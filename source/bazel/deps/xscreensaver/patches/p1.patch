@@ -1,8 +1,8 @@
-diff --git a/config.h b/config.h
+diff --git a/utils/config.h b/utils/config.h
 new file mode 100644
 index 00000000..78c575ca
 --- /dev/null
-+++ b/config.h
++++ b/utils/config.h
 @@ -0,0 +1,485 @@
 +/* config.h.  Generated from config.h.in by configure.  */
 +/* config.h.in.  Generated from configure.ac by autoheader.  */
