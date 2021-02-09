@@ -20,9 +20,9 @@ hcp(
 hcp(
     name = "texture_loader",
     deps = [
+        "//code/utilities/graphics/opengl/loader:opengl_loaders",
         "//code/utilities/image:stb_image",
         "//code/utilities/streams/filestreams:lib",
-        "//code/utilities/graphics/opengl/loader:opengl_loaders",
         "@imgui//:imgui_sdl_opengl3",
         "@system//:KHR_hdrs",
     ],
@@ -33,9 +33,9 @@ hcp(
     deps = [
         "//code/utilities/data_structures/graphics/image:positioned_image_data",
         "//code/utilities/image:stb_image",
-        "//code/utilities/streams/filestreams:lib",
-        "//code/utilities/image:texture_loader",
         "//code/utilities/image:stb_image_set_settings",
+        "//code/utilities/image:texture_loader",
+        "//code/utilities/streams/filestreams:lib",
     ],
 )
 
@@ -44,8 +44,8 @@ hcp(
     deps = [
         "//code/utilities/data_structures/graphics/image:positioned_animated_image_data",
         "//code/utilities/image:stb_image",
-        "//code/utilities/streams/filestreams:lib",
-        "//code/utilities/image:texture_loader",
         "//code/utilities/image:stb_image_set_settings",
+        "//code/utilities/image:texture_loader",
+        "//code/utilities/streams/filestreams:lib",
     ],
 )

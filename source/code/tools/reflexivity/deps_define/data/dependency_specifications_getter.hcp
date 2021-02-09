@@ -235,7 +235,7 @@ class
     x.specs.emplace_back(raylib());
     x.specs.emplace_back(halley());
     x.specs.emplace_back(blah());
-    //xscreensaver
+    x.specs.emplace_back(xscreensaver());
     
     
     
@@ -1228,6 +1228,14 @@ class
     Dependency_Specification spec;
     spec.lib_name = "blah";
     Add_Unilang_Github_Mirror(spec,"blah","3fa9f997916ab4b7e14efe5771a59c6ed5b42d85","c0e5f93b414a67006b7aec9539dd0fc7e24d4c6eee364229edf5ef88cc5d0371");
+    return spec;
+❱
+◀private: static▶ Dependency_Specification ☀xscreensaver()❰
+    Dependency_Specification spec;
+    spec.lib_name = "xscreensaver";
+    Add_Unilang_Github_Mirror(spec,"xscreensaver","9c9ac21de7b85b6c4c767f3005b510d78b0a3e97","014c757da20b2c369c51bcaa2860e39e1844f1e3a3d784fc29685f390b762f77");
+    spec.patch_files.emplace_back("p1");
+    spec.patch_args.emplace_back("-p1");
     return spec;
 ❱
 

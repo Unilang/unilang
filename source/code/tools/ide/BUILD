@@ -26,8 +26,8 @@ hcp(
     deps = [
         "//code/tools/ide/settings:ide_element",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
-        "//code/utilities/image:stb_image_setter",
         "//code/utilities/image:stb_animated_image_setter",
+        "//code/utilities/image:stb_image_setter",
         "//code/utilities/types/variant:lib",
     ],
 )

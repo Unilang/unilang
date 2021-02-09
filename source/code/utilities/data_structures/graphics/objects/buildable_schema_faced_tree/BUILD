@@ -18,9 +18,9 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:generic_menu_handler",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree/data:buildable_face_tree",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree/data:positioned_buildable_face_tree",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:schema_menu_handler",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:buildable_schema_faced_tree",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:positioned_buildable_schema_faced_tree",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:schema_menu_handler",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/data:positioned_buttoned_faced_label",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/premade:buttoned_faced_label_premades",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_click_finder",
@@ -46,13 +46,12 @@ hcp(
 hcp(
     name = "buildable_schema_faced_tree_is_mouse_over",
     deps = [
-        "//code/utilities/fonts/bdf/character_maps:character_maps",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:positioned_buildable_schema_faced_tree",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_is_mouse_over",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:positioned_buildable_schema_faced_tree",
+        "//code/utilities/fonts/bdf/character_maps",
         "//code/utilities/peripheral/pc:pc_input_state",
     ],
 )
-
 
 hcp(
     name = "schema_menu_handler",

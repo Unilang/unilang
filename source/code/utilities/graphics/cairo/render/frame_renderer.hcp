@@ -52,7 +52,8 @@ class
             },
             [&](Positioned_Texture const& x) {
                 //TODO
-            },
+            }
+            
         }, it);
     }
     
@@ -94,6 +95,13 @@ class
             [&](Positioned_Image_Data const& x) {
                 //TODO
             },
+            [&](Positioned_Animated_Image_Data const& x) {
+                //TODO
+            },
+            [&](Positioned_Texture const& x) {
+                //TODO
+            }
+            
         }, it);
     }
     
