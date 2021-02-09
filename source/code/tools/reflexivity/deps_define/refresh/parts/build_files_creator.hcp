@@ -35,10 +35,21 @@ class
 
 ◀private: static▶ void ☀Possibly_Print_Build_File(Dependency_Specification const& spec, std::string const& folder_name)❰
 
+        auto build_file_path = folder_name + "/build.BUILD";
         if (Should_Print_Build_File(spec)){
             auto source_data  = Create_File_Content(spec);
-            Write_To_File(folder_name + "/build.bzl",source_data);
+            Write_To_File(build_file_path,source_data);
         }
+        
+        
+        //if the file doesn't exist, we can at least create an empty one for convenience
+        if (!spec.build_content_in_dependency){
+            Create_File_If_It_Doesnt_Exist(build_file_path);
+        }
+        else {
+            execute("rm -f " + build_file_path);
+        }
+        
 ❱
 
 ◀private: static▶ bool ☀Should_Print_Build_File(Dependency_Specification const& spec)❰
