@@ -11,12 +11,12 @@ int main(int argc, char** argv){
 	//get cli args
 	int x_location = atoi(argv[1]);
 	int y_location = atoi(argv[2]);
-	int speed = atoi(argv[3]);
+	int wait_speed = atoi(argv[3]);
 
 	//move mouse to top left of screen
 	Point p;
 	p.x = x_location;
 	p.y = y_location;
 	Mouse_Controller controller;
-	controller.move_mouse(p,speed);
+	controller.move_mouse(p,wait_speed);
 }
