@@ -38,14 +38,7 @@ class
             },
             [&](Positioned_Image_Data & x) {
                 
-                //convert
-                Positioned_Texture tex;
-                tex.pos = x.pos;
-                tex.id = x.texture;
-                tex.width = x.width;
-                tex.height = x.height;
-                
-                elements.types.emplace_back(tex);
+                elements.types.emplace_back(Convert_To_Texture(x));
             },
             [&](Positioned_Animated_Image_Data & x) {
                 
@@ -55,16 +48,28 @@ class
                     x.frame = 0;
                 }
                 
-                //convert
-                Positioned_Texture tex;
-                tex.pos = x.pos;
-                tex.id = x.texture[x.frame];
-                tex.width = x.width;
-                tex.height = x.height;
-                
-                elements.types.emplace_back(tex);
+                elements.types.emplace_back(Convert_To_Texture(x));
             }
         }, it.element);
     }
     return elements;
+❱
+
+◀private: static▶ Positioned_Texture ☀Convert_To_Texture(Positioned_Image_Data const& img)❰
+
+    Positioned_Texture tex;
+    tex.pos = img.pos;
+    tex.id = img.texture;
+    tex.width = img.width;
+    tex.height = img.height;
+    return tex;
+❱
+◀private: static▶ Positioned_Texture ☀Convert_To_Texture(Positioned_Animated_Image_Data const& img)❰
+
+    Positioned_Texture tex;
+    tex.pos = img.pos;
+    tex.id = img.texture[img.frame];
+    tex.width = img.width;
+    tex.height = img.height;
+    return tex;
 ❱
