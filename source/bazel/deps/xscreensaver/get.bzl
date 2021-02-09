@@ -14,6 +14,7 @@ def xscreensaver():
         ],
         patches = [
             "//bazel/deps/xscreensaver/patches:p1.patch",
+            "//bazel/deps/xscreensaver/patches:p2.patch",
         ],
         patch_args = [
             "-p1",

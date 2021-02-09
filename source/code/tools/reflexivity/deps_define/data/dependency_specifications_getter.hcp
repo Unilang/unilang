@@ -1235,6 +1235,7 @@ class
     spec.lib_name = "xscreensaver";
     Add_Unilang_Github_Mirror(spec,"xscreensaver","9c9ac21de7b85b6c4c767f3005b510d78b0a3e97","014c757da20b2c369c51bcaa2860e39e1844f1e3a3d784fc29685f390b762f77");
     spec.patch_files.emplace_back("p1");
+    spec.patch_files.emplace_back("p2");
     spec.patch_args.emplace_back("-p1");
     return spec;
 ❱
