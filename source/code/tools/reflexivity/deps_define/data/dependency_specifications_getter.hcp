@@ -64,7 +64,11 @@ class
 //Qt:
 //https://github.com/justbuchanan/bazel_rules_qt
 //https://github.com/bbreslauer/qt-bazel-example
-    
+//https://github.com/wxWidgets/wxWidgets
+
+
+//https://github.com/mmikk/MikkTSpace
+//https://github.com/assimp/assimp
     
 //crypt
 //https://github.com/Unilang/libxcrypt
