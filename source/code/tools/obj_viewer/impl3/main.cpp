@@ -2,8 +2,6 @@
 #include "Shaders.hpp"
 #include "Viewer.hpp"
 
-#include <GL/freeglut.h>
-
 #include <iostream>
 #include <stdexcept>
 #include <string>
