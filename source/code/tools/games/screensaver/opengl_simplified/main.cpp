@@ -15,8 +15,9 @@
 #include <X11/Xutil.h>
 #include <GL/gl.h>
 #include <GL/glx.h>
+#include "code/utilities/graphics/x11/main_state/setup_display_settings.hpp"
+#include "code/utilities/graphics/x11/main_state/x11_main_state_creator.hpp"
 
-#define DEBUG 1
 #define GLX_CONTEXT_MAJOR_VERSION_ARB       0x2091
 #define GLX_CONTEXT_MINOR_VERSION_ARB       0x2092
 
@@ -28,10 +29,14 @@ GLXContext ctx;
 
 void setup() {
 
+    //Setup_Display_Settings settings;
+    //auto x11 = X11_Main_State_Creator::Create(settings);
     display = XOpenDisplay(nullptr);
+    
+    bool debug = true;
 
     // Get the root window
-    if (DEBUG == 0) {
+    if (!debug) {
         // Get the root window
         window = DefaultRootWindow(display);
     } else {

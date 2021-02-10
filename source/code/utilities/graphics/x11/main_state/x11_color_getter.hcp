@@ -1,0 +1,39 @@
+class
+❪string❫
+❪cstdlib❫
+❪iostream❫
+❪X11/extensions/shape.h❫
+❪"code/utilities/graphics/x11/main_state/setup_display_settings"❫
+❪"code/utilities/graphics/x11/data/main_x11_state"❫
+❪"code/utilities/graphics/x11/data/x11_window_geometry"❫
+❪"code/utilities/graphics/x11/data/x11_bg_fg_colors"❫
+⚯
+⚞⚟
+
+◀public: static▶ X11_Bg_Fg_Colors ☀Get(Display * theDisplay, int theScreen, unsigned int theDepth)
+❰
+    X11_Bg_Fg_Colors colors;
+    
+    Colormap theColormap = DefaultColormap(theDisplay, theScreen);
+    std::string Foreground = "black";
+    std::string Background = "white";
+    if (theDepth == 1) {
+        Foreground = "black";
+        Background = "white";
+    }
+
+    XColor      theExactColor;
+    if (!XAllocNamedColor(theDisplay, theColormap,
+                Foreground.c_str(), &colors.fg, &theExactColor)) {
+        std::cerr << "Can't XAllocNamedColor" << std::endl;
+        exit(1);
+    }
+
+    if (!XAllocNamedColor(theDisplay, theColormap,
+                Background.c_str(), &colors.bg, &theExactColor)) {
+        std::cerr << "Can't XAllocNamedColor" << std::endl;
+        exit(1);
+    }
+    
+    return colors;
+❱

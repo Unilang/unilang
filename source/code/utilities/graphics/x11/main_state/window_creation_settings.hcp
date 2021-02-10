@@ -1,0 +1,22 @@
+class
+❪string❫
+❪"code/utilities/data_structures/position/position"❫
+❪"code/utilities/data_structures/shapes/rectangle/rectangle_settings"❫
+⚯
+
+⚞⚟
+
+
+◀
+public:
+    
+    //Window creation
+    bool use_root = true;
+    
+    //settings to use if we are not using the root window
+    Position pos;
+    Rectangle_Dimensions dim;
+    int border_width = 0;
+    unsigned int border = 0;
+    unsigned int background = 0;
+▶

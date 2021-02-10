@@ -1,5 +1,6 @@
 class
 ❪string❫
+❪"code/utilities/graphics/x11/main_state/window_creation_settings"❫
 ⚯
 
 ⚞⚟
@@ -8,7 +9,10 @@ class
 ◀
 public:
     
+    //initial X11 setup
     bool syncronize_debug_mode = false;
     bool set_error_handler = false;
     bool check_for_shape_extension = true;
+    
+    Window_Creation_Settings window;
 ▶
