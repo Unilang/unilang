@@ -164,6 +164,7 @@ cc_binary(
         "hacks/glx/tube.c",
         "hacks/glx/tube.h",
         "hacks/glx/xlock-gl-utils.c",
+        "hacks/glx/texfont.c",
     ],
     copts = [
         "-DHAVE_CONFIG_H",
