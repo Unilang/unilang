@@ -6,6 +6,9 @@
 
 #include "vroot.h"
 
+
+//Running this by itself you won't see anything.
+//You need to run it under xscreensaver to see it draw to the window.
 int main ()
 {
   Display *dpy;
