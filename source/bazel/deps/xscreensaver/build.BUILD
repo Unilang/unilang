@@ -95,7 +95,7 @@ cc_library(
 cc_library(
     name = "screen_hack2",
     srcs = [
-        #"hacks/screenhack.c",
+        "hacks/screenhack.c",
         "hacks/fps.c",
         "hacks/xlockmore.c",
     ],
@@ -165,12 +165,13 @@ cc_binary(
         "hacks/glx/tube.h",
         "hacks/glx/xlock-gl-utils.c",
         "hacks/glx/texfont.c",
+        #"hacks/glx/xscreensaver-gl-helper.c",
     ],
     copts = [
         "-DHAVE_CONFIG_H",
-        #"-DSTANDALONE",
-        #"-DUSE_GL",
-        #"-U__STRICT_ANSI__",
+        "-DSTANDALONE",
+        "-DUSE_GL",
+        "-U__STRICT_ANSI__",
         #"-std=c89",
     ],
     deps = [
