@@ -108,6 +108,11 @@ void Viewer::display() {
 	model_->render();
 	
 	glutSwapBuffers();
+	
+	//spin automatically
+	Vector3f xAxis = Vector3f::zero();
+	xAxis(0) = 1.0f;
+	xRotation_ = xRotation_ * rotationMatrix(xAxis, degToRad(5.0f));
 }
 
 void Viewer::resize(int width, int height) {
@@ -144,7 +149,6 @@ void Viewer::specialKey(int key, int x, int y) {
 	
 	xAxis(0) = 1.0f;
 	yAxis(1) = 1.0f;
-	
 	switch(key)	{
 		case GLUT_KEY_UP:		
 			xRotation_ = xRotation_ * rotationMatrix(xAxis, degToRad(-5.0f));
