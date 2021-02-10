@@ -19,4 +19,7 @@ def xscreensaver():
         patch_args = [
             "-p1",
         ],
+        patch_cmds = [
+            "sed -i '1s/^/void clear_gl_error(void);\\n /' hacks/glx/xlock-gl-utils.c",
+        ],
     )

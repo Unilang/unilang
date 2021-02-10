@@ -26,38 +26,35 @@ utils_srcs = glob(
 
 cc_library(
     name = "utils",
-    hdrs = utils_hdrs,
     srcs = utils_srcs,
+    hdrs = utils_hdrs,
     copts = [
         "-DHAVE_CONFIG_H",
         #"-std=c89",
     ],
     includes = [
-        "utils",
+        ".",
         "hacks",
         "images",
-        ".",
+        "utils",
     ],
     deps = [
         "@system//:X11_hdrs",
         "@system//:X11",
         "@system//:KHR_hdrs",
-        
+
         #"@libXxf86vm",
         "@system//:libXxf86vm",
         #"@xorg_xorgproto",
-        
         "@system//:GL_hdrs",
         "@system//:GL",
         "@system//:GLU_hdrs",
         "@system//:GLU",
         "@freetype2",
         "@fontconfig",
-        
         "@xkbcommon",
         #"@system//:xkbcommon",
         #"@system//:xkbcommon_hdrs",
-        
         "@system//:SM",
         "@system//:ICE",
         "@system//:Xft",
@@ -67,15 +64,22 @@ cc_library(
     ],
 )
 
-
 #something that I think most screensavers need
 cc_library(
     name = "screen_hack",
-    hdrs = ["hacks/screenhack.h", "hacks/screenhackI.h", "hacks/fps.h", "hacks/fpsI.h", "hacks/xlockmore.h", "hacks/xlockmoreI.h"],
     srcs = [
-    "hacks/screenhack.c",
-    "hacks/fps.c",
-    "hacks/xlockmore.c"],
+        "hacks/fps.c",
+        "hacks/screenhack.c",
+        "hacks/xlockmore.c",
+    ],
+    hdrs = [
+        "hacks/fps.h",
+        "hacks/fpsI.h",
+        "hacks/screenhack.h",
+        "hacks/screenhackI.h",
+        "hacks/xlockmore.h",
+        "hacks/xlockmoreI.h",
+    ],
     copts = [
         "-DHAVE_CONFIG_H",
     ],
@@ -87,13 +91,22 @@ cc_library(
         ":utils",
     ],
 )
+
 cc_library(
     name = "screen_hack2",
-    hdrs = ["hacks/screenhack.h", "hacks/screenhackI.h", "hacks/fps.h", "hacks/fpsI.h", "hacks/xlockmore.h", "hacks/xlockmoreI.h"],
     srcs = [
-    #"hacks/screenhack.c",
-    "hacks/fps.c",
-    "hacks/xlockmore.c"],
+        #"hacks/screenhack.c",
+        "hacks/fps.c",
+        "hacks/xlockmore.c",
+    ],
+    hdrs = [
+        "hacks/fps.h",
+        "hacks/fpsI.h",
+        "hacks/screenhack.h",
+        "hacks/screenhackI.h",
+        "hacks/xlockmore.h",
+        "hacks/xlockmoreI.h",
+    ],
     copts = [
         "-DHAVE_CONFIG_H",
     ],
@@ -105,8 +118,6 @@ cc_library(
         ":utils",
     ],
 )
-
-
 
 #try building some individual screensavers
 #These are recommended by the author as good starting examples
@@ -118,7 +129,9 @@ cc_binary(
         "-DHAVE_CONFIG_H",
     ],
     deps = [
-    ":utils",":screen_hack",],
+        ":screen_hack",
+        ":utils",
+    ],
 )
 
 cc_binary(
@@ -128,19 +141,30 @@ cc_binary(
         "-DHAVE_CONFIG_H",
     ],
     deps = [
-    ":utils",":screen_hack",],
+        ":screen_hack",
+        ":utils",
+    ],
 )
 
 #This is recomended as a good starting example for OpenGL screensavers
 cc_binary(
     name = "dangerball",
-    srcs = ["hacks/glx/dangerball.c","hacks/glx/sphere.h","hacks/glx/sphere.c",
-    "hacks/glx/tube.h","hacks/glx/tube.c",
-    "hacks/glx/rotator.h","hacks/glx/rotator.c",
-    "hacks/glx/gltrackball.h", "hacks/glx/gltrackball.c","hacks/glx/trackball.h", "hacks/glx/trackball.c",
-    "hacks/glx/fps-gl.c",
-    "hacks/glx/texfont.h",
-    "hacks/glx/xlock-gl-utils.c"],
+    srcs = [
+        "hacks/glx/dangerball.c",
+        "hacks/glx/fps-gl.c",
+        "hacks/glx/gltrackball.c",
+        "hacks/glx/gltrackball.h",
+        "hacks/glx/rotator.c",
+        "hacks/glx/rotator.h",
+        "hacks/glx/sphere.c",
+        "hacks/glx/sphere.h",
+        "hacks/glx/texfont.h",
+        "hacks/glx/trackball.c",
+        "hacks/glx/trackball.h",
+        "hacks/glx/tube.c",
+        "hacks/glx/tube.h",
+        "hacks/glx/xlock-gl-utils.c",
+    ],
     copts = [
         "-DHAVE_CONFIG_H",
         #"-DSTANDALONE",
@@ -149,5 +173,7 @@ cc_binary(
         #"-std=c89",
     ],
     deps = [
-    ":utils",":screen_hack2",],
+        ":screen_hack2",
+        ":utils",
+    ],
 )

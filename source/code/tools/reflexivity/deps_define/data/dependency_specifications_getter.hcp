@@ -1237,6 +1237,11 @@ class
     spec.patch_files.emplace_back("p1");
     spec.patch_files.emplace_back("p2");
     spec.patch_args.emplace_back("-p1");
+    
+    
+    spec.patch_cmds.emplace_back("sed -i '1s/^/void clear_gl_error(void);\\\\n /' hacks/glx/xlock-gl-utils.c");
+    
+    
     return spec;
 ❱
 
