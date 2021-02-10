@@ -188,6 +188,22 @@ cc_import(
     shared_library = "usr/lib/x86_64-linux-gnu/libXi.so",
 )
 
+cc_import(
+    name = "xkbcommon",
+    shared_library = "usr/lib/x86_64-linux-gnu/libxkbcommon.so",
+)
+
+cc_import(
+    name = "libXxf86vm",
+    shared_library = "usr/lib/x86_64-linux-gnu/libXxf86vm.so",
+)
+
+cc_library(
+    name = "xkbcommon_hdrs",
+    hdrs = glob(["usr/include/xkbcommon/**/*.h"]),
+    includes = ["usr/include"],
+)
+
 #headers
 cc_library(
     name = "GL_hdrs",

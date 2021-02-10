@@ -1,36 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-# hdrs = glob(
-#     include = [
-#         "include/**/*.h",
-#     ],
-#     exclude = [
-#     ],
-# )
-
-# cc_library(
-#     name = "screen_hack",
-#     hdrs = ["hacks/screenhack.h", "hacks/screenhackI.h", "utils/yarandom.h", "utils/usleep.h", "utils/resources.h", "utils/hsv.h", "utils/colors.h"],
-#     srcs = ["hacks/screenhack.c"],
-#     copts = [
-#     ],
-#     includes = [
-#         "hacks",
-#         "utils",
-#     ],
-#     deps = [
-#         "@system//:X11_hdrs"
-#     ],
-# )
-
-# cc_binary(
-#     name = "deluxe",
-#     srcs = ["hacks/deluxe.c"],
-#     deps = [":screen_hack",
-#     "@system//:X11_hdrs",],
-# )
-
-
+#the project seems to have a general utilities section
 utils_hdrs = glob(
     include = [
         "utils/**/*.h",
@@ -47,7 +17,6 @@ utils_srcs = glob(
     ],
     exclude = [
         "utils/vms-gtod.c",
-        "utils/yarandom.c",
         "utils/fade.c",
         "utils/async_netdb.c",
         "utils/logo.c",
@@ -71,10 +40,96 @@ cc_library(
     ],
     deps = [
         "@system//:X11_hdrs",
+        "@system//:X11",
         "@system//:KHR_hdrs",
+        
         "@libXxf86vm",
+        #"@system//:libXxf86vm",
+        
         "@system//:GL_hdrs",
         "@freetype2",
         "@fontconfig",
+        
+        "@xkbcommon",
+        #"@system//:xkbcommon",
+        #"@system//:xkbcommon_hdrs",
     ],
+)
+
+
+#something that I think most screensavers need
+cc_library(
+    name = "screen_hack",
+    hdrs = ["hacks/screenhack.h", "hacks/screenhackI.h", "hacks/fps.h", "hacks/fpsI.h", "hacks/xlockmore.h", "hacks/xlockmoreI.h"],
+    srcs = [
+    "hacks/screenhack.c",
+    "hacks/fps.c",
+    "hacks/xlockmore.c"],
+    copts = [
+        "-DHAVE_CONFIG_H",
+    ],
+    includes = [
+        "hacks",
+        "utils",
+    ],
+    deps = [
+        ":utils",
+    ],
+)
+cc_library(
+    name = "screen_hack2",
+    hdrs = ["hacks/screenhack.h", "hacks/screenhackI.h", "hacks/fps.h", "hacks/fpsI.h", "hacks/xlockmore.h", "hacks/xlockmoreI.h"],
+    srcs = [
+    #"hacks/screenhack.c",
+    "hacks/fps.c",
+    "hacks/xlockmore.c"],
+    copts = [
+        "-DHAVE_CONFIG_H",
+    ],
+    includes = [
+        "hacks",
+        "utils",
+    ],
+    deps = [
+        ":utils",
+    ],
+)
+
+
+
+#try building some individual screensavers
+#These are recommended by the author as good starting examples
+#If you want to write your own screensavers
+cc_binary(
+    name = "deluxe",
+    srcs = ["hacks/deluxe.c"],
+    copts = [
+        "-DHAVE_CONFIG_H",
+    ],
+    deps = [
+    ":utils",":screen_hack",],
+)
+
+cc_binary(
+    name = "greynetic",
+    srcs = ["hacks/greynetic.c"],
+    copts = [
+        "-DHAVE_CONFIG_H",
+    ],
+    deps = [
+    ":utils",":screen_hack",],
+)
+
+#This is recomended as a good starting example for OpenGL screensavers
+cc_binary(
+    name = "dangerball",
+    srcs = ["hacks/glx/dangerball.c","hacks/glx/sphere.h","hacks/glx/tube.h","hacks/glx/rotator.h","hacks/glx/gltrackball.h"],
+    copts = [
+        "-DHAVE_CONFIG_H",
+        #"-DSTANDALONE",
+        #"-U__STRICT_ANSI__",
+        #"-std=c89",
+    ],
+    deps = [
+    ":utils",":screen_hack2",],
 )
