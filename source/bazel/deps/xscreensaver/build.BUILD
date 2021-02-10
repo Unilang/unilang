@@ -1,5 +1,20 @@
 package(default_visibility = ["//visibility:public"])
 
+cc_library(
+    name = "vroot",
+    srcs = [],
+    hdrs = ["utils/vroot.h"],
+    copts = [
+    ],
+    includes = [
+        "utils",
+    ],
+    deps = [
+    ],
+)
+
+
+
 #the project seems to have a general utilities section
 utils_hdrs = glob(
     include = [
