@@ -198,14 +198,14 @@ void Viewer::mouseMove(int x, int y) {
 	}
 }
 
-/*void Viewer::mouseWheel(int button, int dir, int x, int y) {
+void Viewer::mouseWheel(int button, int dir, int x, int y) {
 	if (mouseEnabled_) {
 		if (dir > 0)
 			zoomOut();
 		else
 			zoomIn();
 	}
-}*/
+}
 
 void Viewer::zoomIn() {
 	if (modelDistance_ - modelRadius_ > 0.0f) {
