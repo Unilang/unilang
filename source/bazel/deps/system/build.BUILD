@@ -240,6 +240,11 @@ cc_library(
     hdrs = glob(["usr/include/GL/**/*.h"]),
     includes = ["usr/include"],
 )
+cc_library(
+    name = "GLFW_hdrs",
+    hdrs = glob(["usr/include/GLFW/**/*.h"]),
+    includes = ["usr/include"],
+)
 
 cc_library(
     name = "GLES2_hdrs",
