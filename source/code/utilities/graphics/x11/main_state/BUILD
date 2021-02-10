@@ -8,7 +8,8 @@ load("//bazel/rules/enum_cpp:enum_cpp.bzl", "enum_cpp")
 hcp(
     name = "window_creation_settings",
     deps = [
-        "@x11",
+        "@system//:X11_hdrs",
+        "@system//:X11",
         "//code/utilities/data_structures/position:position",
         "//code/utilities/data_structures/shapes/rectangle:rectangle_settings",
     ],
@@ -17,7 +18,8 @@ hcp(
 hcp(
     name = "setup_display_settings",
     deps = [
-        "@x11",
+        "@system//:X11_hdrs",
+        "@system//:X11",
         "//code/utilities/graphics/x11/main_state:window_creation_settings",
     ],
 )
@@ -32,7 +34,8 @@ hcp(
         "//code/utilities/graphics/x11/data:x11_window_geometry",
         "//code/utilities/graphics/x11/main_state:x11_display_getter",
         "//code/utilities/graphics/x11/main_state:x11_color_getter",
-        "@x11",
+        "@system//:X11_hdrs",
+        "@system//:X11",
     ],
 )
 
@@ -43,7 +46,9 @@ hcp(
         "//code/utilities/graphics/x11/data:main_x11_state",
         "//code/utilities/graphics/x11/data:x11_bg_fg_colors",
         "//code/utilities/graphics/x11/data:x11_window_geometry",
-        "@x11",
+        "@system//:X11_hdrs",
+        "@system//:X11",
+        "@system//:Xext",
     ],
 )
 
@@ -54,7 +59,8 @@ hcp(
         "//code/utilities/graphics/x11/data:main_x11_state",
         "//code/utilities/graphics/x11/data:x11_bg_fg_colors",
         "//code/utilities/graphics/x11/data:x11_window_geometry",
-        "@x11",
+        "@system//:X11_hdrs",
+        "@system//:X11",
     ],
 )
 

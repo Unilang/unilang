@@ -7,7 +7,8 @@ load("//bazel/rules/enum_cpp:enum_cpp.bzl", "enum_cpp")
 hcp(
     name = "sprite",
     deps = [
-        "@x11",
+        "@system//:X11_hdrs",
+        "@system//:X11",
     ],
 )
 

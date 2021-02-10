@@ -7,14 +7,16 @@ load("//bazel/rules/enum_cpp:enum_cpp.bzl", "enum_cpp")
 hcp(
     name = "x11_bg_fg_colors",
     deps = [
-        "@x11",
+                "@system//:X11_hdrs",
+        "@system//:X11",
     ],
 )
 
 hcp(
     name = "x11_window_geometry",
     deps = [
-        "@x11",
+                "@system//:X11_hdrs",
+        "@system//:X11",
     ],
 )
 
@@ -23,6 +25,7 @@ hcp(
     deps = [
         ":x11_bg_fg_colors",
         ":x11_window_geometry",
-        "@x11",
+                "@system//:X11_hdrs",
+        "@system//:X11",
     ],
 )

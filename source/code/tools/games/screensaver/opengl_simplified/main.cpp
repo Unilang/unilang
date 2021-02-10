@@ -4,10 +4,10 @@
 #include <thread>
 #include <iostream>
 
-#include "vroot.h"
+//#include "vroot.h"
 
-#define GLFW_EXPOSE_NATIVE_X11
-#define GLFW_EXPOSE_NATIVE_GLX
+// #define GLFW_EXPOSE_NATIVE_X11
+// #define GLFW_EXPOSE_NATIVE_GLX
 
 #include <GLFW/glfw3native.h>
 #include <X11/Xlib.h>
@@ -18,38 +18,29 @@
 #include "code/utilities/graphics/x11/main_state/setup_display_settings.hpp"
 #include "code/utilities/graphics/x11/main_state/x11_main_state_creator.hpp"
 
-#define GLX_CONTEXT_MAJOR_VERSION_ARB       0x2091
-#define GLX_CONTEXT_MINOR_VERSION_ARB       0x2092
-
 typedef GLXContext (*glXCreateContextAttribsARBProc)(Display *, GLXFBConfig, GLXContext, Bool, const int *);
 
-Window window;
-Display *display;
-GLXContext ctx;
+Main_X11_State setup() {
 
-void setup() {
-
-    //Setup_Display_Settings settings;
-    //auto x11 = X11_Main_State_Creator::Create(settings);
-    display = XOpenDisplay(nullptr);
+    Setup_Display_Settings settings;
+    settings.window.use_root = false;
+    settings.window.pos.x = 0;
+    settings.window.pos.y = 0;
+    settings.window.dim.width = 860;
+    settings.window.dim.height = 640;
+    settings.window.border_width = 1;
+    settings.window.border = 0;
+    settings.window.background = 0;
+    auto x11 = X11_Main_State_Creator::Create(settings);
     
-    bool debug = true;
+    return x11;
+}
 
-    // Get the root window
-    if (!debug) {
-        // Get the root window
-        window = DefaultRootWindow(display);
-    } else {
-        // Let's create our own window.
-        int screen = DefaultScreen(display);
-        window = XCreateSimpleWindow(display, RootWindow(display, screen), 24, 48, 860,
-                                     640, 1, BlackPixel(display, screen), WhitePixel(display, screen));
-        XMapWindow(display, window);
-    }
+void bind_to_opengl(Main_X11_State & x11){
 
     // Get the window attributes
     XWindowAttributes wa;
-    XGetWindowAttributes(display, window, &wa);
+    XGetWindowAttributes(x11.d, x11.root, &wa);
 
     // Get a matching FB config
     static int visual_attribs[] =
@@ -72,15 +63,17 @@ void setup() {
 
     //Get framebuffer config
     int fbcount;
-    GLXFBConfig *fbc = glXChooseFBConfig(display, DefaultScreen(display), visual_attribs, &fbcount);
+    GLXFBConfig *fbc = glXChooseFBConfig(x11.d, DefaultScreen(x11.d), visual_attribs, &fbcount);
     // Get a visual
-    XVisualInfo *vi = glXGetVisualFromFBConfig(display, fbc[0]);
+    XVisualInfo *vi = glXGetVisualFromFBConfig(x11.d, fbc[0]);
     //So we could get graphic context.
     glXCreateContextAttribsARBProc glXCreateContextAttribsARB = nullptr;
     glXCreateContextAttribsARB =
             (glXCreateContextAttribsARBProc)
                     glXGetProcAddress((const GLubyte *) "glXCreateContextAttribsARB");
 
+    #define GLX_CONTEXT_MAJOR_VERSION_ARB       0x2091
+    #define GLX_CONTEXT_MINOR_VERSION_ARB       0x2092
     int context_attribs[] =
             {
                     GLX_CONTEXT_MAJOR_VERSION_ARB, 3,
@@ -88,10 +81,10 @@ void setup() {
                     None
             };
 
-    ctx = glXCreateContextAttribsARB(display, fbc[0], nullptr, true, context_attribs);
+    GLXContext ctx = glXCreateContextAttribsARB(x11.d, fbc[0], nullptr, true, context_attribs);
     // Sync to ensure any errors generated are processed.
-    XSync(display, false);
-    glXMakeCurrent(display, window, ctx);
+    XSync(x11.d, false);
+    glXMakeCurrent(x11.d, x11.root, ctx);
     // Be sure to free the FBConfig list allocated by glXChooseFBConfig()
     XFree(fbc);
     //Set viewport to parent window's width/height
@@ -100,14 +93,15 @@ void setup() {
 
 int main() {
 
-    setup();
+    auto x11 = setup();
+    bind_to_opengl(x11);
 
     using namespace std::chrono_literals;
     float r = 0;
     while (true) {
         glClearColor(r, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glXSwapBuffers(display, window);
+        glXSwapBuffers(x11.d, x11.root);
         std::this_thread::sleep_for(1s);
         r += 0.1f;
         if (r > 1) r = 0;
