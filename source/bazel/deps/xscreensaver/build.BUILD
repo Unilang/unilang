@@ -43,16 +43,27 @@ cc_library(
         "@system//:X11",
         "@system//:KHR_hdrs",
         
-        "@libXxf86vm",
-        #"@system//:libXxf86vm",
+        #"@libXxf86vm",
+        "@system//:libXxf86vm",
+        #"@xorg_xorgproto",
         
         "@system//:GL_hdrs",
+        "@system//:GL",
+        "@system//:GLU_hdrs",
+        "@system//:GLU",
         "@freetype2",
         "@fontconfig",
         
         "@xkbcommon",
         #"@system//:xkbcommon",
         #"@system//:xkbcommon_hdrs",
+        
+        "@system//:SM",
+        "@system//:ICE",
+        "@system//:Xft",
+        "@system//:Xt",
+        "@system//:Xmu",
+        "@system//:Xext",
     ],
 )
 
@@ -123,10 +134,17 @@ cc_binary(
 #This is recomended as a good starting example for OpenGL screensavers
 cc_binary(
     name = "dangerball",
-    srcs = ["hacks/glx/dangerball.c","hacks/glx/sphere.h","hacks/glx/tube.h","hacks/glx/rotator.h","hacks/glx/gltrackball.h"],
+    srcs = ["hacks/glx/dangerball.c","hacks/glx/sphere.h","hacks/glx/sphere.c",
+    "hacks/glx/tube.h","hacks/glx/tube.c",
+    "hacks/glx/rotator.h","hacks/glx/rotator.c",
+    "hacks/glx/gltrackball.h", "hacks/glx/gltrackball.c","hacks/glx/trackball.h", "hacks/glx/trackball.c",
+    "hacks/glx/fps-gl.c",
+    "hacks/glx/texfont.h",
+    "hacks/glx/xlock-gl-utils.c"],
     copts = [
         "-DHAVE_CONFIG_H",
         #"-DSTANDALONE",
+        #"-DUSE_GL",
         #"-U__STRICT_ANSI__",
         #"-std=c89",
     ],

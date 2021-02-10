@@ -160,7 +160,7 @@ index 00000000..78c575ca
 +#define HAVE_JPEGLIB 1
 +
 +/* Define this to target the OpenGL ES 1.x API instead of OpenGL 1.3. */
-+/* #undef HAVE_JWZGLES */
++//#define HAVE_JWZGLES 1
 +
 +/* Define this if you want to use Kerberos authentication to lock/unlock the
 +   screen instead of your local password. This currently uses Kerberos V4, but

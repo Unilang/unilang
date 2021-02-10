@@ -188,6 +188,33 @@ cc_import(
     shared_library = "usr/lib/x86_64-linux-gnu/libXi.so",
 )
 
+
+cc_import(
+    name = "SM",
+    shared_library = "usr/lib/x86_64-linux-gnu/libSM.so",
+)
+cc_import(
+    name = "ICE",
+    shared_library = "usr/lib/x86_64-linux-gnu/libICE.so",
+)
+cc_import(
+    name = "Xft",
+    shared_library = "usr/lib/x86_64-linux-gnu/libXft.so",
+)
+cc_import(
+    name = "Xt",
+    shared_library = "usr/lib/x86_64-linux-gnu/libXt.so",
+)
+
+cc_import(
+    name = "Xmu",
+    shared_library = "usr/lib/x86_64-linux-gnu/libXmu.so",
+)
+cc_import(
+    name = "Xext",
+    shared_library = "usr/lib/x86_64-linux-gnu/libXext.so",
+)
+
 cc_import(
     name = "xkbcommon",
     shared_library = "usr/lib/x86_64-linux-gnu/libxkbcommon.so",
