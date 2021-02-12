@@ -31,8 +31,10 @@ operation_poll_period: {
 }
 
 # key/value set of defining that the worker will do gpu work
-platform: {
-    properties: [{name: "gpu" value: "1"}]
+dequeue_match_settings: {
+  platform: {
+      properties: [{name: "gpu" value: "1"}]
+  }
 }
 
 # the worker CAS configuration

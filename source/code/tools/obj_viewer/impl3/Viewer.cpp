@@ -5,17 +5,23 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/freeglut.h>
+#include <GL/glx.h>
 
 #define _USE_MATH_DEFINES
 #include <cmath>
 
 #include <stdio.h>
 
+#include "code/utilities/graphics/x11/main_state/setup_display_settings.hpp"
+#include "code/utilities/graphics/x11/main_state/x11_main_state_creator.hpp"
+#include "code/utilities/graphics/glx/x11_to_opengl_binder.hpp"
+
 static float degToRad(float x) {
 	return (x * (M_PI / 180.0));
 }
 
 Viewer* Viewer::instance_ = NULL;
+Main_X11_State x11;
 
 Viewer::Viewer(std::string name, int width, int height) : name_(name), width_(width), height_(height), 
 	running_(false), mouseEnabled_(false), mouseDown_(false) {
@@ -28,11 +34,27 @@ Viewer::~Viewer() {
 }
 
 void Viewer::initGlut(int argc, char** argv) {
+	
+	//create window the GLUT way
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
 	glutInitWindowSize(width_, height_);
 	glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH) - width_) / 2, (glutGet(GLUT_SCREEN_HEIGHT) - height_) / 2);
-	glutCreateWindow(name_.c_str());
+	//glutCreateWindow(name_.c_str());
+	
+	
+	//create window the screensaver way
+    Setup_Display_Settings settings;
+    settings.window.use_root = false;
+    settings.window.pos.x = 0;
+    settings.window.pos.y = 0;
+    settings.window.dim.width = 860;
+    settings.window.dim.height = 640;
+    settings.window.border_width = 1;
+    settings.window.border = 0;
+    settings.window.background = 0;
+    x11 = X11_Main_State_Creator::Create(settings);
+    X11_To_Opengl_Binder::Bind(x11);
 }
 
 void Viewer::initGl() {
@@ -64,10 +86,16 @@ void Viewer::setModel(const ModelPtr& model) {
 }
 
 void Viewer::start() {
+	std::cout << "entering" << std::endl;
 	if (!running_) {
 		running_ = true;
+		while (true){
+			
+		display();
+		}
 		glutMainLoop();
 	}
+	std::cout << "leaving" << std::endl;
 }
 
 void Viewer::stop() {
@@ -107,7 +135,8 @@ void Viewer::display() {
 	
 	model_->render();
 	
-	glutSwapBuffers();
+	//glutSwapBuffers();
+	//glXSwapBuffers(x11.d, x11.root);
 	
 	//spin automatically
 	Vector3f xAxis = Vector3f::zero();

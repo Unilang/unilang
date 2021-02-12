@@ -39,6 +39,7 @@ int main(int argc, char** argv) {
 		std::cerr << e.what() << std::endl;
 		return -1;
 	}
+	std::cout << "here" << std::endl;
 	
 	model->setUseParams(useParams);
 	
@@ -66,8 +67,11 @@ int main(int argc, char** argv) {
 	model->compileLists();
 	//model->setShaders(shaders);
 	
+	std::cout << "here3" << std::endl;
 	Viewer::setInstance(&viewer);
+	std::cout << "here4" << std::endl;
 	viewer.start();
+	std::cout << "here2" << std::endl;
 	
 	return 0;
 }

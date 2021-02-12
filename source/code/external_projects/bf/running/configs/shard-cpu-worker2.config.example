@@ -35,7 +35,7 @@ operation_poll_period: {
 # provide capabilities
 # so an action with a required platform: { arch: "x86_64" } must
 # match with a worker with at least { arch: "x86_64" } here
-platform: {
+#platform: {
   # commented out here for illustrative purposes, a default empty
   # 'platform' is a sufficient starting point without specifying
   # any platform requirements on the actions' side
@@ -44,7 +44,7 @@ platform: {
   #   name: "key_name"
   #   value: "value_string"
   # }
-}
+#}
 
 # the worker CAS configuration
 cas: {
@@ -143,7 +143,7 @@ redis_shard_backplane_config: {
   # The size of the redis connection pool
   jedis_pool_max_total: 4000
   
-  cache_cas: true
+  #cache_cas: true
 
   # The redis key used to store a hash of registered Workers
   # to their registration expiration time. After a worker's
@@ -240,13 +240,15 @@ redis_shard_backplane_config: {
 #exec_owner: "nobody"
 exec_owner: ""
 
-platform: {
-  properties: {
-    name: "env-vars"
-    value: "*"
-  }
-  properties: {
-    name: "debug-before-execution"
-    value: "*"
+dequeue_match_settings: {
+  platform: {
+    properties: {
+      name: "env-vars"
+      value: "*"
+    }
+    properties: {
+      name: "debug-before-execution"
+      value: "*"
+    }
   }
 }

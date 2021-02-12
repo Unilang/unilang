@@ -10,6 +10,7 @@ cc_binary(
     deps = [
         "//code/utilities/graphics/x11/main_state:setup_display_settings",
         "//code/utilities/graphics/x11/main_state:x11_main_state_creator",
+        "//code/utilities/graphics/glx:x11_to_opengl_binder",
         "@xscreensaver//:vroot",
         "@system//:X11_hdrs",
         "@system//:X11",

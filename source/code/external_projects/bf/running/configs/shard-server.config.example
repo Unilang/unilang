@@ -81,7 +81,7 @@ instances {
       # The size of the redis connection pool
       jedis_pool_max_total: 4000
       
-      cache_cas: true
+      #cache_cas: true
 
       # The redis key used to store a hash of registered Workers
       # to their registration expiration time. After a worker's
