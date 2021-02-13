@@ -20,6 +20,10 @@ Main_X11_State setup() {
     settings.window.border_width = 1;
     settings.window.border = 0;
     settings.window.background = 0;
+    
+    settings.use_glx = true;
+    settings.glx_settings.visual_impl = 1;
+    settings.glx_settings.context_impl = 1;
     auto x11 = X11_Main_State_Creator::Create(settings);
     
     return x11;

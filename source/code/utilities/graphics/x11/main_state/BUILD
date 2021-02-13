@@ -6,19 +6,19 @@ load("//bazel/rules/enum_cpp:enum_cpp.bzl", "enum_cpp")
 
 #data
 hcp(
-    name = "window_creation_settings",
+    name = "setup_display_settings",
     deps = [
-        "//code/utilities/data_structures/position",
-        "//code/utilities/data_structures/shapes/rectangle:rectangle_settings",
+        "//code/utilities/graphics/x11/main_state:window_creation_settings",
+        "//code/utilities/graphics/glx:x11_to_opengl_bind_settings",
         "@system//:X11",
         "@system//:X11_hdrs",
     ],
 )
-
 hcp(
-    name = "setup_display_settings",
+    name = "window_creation_settings",
     deps = [
-        "//code/utilities/graphics/x11/main_state:window_creation_settings",
+        "//code/utilities/data_structures/position",
+        "//code/utilities/data_structures/shapes/rectangle:rectangle_settings",
         "@system//:X11",
         "@system//:X11_hdrs",
     ],
@@ -34,6 +34,7 @@ hcp(
         "//code/utilities/graphics/x11/data:x11_window_geometry",
         "//code/utilities/graphics/x11/main_state:x11_color_getter",
         "//code/utilities/graphics/x11/main_state:x11_display_getter",
+        "//code/utilities/graphics/glx:glx_data_getter",
         "@system//:X11",
         "@system//:X11_hdrs",
     ],

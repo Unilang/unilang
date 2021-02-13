@@ -1,6 +1,7 @@
 class
 ❪string❫
 ❪"code/utilities/graphics/x11/main_state/window_creation_settings"❫
+❪"code/utilities/graphics/glx/x11_to_opengl_bind_settings"❫
 ⚯
 
 ⚞⚟
@@ -14,5 +15,10 @@ public:
     bool set_error_handler = false;
     bool check_for_shape_extension = true;
     
+    //how to create the window
     Window_Creation_Settings window;
+    
+    //whether to use/bind with GLX
+    bool use_glx = false;
+    X11_To_Opengl_Bind_Settings glx_settings;
 ▶

@@ -10,7 +10,7 @@ class
 ◀
 public:
     
-    //Window creation
+    //Window creation (root is needed for xscreensaver)
     bool use_root = true;
     
     //settings to use if we are not using the root window

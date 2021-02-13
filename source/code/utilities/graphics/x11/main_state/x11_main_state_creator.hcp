@@ -9,6 +9,7 @@ class
 ❪"code/utilities/graphics/x11/data/main_x11_state"❫
 ❪"code/utilities/graphics/x11/data/x11_window_geometry"❫
 ❪"code/utilities/graphics/x11/data/x11_bg_fg_colors"❫
+❪"code/utilities/graphics/glx/glx_data_getter"❫
 ⚯
 ⚞⚟
 
@@ -18,12 +19,18 @@ class
     //create the main display
     state.d = X11_Display_Getter::Get(settings);
     
+    //possibly use that display to set things up for GLX
+    Glx_Data glx;
+    if (settings.use_glx){
+        glx = Glx_Data_Getter::Get(state,settings.glx_settings);
+    }
+    
     //create the screen and depth
     state.screen = DefaultScreen(state.d);
     state.depth = DefaultDepth(state.d, state.screen);
     
     //create the root window
-    Build_Window(state,settings);
+    Build_Window(state,glx,settings);
     state.root_geo = get_geometry(state.d, state.root);
     
     //colors
@@ -32,7 +39,7 @@ class
     return state;
 ❱
 
-◀public: static▶ void ☀Build_Window(Main_X11_State & state, Setup_Display_Settings const& settings)❰
+◀private: static▶ void ☀Build_Window(Main_X11_State & state, Glx_Data & glx, Setup_Display_Settings const& settings)❰
 
     //If you're making a screensaver (say with xscreensaver),
     //you don't want a window that will be seen normally when the program runs.
@@ -42,11 +49,37 @@ class
         return;
     }
     
+    if (settings.use_glx){
+        Create_Glx_Window(state,glx,settings);
+        return;
+    }
+    
     //build a window you can actually see
     Build_Simple_Window(state,settings);
 ❱
 
-◀public: static▶ void ☀Build_Simple_Window(Main_X11_State & state, Setup_Display_Settings const& settings)❰
+◀private: static▶ void ☀Create_Glx_Window(Main_X11_State & state, Glx_Data & glx, Setup_Display_Settings const& settings)❰
+
+  Colormap cmap = XCreateColormap(state.d,RootWindow(state.d,glx.vi->screen),glx.vi->visual,AllocNone);
+  XSetWindowAttributes    swa;
+  swa.colormap = cmap;
+  swa.border_pixel = 0;
+  swa.event_mask = ExposureMask | ButtonPressMask | StructureNotifyMask;
+  state.root = XCreateWindow(state.d,RootWindow(state.d,glx.vi->screen),settings.window.pos.x, settings.window.pos.y,settings.window.dim.width,settings.window.dim.height,
+        0,glx.vi->depth,InputOutput,glx.vi->visual,
+        CWBorderPixel | CWColormap | CWEventMask,
+        &swa);
+  
+  char** argv;
+  int argc = 0;
+  XSetStandardProperties(state.d,state.root,"glxsimple","glxsimple",None,argv,argc,NULL);
+  
+  glXMakeCurrent(state.d, state.root, glx.ctx);
+  XMapWindow(state.d, state.root);
+❱
+
+
+◀private: static▶ void ☀Build_Simple_Window(Main_X11_State & state, Setup_Display_Settings const& settings)❰
 
     auto border = BlackPixel(state.d, state.screen);
     auto background = WhitePixel(state.d, state.screen);
