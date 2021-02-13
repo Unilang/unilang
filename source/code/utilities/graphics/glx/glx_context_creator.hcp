@@ -1,0 +1,51 @@
+class
+❪"code/utilities/graphics/x11/data/main_x11_state"❫
+❪"code/utilities/graphics/glx/x11_to_opengl_bind_settings"❫
+❪GL/gl.h❫
+❪GL/glx.h❫
+⚯
+⚞⚟
+
+//Logic for creating a Context
+◀public: static▶ GLXContext ☀Create_Context(Main_X11_State & x11, XVisualInfo *vi, GLXFBConfig *fbc, X11_To_Opengl_Bind_Settings const& settings)❰
+    if (settings.context_impl == 1){return Create_Context_Impl1(x11,fbc);}
+    else if (settings.context_impl == 2){return Create_Context_Impl2(x11,vi);}
+    return Create_Context_Impl2(x11,vi);
+❱
+
+
+◀private: static▶ GLXContext ☀Create_Context_Impl1(Main_X11_State & x11, GLXFBConfig *fbc)❰
+        
+    //So we could get graphic context.
+    typedef GLXContext (*glXCreateContextAttribsARBProc)(Display *, GLXFBConfig, GLXContext, Bool, const int *);
+    glXCreateContextAttribsARBProc glXCreateContextAttribsARB = nullptr;
+    glXCreateContextAttribsARB =
+            (glXCreateContextAttribsARBProc)
+                    glXGetProcAddress((const GLubyte *) "glXCreateContextAttribsARB");
+
+    #define GLX_CONTEXT_MAJOR_VERSION_ARB       0x2091
+    #define GLX_CONTEXT_MINOR_VERSION_ARB       0x2092
+    int context_attribs[] =
+            {
+                    GLX_CONTEXT_MAJOR_VERSION_ARB, 3,
+                    GLX_CONTEXT_MINOR_VERSION_ARB, 3,
+                    None
+            };
+
+        GLXContext ctx = glXCreateContextAttribsARB(x11.d, fbc[0], nullptr, true, context_attribs);
+    
+        return ctx;
+❱
+◀private: static▶ GLXContext ☀Create_Context_Impl2(Main_X11_State & x11,XVisualInfo *vi)❰
+        GLXContext ctx;
+        
+  if(!(ctx = glXCreateContext(x11.d, vi,
+        None,   // no sharing of display lists */
+        True    //direct rendering if possible */
+        ))){
+            std::cerr << "could not create rendering context" << std::endl;
+            exit(-1);
+    }
+
+        return ctx;
+❱

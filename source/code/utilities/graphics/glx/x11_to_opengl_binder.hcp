@@ -1,6 +1,9 @@
 class
 ❪"code/utilities/graphics/x11/data/main_x11_state"❫
 ❪"code/utilities/graphics/glx/x11_to_opengl_bind_settings"❫
+❪"code/utilities/graphics/glx/glx_visual_creator"❫
+❪"code/utilities/graphics/glx/glx_context_creator"❫
+❪"code/utilities/graphics/glx/glx_fb_config_creator"❫
 ❪GL/gl.h❫
 ❪GL/glx.h❫
 ⚯
@@ -17,13 +20,13 @@ class
     Check_GLX_With_X11_Is_Possible(x11);
     
     //Get frame buffer config (this may or may not be used)
-    GLXFBConfig *fbc = Create_Framebuffer_Config(x11);
+    GLXFBConfig *fbc = Glx_Fb_Config_Creator::Create(x11);
     
     // Get a visual
-    XVisualInfo *vi = Create_Visual(x11, fbc, settings);
+    XVisualInfo *vi = Glx_Visual_Creator::Create_Visual(x11, fbc, settings);
     
     // Get a context
-    GLXContext ctx = Create_Context(x11, vi, fbc, settings);
+    GLXContext ctx = Glx_Context_Creator::Create_Context(x11, vi, fbc, settings);
     
     
 
@@ -60,131 +63,6 @@ class
     }
 ❱
 
-◀private: static▶ GLXFBConfig* ☀Create_Framebuffer_Config(Main_X11_State const& x11)❰
-
-    // Get a matching FB config
-    static int visual_attribs[] =
-            {
-                    GLX_X_RENDERABLE, true,
-                    GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
-                    GLX_RENDER_TYPE, GLX_RGBA_BIT,
-                    GLX_X_VISUAL_TYPE, GLX_TRUE_COLOR,
-                    GLX_RED_SIZE, 8,
-                    GLX_GREEN_SIZE, 8,
-                    GLX_BLUE_SIZE, 8,
-                    GLX_ALPHA_SIZE, 8,
-                    GLX_DEPTH_SIZE, 24,
-                    GLX_STENCIL_SIZE, 8,
-                    GLX_DOUBLEBUFFER, true,
-                    //GLX_SAMPLE_BUFFERS  , 1,
-                    //GLX_SAMPLES         , 4,
-                    None
-            };
-
-    //Get framebuffer config
-    int fbcount;
-    GLXFBConfig *fbc = glXChooseFBConfig(x11.d, DefaultScreen(x11.d), visual_attribs, &fbcount);
-    return fbc;
-❱
 
 
-
-
-
-
-
-
-
-
-
-//Logic for creating a Context
-◀private: static▶ GLXContext ☀Create_Context(Main_X11_State & x11, XVisualInfo *vi, GLXFBConfig *fbc, X11_To_Opengl_Bind_Settings const& settings)❰
-    if (settings.context_impl == 1){return Create_Context_Impl1(x11,fbc);}
-    else if (settings.context_impl == 2){return Create_Context_Impl2(x11,vi);}
-    return Create_Context_Impl2(x11,vi);
-❱
-
-
-◀private: static▶ GLXContext ☀Create_Context_Impl1(Main_X11_State & x11, GLXFBConfig *fbc)❰
-        
-    //So we could get graphic context.
-    typedef GLXContext (*glXCreateContextAttribsARBProc)(Display *, GLXFBConfig, GLXContext, Bool, const int *);
-    glXCreateContextAttribsARBProc glXCreateContextAttribsARB = nullptr;
-    glXCreateContextAttribsARB =
-            (glXCreateContextAttribsARBProc)
-                    glXGetProcAddress((const GLubyte *) "glXCreateContextAttribsARB");
-
-    #define GLX_CONTEXT_MAJOR_VERSION_ARB       0x2091
-    #define GLX_CONTEXT_MINOR_VERSION_ARB       0x2092
-    int context_attribs[] =
-            {
-                    GLX_CONTEXT_MAJOR_VERSION_ARB, 3,
-                    GLX_CONTEXT_MINOR_VERSION_ARB, 3,
-                    None
-            };
-
-        GLXContext ctx = glXCreateContextAttribsARB(x11.d, fbc[0], nullptr, true, context_attribs);
-    
-        return ctx;
-❱
-◀private: static▶ GLXContext ☀Create_Context_Impl2(Main_X11_State & x11,XVisualInfo *vi)❰
-        GLXContext ctx;
-        
-  if(!(ctx = glXCreateContext(x11.d, vi,
-        None,   // no sharing of display lists */
-        True    //direct rendering if possible */
-        ))){
-            std::cerr << "could not create rendering context" << std::endl;
-            exit(-1);
-    }
-
-        return ctx;
-❱
-
-
-
-
-
-
-
-
-//Logic for creating a Visual
-◀private: static▶ XVisualInfo* ☀Create_Visual(Main_X11_State & x11, GLXFBConfig *fbc, X11_To_Opengl_Bind_Settings const& settings)❰
-    if (settings.visual_impl == 1){return Create_Visual_Impl1(x11,fbc);}
-    else if (settings.visual_impl == 2){return Create_Visual_Impl2(x11);}
-    return Create_Visual_Impl2(x11);
-❱
-
-◀private: static▶ XVisualInfo* ☀Create_Visual_Impl1(Main_X11_State & x11, GLXFBConfig *fbc)❰
-        XVisualInfo *vi = glXGetVisualFromFBConfig(x11.d, fbc[0]);
-        return vi;
-❱
-
-◀private: static▶ XVisualInfo* ☀Create_Visual_Impl2(Main_X11_State & x11)❰
-
-    int  sngBuf[] = {    GLX_RGBA,
-                    GLX_RED_SIZE, 1,
-                    GLX_GREEN_SIZE, 1,
-                    GLX_BLUE_SIZE, 1,
-                    GLX_DEPTH_SIZE, 12,
-                    None };
-
-    int  dblBuf[] = {    GLX_RGBA,
-                    GLX_RED_SIZE, 1,
-                    GLX_GREEN_SIZE, 1,
-                    GLX_BLUE_SIZE, 1,
-                    GLX_DEPTH_SIZE, 12,
-                    GLX_DOUBLEBUFFER,
-                    None };
-   
-  XVisualInfo* vi;
-  if(!(vi = glXChooseVisual(x11.d, DefaultScreen(x11.d), dblBuf))) {
-    if(!(vi = glXChooseVisual(x11.d, DefaultScreen(x11.d), sngBuf))){
-        std::cerr << "no RGB visual with depth buffer" << std::endl;
-        exit(-1);
-    }
-  }
-  return vi;
-  
-❱
 

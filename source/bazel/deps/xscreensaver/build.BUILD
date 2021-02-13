@@ -13,8 +13,6 @@ cc_library(
     ],
 )
 
-
-
 #the project seems to have a general utilities section
 utils_hdrs = glob(
     include = [
@@ -110,8 +108,8 @@ cc_library(
 cc_library(
     name = "screen_hack2",
     srcs = [
-        "hacks/screenhack.c",
         "hacks/fps.c",
+        "hacks/screenhack.c",
         "hacks/xlockmore.c",
     ],
     hdrs = [

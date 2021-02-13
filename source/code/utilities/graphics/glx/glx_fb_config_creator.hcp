@@ -1,0 +1,35 @@
+class
+❪"code/utilities/graphics/x11/data/main_x11_state"❫
+❪"code/utilities/graphics/glx/x11_to_opengl_bind_settings"❫
+❪GL/gl.h❫
+❪GL/glx.h❫
+⚯
+⚞⚟
+
+
+◀public: static▶ GLXFBConfig* ☀Get(Main_X11_State const& x11)❰
+
+    // Get a matching frame buffer config
+    static int visual_attribs[] =
+            {
+                    GLX_X_RENDERABLE, true,
+                    GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
+                    GLX_RENDER_TYPE, GLX_RGBA_BIT,
+                    GLX_X_VISUAL_TYPE, GLX_TRUE_COLOR,
+                    GLX_RED_SIZE, 8,
+                    GLX_GREEN_SIZE, 8,
+                    GLX_BLUE_SIZE, 8,
+                    GLX_ALPHA_SIZE, 8,
+                    GLX_DEPTH_SIZE, 24,
+                    GLX_STENCIL_SIZE, 8,
+                    GLX_DOUBLEBUFFER, true,
+                    //GLX_SAMPLE_BUFFERS  , 1,
+                    //GLX_SAMPLES         , 4,
+                    None
+            };
+
+    //Get framebuffer config
+    int fbcount;
+    GLXFBConfig *fbc = glXChooseFBConfig(x11.d, DefaultScreen(x11.d), visual_attribs, &fbcount);
+    return fbc;
+❱

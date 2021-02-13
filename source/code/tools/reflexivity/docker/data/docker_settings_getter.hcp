@@ -72,7 +72,7 @@ std::string str = R"RAW(
 # Ideally, I'd like to fix the tools so this is not needed in the Dockerfile.
 RUN echo "locales locales/default_environment_locale select en_US.UTF-8" | debconf-set-selections
 RUN echo "locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8" | debconf-set-selections
-RUN rm "/etc/locale.gen"
+RUN rm -rf "/etc/locale.gen"
 RUN dpkg-reconfigure --frontend noninteractive locales
 
 # Copy the content of your repository into the image

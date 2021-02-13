@@ -7,5 +7,9 @@ package(
 cc_binary(
     name = "main",
     srcs = ["main.cpp"],
-    deps = ["@xscreensaver//:vroot","@system//:X11_hdrs","@system//:X11"],
+    deps = [
+        "@system//:X11",
+        "@system//:X11_hdrs",
+        "@xscreensaver//:vroot",
+    ],
 )
