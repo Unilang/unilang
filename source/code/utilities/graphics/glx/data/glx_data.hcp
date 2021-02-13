@@ -1,0 +1,22 @@
+class
+❪string❫
+❪GL/gl.h❫
+❪GL/glx.h❫
+⚯
+
+⚞⚟
+
+
+◀
+public:
+    
+    // a frame buffer config
+    GLXFBConfig *fbc;
+    
+    // a visual
+    XVisualInfo *vi;
+    
+    // a context
+    GLXContext ctx;
+
+▶

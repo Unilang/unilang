@@ -7,7 +7,7 @@ class
 ⚞⚟
 
 
-◀public: static▶ GLXFBConfig* ☀Get(Main_X11_State const& x11)❰
+◀public: static▶ GLXFBConfig* ☀Create(Main_X11_State const& x11)❰
 
     // Get a matching frame buffer config
     static int visual_attribs[] =

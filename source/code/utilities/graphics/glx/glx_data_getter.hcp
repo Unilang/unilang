@@ -4,7 +4,6 @@ class
 ❪"code/utilities/graphics/glx/glx_visual_creator"❫
 ❪"code/utilities/graphics/glx/glx_context_creator"❫
 ❪"code/utilities/graphics/glx/glx_fb_config_creator"❫
-❪"code/utilities/graphics/glx/glx_data_getter"❫
 ❪"code/utilities/graphics/glx/data/glx_data"❫
 ❪GL/gl.h❫
 ❪GL/glx.h❫
@@ -13,32 +12,22 @@ class
 
 //This is basically done for the case where you need to opengl to draw to an x11 window
 //such as when you are making a screensaver for xscreensaver
-◀public: static▶ void ☀Bind(Main_X11_State & x11)❰
+◀public: static▶ Glx_Data ☀Get(Main_X11_State & x11, X11_To_Opengl_Bind_Settings const& settings)❰
 
-    X11_To_Opengl_Bind_Settings settings;
-    settings.visual_impl = 1;
-    settings.context_impl = 1;
-
-    Glx_Data glx = Glx_Data_Getter::Get(x11,settings);
-
-    // Sync to ensure any errors generated are processed.
-    XSync(x11.d, false);
+    Check_GLX_With_X11_Is_Possible(x11);
     
-    // Bind the rendering context to the window
-    glXMakeCurrent(x11.d, x11.root, glx.ctx);
+    Glx_Data glx;
     
-    // Request that the X window be displayed on the screen
-    XMapWindow(x11.d, x11.root);
+    //Get frame buffer config (this may or may not be used)
+    glx.fbc = Glx_Fb_Config_Creator::Create(x11);
     
+    // Get a visual
+    glx.vi = Glx_Visual_Creator::Create_Visual(x11, glx.fbc, settings);
     
-    // Be sure to free the FBConfig list allocated by glXChooseFBConfig()
-    XFree(glx.fbc);
+    // Get a context
+    glx.ctx = Glx_Context_Creator::Create_Context(x11, glx.vi, glx.fbc, settings);
     
-    // Get the window attributes
-    //Set viewport to parent window's width/height
-    XWindowAttributes wa;
-    XGetWindowAttributes(x11.d, x11.root, &wa);
-    glViewport(0, 0, wa.width, wa.height);
+    return glx;
 ❱
 
 ◀private: static▶ void ☀Check_GLX_With_X11_Is_Possible(Main_X11_State const& x11)❰
