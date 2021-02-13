@@ -3,8 +3,27 @@
 #include    <X11/Xlib.h>
 #include    <GL/glx.h>
 #include    <GL/gl.h>
+#include "code/utilities/graphics/x11/main_state/setup_display_settings.hpp"
+#include "code/utilities/graphics/x11/main_state/x11_main_state_creator.hpp"
+#include "code/utilities/graphics/glx/x11_to_opengl_binder.hpp"
 
 /* Prototypes */
+
+Main_X11_State setup() {
+
+    Setup_Display_Settings settings;
+    settings.window.use_root = false;
+    settings.window.pos.x = 0;
+    settings.window.pos.y = 0;
+    settings.window.dim.width = 860;
+    settings.window.dim.height = 640;
+    settings.window.border_width = 1;
+    settings.window.border = 0;
+    settings.window.background = 0;
+    auto x11 = X11_Main_State_Creator::Create(settings);
+    
+    return x11;
+}
 
 void redraw(void);
 void fatalError(char *);
@@ -42,25 +61,23 @@ int main(int argc, char **argv)
     Bool            needRedraw = False, recalcModelView = True;
     int         dummy;
 
-/* Step 1.  Open a connection to the X server.  If an unexpected condition
-   occurs, fatalError will print an explanation and exit.
-*/
+//Step 1.  Open a connection to the X server.  If an unexpected condition
+//   occurs, fatalError will print an explanation and exit.
 
   if(!(dpy = XOpenDisplay(NULL)))
     fatalError("could not open display");
 
-/* Step 2.  Make sure OpenGL's GLX extension is supported.  The
-   glXQueryExtension also returns the GLX extension's error base and event
-   base.  For almost all OpenGL programs, this information is irrelevant;
-   hence the use of dummy.
-*/
+//Step 2.  Make sure OpenGL's GLX extension is supported.  The
+//   glXQueryExtension also returns the GLX extension's error base and event
+//   base.  For almost all OpenGL programs, this information is irrelevant;
+//   hence the use of dummy.
 
   if(!glXQueryExtension(dpy, &dummy, &dummy))
     fatalError("X server has no OpenGL GLX extension");
 
-/* Step 3.  Find an appropriate OpenGL-capable visual.  Look for double
-   buffering first; if it is not found, settle for a single buffered visual.
-*/
+//Step 3.  Find an appropriate OpenGL-capable visual.  Look for double
+// buffering first; if it is not found, settle for a single buffered visual.
+
   if(!(vi = glXChooseVisual(dpy, DefaultScreen(dpy), dblBuf))) {
     if(!(vi = glXChooseVisual(dpy, DefaultScreen(dpy), sngBuf)))
       fatalError("no RGB visual with depth buffer");
@@ -69,17 +86,16 @@ int main(int argc, char **argv)
  // if(vi->class != TrueColor)
  //   fatalError("TrueColor visual required for this program");
 
-/* Step 4. Create an OpenGL rendering context. */
+// Step 4. Create an OpenGL rendering context.
 
   if(!(cx = glXCreateContext(dpy, vi,
-        None,   /* no sharing of display lists */
-        True    /* direct rendering if possible */
+        None,   // no sharing of display lists */
+        True    //direct rendering if possible */
         )))
     fatalError("could not create rendering context");
 
-/* Step 5.  Create an X window with the selected visual.  Since the visual
-   selected is likely not be the default, create an X colormap for use.
-*/
+// Step 5.  Create an X window with the selected visual.  Since the visual
+// selected is likely not be the default, create an X colormap for use.
 
   cmap = XCreateColormap(dpy,RootWindow(dpy,vi->screen),vi->visual,AllocNone);
   swa.colormap = cmap;
@@ -91,15 +107,15 @@ int main(int argc, char **argv)
         &swa);
   XSetStandardProperties(dpy,win,"glxsimple","glxsimple",None,argv,argc,NULL);
 
-/* Step 6.  Bind the rendering context to the window. */
+// Step 6.  Bind the rendering context to the window. */
 
   glXMakeCurrent(dpy, win, cx);
 
-/* Step 7.  Request that the X window be displayed on the screen. */
+// Step 7.  Request that the X window be displayed on the screen. */
 
   XMapWindow(dpy, win);
 
-/* Step 8.  Configure the OpenGL context for rendering. */
+// Step 8.  Configure the OpenGL context for rendering. */
 
   glEnable(GL_DEPTH_TEST);  /* enable depth buffering */
   glMatrixMode(GL_PROJECTION);  /* set up projection transform */
@@ -215,9 +231,9 @@ void redraw(void)
   }
 
   if(doubleBuffer)
-    glXSwapBuffers(dpy,win);        /* buffer swap does implicit glFlush. */
+    glXSwapBuffers(dpy,win);        //buffer swap does implicit glFlush.
   else
-    glFlush();              /* explicit flush for single buf case */
+    glFlush();              //explicit flush for single buf case
 }
 
 

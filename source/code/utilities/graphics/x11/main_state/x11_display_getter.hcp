@@ -47,9 +47,10 @@ class
 ◀private: static▶ Display * ☀open_display()❰
     
     //create the main display
+    //This opens up a connection to the X server.
     Display *theDisplay = nullptr;
     if ((theDisplay = XOpenDisplay(nullptr)) == nullptr) {
-        std::cerr << "can't create display" << std::endl;
+        std::cerr << "can't create X11 display.  This basically means we weren't able to establish a connection with the XServer" << std::endl;
         exit(1);
     }
     return theDisplay;
