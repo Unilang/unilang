@@ -1,5 +1,6 @@
 class
 ❪"code/utilities/graphics/x11/data/main_x11_state"❫
+❪"code/utilities/graphics/glx/x11_to_opengl_bind_settings"❫
 ❪GL/gl.h❫
 ❪GL/glx.h❫
 ⚯
@@ -9,14 +10,16 @@ class
 //such as when you are making a screensaver for xscreensaver
 ◀public: static▶ void ☀Bind(Main_X11_State & x11)❰
 
+    X11_To_Opengl_Bind_Settings settings;
+    settings.visual_impl = 1;
+
     Check_GLX_With_X11_Is_Possible(x11);
     
-
+    //Get a frame buffer
     GLXFBConfig *fbc = Create_Framebuffer_Config(x11);
     
     // Get a visual
-    //maybe we could use glXChooseVisual instead?
-    XVisualInfo *vi = glXGetVisualFromFBConfig(x11.d, fbc[0]);
+    XVisualInfo *vi = Create_Visual(x11, fbc, settings);
     
     
     //So we could get graphic context.
@@ -89,7 +92,18 @@ class
     return fbc;
 ❱
 
-◀private: static▶ XVisualInfo* ☀Create_Visual(Main_X11_State const& x11)❰
+◀private: static▶ XVisualInfo* ☀Create_Visual(Main_X11_State & x11, GLXFBConfig *fbc, X11_To_Opengl_Bind_Settings const& settings)❰
+    if (settings.visual_impl == 1){return Create_Visual_Impl1(x11,fbc);}
+    else if (settings.visual_impl == 2){return Create_Visual_Impl2(x11);}
+    return Create_Visual_Impl2(x11);
+❱
+
+◀private: static▶ XVisualInfo* ☀Create_Visual_Impl1(Main_X11_State & x11, GLXFBConfig *fbc)❰
+        XVisualInfo *vi = glXGetVisualFromFBConfig(x11.d, fbc[0]);
+        return vi;
+❱
+
+◀private: static▶ XVisualInfo* ☀Create_Visual_Impl2(Main_X11_State & x11)❰
 
     int  sngBuf[] = {    GLX_RGBA,
                     GLX_RED_SIZE, 1,

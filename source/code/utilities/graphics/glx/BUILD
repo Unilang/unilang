@@ -8,8 +8,15 @@ hcp(
     name = "x11_to_opengl_binder",
     deps = [
         "//code/utilities/graphics/x11/data:main_x11_state",
+        "//code/utilities/graphics/glx:x11_to_opengl_bind_settings",
         "@system//:GL_hdrs",
         "@system//:GL",
         "@system//:KHR_hdrs",
+    ],
+)
+
+hcp(
+    name = "x11_to_opengl_bind_settings",
+    deps = [
     ],
 )
