@@ -23,7 +23,7 @@ static float degToRad(float x) {
 Viewer* Viewer::instance_ = NULL;
 Main_X11_State x11;
 
-static bool use_glut = true;
+static bool use_glut = false;
 
 Viewer::Viewer(std::string name, int width, int height) : name_(name), width_(width), height_(height), 
 	running_(false), mouseEnabled_(false), mouseDown_(false) {
@@ -158,6 +158,7 @@ void Viewer::display() {
 	if (use_glut){
 		glutSwapBuffers();
 	}else{
+		
 		glXSwapBuffers(x11.d, x11.root);
 	}
 	
