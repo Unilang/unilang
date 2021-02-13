@@ -36,11 +36,11 @@ Viewer::~Viewer() {
 void Viewer::initGlut(int argc, char** argv) {
 	
 	//create window the GLUT way
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
-	glutInitWindowSize(width_, height_);
-	glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH) - width_) / 2, (glutGet(GLUT_SCREEN_HEIGHT) - height_) / 2);
-	//glutCreateWindow(name_.c_str());
+	// glutInit(&argc, argv);
+	// glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
+	// glutInitWindowSize(width_, height_);
+	// glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH) - width_) / 2, (glutGet(GLUT_SCREEN_HEIGHT) - height_) / 2);
+	// glutCreateWindow(name_.c_str());
 	
 	
 	//create window the screensaver way
@@ -86,21 +86,20 @@ void Viewer::setModel(const ModelPtr& model) {
 }
 
 void Viewer::start() {
-	std::cout << "entering" << std::endl;
 	if (!running_) {
 		running_ = true;
-		while (true){
-			
-		display();
-		}
-		glutMainLoop();
+		//glutMainLoop();
 	}
-	std::cout << "leaving" << std::endl;
+	
+	while(true){
+		
+	}
 }
 
 void Viewer::stop() {
-	if (running_)
-		glutLeaveMainLoop();
+	if (running_){
+		//glutLeaveMainLoop();
+	}
 }
 
 void Viewer::idle() {
@@ -136,7 +135,7 @@ void Viewer::display() {
 	model_->render();
 	
 	//glutSwapBuffers();
-	//glXSwapBuffers(x11.d, x11.root);
+	glXSwapBuffers(x11.d, x11.root);
 	
 	//spin automatically
 	Vector3f xAxis = Vector3f::zero();
@@ -269,12 +268,12 @@ void Viewer::zoomOut() {
  */
 void Viewer::setInstance(Viewer* instance) {
 	instance_ = instance;
-	glutIdleFunc(idleCallback);
-	glutDisplayFunc(displayCallback);
-	glutKeyboardFunc(keyDownCallback);
-	glutSpecialFunc(specialKeyCallback);
-	glutMouseFunc(mouseCallback);
-	glutMotionFunc(mouseMoveCallback);
+	//glutIdleFunc(idleCallback);
+	//glutDisplayFunc(displayCallback);
+	//glutKeyboardFunc(keyDownCallback);
+	//glutSpecialFunc(specialKeyCallback);
+	//glutMouseFunc(mouseCallback);
+	//glutMotionFunc(mouseMoveCallback);
 	//glutMouseWheelFunc(mouseWheelCallback);
 }
 
@@ -306,6 +305,6 @@ void Viewer::mouseMoveCallback(int x, int y) {
 	instance_->mouseMove(x, y);
 }
 
-/*void Viewer::mouseWheelCallback(int button, int dir, int x, int y) {
+void Viewer::mouseWheelCallback(int button, int dir, int x, int y) {
 	instance_->mouseWheel(button, dir, x, y);
-}*/
+}
