@@ -57,8 +57,8 @@ int main(int argc, char **argv)
     Colormap        cmap;
     XSetWindowAttributes    swa;
     GLXContext      cx;
-    XEvent          event;
-    Bool            needRedraw = False, recalcModelView = True;
+     XEvent          event;
+     Bool            needRedraw = False, recalcModelView = True;
     int         dummy;
 
 //Step 1.  Open a connection to the X server.  If an unexpected condition
@@ -115,7 +115,10 @@ int main(int argc, char **argv)
 
   XMapWindow(dpy, win);
 
-// Step 8.  Configure the OpenGL context for rendering. */
+//Step 8.  Configure the OpenGL context for rendering. */
+  
+  // auto x11 = setup();
+  // X11_To_Opengl_Binder::Bind(x11);
 
   glEnable(GL_DEPTH_TEST);  /* enable depth buffering */
   glMatrixMode(GL_PROJECTION);  /* set up projection transform */
