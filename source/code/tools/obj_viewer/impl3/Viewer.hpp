@@ -14,10 +14,15 @@ class Viewer {
 		
 		void initGlut(int argc, char** argv);
 		void initGl();
+			void glut_window_setup(int argc, char** argv);
+			void x11_glx_window_setup();
 		
 		void setModel(const ModelPtr& model);
 		
 		void start();
+			void run_glut_loop();
+			void run_x11_glx_loop();
+
 		void stop();
 		
 		void idle();

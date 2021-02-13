@@ -23,6 +23,8 @@ static float degToRad(float x) {
 Viewer* Viewer::instance_ = NULL;
 Main_X11_State x11;
 
+static bool use_glut = true;
+
 Viewer::Viewer(std::string name, int width, int height) : name_(name), width_(width), height_(height), 
 	running_(false), mouseEnabled_(false), mouseDown_(false) {
 	arcBallRotation_ = Matrix3f::identity();
@@ -33,16 +35,16 @@ Viewer::Viewer(std::string name, int width, int height) : name_(name), width_(wi
 Viewer::~Viewer() {
 }
 
-void Viewer::initGlut(int argc, char** argv) {
-	
+void Viewer::glut_window_setup(int argc, char** argv){
 	//create window the GLUT way
-	// glutInit(&argc, argv);
-	// glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
-	// glutInitWindowSize(width_, height_);
-	// glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH) - width_) / 2, (glutGet(GLUT_SCREEN_HEIGHT) - height_) / 2);
-	// glutCreateWindow(name_.c_str());
-	
-	
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
+	glutInitWindowSize(width_, height_);
+	glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH) - width_) / 2, (glutGet(GLUT_SCREEN_HEIGHT) - height_) / 2);
+	glutCreateWindow(name_.c_str());
+}
+
+void Viewer::x11_glx_window_setup(){
 	//create window the screensaver way
     Setup_Display_Settings settings;
     settings.window.use_root = false;
@@ -55,6 +57,15 @@ void Viewer::initGlut(int argc, char** argv) {
     settings.window.background = 0;
     x11 = X11_Main_State_Creator::Create(settings);
     X11_To_Opengl_Binder::Bind(x11);
+}
+
+void Viewer::initGlut(int argc, char** argv) {
+	
+	if (use_glut){
+		glut_window_setup(argc,argv);
+	}else{
+		x11_glx_window_setup();
+	}
 }
 
 void Viewer::initGl() {
@@ -85,20 +96,30 @@ void Viewer::setModel(const ModelPtr& model) {
 	farPlane_ = modelDistance_ + modelRadius_;
 }
 
-void Viewer::start() {
+void Viewer::run_glut_loop() {
 	if (!running_) {
 		running_ = true;
-		//glutMainLoop();
+		glutMainLoop();
 	}
-	
+}
+void Viewer::run_x11_glx_loop() {
 	while(true){
-		
+		display();
+	}
+}
+
+void Viewer::start() {
+	
+	if (use_glut){
+		run_glut_loop();
+	}else{
+		run_x11_glx_loop();
 	}
 }
 
 void Viewer::stop() {
 	if (running_){
-		//glutLeaveMainLoop();
+		glutLeaveMainLoop();
 	}
 }
 
@@ -134,8 +155,11 @@ void Viewer::display() {
 	
 	model_->render();
 	
-	//glutSwapBuffers();
-	glXSwapBuffers(x11.d, x11.root);
+	if (use_glut){
+		glutSwapBuffers();
+	}else{
+		glXSwapBuffers(x11.d, x11.root);
+	}
 	
 	//spin automatically
 	Vector3f xAxis = Vector3f::zero();
@@ -268,13 +292,16 @@ void Viewer::zoomOut() {
  */
 void Viewer::setInstance(Viewer* instance) {
 	instance_ = instance;
-	//glutIdleFunc(idleCallback);
-	//glutDisplayFunc(displayCallback);
-	//glutKeyboardFunc(keyDownCallback);
-	//glutSpecialFunc(specialKeyCallback);
-	//glutMouseFunc(mouseCallback);
-	//glutMotionFunc(mouseMoveCallback);
-	//glutMouseWheelFunc(mouseWheelCallback);
+	
+	if (use_glut){
+		glutIdleFunc(idleCallback);
+		glutDisplayFunc(displayCallback);
+		glutKeyboardFunc(keyDownCallback);
+		glutSpecialFunc(specialKeyCallback);
+		glutMouseFunc(mouseCallback);
+		glutMotionFunc(mouseMoveCallback);
+		glutMouseWheelFunc(mouseWheelCallback);
+	}
 }
 
 void Viewer::idleCallback() {
