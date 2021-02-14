@@ -7,9 +7,27 @@
 #include "code/utilities/graphics/x11/main_state/x11_main_state_creator.hpp"
 #include "code/utilities/graphics/glx/x11_to_opengl_binder.hpp"
 
-/* Prototypes */
+Main_X11_State setup() {
 
-void redraw(void);
+    Setup_Display_Settings settings;
+    settings.window.use_root = false;
+    settings.window.pos.x = 0;
+    settings.window.pos.y = 0;
+    settings.window.dim.width = 860;
+    settings.window.dim.height = 640;
+    settings.window.border_width = 1;
+    settings.window.border = 0;
+    settings.window.background = 0;
+    
+    settings.use_glx = true;
+    settings.glx_settings.visual_impl = 2;
+    settings.glx_settings.context_impl = 2;
+    auto x11 = X11_Main_State_Creator::Create(settings);
+    
+    return x11;
+}
+
+void redraw(Main_X11_State & x11);
 void fatalError(char *);
 
 static int  sngBuf[] = {    GLX_RGBA,
@@ -27,9 +45,8 @@ static int  dblBuf[] = {    GLX_RGBA,
                 GLX_DOUBLEBUFFER,
                 None };
 
-Display     *dpy;
-Window      win;
 Bool        doubleBuffer = True;
+Bool            needRedraw = False, recalcModelView = True;
 
 /* Initial 3d box orientation. */
 
@@ -37,67 +54,7 @@ GLfloat     xAngle = 42.0, yAngle = 82.0, zAngle = 112.0;
 
 int main(int argc, char **argv)
 {
-    XVisualInfo     *vi = NULL;
-    Colormap        cmap;
-    XSetWindowAttributes    swa;
-    GLXContext      cx;
-     XEvent          event;
-     Bool            needRedraw = False, recalcModelView = True;
-    int         dummy;
-
-//Step 1.  Open a connection to the X server.  If an unexpected condition
-//   occurs, fatalError will print an explanation and exit.
-
-  if(!(dpy = XOpenDisplay(NULL)))
-    fatalError("could not open display");
-
-//Step 2.  Make sure OpenGL's GLX extension is supported.  The
-//   glXQueryExtension also returns the GLX extension's error base and event
-//   base.  For almost all OpenGL programs, this information is irrelevant;
-//   hence the use of dummy.
-
-  if(!glXQueryExtension(dpy, &dummy, &dummy))
-    fatalError("X server has no OpenGL GLX extension");
-
-//Step 3.  Find an appropriate OpenGL-capable visual.  Look for double
-// buffering first; if it is not found, settle for a single buffered visual.
-
-  if(!(vi = glXChooseVisual(dpy, DefaultScreen(dpy), dblBuf))) {
-    if(!(vi = glXChooseVisual(dpy, DefaultScreen(dpy), sngBuf)))
-      fatalError("no RGB visual with depth buffer");
-    doubleBuffer = False;
-  }
- // if(vi->class != TrueColor)
- //   fatalError("TrueColor visual required for this program");
-
-// Step 4. Create an OpenGL rendering context.
-
-  if(!(cx = glXCreateContext(dpy, vi,
-        None,   // no sharing of display lists */
-        True    //direct rendering if possible */
-        )))
-    fatalError("could not create rendering context");
-
-// Step 5.  Create an X window with the selected visual.  Since the visual
-// selected is likely not be the default, create an X colormap for use.
-
-  cmap = XCreateColormap(dpy,RootWindow(dpy,vi->screen),vi->visual,AllocNone);
-  swa.colormap = cmap;
-  swa.border_pixel = 0;
-  swa.event_mask = ExposureMask | ButtonPressMask | StructureNotifyMask;
-  win = XCreateWindow(dpy,RootWindow(dpy,vi->screen),0,0,300,300,
-        0,vi->depth,InputOutput,vi->visual,
-        CWBorderPixel | CWColormap | CWEventMask,
-        &swa);
-  XSetStandardProperties(dpy,win,"glxsimple","glxsimple",None,argv,argc,NULL);
-
-// Step 6.  Bind the rendering context to the window. */
-
-  glXMakeCurrent(dpy, win, cx);
-
-// Step 7.  Request that the X window be displayed on the screen. */
-
-  XMapWindow(dpy, win);
+    auto x11 = setup();
 
 //Step 8.  Configure the OpenGL context for rendering. */
   
@@ -117,10 +74,12 @@ int main(int argc, char **argv)
    flag.  To minimize the work to be done, we reas as many events as are
    ready to be received before acting on the events.
 */
+  
+XEvent          event;
 
   while(1) {
     do {
-      XNextEvent(dpy, &event);
+      XNextEvent(x11.d, &event);
       switch(event.type) {
         case ButtonPress:
           recalcModelView = True;
@@ -137,7 +96,7 @@ int main(int argc, char **argv)
           needRedraw = True;
           break;
       }
-    } while(XPending(dpy)); /* loop to compress events */
+    } while(XPending(x11.d)); /* loop to compress events */
 
 /* Once the outstanding events have been read, we update the OpenGL modelview
    matrix if the recalcModelView flag is set.  This ensures that any rotations
@@ -161,14 +120,14 @@ int main(int argc, char **argv)
     }
 
     if(needRedraw) {
-      redraw();
+      redraw(x11);
       needRedraw = False;
     }
   }
 }
 
 
-void redraw(void)
+void redraw(Main_X11_State & x11)
 {
     static Bool displayListInited = False;
 
@@ -216,7 +175,7 @@ void redraw(void)
   }
 
   if(doubleBuffer)
-    glXSwapBuffers(dpy,win);        //buffer swap does implicit glFlush.
+    glXSwapBuffers(x11.d,x11.root);        //buffer swap does implicit glFlush.
   else
     glFlush();              //explicit flush for single buf case
 }
