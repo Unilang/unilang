@@ -45,7 +45,13 @@ class
     //you don't want a window that will be seen normally when the program runs.
     //You want to draw to the virtual root window
     if (settings.window.use_root){
-        state.root = RootWindow(state.d, state.screen);
+        if (settings.use_glx){
+            state.root = RootWindow(state.d,glx.vi->screen);
+            Do_Binding(state,glx,settings);
+        }
+        else {
+            state.root = RootWindow(state.d, state.screen);
+        }
         return;
     }
     
@@ -70,6 +76,11 @@ class
         CWBorderPixel | CWColormap | CWEventMask,
         &swa);
   
+  Do_Binding(state,glx,settings);
+❱
+
+◀private: static▶ void ☀Do_Binding(Main_X11_State & state, Glx_Data & glx, Setup_Display_Settings const& settings)❰
+
   char** argv;
   int argc = 0;
   XSetStandardProperties(state.d,state.root,"glxsimple","glxsimple",None,argv,argc,NULL);
