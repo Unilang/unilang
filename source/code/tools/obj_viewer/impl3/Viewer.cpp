@@ -168,7 +168,7 @@ void Viewer::display() {
 	//spin automatically
 	Vector3f xAxis = Vector3f::zero();
 	xAxis(0) = 1.0f;
-	xRotation_ = xRotation_ * rotationMatrix(xAxis, degToRad(5.0f));
+	xRotation_ = xRotation_ * rotationMatrix(xAxis, degToRad(1.0f));
 }
 
 void Viewer::resize(int width, int height) {
