@@ -47,7 +47,7 @@ void Viewer::glut_window_setup(int argc, char** argv){
 void Viewer::x11_glx_window_setup(){
 	//create window the screensaver way
     Setup_Display_Settings settings;
-    settings.window.use_root = false;
+    settings.window.use_root = true;
     settings.window.pos.x = 0;
     settings.window.pos.y = 0;
     settings.window.dim.width = 860;

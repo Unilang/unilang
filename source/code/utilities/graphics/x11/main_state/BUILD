@@ -34,6 +34,21 @@ hcp(
         "//code/utilities/graphics/x11/data:x11_window_geometry",
         "//code/utilities/graphics/x11/main_state:x11_color_getter",
         "//code/utilities/graphics/x11/main_state:x11_display_getter",
+        "//code/utilities/graphics/x11/main_state:x11_window_creator",
+        "//code/utilities/graphics/glx:glx_data_getter",
+        "@system//:X11",
+        "@system//:X11_hdrs",
+    ],
+)
+hcp(
+    name = "x11_window_creator",
+    deps = [
+        ":setup_display_settings",
+        "//code/utilities/graphics/x11/data:main_x11_state",
+        "//code/utilities/graphics/x11/data:x11_bg_fg_colors",
+        "//code/utilities/graphics/x11/data:x11_window_geometry",
+        "//code/utilities/graphics/x11/main_state:x11_color_getter",
+        "//code/utilities/graphics/x11/main_state:x11_display_getter",
         "//code/utilities/graphics/glx:glx_data_getter",
         "@system//:X11",
         "@system//:X11_hdrs",

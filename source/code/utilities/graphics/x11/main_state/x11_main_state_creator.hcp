@@ -6,6 +6,7 @@ class
 ❪"code/utilities/graphics/x11/main_state/setup_display_settings"❫
 ❪"code/utilities/graphics/x11/main_state/x11_display_getter"❫
 ❪"code/utilities/graphics/x11/main_state/x11_color_getter"❫
+❪"code/utilities/graphics/x11/main_state/x11_window_creator"❫
 ❪"code/utilities/graphics/x11/data/main_x11_state"❫
 ❪"code/utilities/graphics/x11/data/x11_window_geometry"❫
 ❪"code/utilities/graphics/x11/data/x11_bg_fg_colors"❫
@@ -30,75 +31,13 @@ class
     state.depth = DefaultDepth(state.d, state.screen);
     
     //create the root window
-    Build_Window(state,glx,settings);
+    X11_Window_Creator::Create(state,glx,settings);
     state.root_geo = get_geometry(state.d, state.root);
     
     //colors
     state.colors = X11_Color_Getter::Get(state.d, state.screen, state.depth);
     
     return state;
-❱
-
-◀private: static▶ void ☀Build_Window(Main_X11_State & state, Glx_Data & glx, Setup_Display_Settings const& settings)❰
-
-    //If you're making a screensaver (say with xscreensaver),
-    //you don't want a window that will be seen normally when the program runs.
-    //You want to draw to the virtual root window
-    if (settings.window.use_root){
-        if (settings.use_glx){
-            state.root = RootWindow(state.d,glx.vi->screen);
-            Do_Binding(state,glx,settings);
-        }
-        else {
-            state.root = RootWindow(state.d, state.screen);
-        }
-        return;
-    }
-    
-    if (settings.use_glx){
-        Create_Glx_Window(state,glx,settings);
-        return;
-    }
-    
-    //build a window you can actually see
-    Build_Simple_Window(state,settings);
-❱
-
-◀private: static▶ void ☀Create_Glx_Window(Main_X11_State & state, Glx_Data & glx, Setup_Display_Settings const& settings)❰
-
-  Colormap cmap = XCreateColormap(state.d,RootWindow(state.d,glx.vi->screen),glx.vi->visual,AllocNone);
-  XSetWindowAttributes    swa;
-  swa.colormap = cmap;
-  swa.border_pixel = 0;
-  swa.event_mask = ExposureMask | ButtonPressMask | StructureNotifyMask;
-  state.root = XCreateWindow(state.d,RootWindow(state.d,glx.vi->screen),settings.window.pos.x, settings.window.pos.y,settings.window.dim.width,settings.window.dim.height,
-        0,glx.vi->depth,InputOutput,glx.vi->visual,
-        CWBorderPixel | CWColormap | CWEventMask,
-        &swa);
-  
-  Do_Binding(state,glx,settings);
-❱
-
-◀private: static▶ void ☀Do_Binding(Main_X11_State & state, Glx_Data & glx, Setup_Display_Settings const& settings)❰
-
-  char** argv;
-  int argc = 0;
-  XSetStandardProperties(state.d,state.root,"glxsimple","glxsimple",None,argv,argc,NULL);
-  
-  glXMakeCurrent(state.d, state.root, glx.ctx);
-  XMapWindow(state.d, state.root);
-❱
-
-
-◀private: static▶ void ☀Build_Simple_Window(Main_X11_State & state, Setup_Display_Settings const& settings)❰
-
-    auto border = BlackPixel(state.d, state.screen);
-    auto background = WhitePixel(state.d, state.screen);
-
-    //If you do want to see the actual window, you would create a simple window like this.
-    state.root = XCreateSimpleWindow(state.d, RootWindow(state.d, state.screen), settings.window.pos.x, settings.window.pos.y, settings.window.dim.width,
-                                 settings.window.dim.height, settings.window.border_width, border, background);
-    XMapWindow(state.d, state.root);
 ❱
 
 ◀private: static▶ X11_Window_Geometry ☀get_geometry(Display * display, Window w)❰
