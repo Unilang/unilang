@@ -14,12 +14,6 @@ class
 ◀public: static▶ std::string ☀Get(model::Module const& structure, std::vector<Contributor> const& contributors, Java_Settings const& settings)❰
     std::string x;
     
-    //TODO: FIX THIS.  DONT DO THIS:
-    //WE SHOULD PASS GENERAL/PORTION into the data member printer as well
-    //THIS IS A TEMP HACK/FIX.
-    // C_Export_Settings bad_temp;
-    // bad_temp.portion = settings.portion;
-    // bad_temp.general = settings.general;
     
     // for (size_t i = 0; i < structure.data_members.data_members.size(); ++i){
     //     x += Doxygen_Block_Printer::Get_Doxygen_Member_Item_Comment(structure.data_members.data_members[i],bad_temp,4);
