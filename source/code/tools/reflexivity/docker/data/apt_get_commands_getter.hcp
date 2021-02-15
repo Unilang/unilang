@@ -8,36 +8,36 @@ class
 
 ◀public: static▶ std::vector<Apt_Get_Command> ☀Get()❰
     std::vector<Apt_Get_Command> commands;
-    // {
-    //     Apt_Get_Command command;
-    //     command.name = "software-properties-common";
-    //     commands.emplace_back(command);
-    // }
-    // {
-    //     Apt_Get_Command command;
-    //     command.name = "git";
-    //     commands.emplace_back(command);
-    // }
+    {
+        Apt_Get_Command command;
+        command.name = "software-properties-common";
+        commands.emplace_back(command);
+    }
+    {
+        Apt_Get_Command command;
+        command.name = "git";
+        commands.emplace_back(command);
+    }
     // {
     //     Apt_Get_Command command;
     //     command.name = "patch";
     //     commands.emplace_back(command);
     // }
-    // {
-    //     Apt_Get_Command command;
-    //     command.name = "python";
-    //     commands.emplace_back(command);
-    // }
+    {
+        Apt_Get_Command command;
+        command.name = "python";
+        commands.emplace_back(command);
+    }
     // {
     //     Apt_Get_Command command;
     //     command.name = "zip";
     //     commands.emplace_back(command);
     // }
-    // {
-    //     Apt_Get_Command command;
-    //     command.name = "wget";
-    //     commands.emplace_back(command);
-    // }
+    {
+        Apt_Get_Command command;
+        command.name = "wget";
+        commands.emplace_back(command);
+    }
     // {
     //     Apt_Get_Command command;
     //     command.name = "m4";

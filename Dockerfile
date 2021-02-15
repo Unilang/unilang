@@ -31,6 +31,10 @@ RUN apt-get update
 RUN apt-get install -y software-properties-common
 
 
+RUN apt-get install -y software-properties-common
+RUN apt-get install -y git
+RUN apt-get install -y python
+RUN apt-get install -y wget
 
 # The build runs certain tools that need a particular locale to be available
 # I had to do this differently when transitioning from Ubuntu 14.04 to 18.04
