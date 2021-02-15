@@ -33,6 +33,7 @@ RUN apt-get install -y software-properties-common
 
 RUN apt-get install -y software-properties-common
 RUN apt-get install -y git
+RUN apt-get install -y gcc
 RUN apt-get install -y python
 RUN apt-get install -y wget
 
