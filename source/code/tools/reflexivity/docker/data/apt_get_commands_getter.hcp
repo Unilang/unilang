@@ -18,6 +18,11 @@ class
         command.name = "git";
         commands.emplace_back(command);
     }
+    {
+        Apt_Get_Command command;
+        command.name = "gcc";
+        commands.emplace_back(command);
+    }
     // {
     //     Apt_Get_Command command;
     //     command.name = "patch";
