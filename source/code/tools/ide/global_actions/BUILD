@@ -58,5 +58,6 @@ hcp(
         "//code/utilities/graphics/sdl:sdl_fullscreener",
         "//code/utilities/program/wrappers/zenity/file_selector",
         "@imgui//:imgui_sdl_opengl3",
+        "//code/tools/ide/frame:apply_schema_to_elements",
     ],
 )

@@ -1,0 +1,20 @@
+class
+❪string❫
+❪unordered_map❫
+❪utility❫
+❪cstdlib❫
+❪"code/utilities/fonts/bdf/character_maps/character_maps"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data/positioned_buildable_schema_faced_tree"❫
+❪"code/utilities/peripheral/pc/pc_input_state"❫
+❪"code/utilities/data_structures/tree/generic/child_lookup_map"❫
+⚯
+❪"code/utilities/code/concept_string_tree_getter"❫
+❪"code/utilities/data_structures/tree/generic/string_tree_to_child_lookup_map"❫
+⚞⚟
+
+
+◀public: static▶ Child_Lookup_Map ☀Get()❰
+    auto schema = String_Tree_To_Child_Lookup_Map::Convert(Concept_String_Tree_Getter::Get());
+    return schema;
+❱
+

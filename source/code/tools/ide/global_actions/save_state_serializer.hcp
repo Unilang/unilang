@@ -13,6 +13,7 @@ class
 ❪"code/utilities/formats/json/converters/json_file_io"❫
 ❪"code/utilities/code/save/save_state_loader"❫
 ❪"code/utilities/code/save/save_state_saver"❫
+❪"code/tools/ide/frame/apply_schema_to_elements"❫
 ⚞⚟
 
 
@@ -21,4 +22,9 @@ class
 ❱
 ◀public: static▶ void ☀Load(Ide_Settings & settings)❰
     settings.elements = Save_State_Loader::Load(settings.desktop.save.file_name);
+    
+    //fix the schema in case it changed
+    for (auto & it: settings.elements.types){
+        Apply_Schema_To_Elements::Apply(it);
+    }
 ❱

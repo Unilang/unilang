@@ -35,6 +35,7 @@ class
 ❪"code/utilities/code/style_theme/style_lookup_map_getter"❫
 ❪"code/utilities/data_structures/graphics/image/positioned_image_data"❫
 ❪"code/utilities/image/stb_image_setter"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/buildable_schema_faced_tree_default_schema"❫
 ⚞⚟
 
 ◀public: static▶ Ide_Settings ☀Get()❰
@@ -82,7 +83,7 @@ class
       //build
       Positioned_Buildable_Schema_Faced_Tree btree;
       btree.state.tree.state.structure = Faced_Tree_Example();
-      btree.state.schema = String_Tree_To_Child_Lookup_Map::Convert(Concept_String_Tree_Getter::Get());
+      btree.state.schema = Buildable_Schema_Faced_Tree_Default_Schema::Get();
       btree.state.schema_styles = Style_Lookup_Map_Getter::Get_Default_Theme();
       btree.pos.x = 220;
       btree.pos.y = 100;

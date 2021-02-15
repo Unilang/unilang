@@ -32,6 +32,37 @@ hcp(
 )
 
 hcp(
+    name = "apply_schema_to_elements",
+    deps = [
+        "//code/tools/ide/settings:ide_settings",
+        "//code/utilities/data_structures/graphics/image:positioned_texture",
+        "//code/utilities/data_structures/graphics/objects:frame_elements",
+        "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_drawer",
+        "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_is_mouse_over",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:buildable_schema_face_tree_drawer",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_tree_label_drawer",
+        "//code/utilities/data_structures/graphics/objects/cursor:cursor_drawer",
+        "//code/utilities/data_structures/graphics/objects/cursor:label_cursor_action_doer",
+        "//code/utilities/data_structures/graphics/objects/faced_grid:grid_label_drawer",
+        "//code/utilities/data_structures/graphics/objects/faced_tree:tree_label_drawer",
+        "//code/utilities/data_structures/graphics/objects/label:label_drawer",
+        "//code/utilities/data_structures/graphics/objects/mouse/draw:mouse_frame_getter",
+        "//code/utilities/data_structures/graphics/objects/mouse/draw:mouse_selection_drawer",
+        "//code/utilities/data_structures/graphics/objects/mouse/events:mouse_events_checker",
+        "//code/utilities/data_structures/graphics/objects/slider:slider_drawer",
+        "//code/utilities/graphics/imgui/loop:mechanics",
+        "//code/utilities/graphics/imgui/window:window_position_finder",
+        "//code/utilities/peripheral/mouse/state:mouse_position_getter",
+        "//code/utilities/peripheral/mouse/state:mouse_state",
+        "//code/utilities/peripheral/pc:pc_input_state",
+        "//code/utilities/types/variant:lib",
+        "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:buildable_schema_faced_tree_default_schema",
+    ],
+)
+
+
+hcp(
     name = "ide_element_drawer",
     deps = [
         "//code/tools/ide/frame:convert_all_ide_elements",
