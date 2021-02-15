@@ -3,7 +3,9 @@ code
 ..name
 ..code type
 ..brief
+...sentence
 ..detail
+...sentence
     
 ..group
 ...name
