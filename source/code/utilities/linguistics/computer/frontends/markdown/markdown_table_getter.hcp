@@ -9,7 +9,7 @@ class
 ❪"code/utilities/types/strings/transformers/appending/lib"❫
 ⚞⚟
 
-◀public: static▶ std::string ☀Get(model::Sentence const& s, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
+◀public: static▶ std::string ☀Get(model::ParagraphSentence const& s, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
     
     
     if (Should_Skip_Producing_Table_Data(s,settings)){
@@ -24,7 +24,7 @@ class
     return Traditional_Markdown_Table_Format(s,settings);
 ❱
 
-◀private: static▶ bool ☀Should_Skip_Producing_Table_Data(model::Sentence const& s, Markdown_Settings const& settings)❰
+◀private: static▶ bool ☀Should_Skip_Producing_Table_Data(model::ParagraphSentence const& s, Markdown_Settings const& settings)❰
 
     //decide not to do it at all
     if (!settings.tables.print){
@@ -37,7 +37,7 @@ class
 ❱
 
 
-◀private: static▶ std::string ☀Markdown_Table_As_List_Format(model::Sentence const& s, Markdown_Settings const& settings)❰
+◀private: static▶ std::string ☀Markdown_Table_As_List_Format(model::ParagraphSentence const& s, Markdown_Settings const& settings)❰
 
     std::string text;
     Append_A_Newline(text);
@@ -55,7 +55,7 @@ class
     return text;
 ❱
 
-◀private: static▶ std::string ☀Traditional_Markdown_Table_Format(model::Sentence const& s, Markdown_Settings const& settings)❰
+◀private: static▶ std::string ☀Traditional_Markdown_Table_Format(model::ParagraphSentence const& s, Markdown_Settings const& settings)❰
 
     std::string text;
     Append_A_Newline(text);

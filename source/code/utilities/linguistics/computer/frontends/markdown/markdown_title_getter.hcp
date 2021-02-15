@@ -40,7 +40,7 @@ class
 
 ◀public: static▶ bool ☀More_Of_A_Labeled_Image_Title_Display(model::Paragraph const& p, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
     if (!p.paragraph_title.empty()){
-        for (auto const& s: p.sentence){
+        for (auto const& s: p.paragraph_sentence){
             if (s.sentence_text.empty()){
                 return true;
             }
@@ -51,7 +51,7 @@ class
 
 ◀private: static▶ std::string ☀Labeled_Image_Title_Display(model::Paragraph const& p, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
     std::string text;
-    for (auto const& s: p.sentence){
+    for (auto const& s: p.paragraph_sentence){
         Append(text,Markdown_Sentence_Extra_Getter::Get(s,contributors,settings));
         Append(text," ");
         Append_With_Newline(text,"[<img width=\"60\" height=\"60\" src=\".readme/pdf_download.png\">](https://www.dropbox.com/s/1qde65ekii8nyb9/unilang.pdf?dl=1)");
@@ -67,7 +67,7 @@ class
 ❱
 ◀private: static▶ std::string ☀Labeled_NonImage_Title_Display(model::Paragraph const& p, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
     std::string text;
-    for (auto const& s: p.sentence){
+    for (auto const& s: p.paragraph_sentence){
         for (auto const& it: s.image){
             Append(text,"% ");
             for (auto const& alt_text: it.alternative_text){

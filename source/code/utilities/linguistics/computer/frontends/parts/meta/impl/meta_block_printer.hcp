@@ -101,8 +101,18 @@ class
     
     
     //extracted from structure
-    auto brief_desc = First_Element_Or_Default(structure.module_brief).value;
-    auto detail_desc = First_Element_Or_Default(structure.module_detail).value;
+    auto brief_desc_vec = First_Element_Or_Default(structure.module_brief);
+    auto detail_desc_vec = First_Element_Or_Default(structure.module_detail);
+    std::string brief_desc;
+    std::string detail_desc;
+    for (auto const& it: brief_desc_vec.brief_sentence){
+        brief_desc += it.value + "\n";
+    }
+    for (auto const& it: detail_desc_vec.detail_sentence){
+        detail_desc += it.value + "\n";
+    }
+    
+    
     auto groups = First_Element_Or_Default(structure.group);
     std::vector<std::string> group_names;
     for (auto const& it : groups.group_name){

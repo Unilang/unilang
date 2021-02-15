@@ -82,7 +82,7 @@ class
             x += "</h3>\n";
             
             x += "<p>";
-            for (auto const& s: p.sentence){
+            for (auto const& s: p.paragraph_sentence){
                 Comment_Grammar_Settings grammar;
                 Append(x,Grammar_Adjuster::Get_Adjusted(Get_Sentence(s),grammar));
                 x += "  ";
@@ -96,7 +96,7 @@ class
     return x;
 ❱
 
-◀private: static▶ std::string ☀Get_Sentence(model::Sentence sentence)❰
+◀private: static▶ std::string ☀Get_Sentence(model::ParagraphSentence sentence)❰
     std::string x;
     for (auto const& it: sentence.sentence_text){Append(x,it.value);}
     return x;

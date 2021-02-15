@@ -16,7 +16,7 @@ class
 ❪"code/utilities/linguistics/computer/frontends/markdown/images/html_markdown_image"❫
 ⚞⚟
 
-◀public: static▶ std::string ☀Get(model::Sentence const& s, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
+◀public: static▶ std::string ☀Get(model::ParagraphSentence const& s, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
     std::string text;
     
     //print images

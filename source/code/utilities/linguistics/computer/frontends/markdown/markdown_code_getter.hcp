@@ -9,7 +9,7 @@ class
 ❪"code/utilities/types/strings/transformers/appending/lib"❫
 ⚞⚟
 
-◀public: static▶ std::string ☀Get(model::Sentence const& s, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
+◀public: static▶ std::string ☀Get(model::ParagraphSentence const& s, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
     std::string text;
     
     //stop early if we don't want to print the code block

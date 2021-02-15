@@ -48,7 +48,7 @@ class
     //there are citation sources, and at least 1 sentence has a citation
     for (auto const& l: structure.literature){
         for (auto const& p: l.paragraph){
-            for (auto const& s: p.sentence){
+            for (auto const& s: p.paragraph_sentence){
                 if (!s.citations.empty()){
                     return true;
                 }
@@ -126,7 +126,7 @@ class
     std::string text;
     
     //if there are no sentences don't print them or any of the supplementary data
-    if (p.sentence.empty()){
+    if (p.paragraph_sentence.empty()){
         return text;
     }
     if(!settings.sentences.print){
@@ -136,7 +136,7 @@ class
     
         
     //print each sentence
-    for (auto const& it: p.sentence){
+    for (auto const& it: p.paragraph_sentence){
         Append(text,Possibly_Get_Sentence(it,contributors,settings));
     }
     
@@ -144,7 +144,7 @@ class
     Append_A_Newline(text);
     return text;
 ❱
-◀private: static▶ std::string ☀Possibly_Get_Sentence(model::Sentence const& s, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
+◀private: static▶ std::string ☀Possibly_Get_Sentence(model::ParagraphSentence const& s, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
     std::string text;
     if (!s.sentence_text.empty()){
         Append(text,Grammar_Adjuster::Get_Adjusted(as_string(s.sentence_text[0].value),settings.grammar));
