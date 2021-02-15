@@ -36,10 +36,10 @@ RUN apt-get install -y software-properties-common
 # I had to do this differently when transitioning from Ubuntu 14.04 to 18.04
 # This will ensure the en_US.UTF-8 locale is available.
 # Ideally, I'd like to fix the tools so this is not needed in the Dockerfile.
-RUN echo "locales locales/default_environment_locale select en_US.UTF-8" | debconf-set-selections
-RUN echo "locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8" | debconf-set-selections
-RUN rm -rf "/etc/locale.gen"
-RUN dpkg-reconfigure --frontend noninteractive locales
+#RUN echo "locales locales/default_environment_locale select en_US.UTF-8" | debconf-set-selections
+#RUN echo "locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8" | debconf-set-selections
+#RUN rm -rf "/etc/locale.gen"
+#RUN dpkg-reconfigure --frontend noninteractive locales
 
 # Copy the content of your repository into the image
 COPY . ./
