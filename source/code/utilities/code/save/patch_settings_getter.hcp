@@ -1,0 +1,53 @@
+class
+❪"code/tools/ide/settings/ide_elements"❫
+❪"code/utilities/formats/json/converters/json_file_io"❫
+⚯
+❪"code/tools/ide/global_actions/global_action_decider"❫
+❪"code/utilities/program/wrappers/zenity/file_selector/file_selector"❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/utilities/code/concept_string_tree_parser"❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/utilities/code/save/save_state"❫
+⚞⚟
+
+◀public: static▶ std::vector<std::function<void(nlohmann::json&)>> ☀Get()❰
+
+    // The version of the unilang IDE is determined by the number of patches needed to upgrade any unilang file.
+    // Based on the saved file's recorded version number, we know how many patches are needed to open it.
+    // Additionally, the unilang IDE know what version itself is on by counting the number of patches it has available.
+    // So how do you upgrade the unilang IDE version?  Add a patch.  Simple as that. A patch is only needed if a version change is needed.
+    // The IDE gets its version number by the number of patches.
+    using PatchFunctionT = std::function<void(nlohmann::json&)>;
+    std::vector<PatchFunctionT> patches;
+    patches.emplace_back(Patch_0);
+    patches.emplace_back(Patch_1);
+    patches.emplace_back(Patch_2);
+    
+    //add more
+    return patches;
+❱
+
+◀private: static▶ void ☀Patch_0(nlohmann::json & j)❰
+❱
+◀private: static▶ void ☀Patch_1(nlohmann::json & j)❰
+    for (auto & element: j["elements"]["types"]){
+        
+        //if its the variant structure we care about
+        if (element["element"]["index"] == 1){
+            element["element"]["value"]["state"]["schema_styles"].clear();
+            element["element"]["value"]["state"]["schema_styles"]["map"] = nlohmann::json::object();
+            element["element"]["value"]["state"]["schema_styles"]["default_styles"] = nlohmann::json::object();
+            element["element"]["value"]["state"]["schema_styles"]["default_styles"]["label_styles"] = nlohmann::json::array();
+        }
+    }
+❱
+◀private: static▶ void ☀Patch_2(nlohmann::json & j)❰
+    for (auto & element: j["elements"]["types"]){
+        
+        //if its the variant structure we care about
+        if (element["element"]["index"] == 2){
+            element["element"]["value"]["orign_filepath"] = "";
+            element["element"]["value"]["seralizable_image"] = nlohmann::json::array();
+        }
+    }
+❱

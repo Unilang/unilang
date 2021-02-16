@@ -8,6 +8,7 @@ class
 ❪"code/utilities/code/concept_string_tree_parser"❫
 ❪"code/utilities/formats/json/converters/lib"❫
 ❪"code/utilities/code/save/save_state"❫
+❪"code/utilities/code/save/patch_settings_getter"❫
 ⚞⚟
 
 
@@ -30,7 +31,8 @@ class
     catch(std::exception const& e){
         std::cerr << "We can't deserialize the object properly :(" << std::endl;
         std::cerr << "Here is the library exception: " << e.what() << std::endl;
-        std::cerr << "We will now dump that object:" << std::endl;
+        std::cerr << "What this means is that the upgrade patching mechanism for the saved format did not properly adjust your data for proper deserialization." << std::endl;
+        //std::cerr << "We will now dump that object:" << std::endl;
         //std::cerr << json.dump(2) << std::endl;
         exit(-1);
     }
@@ -43,42 +45,18 @@ class
 
 ◀private: static▶ void ☀Upgrade_Json_For_Deserialization_Compadibility(nlohmann::json & j, int version)❰
 
-    if (version <= 1){
-        std::cout << "applying patch 1" << std::endl;
-        Patch_1(j);
+    auto patches = Patch_Settings_Getter::Get();
+    
+    for (int i = version; i < patches.size(); ++i){
+        std::cout << "applying patch " << i << std::endl;
+        patches[i](j);
     }
-    if (version <= 2){
-        std::cout << "applying patch 2" << std::endl;
-        Patch_2(j);
+
+    if (version == patches.size()){
+        std::cout << "No patching needed.  You are at the correct version (" << version << "). " << std::endl;
     }
-    if (version == 3){
-        std::cout << "No more patching needed.  You are at the correct version." << std::endl;
-    }
-    if (version > 3){
+    if (version > patches.size()){
         std::cerr << "You're IDE is too old to open this file.  It claims to be version: " << version << "." << std::endl;
         exit(-1);
-    }
-❱
-
-◀private: static▶ void ☀Patch_1(nlohmann::json & j)❰
-    for (auto & element: j["elements"]["types"]){
-        
-        //if its the variant structure we care about
-        if (element["element"]["index"] == 1){
-            element["element"]["value"]["state"]["schema_styles"].clear();
-            element["element"]["value"]["state"]["schema_styles"]["map"] = nlohmann::json::object();
-            element["element"]["value"]["state"]["schema_styles"]["default_styles"] = nlohmann::json::object();
-            element["element"]["value"]["state"]["schema_styles"]["default_styles"]["label_styles"] = nlohmann::json::array();
-        }
-    }
-❱
-◀private: static▶ void ☀Patch_2(nlohmann::json & j)❰
-    for (auto & element: j["elements"]["types"]){
-        
-        //if its the variant structure we care about
-        if (element["element"]["index"] == 2){
-            element["element"]["value"]["orign_filepath"] = "";
-            element["element"]["value"]["seralizable_image"] = nlohmann::json::array();
-        }
     }
 ❱

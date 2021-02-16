@@ -8,13 +8,14 @@ class
 ❪"code/utilities/code/concept_string_tree_parser"❫
 ❪"code/utilities/formats/json/converters/lib"❫
 ❪"code/utilities/code/save/save_state"❫
+❪"code/utilities/code/save/patch_settings_getter"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Save(Ide_Elements const& elements, std::string const& file_name)❰
 
     //build save state
     Save_State x;
-    x.version = 3; //what version we are on
+    x.version = Patch_Settings_Getter::Get().size(); //what version we are on
     x.elements = elements;
     
     //save it
