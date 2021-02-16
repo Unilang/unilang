@@ -4,6 +4,7 @@ class
 ❪string❫
 ❪"code/utilities/linguistics/grammar/grammar_adjuster"❫
 ❪"code/utilities/linguistics/grammar/settings/comment_grammar_settings"❫
+❪"code/utilities/types/strings/observers/reflow/settings/comment_reflow_settings"❫
 ⚯
 ❪"code/utilities/types/strings/observers/splitting/words_deriver"❫
 ❪"code/utilities/types/strings/observers/splitting/lib"❫

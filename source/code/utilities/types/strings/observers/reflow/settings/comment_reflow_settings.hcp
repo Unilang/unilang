@@ -1,5 +1,8 @@
 class
 ❪string❫
+❪"code/utilities/types/strings/observers/reflow/settings/reflow_algorithm"❫
+❪"code/utilities/types/strings/observers/reflow/settings/greedy_reflow_settings"❫
+❪"code/utilities/types/strings/observers/reflow/settings/knuth_plass_reflow_settings"❫
 ⚯
 
 ⚞⚟
