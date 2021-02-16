@@ -40,8 +40,8 @@ class
     auto final_detail = Sentence_Reflower::Possibly_Apply_Reflow(detail_sentences,grammar,reflow);
     
     //add them
-    Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,"brief",final_brief);
-    Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,"details",final_detail);
+    Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,options.general.comment.doxygen.brief_tag,final_brief);
+    Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,options.general.comment.doxygen.detail_tag,final_detail);
       
 ❱
 
