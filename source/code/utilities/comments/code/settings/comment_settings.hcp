@@ -3,6 +3,7 @@ class
 ❪"code/utilities/comments/language/c_comment_settings"❫
 ❪"code/utilities/linguistics/grammar/settings/comment_grammar_settings"❫
 ❪"code/utilities/comments/code/settings/comment_style_category"❫
+❪"code/utilities/types/strings/observers/reflow/settings/comment_reflow_settings"❫
 ⚯
 
 ⚞⚟
@@ -11,12 +12,13 @@ class
      
    //styles for printing comments
    Doxygen_Block_Options doxygen;
-   C_Comment_Settings    language;
+   C_Comment_Settings    language; //make generic for any language
    
    //choosing between one of the two style category settings above
    Comment_Style_Category comment_category = Comment_Style_Category::DOXYGEN;
    
    //settings for adjusting comments
    Comment_Grammar_Settings grammar;
+   Comment_Reflow_Settings reflow;
     
 ▶

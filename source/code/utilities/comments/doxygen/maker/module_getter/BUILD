@@ -13,5 +13,7 @@ hcp(
         "//code/utilities/types/converters:lib",
         "//code/utilities/types/general:lib",
         "//code/utilities/code/query:class_name_getter",
+        "//code/utilities/linguistics/grammar:grammar_adjuster",
+        "//code/utilities/types/strings/observers/reflow:sentence_reflower",
     ],
 )

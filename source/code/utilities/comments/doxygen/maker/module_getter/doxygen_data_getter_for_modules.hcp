@@ -8,6 +8,8 @@ class
 ❪"code/utilities/types/converters/lib"❫
 ❪"code/utilities/types/general/lib"❫
 ❪"code/utilities/code/query/class_name_getter"❫
+❪"code/utilities/linguistics/grammar/grammar_adjuster"❫
+❪"code/utilities/types/strings/observers/reflow/sentence_reflower"❫
 ⚞⚟
 
 ◀public: static▶ Doxygen_Data ☀Get(model::Module const& m, Module_Settings const& options)❰
@@ -32,12 +34,12 @@ class
     auto detail_sentences = Get_Sentences(m.module_detail);
 
     //fix their grammar
-    Fix_Grammar(brief_sentences,grammar);
-    Fix_Grammar(detail_sentences,grammar);
+    Fix_Grammar(brief_sentences,options.general.comment.grammar);
+    Fix_Grammar(detail_sentences,options.general.comment.grammar);
     
     //reflow them
-    auto final_brief = Sentence_Reflower::Possibly_Apply_Reflow(brief_sentences,grammar,reflow);
-    auto final_detail = Sentence_Reflower::Possibly_Apply_Reflow(detail_sentences,grammar,reflow);
+    auto final_brief = Sentence_Reflower::Possibly_Apply_Reflow(brief_sentences,options.general.comment.grammar,options.general.comment.reflow);
+    auto final_detail = Sentence_Reflower::Possibly_Apply_Reflow(detail_sentences,options.general.comment.grammar,options.general.comment.reflow);
     
     //add them
     Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,options.general.comment.doxygen.brief_tag,final_brief);
@@ -53,23 +55,23 @@ class
 ❱
 
 
-◀private: static▶ std::vector<std::string> ☀Get_Sentences(std::vector<ModuleBrief> const& x)❰
+◀private: static▶ std::vector<std::string> ☀Get_Sentences(std::vector<model::ModuleBrief> const& x)❰
     
     std::vector<std::string> result;
     for (auto const& a: x){
         for (auto const& b: a.brief_sentence){
-            result.emplace_back(b);
+            result.emplace_back(b.value);
         }
     }
     
     return result;
 ❱
-◀private: static▶ std::vector<std::string> ☀Get_Sentences(std::vector<ModuleDetail> const& x)❰
+◀private: static▶ std::vector<std::string> ☀Get_Sentences(std::vector<model::ModuleDetail> const& x)❰
     
     std::vector<std::string> result;
     for (auto const& a: x){
         for (auto const& b: a.detail_sentence){
-            result.emplace_back(b);
+            result.emplace_back(b.value);
         }
     }
     

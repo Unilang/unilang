@@ -47,7 +47,7 @@ class
      }
     
     str += "class ";
-    str += auto class_name = Class_Name_Getter::Get(structure,settings);
+    str += Class_Name_Getter::Get(structure,settings.module);
     str += Add_Posible_Templates(structure,settings);
     str += " {\n";
     return str;

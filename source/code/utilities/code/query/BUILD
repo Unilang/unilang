@@ -40,6 +40,7 @@ hcp(
         "//code/utilities/types/strings/transformers/casing:case_modifier",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/types/vectors/converters:lib",
     ],
 )
 

@@ -12,5 +12,6 @@ hcp(
         "//code/utilities/comments/doxygen/settings:doxygen_block_options",
         "//code/utilities/comments/language:c_comment_settings",
         "//code/utilities/linguistics/grammar/settings:comment_grammar_settings",
+        "//code/utilities/types/strings/observers/reflow/settings:comment_reflow_settings",
     ],
 )
