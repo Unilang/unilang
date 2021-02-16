@@ -30,6 +30,20 @@ hcp(
 )
 
 hcp(
+    name = "class_name_getter",
+    deps = [
+        "//code/utilities/contributor:contributor",
+        "//code/utilities/code:concept_static_tree_structs",
+        "//code/utilities/linguistics/computer/frontends/parts:module_settings",
+        "//code/utilities/types/strings/transformers/appending:lib",
+        "//code/utilities/types/converters:lib",
+        "//code/utilities/types/strings/transformers/casing:case_modifier",
+        "//code/utilities/types/vectors/observers:lib",
+        "//code/utilities/types/vectors/operators:lib",
+    ],
+)
+
+hcp(
     name = "argument_is_pointer_like",
     deps = [
         "//code/utilities/code:concept_static_tree_structs",

@@ -131,8 +131,8 @@ class
     settings.module.portion.meta.comment_settings.doxygen.tag_symbol = "";
     
     //doxygen block general settings
-    settings.module.general.comment.doxygen.style = Block_Style::TRIPLE_SLASH;
-    settings.module.general.comment.doxygen.intermediate_stars = false;
+    settings.module.general.comment.doxygen.style = Block_Style::JAVADOC;
+    settings.module.general.comment.doxygen.intermediate_stars = true;
     settings.module.general.comment.doxygen.column_align = true;
     settings.module.general.comment.doxygen.spaces_between_doxygen_border_and_tag = 1;
 ❱

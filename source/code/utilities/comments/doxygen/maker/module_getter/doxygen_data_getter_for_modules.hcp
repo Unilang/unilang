@@ -7,27 +7,23 @@ class
 ❪"code/utilities/comments/doxygen/maker/doxygen_data_shared"❫
 ❪"code/utilities/types/converters/lib"❫
 ❪"code/utilities/types/general/lib"❫
+❪"code/utilities/code/query/class_name_getter"❫
 ⚞⚟
 
 ◀public: static▶ Doxygen_Data ☀Get(model::Module const& m, Module_Settings const& options)❰
     
     Doxygen_Data data;
     
+    //possibly add a dumb redundant class tag
+     if (options.general.comment.doxygen.use_repetitive_class_tag){
+             auto class_name = Class_Name_Getter::Get(m,options);
+             Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,options.general.comment.doxygen.class_tag,class_name);
+     }
+     
+    //   Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,"brief",brief);
+    //   Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,"details",details);
+    
     return data;
 ❱
-
-
-
-// Get_For_Struct(std::string const& brief, std::string const& details, std::string const& name)
-//   Doxygen_Data data;
-
-//  bool use_dumb_struct_tag = true;
-//   std::string struct_tag = "class";
-//  if (use_dumb_struct_tag){
-//          Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,struct_tag,name);
-//  }
-//   Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,"brief",brief);
-//   Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,"details",details);
   
-//   return data;
 

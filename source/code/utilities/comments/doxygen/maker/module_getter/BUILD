@@ -12,5 +12,6 @@ hcp(
         "//code/utilities/linguistics/computer/frontends/parts:module_settings",
         "//code/utilities/types/converters:lib",
         "//code/utilities/types/general:lib",
+        "//code/utilities/code/query:class_name_getter",
     ],
 )

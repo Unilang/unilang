@@ -9,6 +9,8 @@ class
 ◀
 public:
 
+
+//formatting related
 Block_Style style = Block_Style::JAVADOC;
 bool print_style_start = true;
 bool print_style_end = true;
@@ -24,6 +26,11 @@ std::string text_between_tag_and_tag_value = " ";
 Standard_Doxygen_Style_Lines standard;
 int spaces_between_doxygen_border_and_tag = 0;
 int spaces_between_tag_and_comment = 0;
+
+//tag settings
+
+bool use_repetitive_class_tag = false;
+std::string class_tag = "class";
 
 //specific to function arguments
 //doxygen gets confused if the casing isn't all lowercase.

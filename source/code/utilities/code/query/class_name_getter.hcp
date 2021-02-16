@@ -1,0 +1,19 @@
+class
+❪fstream❫
+❪iostream❫
+❪"code/utilities/contributor/contributor"❫
+❪"code/utilities/code/concept_static_tree_structs"❫
+❪"code/utilities/linguistics/computer/frontends/parts/module_settings"❫
+⚯
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/utilities/types/converters/lib"❫
+❪"code/utilities/types/strings/transformers/casing/case_modifier"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/converters/lib"❫
+⚞⚟
+
+◀public: static▶ std::string ☀Get(model::Module const& structure, Module_Settings const& settings)❰
+    auto name = First_Element_Or_Default(structure.module_name).value;
+    return Case_Modifier::As_Modified_Casing(settings.general.filesystem.filesystem_naming.file_casing,name);
+❱

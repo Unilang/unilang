@@ -17,6 +17,7 @@ class
 ❪"code/utilities/types/strings/observers/converting/lib"❫
 ❪"code/utilities/types/strings/transformers/casing/case_modifier"❫
 ❪"code/utilities/code/query/virtual_method_checker"❫
+❪"code/utilities/code/query/class_name_getter"❫
 ❪"code/utilities/comments/doxygen/maker/doxygen_block_printer"❫
 ❪"code/utilities/linguistics/computer/frontends/java/parts/data_members_getter"❫
 ❪"code/utilities/linguistics/computer/frontends/java/parts/methods_getter"❫
@@ -46,7 +47,7 @@ class
      }
     
     str += "class ";
-    str += Class_Name(structure,settings);
+    str += auto class_name = Class_Name_Getter::Get(structure,settings);
     str += Add_Posible_Templates(structure,settings);
     str += " {\n";
     return str;
@@ -68,11 +69,4 @@ class
     return x;
     
 ❱
-
-
-◀private: static▶ std::string ☀Class_Name(model::Module const& structure, Java_Settings const& settings)❰
-    auto name = First_Element_Or_Default(structure.module_name).value;
-    return Case_Modifier::As_Modified_Casing(settings.module.general.filesystem.filesystem_naming.file_casing,name);
-❱
-
 
