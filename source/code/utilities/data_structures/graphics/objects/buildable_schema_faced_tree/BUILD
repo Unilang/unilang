@@ -46,12 +46,12 @@ hcp(
 hcp(
     name = "buildable_schema_faced_tree_default_schema",
     deps = [
-        "//code/utilities/fonts/bdf/character_maps:character_maps",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:positioned_buildable_schema_faced_tree",
-        "//code/utilities/peripheral/pc:pc_input_state",
-        "//code/utilities/data_structures/tree/generic:child_lookup_map",
         "//code/utilities/code:concept_string_tree_getter",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:positioned_buildable_schema_faced_tree",
+        "//code/utilities/data_structures/tree/generic:child_lookup_map",
         "//code/utilities/data_structures/tree/generic:string_tree_to_child_lookup_map",
+        "//code/utilities/fonts/bdf/character_maps",
+        "//code/utilities/peripheral/pc:pc_input_state",
     ],
 )
 

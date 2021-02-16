@@ -1,8 +1,0 @@
-run the makefile that's on the root.
-it will build and run the "exporter"
-this "exporter" will scan, export, build, and document.
-Much of its features are incomplete.
-What it does export/build can be found be in the jstd-export directory.
-Some features and functionality from 1.1.0 have been removed, but will be properly merged back in up-coming releases.
-
-

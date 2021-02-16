@@ -46,6 +46,7 @@ hcp(
 hcp(
     name = "save_state_serializer",
     deps = [
+        "//code/tools/ide/frame:apply_schema_to_elements",
         "//code/tools/ide/global_actions:global_action",
         "//code/tools/ide/global_actions:global_action_decider",
         "//code/tools/ide/settings:ide_settings",
@@ -58,6 +59,5 @@ hcp(
         "//code/utilities/graphics/sdl:sdl_fullscreener",
         "//code/utilities/program/wrappers/zenity/file_selector",
         "@imgui//:imgui_sdl_opengl3",
-        "//code/tools/ide/frame:apply_schema_to_elements",
     ],
 )
