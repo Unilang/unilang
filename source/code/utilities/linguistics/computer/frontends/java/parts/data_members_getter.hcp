@@ -7,20 +7,23 @@ class
 ❪"code/utilities/linguistics/computer/frontends/java/settings/java_settings"❫
 
 ⚯
+❪"code/utilities/comments/doxygen/maker/doxygen_block_printer"❫
 ❪"code/utilities/linguistics/computer/keywords/visibility/visibility_keyword_getter"❫
 ❪"code/utilities/code/query/data_member_visibility"❫
+❪"code/utilities/code/query/data_member_storage_specifier"❫
 ⚞⚟
 
 ◀public: static▶ std::string ☀Get(model::Module const& structure, std::vector<Contributor> const& contributors, Java_Settings const& settings)❰
     std::string x;
     
     
-    // for (size_t i = 0; i < structure.data_members.data_members.size(); ++i){
-    //     x += Doxygen_Block_Printer::Get_Doxygen_Member_Item_Comment(structure.data_members.data_members[i],bad_temp,4);
-    //     x += "    ";
-    //     x += Get_Visibility_Specifiers(structure.data_members.data_members[i]);
-    //     x += " ";
-    //     x += Posibily_Get_Static_Specifier(structure.data_members.data_members[i]);
+    for (auto const& it: structure.data_member){
+         x += Doxygen_Block_Printer::Get_Indented_Block(it,settings.module,4);
+        x += "\n";
+        x += "    ";
+        x += Get_Visibility_Specifiers(it);
+        x += " ";
+        x += Posibily_Get_Static_Specifier(it);
     //     x += " ";
     //     x += Posibily_Get_Final_Specifier(structure.data_members.data_members[i]);
     //     x += Get_Real_Type(structure.data_members.data_members[i]);
@@ -30,7 +33,7 @@ class
     //     x += Default_Initialize_Getter::Possibly_Get_Default_Value(structure.data_members.data_members[i],Source_Language::JAVA);
     //     x += ";\n\n";
 
-    // }
+    }
     
     return x;
 ❱
@@ -50,16 +53,16 @@ class
 ❱
 
 ◀public: static▶ std::string ☀Posibily_Get_Final_Specifier(model::DataMember const& mem)❰
+
     // if (mem.is_const){
     //     return "final ";
     // }
     return "";
 ❱
 ◀public: static▶ std::string ☀Posibily_Get_Static_Specifier(model::DataMember const& mem)❰
-    // if (mem.storage == Storage_Specifier::STATIC){
-    //     return "static ";
-    // }
-    // else{
-    // }
+    auto storage = Data_Member_Storage_Specifier::Get(mem);
+    if (storage == Storage_Specifier::STATIC){
+         return "static";
+    }
     return "";
 ❱

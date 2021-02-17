@@ -76,7 +76,9 @@ hcp(
     name = "data_members_getter",
     deps = [
         "//code/utilities/code:concept_static_tree_structs",
+        "//code/utilities/comments/doxygen/maker:doxygen_block_printer",
         "//code/utilities/code/query:data_member_visibility",
+        "//code/utilities/code/query:data_member_storage_specifier",
         "//code/utilities/contributor",
         "//code/utilities/linguistics/computer/frontends/java/settings:java_settings",
         "//code/utilities/linguistics/computer/keywords/visibility:visibility_keyword_getter",

@@ -69,3 +69,12 @@ enum_cpp(
         "local",
     ],
 )
+
+enum_cpp(
+    name = "storage_specifier",
+    values = [
+        "static",
+        "extern",
+        "none",
+    ],
+)

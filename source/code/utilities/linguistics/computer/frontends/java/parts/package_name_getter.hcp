@@ -17,7 +17,9 @@ class
     //convert the name spaces into package names
     std::vector<std::string> packages;
     for (auto const& it: structure.namespace_){
-        packages.emplace_back(First_Element_Or_Default(it.namespace_name).value);
+        for (auto const& part: it.namespace_name){
+            packages.emplace_back(part.value);
+        }
     }
     
     //print the package command assuming one was derived
