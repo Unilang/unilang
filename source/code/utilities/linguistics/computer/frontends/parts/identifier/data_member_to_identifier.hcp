@@ -1,7 +1,10 @@
 class
 ❪"code/utilities/linguistics/computer/frontends/parts/module_settings"❫
 ❪"code/utilities/code/concept_static_tree_structs"❫
+❪"code/utilities/types/strings/transformers/casing/case_modifier"❫
 ⚯
+❪"code/utilities/code/query/data_member_mutability"❫
+❪"code/utilities/code/query/data_member_storage_specifier"❫
 ⚞⚟
 
 //gives you the identifier name
@@ -17,7 +20,7 @@ class
       
       
   //     //casing settings
-  //     auto identifier_casing = How_To_Case_Identifier(data_member,settings,is_global);
+       auto identifier_casing = How_To_Case_Identifier(data_member,settings,is_global);
   //     //auto hungarian_casing = How_To_Case_Hungarian(data_member,settings,is_global);
   //     auto unit_casing = How_To_Case_Units(data_member,settings,is_global);
   //     //auto extra_type_casing = How_To_Case_Extra_Type_Info(data_member,settings,is_global);
@@ -28,11 +31,11 @@ class
 
 
   //     //apply casing
-  //     new_identifier = Case_Modifier::As_Modified_Casing(identifier_casing,new_identifier);
+       new_identifier = Case_Modifier::As_Modified_Casing(identifier_casing,new_identifier);
   //     suffix = Get_Properly_Cased_Suffix(suffix,unit_casing);
     
   // //print CONSTANT_LIKE_THIS
-  // if (data_member.is_const){
+  // if (mutability == Mutability::IMMUTABLE){
   
   //     Append(new_identifier,suffix);
   // }
@@ -43,9 +46,7 @@ class
   // }
     
   //   //return it
-  //   return new_identifier;
-
-  return "var";
+     return new_identifier;
 ❱
 
 ◀private: static▶ std::string ☀Adjust_Based_On_Type_Info(std::string identifier, model::DataMember const& item, Module_Settings const& options)❰
@@ -62,4 +63,82 @@ class
     // identifier = Modify_Identifier_With_Extra_Type_Info::Modify(data_properties,settings.portion.data_member_options.notation.extra_type_settings);
     // return identifier;
 return "";
+❱
+
+
+
+
+
+
+◀private: static▶ Case_Format_Style ☀How_To_Case_Identifier(model::DataMember const& data_member, Module_Settings const& settings, bool is_global)❰
+      return How_To_Case_Data_Member_Thing(data_member,settings.portion.data_member_options.casing,is_global);
+❱
+◀private: static▶ Case_Format_Style ☀How_To_Case_Data_Member_Thing(model::DataMember const& data_member, Data_Member_Casing_Settings const& settings, bool is_global)❰
+
+      //all of the different contexts/characteristics of a data member where we may want to case it differently
+      Case_Format_Style identifier_casing;
+      
+      //properties about the data member
+      auto mutability = Data_Member_Mutability::Get(data_member);
+      auto storage = Data_Member_Storage_Specifier::Get(data_member);
+      
+      
+      //TODO: describe this as a table
+      //global
+      if (is_global){
+        
+          //static
+          if (storage == Storage_Specifier::STATIC){
+            
+            //const
+            if (mutability == Mutability::IMMUTABLE){
+              identifier_casing = settings.global_static_const_casing;
+            }
+            
+            //non const
+            else{
+              identifier_casing = settings.global_static_non_const_casing;
+            }
+          }
+          
+          //non static
+          else{
+            
+            //const
+            if (mutability == Mutability::IMMUTABLE){
+              identifier_casing = settings.global_const_casing;
+            }
+            
+            //non const
+            else{
+              identifier_casing = settings.global_non_const_casing;
+            }
+          }
+      }
+      
+      //non global
+      else{
+          
+          //static
+          if (storage == Storage_Specifier::STATIC){
+            if (mutability == Mutability::IMMUTABLE){
+              identifier_casing = settings.static_const_casing;
+            }
+            else{
+              identifier_casing = settings.static_non_const_casing;
+            }
+          }
+          
+          //non static
+          else{
+            if (mutability == Mutability::IMMUTABLE){
+              identifier_casing = settings.const_casing;
+            }
+            else{
+              identifier_casing = settings.non_const_casing;
+            }
+          }
+          
+      }
+      return identifier_casing;
 ❱

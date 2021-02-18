@@ -89,6 +89,7 @@ hcp(
         "//code/utilities/types/vectors/operators:lib",
         "//code/utilities/types/vectors/converters:lib",
         "//code/utilities/linguistics/computer/types/generic:unilang_type_to_language_type_converter",
+        "//code/utilities/linguistics/computer/frontends/parts/identifier:data_member_to_identifier",
     ],
 )
 

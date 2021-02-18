@@ -38,69 +38,6 @@ class
 ❱
 
 
-◀private: static▶ Case_Format_Style ☀How_To_Case_Data_Member_Thing(Data_Member_Item const& data_member, Data_Member_Casing_Settings const& settings, bool is_global)❰
-
-      //all of the different contexts/characteristics of a data member where we may want to case it differently
-      Case_Format_Style identifier_casing;
-      
-      //global
-      if (is_global){
-        
-          //static
-          if (data_member.storage == Storage_Specifier::STATIC){
-            
-            //const
-            if (data_member.is_const){
-              identifier_casing = settings.global_static_const_casing;
-            }
-            
-            //non const
-            else{
-              identifier_casing = settings.global_static_non_const_casing;
-            }
-          }
-          
-          //non static
-          else{
-            
-            //const
-            if (data_member.is_const){
-              identifier_casing = settings.global_const_casing;
-            }
-            
-            //non const
-            else{
-              identifier_casing = settings.global_non_const_casing;
-            }
-          }
-      }
-      
-      //non global
-      else{
-          
-          //static
-          if (data_member.storage == Storage_Specifier::STATIC){
-            if (data_member.is_const){
-              identifier_casing = settings.static_const_casing;
-            }
-            else{
-              identifier_casing = settings.static_non_const_casing;
-            }
-          }
-          
-          //non static
-          else{
-            if (data_member.is_const){
-              identifier_casing = settings.const_casing;
-            }
-            else{
-              identifier_casing = settings.non_const_casing;
-            }
-          }
-          
-      }
-      return identifier_casing;
-❱
 
 ◀private: static▶ Case_Format_Style ☀How_To_Case_Identifier(Data_Member_Item const& data_member, C_Export_Settings const& settings, bool is_global)❰
       return How_To_Case_Data_Member_Thing(data_member,settings.portion.data_member_options.casing,is_global);

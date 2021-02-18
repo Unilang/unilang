@@ -24,5 +24,8 @@ hcp(
     deps = [
         "//code/utilities/code:concept_static_tree_structs",
         "//code/utilities/linguistics/computer/frontends/parts:module_settings",
+        "//code/utilities/types/strings/transformers/casing:case_modifier",
+        "//code/utilities/code/query:data_member_mutability",
+        "//code/utilities/code/query:data_member_storage_specifier",
     ],
 )
