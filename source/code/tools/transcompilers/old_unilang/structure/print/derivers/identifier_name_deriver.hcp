@@ -39,9 +39,6 @@ class
 
 
 
-◀private: static▶ Case_Format_Style ☀How_To_Case_Identifier(Data_Member_Item const& data_member, C_Export_Settings const& settings, bool is_global)❰
-      return How_To_Case_Data_Member_Thing(data_member,settings.portion.data_member_options.casing,is_global);
-❱
 ◀private: static▶ Case_Format_Style ☀How_To_Case_Hungarian(Data_Member_Item const& data_member, C_Export_Settings const& settings, bool is_global)❰
       return How_To_Case_Data_Member_Thing(data_member,settings.portion.data_member_options.notation.hungarian_casing,is_global);
 ❱
