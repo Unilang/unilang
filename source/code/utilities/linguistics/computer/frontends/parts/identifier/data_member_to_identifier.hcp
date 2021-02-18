@@ -5,6 +5,9 @@ class
 ⚯
 ❪"code/utilities/code/query/data_member_mutability"❫
 ❪"code/utilities/code/query/data_member_storage_specifier"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/converters/lib"❫
 ⚞⚟
 
 //gives you the identifier name
@@ -12,21 +15,22 @@ class
 //identifier (properly cased)
 //suffix (units)
 //other identifier adjustments based on data member properties
-◀public: static▶ std::string ☀Derive_Name(model::DataMember const& item, Module_Settings const& options, bool is_global, bool is_member)❰
+◀public: static▶ std::string ☀Derive_Name(model::DataMember const& item, Module_Settings const& settings, bool is_global, bool is_member)❰
     
+    std::string new_identifier;
   //     //get prefixes and suffixes
   //     auto prefix = Data_Member_To_Hungarian_Notation_Converter::Get_Hungarian_Notation_Prefix(data_member,settings,is_global,is_member);
   //     auto suffix = Get_Raw_Unit_Suffix(data_member);
       
       
   //     //casing settings
-       auto identifier_casing = How_To_Case_Identifier(data_member,settings,is_global);
+       auto identifier_casing = How_To_Case_Identifier(item,settings,is_global);
   //     //auto hungarian_casing = How_To_Case_Hungarian(data_member,settings,is_global);
   //     auto unit_casing = How_To_Case_Units(data_member,settings,is_global);
   //     //auto extra_type_casing = How_To_Case_Extra_Type_Info(data_member,settings,is_global);
       
       
-  //     std::string new_identifier = as_string(data_member.name.value);
+  new_identifier = First_Element_Or_Default(item.data_member_identifier).value;
   //     new_identifier = Adjust_Based_On_Type_Info(new_identifier,data_member,settings);
 
 
