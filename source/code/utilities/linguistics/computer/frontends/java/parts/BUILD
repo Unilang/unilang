@@ -85,6 +85,10 @@ hcp(
         "//code/utilities/linguistics/computer/keywords/storage:storage_keyword_getter",
         "//code/utilities/linguistics/computer/keywords/mutability:mutability_keyword_getter",
         "//code/utilities/code/query:data_member_mutability",
+        "//code/utilities/types/vectors/observers:lib",
+        "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/types/vectors/converters:lib",
+        "//code/utilities/linguistics/computer/types/generic:unilang_type_to_language_type_converter",
     ],
 )
 

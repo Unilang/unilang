@@ -14,6 +14,10 @@ class
 ❪"code/utilities/code/query/data_member_mutability"❫
 ❪"code/utilities/code/query/data_member_visibility"❫
 ❪"code/utilities/code/query/data_member_storage_specifier"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/converters/lib"❫
+❪"code/utilities/linguistics/computer/types/generic/unilang_type_to_language_type_converter"❫
 ⚞⚟
 
 ◀public: static▶ std::string ☀Get(model::Module const& structure, std::vector<Contributor> const& contributors, Java_Settings const& settings)❰
@@ -29,24 +33,25 @@ class
         x += Posibily_Get_Static_Specifier(it);
         x += " ";
         x += Posibily_Get_Final_Specifier(it);
-    //     x += Get_Real_Type(structure.data_members.data_members[i]);
-    //     x += Type_Specialize_Getter::Get(structure.data_members.data_members[i].type_specializations);
-    //     x += " ";
+        x += " ";
+        x += Get_Real_Type(it);
+        x += Get_Type_Specializations(it);
+        x += " ";
     //     x += Identifier_Name_Deriver::Derive_Name(structure.data_members.data_members[i],bad_temp,false,true);
     //     x += Default_Initialize_Getter::Possibly_Get_Default_Value(structure.data_members.data_members[i],Source_Language::JAVA);
-    //     x += ";\n\n";
+        x += ";\n\n";
 
     }
     
     return x;
 ❱
-
+◀public: static▶ std::string ☀Get_Type_Specializations(model::DataMember const& mem)❰
+    return "";
+❱
 
 ◀public: static▶ std::string ☀Get_Real_Type(model::DataMember const& mem)❰
-    //auto type       = as_string(mem.type.value);
-    //auto real_type = Unilang_Type_To_Language_Type_Converter::Convert_To_Language_Type(type, Source_Language::JAVA).name;
-    
-    std::string real_type;
+    auto type       = First_Element_Or_Default(mem.data_member_type).value;
+    auto real_type = Unilang_Type_To_Language_Type_Converter::Convert_To_Language_Type(type, Source_Language::JAVA).name;
     return real_type;
 ❱
 ◀public: static▶ std::string ☀Get_Visibility_Specifiers(model::DataMember const& mem)❰
