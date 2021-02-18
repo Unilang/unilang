@@ -82,6 +82,7 @@ hcp(
         "//code/utilities/contributor",
         "//code/utilities/linguistics/computer/frontends/java/settings:java_settings",
         "//code/utilities/linguistics/computer/keywords/visibility:visibility_keyword_getter",
+        "//code/utilities/linguistics/computer/keywords/storage:storage_keyword_getter",
     ],
 )
 

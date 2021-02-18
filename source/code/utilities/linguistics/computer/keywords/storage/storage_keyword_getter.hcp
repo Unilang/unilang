@@ -1,0 +1,34 @@
+class
+
+❪"code/utilities/linguistics/computer/source_language"❫
+❪"code/utilities/linguistics/computer/keywords/storage/language_storage_getter"❫
+❪"code/utilities/linguistics/computer/keywords/storage/storage_strs"❫
+❪"code/utilities/code/storage_specifier"❫
+⚯
+❪"code/utilities/types/map/lib"❫
+❪"code/utilities/types/strings/transformers/casing/lib"❫
+⚞⚟
+
+◀public: static▶ std::string ☀Get(Storage_Specifier const& storage, Source_Language const& source_language)❰
+
+    auto language_keywords = Language_Storage_Getter::Get();
+    
+    //get the value out of the table if it exists
+    if (Exists_In_Unordered_Map(language_keywords,source_language)){
+        auto s = language_keywords.at(source_language);
+        return Pick(s,storage);
+    }
+    return "unknown";
+    
+❱
+
+◀private: static▶ std::string ☀Pick(Storage_Strs const& strs, Storage_Specifier const& storage)❰
+    if (storage == Storage_Specifier::STATIC){
+        return strs.static_;
+    }
+    else if (storage == Storage_Specifier::EXTERN){
+        return strs.extern_;
+    }
+    return strs.none;
+    
+❱

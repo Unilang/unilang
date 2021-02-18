@@ -1,0 +1,14 @@
+class
+
+❪vector❫
+❪string❫
+⚯
+
+⚞⚟
+
+◀
+public:
+
+    std::string static_;
+    std::string extern_;
+    std::string none;

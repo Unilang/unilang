@@ -9,6 +9,7 @@ class
 ⚯
 ❪"code/utilities/comments/doxygen/maker/doxygen_block_printer"❫
 ❪"code/utilities/linguistics/computer/keywords/visibility/visibility_keyword_getter"❫
+❪"code/utilities/linguistics/computer/keywords/storage/storage_keyword_getter"❫
 ❪"code/utilities/code/query/data_member_visibility"❫
 ❪"code/utilities/code/query/data_member_storage_specifier"❫
 ⚞⚟
@@ -24,7 +25,7 @@ class
         x += Get_Visibility_Specifiers(it);
         x += " ";
         x += Posibily_Get_Static_Specifier(it);
-    //     x += " ";
+        x += " ";
     //     x += Posibily_Get_Final_Specifier(structure.data_members.data_members[i]);
     //     x += Get_Real_Type(structure.data_members.data_members[i]);
     //     x += Type_Specialize_Getter::Get(structure.data_members.data_members[i].type_specializations);
@@ -61,8 +62,5 @@ class
 ❱
 ◀public: static▶ std::string ☀Posibily_Get_Static_Specifier(model::DataMember const& mem)❰
     auto storage = Data_Member_Storage_Specifier::Get(mem);
-    if (storage == Storage_Specifier::STATIC){
-         return "static";
-    }
-    return "";
+    return Storage_Keyword_Getter::Get(storage,Source_Language::JAVA);
 ❱
