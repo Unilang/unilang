@@ -1,0 +1,29 @@
+class
+
+❪"code/utilities/linguistics/computer/source_language"❫
+❪"code/utilities/linguistics/computer/keywords/mutability/mutability_strs"❫
+⚯
+❪"code/utilities/types/map/lib"❫
+❪"code/utilities/types/strings/transformers/casing/lib"❫
+⚞⚟
+
+◀public: static▶ std::unordered_map<Source_Language,Mutability_Strs> ☀Get()❰
+
+    std::unordered_map<Source_Language,Mutability_Strs> x;
+    Add_Cpp(x);
+    Add_Java(x);
+    return x;
+❱
+
+◀private: static▶ void ☀Add_Cpp(std::unordered_map<Source_Language,Mutability_Strs> & x)❰
+    Mutability_Strs strs;
+    strs.immutable = "const";
+    strs.mutable_ = "";
+    x.insert({Source_Language::CPP,strs});
+❱
+◀private: static▶ void ☀Add_Java(std::unordered_map<Source_Language,Mutability_Strs> & x)❰
+    Mutability_Strs strs;
+    strs.immutable = "final";
+    strs.mutable_ = "";
+    x.insert({Source_Language::JAVA,strs});
+❱

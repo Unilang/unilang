@@ -1,0 +1,31 @@
+class
+
+❪"code/utilities/linguistics/computer/source_language"❫
+❪"code/utilities/linguistics/computer/keywords/mutability/language_mutability_getter"❫
+❪"code/utilities/linguistics/computer/keywords/mutability/mutability_strs"❫
+❪"code/utilities/code/mutability"❫
+⚯
+❪"code/utilities/types/map/lib"❫
+❪"code/utilities/types/strings/transformers/casing/lib"❫
+⚞⚟
+
+◀public: static▶ std::string ☀Get(Mutability const& mutability, Source_Language const& source_language)❰
+
+    auto language_keywords = Language_Mutability_Getter::Get();
+    
+    //get the value out of the table if it exists
+    if (Exists_In_Unordered_Map(language_keywords,source_language)){
+        auto s = language_keywords.at(source_language);
+        return Pick(s,mutability);
+    }
+    return "unknown";
+    
+❱
+
+◀private: static▶ std::string ☀Pick(Mutability_Strs const& strs, Mutability const& mutability)❰
+    if (mutability == Mutability::IMMUTABLE){
+        return strs.immutable;
+    }
+    return strs.mutable_;
+    
+❱

@@ -1,0 +1,25 @@
+class
+
+❪"code/utilities/code/concept_static_tree_structs"❫
+❪"code/utilities/comments/doxygen/settings/doxygen_parameter_direction"❫
+❪"code/utilities/code/mutability"❫
+⚯
+❪"code/utilities/types/converters/lib"❫
+❪"code/utilities/types/strings/transformers/stripping/lib"❫
+❪"code/utilities/types/strings/observers/other/lib"❫
+❪"code/utilities/code/symbols/token_attribute_settings"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+⚞⚟
+
+◀public: static▶ Mutability ☀Get(model::DataMember const& mem)❰
+
+    auto str = First_Element_Or_Default(mem.type_qualifiers).value;
+    
+    Mutability s = Mutability::MUTABLE;
+    
+    Token_Attribute_Settings symbols;
+    if (Contains_Substring(str,symbols.data_member.const_qualifier)){
+        s = Mutability::IMMUTABLE;
+    }
+    return s;
+❱

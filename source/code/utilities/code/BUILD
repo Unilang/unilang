@@ -78,3 +78,11 @@ enum_cpp(
         "none",
     ],
 )
+
+enum_cpp(
+    name = "mutability",
+    values = [
+        "immutable",
+        "mutable",
+    ],
+)

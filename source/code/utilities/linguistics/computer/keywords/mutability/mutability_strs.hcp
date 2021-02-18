@@ -1,0 +1,13 @@
+class
+
+❪vector❫
+❪string❫
+⚯
+
+⚞⚟
+
+◀
+public:
+
+    std::string immutable;
+    std::string mutable_;
