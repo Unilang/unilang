@@ -40,7 +40,7 @@ class
     
     //customize
     bool add_tree_manipulation_options = true;
-    bool add_sibiling_rename_options = true;
+    bool add_sibiling_rename_options = false;
     bool add_children_append_options = true;
     
     if (add_tree_manipulation_options){
