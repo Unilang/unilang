@@ -66,6 +66,9 @@ class
     
     face_label.state.faces[0].label.message = ":delete";
     x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    
+    face_label.state.faces[0].label.message = ":duplicate";
+    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
 ❱
 
 ◀private: static▶ void ☀Add_Sibling_Names_For_Renaming(Select_Menu & x, Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
