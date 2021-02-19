@@ -1,0 +1,25 @@
+class
+
+❪iostream❫
+❪"code/utilities/linguistics/computer/types/cross/language_type/language_type"❫
+❪"code/utilities/linguistics/computer/types/generic/unilang_type_to_language_type_converter"❫
+⚯
+❪"code/utilities/types/converters/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/converters/lib"❫
+⚞⚟
+
+
+◀public: static▶ std::string ☀Derive_Name(model::DataMember const& mem, Source_Language const& language)❰
+    
+    auto type       = First_Element_Or_Default(mem.data_member_type).value;
+    //auto stripped_type_detail = Type_Qualifier_Stripper::Strip_To_Base_Unilang_Type(as_string(data_member.type.value),false);
+    auto language_type = Unilang_Type_To_Language_Type_Converter::Convert_To_Language_Type(type, language);
+    //auto final = Get_The_Printable_Language_Type_Without_Any_Of_The_Qualifers_Back_On(language_type,stripped_type_detail);
+    //Add_Scope(data_member,final);
+    //Add_Specialization(data_member,final);
+    
+    std::string final = language_type;
+    return final;
+❱

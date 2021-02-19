@@ -11,18 +11,12 @@ class
 ⚞⚟
 
 
-//TODO: deprecate
-◀public: static▶ std::string ☀Get_Adjusted(std::string actual_language_type, std::string literal)❰
-  return Get_Adjusted_By_Language(actual_language_type,literal,Source_Language::CPP);
-❱
-
-//TODO: keep
 ◀public: static▶ std::string ☀Get_Adjusted(std::string actual_language_type, std::string literal, Source_Language const& source_language)❰
     return Get_Adjusted_By_Language(actual_language_type,literal,source_language);
 ❱
 
 
-◀public: static▶ std::string ☀Get_Adjusted_By_Language(std::string actual_language_type, std::string literal, Source_Language const& source_language)❰
+◀private: static▶ std::string ☀Get_Adjusted_By_Language(std::string actual_language_type, std::string literal, Source_Language const& source_language)❰
     
     //settings related to literal settings by language
     Literal_Suffix_Settings settings;

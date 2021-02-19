@@ -2,22 +2,27 @@ class
 
 ❪string❫
 ❪"code/utilities/linguistics/computer/source_language"❫
+❪"code/utilities/code/concept_static_tree_structs"❫
 ⚯
 ❪"code/utilities/linguistics/computer/literals/adjuster/literal_adjuster"❫
 ❪"code/utilities/types/strings/observers/converting/lib"❫
 ❪"code/utilities/types/converters/lib"❫
+❪"code/utilities/linguistics/computer/types/generic/type_name_deriver"❫
 ⚞⚟
 
 
-◀public: static▶ std::string ☀Possibly_Get_Default_Value(Data_Member_Item const& it, Source_Language const& source_language)❰
+◀public: static▶ std::string ☀Possibly_Get_Default_Value(model::DataMember const& it, Source_Language const& source_language)❰
 
     std::string default_seperator = " = ";
-    std::string result;
-    if (!it.default_value.value.empty()){
+    auto default_value = First_Element_Or_Default(it.default_value).value
+    
+    if (!default_value.empty()){
+        std::string result;
         result += default_seperator;
         auto language_type_name = Type_Name_Deriver::Derive_Name(it,source_language);
-        std::string literal = Literal_Adjuster::Get_Adjusted(language_type_name,as_string(it.default_value.value),source_language);
+        std::string literal = Literal_Adjuster::Get_Adjusted(language_type_name,default_value,source_language);
         result += literal;
+        return result;
     }
-    return result;
+    return "";
 ❱

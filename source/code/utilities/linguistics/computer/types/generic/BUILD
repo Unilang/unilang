@@ -13,3 +13,15 @@ hcp(
         "//code/utilities/types/strings/transformers/casing:lib",
     ],
 )
+
+hcp(
+    name = "type_name_deriver",
+    deps = [
+        "//code/utilities/linguistics/computer/types/cross/language_type:language_type",
+        "//code/utilities/linguistics/computer/types/generic:unilang_type_to_language_type_converter",
+        "//code/utilities/types/converters:lib",
+        "//code/utilities/types/vectors/observers:lib",
+        "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/types/vectors/converters:lib",
+    ],
+)

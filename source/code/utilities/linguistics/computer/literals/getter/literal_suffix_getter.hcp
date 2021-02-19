@@ -9,12 +9,13 @@ class
 
 ◀public: static▶ std::string ☀Get_Literal_Suffix(Literal_Suffix_Settings const& settings, std::string base_type)❰
     
-    auto stripped_type_detail = Type_Qualifier_Stripper::Strip_To_Base_Unilang_Type(as_string(base_type),false);
-    auto language_type = Unilang_Type_To_Language_Type_Converter::Convert_To_Language_Type(stripped_type_detail.base_type, Source_Language::C);
+    //auto stripped_type_detail = Type_Qualifier_Stripper::Strip_To_Base_Unilang_Type(as_string(base_type),false);
+    //auto language_type = Unilang_Type_To_Language_Type_Converter::Convert_To_Language_Type(stripped_type_detail.base_type, Source_Language::C);
+    std::string language_type_name = "FIX";
     
     std::string suffix;
     if (settings.use_literal_suffixes){
-        suffix = Pull_Out_Literal_Based_On_Table(settings.literal_lookup_table,language_type.name);
+        suffix = Pull_Out_Literal_Based_On_Table(settings.literal_lookup_table,language_type_name);
     }
     
     return suffix;
