@@ -8,13 +8,16 @@ class
 ❪"code/utilities/types/strings/observers/converting/lib"❫
 ❪"code/utilities/types/converters/lib"❫
 ❪"code/utilities/linguistics/computer/types/generic/type_name_deriver"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/converters/lib"❫
 ⚞⚟
 
 
 ◀public: static▶ std::string ☀Possibly_Get_Default_Value(model::DataMember const& it, Source_Language const& source_language)❰
 
     std::string default_seperator = " = ";
-    auto default_value = First_Element_Or_Default(it.default_value).value
+    auto default_value = First_Element_Or_Default(it.default_value).value;
     
     if (!default_value.empty()){
         std::string result;

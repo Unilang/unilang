@@ -8,6 +8,8 @@ class
 ❪"code/utilities/types/vectors/observers/lib"❫
 ❪"code/utilities/linguistics/computer/literals/getter/cpp_literal_suffix_settings"❫
 ❪"code/utilities/linguistics/computer/literals/getter/java_literal_suffix_settings"❫
+❪"code/utilities/types/strings/observers/other/lib"❫
+❪"code/utilities/types/strings/transformers/stripping/lib"❫
 ⚞⚟
 
 

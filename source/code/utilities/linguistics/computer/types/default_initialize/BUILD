@@ -12,5 +12,8 @@ hcp(
         "//code/utilities/types/converters:lib",
         "//code/utilities/types/strings/observers/converting:lib",
         "//code/utilities/linguistics/computer/types/generic:type_name_deriver",
+        "//code/utilities/types/vectors/observers:lib",
+        "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/types/vectors/converters:lib",
     ],
 )
