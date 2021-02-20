@@ -53,6 +53,7 @@ hcp(
     name = "class_getter",
     deps = [
         "//code/utilities/code:concept_static_tree_structs",
+        "//code/utilities/code/query:class_name_getter",
         "//code/utilities/code/query:virtual_method_checker",
         "//code/utilities/comments/doxygen/maker:doxygen_block_printer",
         "//code/utilities/contributor",
@@ -68,7 +69,6 @@ hcp(
         "//code/utilities/types/vectors/converters:lib",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
-        "//code/utilities/code/query:class_name_getter",
     ],
 )
 
@@ -76,21 +76,21 @@ hcp(
     name = "data_members_getter",
     deps = [
         "//code/utilities/code:concept_static_tree_structs",
-        "//code/utilities/comments/doxygen/maker:doxygen_block_printer",
-        "//code/utilities/code/query:data_member_visibility",
+        "//code/utilities/code/query:data_member_mutability",
         "//code/utilities/code/query:data_member_storage_specifier",
+        "//code/utilities/code/query:data_member_visibility",
+        "//code/utilities/comments/doxygen/maker:doxygen_block_printer",
         "//code/utilities/contributor",
         "//code/utilities/linguistics/computer/frontends/java/settings:java_settings",
-        "//code/utilities/linguistics/computer/keywords/visibility:visibility_keyword_getter",
-        "//code/utilities/linguistics/computer/keywords/storage:storage_keyword_getter",
+        "//code/utilities/linguistics/computer/frontends/parts/identifier:data_member_to_identifier",
         "//code/utilities/linguistics/computer/keywords/mutability:mutability_keyword_getter",
-        "//code/utilities/code/query:data_member_mutability",
+        "//code/utilities/linguistics/computer/keywords/storage:storage_keyword_getter",
+        "//code/utilities/linguistics/computer/keywords/visibility:visibility_keyword_getter",
+        "//code/utilities/linguistics/computer/types/default_initialize:default_initialize_getter",
+        "//code/utilities/linguistics/computer/types/generic:unilang_type_to_language_type_converter",
+        "//code/utilities/types/vectors/converters:lib",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
-        "//code/utilities/types/vectors/converters:lib",
-        "//code/utilities/linguistics/computer/types/generic:unilang_type_to_language_type_converter",
-        "//code/utilities/linguistics/computer/frontends/parts/identifier:data_member_to_identifier",
-        "//code/utilities/linguistics/computer/types/default_initialize:default_initialize_getter",
     ],
 )
 

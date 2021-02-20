@@ -13,13 +13,14 @@ enum_cpp(
 )
 
 hcp(name = "greedy_reflow_settings")
+
 hcp(name = "knuth_plass_reflow_settings")
 
 hcp(
     name = "comment_reflow_settings",
     deps = [
-        "//code/utilities/types/strings/observers/reflow/settings:reflow_algorithm",
         "//code/utilities/types/strings/observers/reflow/settings:greedy_reflow_settings",
         "//code/utilities/types/strings/observers/reflow/settings:knuth_plass_reflow_settings",
+        "//code/utilities/types/strings/observers/reflow/settings:reflow_algorithm",
     ],
 )

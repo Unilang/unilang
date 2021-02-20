@@ -60,7 +60,7 @@ class
 // build --bes_backend=grpc://localhost:1985
 // build --remote_cache=grpc://localhost:1985
     
-    Append_With_Newline(str,"build --sandbox_writable_path=" + Full_Path_To_Desktop() + "repos");
+    Append_With_Newline(str,"build:unilang --sandbox_writable_path=" + Full_Path_To_Desktop() + "repos");
     
     return str;
 ❱

@@ -16,11 +16,11 @@ hcp(
         "//code/tools/ide/global_actions:global_action_decider",
         "//code/tools/ide/settings:ide_elements",
         "//code/utilities/code:concept_string_tree_parser",
+        "//code/utilities/code/save:patch_settings_getter",
         "//code/utilities/code/save:save_state",
         "//code/utilities/formats/json/converters:json_file_io",
         "//code/utilities/formats/json/converters:lib",
         "//code/utilities/program/wrappers/zenity/file_selector",
-        "//code/utilities/code/save:patch_settings_getter",
     ],
 )
 
@@ -43,11 +43,11 @@ hcp(
         "//code/tools/ide/global_actions:global_action_decider",
         "//code/tools/ide/settings:ide_elements",
         "//code/utilities/code:concept_string_tree_parser",
+        "//code/utilities/code/save:patch_settings_getter",
         "//code/utilities/code/save:save_state",
         "//code/utilities/formats/json/converters:json_file_io",
         "//code/utilities/formats/json/converters:lib",
         "//code/utilities/program/wrappers/zenity/file_selector",
-        "//code/utilities/code/save:patch_settings_getter",
     ],
 )
 

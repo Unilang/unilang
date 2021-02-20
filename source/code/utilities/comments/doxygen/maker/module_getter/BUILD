@@ -7,13 +7,13 @@ hcp(
     name = "doxygen_data_getter_for_modules",
     deps = [
         "//code/utilities/code:concept_static_tree_structs",
+        "//code/utilities/code/query:class_name_getter",
         "//code/utilities/comments/doxygen/maker:doxygen_data",
         "//code/utilities/comments/doxygen/maker:doxygen_data_shared",
         "//code/utilities/linguistics/computer/frontends/parts:module_settings",
+        "//code/utilities/linguistics/grammar:grammar_adjuster",
         "//code/utilities/types/converters:lib",
         "//code/utilities/types/general:lib",
-        "//code/utilities/code/query:class_name_getter",
-        "//code/utilities/linguistics/grammar:grammar_adjuster",
         "//code/utilities/types/strings/observers/reflow:sentence_reflower",
     ],
 )

@@ -12,8 +12,8 @@ hcp(
         "//code/utilities/linguistics/computer/literals/getter:literal_suffix_getter",
         "//code/utilities/linguistics/computer/literals/getter/data:floating_point_literal_settings",
         "//code/utilities/linguistics/computer/literals/getter/data:literal_suffix_settings",
-        "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/strings/observers/other:lib",
         "//code/utilities/types/strings/transformers/stripping:lib",
+        "//code/utilities/types/vectors/observers:lib",
     ],
 )

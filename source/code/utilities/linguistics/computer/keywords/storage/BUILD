@@ -23,10 +23,10 @@ hcp(
 hcp(
     name = "storage_keyword_getter",
     deps = [
+        "//code/utilities/code:storage_specifier",
         "//code/utilities/linguistics/computer:source_language",
         "//code/utilities/linguistics/computer/keywords/storage:language_storage_getter",
         "//code/utilities/linguistics/computer/keywords/storage:storage_strs",
-        "//code/utilities/code:storage_specifier",
         "//code/utilities/types/map:lib",
         "//code/utilities/types/strings/transformers/casing:lib",
     ],

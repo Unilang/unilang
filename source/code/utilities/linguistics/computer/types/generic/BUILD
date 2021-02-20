@@ -17,12 +17,12 @@ hcp(
 hcp(
     name = "type_name_deriver",
     deps = [
-        "//code/utilities/linguistics/computer/types/cross/language_type:language_type",
+        "//code/utilities/code:concept_static_tree_structs",
+        "//code/utilities/linguistics/computer/types/cross/language_type",
         "//code/utilities/linguistics/computer/types/generic:unilang_type_to_language_type_converter",
         "//code/utilities/types/converters:lib",
+        "//code/utilities/types/vectors/converters:lib",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
-        "//code/utilities/types/vectors/converters:lib",
-        "//code/utilities/code:concept_static_tree_structs",
     ],
 )
