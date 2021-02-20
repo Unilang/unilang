@@ -1,9 +1,0 @@
-codeship_example:
-  build:
-    image: codeship_example
-    dockerfile: Dockerfile
-    path: "./"
-  add_docker: true
-  environment:
-    LANG: en_US.UTF-8
-    LC_ALL: en_US.UTF-8
