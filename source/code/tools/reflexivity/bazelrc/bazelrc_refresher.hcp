@@ -19,7 +19,7 @@ class
 
     Write_To_File(Get_Bazelrc_File_Path(),Create_Bazelrc_Contents());
 
-❱
+❱ 
 
 ◀private: static▶ std::string ☀Create_Bazelrc_Contents()❰
     std::string str;
