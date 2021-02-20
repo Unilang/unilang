@@ -32,19 +32,26 @@ class
     //get module sentences
     auto brief_sentences = Get_Sentences(m.module_brief);
     auto detail_sentences = Get_Sentences(m.module_detail);
-
-    //fix their grammar
-    Fix_Grammar(brief_sentences,options.general.comment.grammar);
-    Fix_Grammar(detail_sentences,options.general.comment.grammar);
     
-    //reflow them
-    auto final_brief = Sentence_Reflower::Possibly_Apply_Reflow(brief_sentences,options.general.comment.grammar,options.general.comment.reflow);
-    auto final_detail = Sentence_Reflower::Possibly_Apply_Reflow(detail_sentences,options.general.comment.grammar,options.general.comment.reflow);
+    //adjust sentences so they look pretty
+    auto final_brief = Fix_Up_Sentences(brief_sentences,options);
+    auto final_detail = Fix_Up_Sentences(detail_sentences,options);
     
     //add them
     Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,options.general.comment.doxygen.brief_tag,final_brief);
     Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,options.general.comment.doxygen.detail_tag,final_detail);
       
+❱
+
+◀private: static▶ std::string ☀Fix_Up_Sentences(std::vector<std::string> & sentences, Module_Settings const& options)❰
+
+    //fix grammar
+    Fix_Grammar(sentences,options.general.comment.grammar);
+    
+    //reflow them
+    auto full_string = Sentence_Reflower::Possibly_Apply_Reflow(sentences,options.general.comment.grammar,options.general.comment.reflow);
+    
+    return full_string;
 ❱
 
 ◀private: static▶ void ☀Fix_Grammar(std::vector<std::string> & sentences, Comment_Grammar_Settings const& grammar)❰
