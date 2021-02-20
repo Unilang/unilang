@@ -1,0 +1,3 @@
+install: 
+  - echo 'docker build -t unilang .'
+  - echo 'docker run unilang ./ci_scripts/drone'
