@@ -48,7 +48,7 @@ class
         Buildable_Face_Tree_Action_Doer::Do_Label_Action(tree,Buildable_Label_Action::DELETE);
     }
     else if (message == "duplicate"){
-        //TODO
+        Buildable_Face_Tree_Action_Doer::Do_Label_Action(tree,Buildable_Label_Action::DUPLICATE);
     }
 ❱
 ◀private: static▶ void ☀Add_Child_Node(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, std::string const& message)❰

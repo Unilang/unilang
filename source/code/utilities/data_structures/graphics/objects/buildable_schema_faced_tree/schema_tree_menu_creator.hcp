@@ -29,6 +29,7 @@ class
     
     auto face_label = Faced_Label_Premades::Highlightable_Single_Plain_White_Box();
     face_label.state.faces[0].label.message = "show children only";
+    face_label.state.faces[0].label.message = "apply color theme";
     
     return x;
 ❱

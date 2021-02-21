@@ -59,6 +59,9 @@ class
         
         case Buildable_Label_Action::TEXT_COLOR: Text_Color(tree);
         break;
+        
+        case Buildable_Label_Action::DUPLICATE: Duplicate(tree);
+        break;
     }
 ❱
 
@@ -139,6 +142,12 @@ class
                                            ,tree.selected_node->label.state.faces[tree.selected_node->label.state.index].label.styles.hovered_active.text
                                            ,tree.selected_node->label.state.faces[tree.selected_node->label.state.index].label.styles.hovered_nonactive.text
                                            ,c_settings);
+❱
+
+◀private: static▶ void ☀Duplicate(Buildable_Face_Tree_State & tree)❰
+    auto end_marker = tree.structure.nodes.next_sibling(tree.selected_node);
+    auto subtree = tree.structure.nodes.subtree(tree.selected_node,end_marker);
+    tree.structure.nodes.insert_subtree(tree.selected_node,subtree.begin());
 ❱
 
 

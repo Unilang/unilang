@@ -23,6 +23,7 @@ enum_cpp(
         "collapse_all",
         "background_color",
         "text_color",
+        "duplicate",
     ],
 )
 
