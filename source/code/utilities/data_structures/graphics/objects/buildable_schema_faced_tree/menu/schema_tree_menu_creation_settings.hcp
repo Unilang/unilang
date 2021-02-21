@@ -1,0 +1,17 @@
+class
+❪vector❫
+❪string❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    std::string ፠menu_name፠ = "default";
+    bool ፠add_global_manipulation_options፠ = true;
+    bool ፠add_local_manipulation_options፠ = true;
+    bool ፠add_sibiling_rename_options፠ = false;
+    bool ፠add_children_append_options፠ = true;
+    
+▶
+

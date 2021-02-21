@@ -21,6 +21,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/select_menu/select_menu"❫
 ❪"code/utilities/data_structures/tree/generic/child_lookup_map"❫
 ❪"code/utilities/code/style_theme/style_lookup_map"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_tree_menu_creation_settings"❫
 ⚯
 ❪"code/utilities/data_structures/graphics/objects/mouse/events/mouse_events_checker"❫
 ❪"code/utilities/types/vectors/operators/lib"❫
@@ -37,8 +38,8 @@ class
 ❪"code/utilities/output/printers/lib"❫
 ❪"code/utilities/data_structures/tree/generic/child_lookup_map_find"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_full_path_name"❫
-❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/schema_tree_menu_creator"❫
-❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/schema_tree_menu_click_handler"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_tree_menu_creator"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_tree_menu_click_handler"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Handle_Menu_Logic(Frame_Elements & elements, Character_Maps const& font_chars, Pc_Input_State const& pc_input, Buildable_Face_Tree_State & state, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, bool const& label_first_selected)❰
@@ -58,11 +59,45 @@ class
 
     if (label_first_selected){
         
-        auto menu_out = Schema_Tree_Menu_Creator::Create_Menu(tree.structure,lookup,tree.selected_node);
+        auto settings = Create_Menu_Settings(pc_input);
+        auto menu_out = Schema_Tree_Menu_Creator::Create_Menu(tree.structure,lookup,settings,tree.selected_node);
         tree.menu.menu = menu_out.menu;
         tree.menu.pos = pc_input.mouse.pos;
         tree.menu.visible = true;
     }
+❱
+
+◀private: static▶ Schema_Tree_Menu_Creation_Settings ☀Create_Menu_Settings(Pc_Input_State const& pc_input)❰
+    
+    Schema_Tree_Menu_Creation_Settings settings;
+    settings.add_global_manipulation_options = false;
+    settings.add_local_manipulation_options = false;
+    settings.add_sibiling_rename_options = false;
+    settings.add_children_append_options = false;
+    
+    if (pc_input.keyboard.one == Key_State::DOWN || pc_input.keyboard.one == Key_State::PRESSED){
+        settings.menu_name = "global";
+        settings.add_global_manipulation_options = true;
+        return settings;
+    }
+    
+    if (pc_input.keyboard.two == Key_State::DOWN || pc_input.keyboard.two == Key_State::PRESSED){
+        settings.menu_name = "local";
+        settings.add_local_manipulation_options = true;
+        return settings;
+    }
+    
+    if (pc_input.keyboard.three == Key_State::DOWN || pc_input.keyboard.three == Key_State::PRESSED){
+        settings.menu_name = "rename";
+        settings.add_sibiling_rename_options = true;
+        return settings;
+    }
+    
+    settings.menu_name = "insert";
+    settings.add_children_append_options = true;
+    return settings;
+    
+
 ❱
 
 ◀private: static▶ void ☀Handle_Menu(Frame_Elements & elements, Character_Maps const& font_chars, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, Buildable_Face_Tree_State & tree, Pc_Input_State const& pc_input, bool const& label_first_selected)❰

@@ -22,6 +22,7 @@ class
     patches.emplace_back(Patch_0);
     patches.emplace_back(Patch_1);
     patches.emplace_back(Patch_2);
+    patches.emplace_back(Patch_3);
     
     //add more
     return patches;
@@ -51,3 +52,19 @@ class
         }
     }
 ❱
+◀private: static▶ void ☀Patch_3(nlohmann::json & j)❰
+    for (auto & element: j["elements"]["types"]){
+        
+        //if its the variant structure we care about
+        if (element["element"]["index"] == 1){
+            for (auto & label: element["element"]["value"]["state"]["tree"]["state"]["structure"]["nodes"]){
+                    for (auto & face:  label[1]["label"]["state"]["faces"]){
+                        face["draw"] = true;
+                    }
+            }
+        }
+    }
+❱
+
+//Type_To_Json_String::As_JSON_String();
+

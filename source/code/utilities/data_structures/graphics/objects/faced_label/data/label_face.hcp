@@ -16,5 +16,8 @@ class
     //signified
     //user can see
     Label_Settings ፠label፠;
+    
+    //whether the face should be drawn to the user
+    bool ፠draw፠ = true;
 ▶
 

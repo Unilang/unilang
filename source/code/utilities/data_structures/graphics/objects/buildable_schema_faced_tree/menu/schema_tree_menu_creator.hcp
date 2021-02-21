@@ -7,6 +7,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree"❫
 ❪"code/utilities/data_structures/tree/generic/child_lookup_map"❫
 ❪"code/utilities/data_structures/graphics/objects/select_menu/select_menu"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_tree_menu_creation_settings"❫
 ⚯
 ❪"code/utilities/data_structures/graphics/objects/faced_label/premade/faced_label_premades"❫
 ❪"code/utilities/data_structures/tree/generic/child_lookup_map_find"❫
@@ -14,45 +15,29 @@ class
 ⚞⚟
 
 
-◀public: static▶ Select_Menu ☀Create_Menu(Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
+◀public: static▶ Select_Menu ☀Create_Menu(Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, Schema_Tree_Menu_Creation_Settings const& settings, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
 
     //there are two kinds of menus to choose from
-    return Individual_Label_Menu(structure,lookup,it);
-    //return Entire_Tree_Menu(structure,lookup,it);
+    return Create(structure,lookup,settings,it);
 ❱
 
-
-◀private: static▶ Select_Menu ☀Entire_Tree_Menu(Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
-
-    Select_Menu x;
-    x.name = "tree menu";
-    
-    auto face_label = Faced_Label_Premades::Highlightable_Single_Plain_White_Box();
-    face_label.state.faces[0].label.message = "show children only";
-    face_label.state.faces[0].label.message = "apply color theme";
-    
-    return x;
-❱
-
-◀private: static▶ Select_Menu ☀Individual_Label_Menu(Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
+◀private: static▶ Select_Menu ☀Create(Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, Schema_Tree_Menu_Creation_Settings const& settings, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
 
     Select_Menu x;
-    x.name = "label menu";
+    x.name = settings.menu_name;
     
-    //customize
-    bool add_tree_manipulation_options = true;
-    bool add_sibiling_rename_options = false;
-    bool add_children_append_options = true;
-    
-    if (add_tree_manipulation_options){
-        Add_Tree_Manipulation_Options(x,structure,lookup,it);
+    if (settings.add_global_manipulation_options){
+        Add_Global_Manipulation_Options(x,structure,lookup,it);
+    }
+    if (settings.add_local_manipulation_options){
+        Add_Local_Manipulation_Options(x,structure,lookup,it);
     }
     
-    if (add_sibiling_rename_options){
+    if (settings.add_sibiling_rename_options){
         Add_Sibling_Names_For_Renaming(x,structure,lookup,it);
     }
     
-    if (add_children_append_options){
+    if (settings.add_children_append_options){
         Add_Children_Names_For_Appending(x,structure,lookup,it);
     }
     
@@ -60,7 +45,24 @@ class
 ❱
 
 
-◀private: static▶ void ☀Add_Tree_Manipulation_Options(Select_Menu & x, Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
+◀private: static▶ void ☀Add_Global_Manipulation_Options(Select_Menu & x, Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
+
+    //style
+    auto face_label = Faced_Label_Premades::Highlightable_Single_Plain_White_Box();
+    
+    face_label.state.faces[0].label.message = "!draw children only";
+    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    
+    face_label.state.faces[0].label.message = "!draw signified only";
+    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    
+    face_label.state.faces[0].label.message = "!draw all";
+    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    
+    face_label.state.faces[0].label.message = "!apply color theme";
+    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+❱
+◀private: static▶ void ☀Add_Local_Manipulation_Options(Select_Menu & x, Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
 
     //style
     auto face_label = Faced_Label_Premades::Highlightable_Single_Plain_White_Box();
