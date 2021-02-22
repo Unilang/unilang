@@ -64,6 +64,7 @@ class
     settings.module.general.comment.doxygen.in_parameters = "";
     settings.module.general.comment.doxygen.out_parameters = "";
     settings.module.general.comment.doxygen.in_and_out_parameters = "";
+    settings.module.general.comment.doxygen.use_repetitive_class_tag = true;
     
     settings.module.portion.method_options.prefix_object_api_methods_with_object_name = false;
     
