@@ -22,20 +22,23 @@ class
 ⚞⚟
 
 ◀public: static▶ Label_Styles ☀Blue()❰
-    Label_Styles x = Two_Color_Style(Color_Defaults::Light_Blue(),Color_Defaults::Black(),Color_Defaults::Black(),
-                                     Color_Defaults::Blue(),Color_Defaults::Black(),Color_Defaults::Black());
-    return x;
+    return Fade_Label(Color_Defaults::Light_Blue());
 ❱
 ◀public: static▶ Label_Styles ☀Gray()❰
+    return Fade_Label(Color_Defaults::Light_Gray());
+❱
 
-    auto light = Color_Defaults::Light_Gray();
-    auto dark = Color_Defaults::Light_Gray();
-    Color_Shader::Shade(dark,.5);
+◀private: static▶ Label_Styles ☀Fade_Label(Transparent_Rgb_Color const& color)❰
+
+    auto light = color;
+    auto dark = color;
+    Color_Shader::Shade(dark,-.2);
     
     Label_Styles x = Two_Color_Style(light,Color_Defaults::Black(),Color_Defaults::Black(),
                                      dark,Color_Defaults::Black(),Color_Defaults::Black());
     return x;
 ❱
+
 
 ◀public: static▶ Label_Styles ☀Two_Color_Style(Transparent_Rgb_Color const& fill, Transparent_Rgb_Color const& text, Transparent_Rgb_Color const& cursor,
                                              Transparent_Rgb_Color const& fill2, Transparent_Rgb_Color const& text2, Transparent_Rgb_Color const& cursor2)❰
