@@ -8,6 +8,7 @@ hcp(
     deps = [
         "//code/utilities/filesystem/files/temp:existing_temp_file",
         "//code/utilities/filesystem/paths:lib",
+        "//code/utilities/fonts/font_files:nasalization_rg",
         "//code/utilities/fonts/font_files:pixel_bit_advanced",
         "//code/utilities/program/wrappers/convert:black_and_white_forcer",
         "//code/utilities/program/wrappers/convert:convert_image_maker",

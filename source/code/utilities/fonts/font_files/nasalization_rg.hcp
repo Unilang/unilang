@@ -1,0 +1,12 @@
+class
+❪string❫
+❪iostream❫
+⚯
+⚞⚟
+
+◀public: static▶ std::string ☀Get()❰
+
+    std::string str;
+    str = "external/fonts/nasalization-rg.ttf";
+    return str;
+❱ 

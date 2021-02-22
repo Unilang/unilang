@@ -26,3 +26,9 @@ hcp(
     data = ["@fonts//:DroidSansMono"],
     deps = [],
 )
+
+hcp(
+    name = "nasalization_rg",
+    data = ["@fonts//:nasalization_rg"],
+    deps = [],
+)

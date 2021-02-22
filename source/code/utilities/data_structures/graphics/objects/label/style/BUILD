@@ -41,6 +41,7 @@ hcp(
         "//code/tools/ide/settings:ide_settings",
         "//code/utilities/colors/defaults:color_defaults",
         "//code/utilities/colors/defaults:rectangle_shades",
+        "//code/utilities/colors/transformers:color_shader",
         "//code/utilities/data_structures/color:transparent_rgb_color",
         "//code/utilities/data_structures/graphics/bitmap/full_color_bitmap",
         "//code/utilities/data_structures/graphics/bitmap/pixel:pixel_slider",
@@ -54,6 +55,5 @@ hcp(
         "//code/utilities/graphics/imgui:ui_renders",
         "//code/utilities/graphics/imgui/render/elements:full_color_bitmap_drawer",
         "//code/utilities/graphics/imgui/render/elements:rectangle_drawer",
-        "//code/utilities/colors/transformers:color_shader",
     ],
 )

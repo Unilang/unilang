@@ -25,6 +25,7 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree/data:buildable_face_tree",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree/data:positioned_buildable_face_tree",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_tree_menu_click_handler",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_tree_menu_creation_settings",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_tree_menu_creator",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/data:positioned_buttoned_faced_label",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/premade:buttoned_faced_label_premades",
@@ -50,13 +51,13 @@ hcp(
         "//code/utilities/types/tree:full_path_name",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_tree_menu_creation_settings",
     ],
 )
 
 hcp(
     name = "schema_tree_menu_creator",
     deps = [
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_tree_menu_creation_settings",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_full_path_name",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:positioned_button_face_tree",
@@ -64,10 +65,8 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/select_menu",
         "//code/utilities/data_structures/tree/generic:child_lookup_map",
         "//code/utilities/data_structures/tree/generic:child_lookup_map_find",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_tree_menu_creation_settings",
     ],
 )
-
 
 hcp(
     name = "schema_tree_menu_click_handler",

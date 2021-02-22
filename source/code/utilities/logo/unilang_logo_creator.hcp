@@ -11,6 +11,7 @@ class
 ❪"code/utilities/filesystem/paths/lib"❫
 ❪"code/utilities/filesystem/files/temp/existing_temp_file"❫
 ❪"code/utilities/fonts/font_files/pixel_bit_advanced"❫
+❪"code/utilities/fonts/font_files/nasalization_rg"❫
 ❪"code/utilities/program/wrappers/convert/text_image_maker/text_image_maker_settings"❫
 ❪"code/utilities/program/wrappers/convert/text_image_maker/text_image_maker"❫
 ⚞⚟
@@ -29,7 +30,8 @@ class
     
     //stage 2
     settings.text = "Unilang";
-    settings.font_path = Pixel_Bit_Advanced::Get();
+    //settings.font_path = Pixel_Bit_Advanced::Get();
+    settings.font_path = Nasalization_Rg::Get();
     settings.pos.x = 0;
     settings.pos.y = 100;
     settings.point_size=60;
