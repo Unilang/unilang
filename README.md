@@ -1,4 +1,4 @@
-<img width="369" height="60" src=".readme/unilang_logo.png"> [<img width="60" height="60" src=".readme/pdf_download.png">](https://www.dropbox.com/s/1qde65ekii8nyb9/unilang.pdf?dl=1)
+<img src=".readme/unilang_logo.png"> [<img width="60" height="60" src=".readme/pdf_download.png">](https://www.dropbox.com/s/1qde65ekii8nyb9/unilang.pdf?dl=1)
 
 **A universal programming language**
 
