@@ -16,6 +16,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/cursor/premade/color_cursor"❫
 ⚯
 ❪"code/utilities/colors/defaults/color_defaults"❫
+❪"code/utilities/colors/transformers/color_shader"❫
 ❪"code/utilities/data_structures/graphics/objects/cursor/premade/blue_cursor"❫
 ❪"code/utilities/data_structures/graphics/objects/cursor/premade/red_cursor"❫
 ⚞⚟
@@ -23,6 +24,16 @@ class
 ◀public: static▶ Label_Styles ☀Blue()❰
     Label_Styles x = Two_Color_Style(Color_Defaults::Light_Blue(),Color_Defaults::Black(),Color_Defaults::Black(),
                                      Color_Defaults::Blue(),Color_Defaults::Black(),Color_Defaults::Black());
+    return x;
+❱
+◀public: static▶ Label_Styles ☀Gray()❰
+
+    auto light = Color_Defaults::Light_Gray();
+    auto dark = Color_Defaults::Light_Gray();
+    Color_Shader::Shade(dark,.5);
+    
+    Label_Styles x = Two_Color_Style(light,Color_Defaults::Black(),Color_Defaults::Black(),
+                                     dark,Color_Defaults::Black(),Color_Defaults::Black());
     return x;
 ❱
 
@@ -95,16 +106,16 @@ class
     
     return x;
 ❱
-◀public: static▶ Label_Styles ☀Highlightable_Plain_White_Box()❰
+◀public: static▶ Label_Styles ☀Plain_Gray_Box()❰
     Label_Styles x;
     
     //not selected
-    x.regular_nonactive = Plain_White_Box_Style();
-    x.hovered_nonactive = Plain_Black_Box_Style();
+    x.regular_nonactive = Plain_Gray_Box_Style();
+    x.hovered_nonactive = Plain_Gray_Box_Style();
     
     //selected
-    x.regular_active = Plain_Black_Box_Style();
-    x.hovered_active = Plain_Black_Box_Style();
+    x.regular_active = Plain_Gray_Box_Style();
+    x.hovered_active = Plain_Gray_Box_Style();
     
     //DISABLED:
     //not selected
@@ -117,16 +128,17 @@ class
     
     return x;
 ❱
-◀public: static▶ Label_Styles ☀Plain_Gray_Box()❰
+
+◀public: static▶ Label_Styles ☀Highlightable_Plain_White_Box()❰
     Label_Styles x;
     
     //not selected
-    x.regular_nonactive = Plain_Gray_Box_Style();
-    x.hovered_nonactive = Plain_Gray_Box_Style();
+    x.regular_nonactive = Plain_White_Box_Style();
+    x.hovered_nonactive = Plain_Black_Box_Style();
     
     //selected
-    x.regular_active = Plain_Gray_Box_Style();
-    x.hovered_active = Plain_Gray_Box_Style();
+    x.regular_active = Plain_Black_Box_Style();
+    x.hovered_active = Plain_Black_Box_Style();
     
     //DISABLED:
     //not selected

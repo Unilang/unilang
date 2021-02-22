@@ -93,6 +93,7 @@ class
         return settings;
     }
     
+    //default
     settings.menu_name = "insert";
     settings.add_children_append_options = true;
     return settings;

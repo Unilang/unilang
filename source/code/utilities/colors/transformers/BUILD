@@ -16,6 +16,7 @@ hcp(
     deps = [
         "//code/utilities/data_structures/color:rgb_color_transition",
         "//code/utilities/data_structures/color:rgba_color_transition",
+        "//code/utilities/data_structures/color:transparent_rgb_color",
     ],
 )
 

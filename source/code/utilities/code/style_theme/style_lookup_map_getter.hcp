@@ -19,8 +19,8 @@ class
     x.map.insert({"code/module/code_type/",Code_Module_Code_Type()});
     
     //default styling if missing
-    x.default_styles.label_styles.emplace_back(Default_Label_Styles::Plain_Gray_Box());
-    x.default_styles.label_styles.emplace_back(Default_Label_Styles::Highlightable_Plain_White_Box());
+    x.default_styles.label_styles.emplace_back(Default_Label_Styles::Gray());
+    x.default_styles.label_styles.emplace_back(Default_Label_Styles::Gray());
     
     return x;
 ❱
@@ -28,25 +28,25 @@ class
 
 ◀private: static▶ Style_Theme ☀Code()❰
     Style_Theme theme;
-    theme.label_styles.emplace_back(Default_Label_Styles::Plain_Gray_Box());
-    theme.label_styles.emplace_back(Default_Label_Styles::Highlightable_Plain_White_Box());
+    theme.label_styles.emplace_back(Default_Label_Styles::Blue());
+    theme.label_styles.emplace_back(Default_Label_Styles::Gray());
     return theme;
 ❱
 ◀private: static▶ Style_Theme ☀Code_Module()❰
     Style_Theme theme;
-    theme.label_styles.emplace_back(Default_Label_Styles::Plain_Gray_Box());
-    theme.label_styles.emplace_back(Default_Label_Styles::Highlightable_Plain_White_Box());
+    theme.label_styles.emplace_back(Default_Label_Styles::Gray());
+    theme.label_styles.emplace_back(Default_Label_Styles::Gray());
     return theme;
 ❱
 ◀private: static▶ Style_Theme ☀Code_Module_Name()❰
     Style_Theme theme;
-    theme.label_styles.emplace_back(Default_Label_Styles::Plain_Gray_Box());
+    theme.label_styles.emplace_back(Default_Label_Styles::Gray());
     theme.label_styles.emplace_back(Default_Label_Styles::Blue());
     return theme;
 ❱
 ◀private: static▶ Style_Theme ☀Code_Module_Code_Type()❰
     Style_Theme theme;
-    theme.label_styles.emplace_back(Default_Label_Styles::Plain_Gray_Box());
+    theme.label_styles.emplace_back(Default_Label_Styles::Gray());
     theme.label_styles.emplace_back(Default_Label_Styles::Blue());
     return theme;
 ❱

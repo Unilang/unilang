@@ -61,6 +61,9 @@ class
     
     face_label.state.faces[0].label.message = "!apply color theme";
     x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    
+    face_label.state.faces[0].label.message = "!sort by schema";
+    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
 ❱
 ◀private: static▶ void ☀Add_Local_Manipulation_Options(Select_Menu & x, Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
 
