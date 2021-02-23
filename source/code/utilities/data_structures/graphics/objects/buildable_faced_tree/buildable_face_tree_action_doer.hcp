@@ -179,6 +179,8 @@ class
 
     //get the first sibling
     auto first = tree.structure.nodes.sibling(tree.selected_node,0);
+    
+    //move
     tree.structure.nodes.insert_subtree(first,tree.selected_node);
     tree.structure.nodes.erase(tree.selected_node);
 ❱
@@ -188,6 +190,7 @@ class
     auto count = tree.structure.nodes.number_of_siblings(tree.selected_node);
     auto last = tree.structure.nodes.sibling(tree.selected_node,count);
     
+    //move
     tree.structure.nodes.insert_subtree_after(last,tree.selected_node);
     tree.structure.nodes.erase(tree.selected_node);
     
