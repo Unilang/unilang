@@ -178,6 +178,9 @@ class
 ◀private: static▶ void ☀Move_Sibling_First(Buildable_Face_Tree_State & tree)❰
 ❱
 ◀private: static▶ void ☀Move_Sibling_Last(Buildable_Face_Tree_State & tree)❰
+    auto count = tree.structure.nodes.number_of_siblings(tree.selected_node);
+    auto last = tree.structure.nodes.child(tree.selected_node,count-1);
+    tree.structure.nodes.swap(tree.selected_node,last);
 ❱
 
 
