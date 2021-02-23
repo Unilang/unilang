@@ -62,6 +62,18 @@ class
         
         case Buildable_Label_Action::DUPLICATE: Duplicate(tree);
         break;
+        
+        case Buildable_Label_Action::MOVE_SIBLING_UP: Move_Sibling_Up(tree);
+        break;
+        
+        case Buildable_Label_Action::MOVE_SIBLING_DOWN: Move_Sibling_Down(tree);
+        break;
+        
+        case Buildable_Label_Action::MOVE_SIBLING_FIRST: Move_Sibling_First(tree);
+        break;
+        
+        case Buildable_Label_Action::MOVE_SIBLING_LAST: Move_Sibling_Last(tree);
+        break;
     }
 ❱
 
@@ -149,6 +161,27 @@ class
     auto subtree = tree.structure.nodes.subtree(tree.selected_node,end_marker);
     tree.structure.nodes.insert_subtree(tree.selected_node,subtree.begin());
 ❱
+
+
+◀private: static▶ void ☀Move_Sibling_Up(Buildable_Face_Tree_State & tree)❰
+    auto next = tree.structure.nodes.previous_sibling(tree.selected_node);
+    if (next != nullptr){
+        tree.structure.nodes.swap(tree.selected_node,next);
+    }
+❱
+◀private: static▶ void ☀Move_Sibling_Down(Buildable_Face_Tree_State & tree)❰
+    auto next = tree.structure.nodes.next_sibling(tree.selected_node);
+    if (next != nullptr){
+        tree.structure.nodes.swap(tree.selected_node,next);
+    }
+❱
+◀private: static▶ void ☀Move_Sibling_First(Buildable_Face_Tree_State & tree)❰
+❱
+◀private: static▶ void ☀Move_Sibling_Last(Buildable_Face_Tree_State & tree)❰
+❱
+
+
+
 
 
 

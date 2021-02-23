@@ -24,6 +24,10 @@ enum_cpp(
         "background_color",
         "text_color",
         "duplicate",
+        "move_sibling_up",
+        "move_sibling_down",
+        "move_sibling_first",
+        "move_sibling_last",
     ],
 )
 
