@@ -5,6 +5,16 @@ load("//bazel/rules/cpp:object.bzl", "cpp_object")
 load("//bazel/rules/hcp:hcp_and_hcp_pos.bzl", "hcp_and_hcp_pos")
 load("//bazel/rules/enum_cpp:enum_cpp.bzl", "enum_cpp")
 
+enum_cpp(
+    name = "schema_menu_type",
+    values = [
+        "global",
+        "local",
+        "rename",
+        "insert",
+        ],
+)
+
 hcp(
     name = "schema_tree_menu_creation_settings",
     deps = [
@@ -51,6 +61,7 @@ hcp(
         "//code/utilities/types/tree:full_path_name",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_menu_type",
     ],
 )
 

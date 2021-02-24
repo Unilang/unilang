@@ -22,6 +22,7 @@ class
 ❪"code/utilities/data_structures/tree/generic/child_lookup_map"❫
 ❪"code/utilities/code/style_theme/style_lookup_map"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_tree_menu_creation_settings"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_menu_type"❫
 ⚯
 ❪"code/utilities/data_structures/graphics/objects/mouse/events/mouse_events_checker"❫
 ❪"code/utilities/types/vectors/operators/lib"❫
@@ -75,30 +76,48 @@ class
     settings.add_sibiling_rename_options = false;
     settings.add_children_append_options = false;
     
-    if (pc_input.keyboard.one == Key_State::DOWN || pc_input.keyboard.one == Key_State::PRESSED){
+    auto menu_type = Choose_Menu_Type(pc_input);
+    
+    switch (menu_type){
+        case Schema_Menu_Type::GLOBAL:
         settings.menu_name = "global";
         settings.add_global_manipulation_options = true;
-        return settings;
-    }
-    
-    if (pc_input.keyboard.two == Key_State::DOWN || pc_input.keyboard.two == Key_State::PRESSED){
+        break;
+        
+        case Schema_Menu_Type::LOCAL:
         settings.menu_name = "local";
         settings.add_local_manipulation_options = true;
-        return settings;
-    }
-    
-    if (pc_input.keyboard.three == Key_State::DOWN || pc_input.keyboard.three == Key_State::PRESSED){
+        break;
+        
+        case Schema_Menu_Type::RENAME:
         settings.menu_name = "rename";
         settings.add_sibiling_rename_options = true;
-        return settings;
+        break;
+        
+        case Schema_Menu_Type::INSERT:
+        settings.menu_name = "insert";
+        settings.add_children_append_options = true;
+        break;
     }
     
-    //default
-    settings.menu_name = "insert";
-    settings.add_children_append_options = true;
     return settings;
     
 
+❱
+
+
+◀private: static▶ Schema_Menu_Type ☀Choose_Menu_Type(Pc_Input_State const& pc_input)❰
+    if (pc_input.keyboard.one == Key_State::DOWN || pc_input.keyboard.one == Key_State::PRESSED){
+        return Schema_Menu_Type::GLOBAL;
+    }
+    if (pc_input.keyboard.two == Key_State::DOWN || pc_input.keyboard.two == Key_State::PRESSED){
+        return Schema_Menu_Type::LOCAL;
+    }
+    if (pc_input.keyboard.three == Key_State::DOWN || pc_input.keyboard.three == Key_State::PRESSED){
+        return Schema_Menu_Type::RENAME;
+    }
+    
+    return Schema_Menu_Type::INSERT;
 ❱
 
 ◀private: static▶ void ☀Handle_Menu(Frame_Elements & elements, Character_Maps const& font_chars, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, Buildable_Face_Tree_State & tree, Pc_Input_State const& pc_input, bool const& label_first_selected)❰
