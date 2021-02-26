@@ -41,6 +41,8 @@ instances {
     # The operation queuer is exclusive and should run on
     # multiple instances concurrently.
     run_operation_queuer: true
+    
+    max_cpu: 20
 
     # The maximum size of a single blob accepted via a
     # ByteStream#write or ContentAddressableStorage#batchUpdateBlobs

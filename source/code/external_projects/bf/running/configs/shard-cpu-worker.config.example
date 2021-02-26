@@ -4,6 +4,7 @@ port: 8981
 # the host:port of this grpc server, required to be accessible
 # by all shard cluster servers
 public_name: "localhost:8981"
+limit_execution: true
 
 # This determines whether the shard instance will participate in the backplane
 # and cache it's operation outputs in its own cache file CAS.
@@ -239,6 +240,7 @@ redis_shard_backplane_config: {
 exec_owner: ""
 
 dequeue_match_settings: {
+  accept_everything: true
   platform: {
     properties: {
       name: "env-vars"
