@@ -1,0 +1,59 @@
+class
+❪string❫
+❪unordered_map❫
+❪utility❫
+❪cstdlib❫
+❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/data/buildable_face_tree"❫
+❪"code/utilities/data_structures/tree/generic/child_lookup_map"❫
+❪"code/utilities/code/style_theme/style_lookup_map"❫
+❪"code/utilities/code/style_theme/style_theme"❫
+⚯
+❪"code/utilities/data_structures/graphics/objects/faced_tree/tree_label_click_finder"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/premade/buttoned_faced_label_premades"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_full_path_name"❫
+❪"code/utilities/data_structures/tree/generic/child_lookup_map_find"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/buildable_face_tree_action_doer"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+⚞⚟
+
+
+
+
+◀public: static▶ void ☀Apply_Theme(Buttoned_Faced_Label & label, Style_Lookup_Map const& style_lookup, std::string const& full_name)❰
+    
+    auto new_style = Get_Color_Styling(style_lookup,full_name);
+    Apply_Theme(label,new_style);
+❱
+
+◀private: static▶ Style_Theme ☀Get_Color_Styling(Style_Lookup_Map const& style_lookup, std::string const& full_name)❰
+
+    //decide the style of those faces
+    auto style = style_lookup.map.find(full_name);
+    if (style == style_lookup.map.end()){
+        return style_lookup.default_styles;
+    }
+    return style->second;
+❱
+
+◀private: static▶ void ☀Apply_Theme(Buttoned_Faced_Label & label, Style_Theme const& styles)❰
+
+    //for now, we'll assume the face label created is 1 or 2 faces
+    //1 for non-leaf nodes
+    //2 for leaf nodes
+    //so we'll set these appropriately based on the styles available
+    
+    //first face exists
+    if (label.label.state.faces.size() >= 1){
+        if (styles.label_styles.size() >= 1){
+            label.label.state.faces[0].label.styles = styles.label_styles[0];
+        }
+    }
+    
+    //second face exists
+    if (label.label.state.faces.size() >= 2){
+        if (styles.label_styles.size() >= 2){
+            label.label.state.faces[1].label.styles = styles.label_styles[1];
+        }
+    }
+❱

@@ -15,7 +15,7 @@ class
 ❪"code/utilities/types/strings/transformers/removing/lib"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/buildable_face_tree_action_doer"❫
 ❪"code/utilities/types/vectors/observers/lib"❫
-❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/style_theme_applier"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/button_faced_label_style_applier"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Handle_Menu_Click(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup)❰
@@ -87,7 +87,7 @@ class
     
     //change color and style based on a customizable theme
     auto full_name = With_Child_Name(tree.structure,parent,message);
-    Style_Theme_Applier::Apply_Theme(new_label,style_lookup,full_name);
+    Button_Faced_Label_Style_Applier::Apply_Theme(new_label,style_lookup,full_name);
     
     
     return new_label;

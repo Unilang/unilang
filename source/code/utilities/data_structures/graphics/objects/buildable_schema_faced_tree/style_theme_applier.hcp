@@ -20,40 +20,6 @@ class
 
 
 
-◀public: static▶ void ☀Apply_Theme(Buttoned_Faced_Label & label, Style_Lookup_Map const& style_lookup, std::string const& full_name)❰
+◀public: static▶ void ☀Apply_Theme(Buildable_Schema_Faced_Tree_State & state)❰
     
-    auto new_style = Get_Color_Styling(style_lookup,full_name);
-    Apply_Theme(label,new_style);
-❱
-
-◀private: static▶ Style_Theme ☀Get_Color_Styling(Style_Lookup_Map const& style_lookup, std::string const& full_name)❰
-
-    //decide the style of those faces
-    auto style = style_lookup.map.find(full_name);
-    if (style == style_lookup.map.end()){
-        return style_lookup.default_styles;
-    }
-    return style->second;
-❱
-
-◀private: static▶ void ☀Apply_Theme(Buttoned_Faced_Label & label, Style_Theme const& styles)❰
-
-    //for now, we'll assume the face label created is 1 or 2 faces
-    //1 for non-leaf nodes
-    //2 for leaf nodes
-    //so we'll set these appropriately based on the styles available
-    
-    //first face exists
-    if (label.label.state.faces.size() >= 1){
-        if (styles.label_styles.size() >= 1){
-            label.label.state.faces[0].label.styles = styles.label_styles[0];
-        }
-    }
-    
-    //second face exists
-    if (label.label.state.faces.size() >= 2){
-        if (styles.label_styles.size() >= 2){
-            label.label.state.faces[1].label.styles = styles.label_styles[1];
-        }
-    }
 ❱
