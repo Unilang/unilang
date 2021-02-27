@@ -16,6 +16,8 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/buildable_face_tree_action_doer"❫
 ❪"code/utilities/types/vectors/observers/lib"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/button_faced_label_style_applier"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/global_manipulation_option"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/local_manipulation_option"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Handle_Menu_Click(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup)❰
@@ -47,12 +49,24 @@ class
 ❱
 
 ◀private: static▶ void ☀Handle_Local_Tree_Actions(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, std::string const& message)❰
-    if (message == "delete"){
+
+    switch (enum_cast_to_Local_Manipulation_Option(message)){
+        case Local_Manipulation_Option::DELETE:
         Buildable_Face_Tree_Action_Doer::Do_Label_Action(tree,Buildable_Label_Action::DELETE);
-    }
-    else if (message == "duplicate"){
+        break;
+        case Local_Manipulation_Option::DUPLICATE:
         Buildable_Face_Tree_Action_Doer::Do_Label_Action(tree,Buildable_Label_Action::DUPLICATE);
+        break;
+        case Local_Manipulation_Option::UP:
+        break;
+        case Local_Manipulation_Option::DOWN:
+        break;
+        case Local_Manipulation_Option::FIRST:
+        break;
+        case Local_Manipulation_Option::LAST:
+        break;
     }
+    
 ❱
 ◀private: static▶ void ☀Handle_Global_Tree_Actions(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, std::string const& message)❰
 ❱
