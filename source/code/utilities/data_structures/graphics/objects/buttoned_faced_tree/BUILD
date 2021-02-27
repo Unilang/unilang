@@ -176,3 +176,22 @@ enum_cpp(
         "none",
     ],
 )
+
+
+
+hcp(
+    name = "button_face_tree_style_applier",
+    deps = [
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:buttoned_face_tree",
+        "//code/utilities/data_structures/tree/generic:child_lookup_map",
+        "//code/utilities/code/style_theme:style_lookup_map",
+        "//code/utilities/code/style_theme:style_theme",
+        "//code/utilities/data_structures/graphics/objects/faced_tree:tree_label_click_finder",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/premade:buttoned_faced_label_premades",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_full_path_name",
+        "//code/utilities/data_structures/tree/generic:child_lookup_map_find",
+        "//code/utilities/types/strings/transformers/removing:lib",
+        "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_action_doer",
+        "//code/utilities/types/vectors/observers:lib",
+    ],
+)
