@@ -15,6 +15,18 @@ enum_cpp(
         ],
 )
 
+enum_cpp(
+    name = "global_manipulation_option",
+    values = [
+        "draw_children_only",
+        "draw_signified_only",
+        "draw_all",
+        "apply_color_theme",
+        "sort_by_schema",
+        ],
+)
+
+
 hcp(
     name = "schema_tree_menu_creation_settings",
     deps = [
@@ -76,6 +88,7 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/select_menu",
         "//code/utilities/data_structures/tree/generic:child_lookup_map",
         "//code/utilities/data_structures/tree/generic:child_lookup_map_find",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:global_manipulation_option",
     ],
 )
 

@@ -8,6 +8,7 @@ class
 ❪"code/utilities/data_structures/tree/generic/child_lookup_map"❫
 ❪"code/utilities/data_structures/graphics/objects/select_menu/select_menu"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_tree_menu_creation_settings"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/global_manipulation_option"❫
 ⚯
 ❪"code/utilities/data_structures/graphics/objects/faced_label/premade/faced_label_premades"❫
 ❪"code/utilities/data_structures/tree/generic/child_lookup_map_find"❫
@@ -50,20 +51,25 @@ class
     //style
     auto face_label = Faced_Label_Premades::Highlightable_Single_Plain_White_Box();
     
-    face_label.state.faces[0].label.message = "!draw children only";
-    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    for (auto const& it: Global_Manipulation_Option_all_strings()){
+        face_label.state.faces[0].label.message = "!" + it;
+        x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    }
     
-    face_label.state.faces[0].label.message = "!draw signified only";
-    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    // face_label.state.faces[0].label.message = "!draw children only";
+    // x.menu.nodes.insert(x.menu.nodes.end(),face_label);
     
-    face_label.state.faces[0].label.message = "!draw all";
-    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    // face_label.state.faces[0].label.message = "!draw signified only";
+    // x.menu.nodes.insert(x.menu.nodes.end(),face_label);
     
-    face_label.state.faces[0].label.message = "!apply color theme";
-    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    // face_label.state.faces[0].label.message = "!draw all";
+    // x.menu.nodes.insert(x.menu.nodes.end(),face_label);
     
-    face_label.state.faces[0].label.message = "!sort by schema";
-    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    // face_label.state.faces[0].label.message = "!apply color theme";
+    // x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    
+    // face_label.state.faces[0].label.message = "!sort by schema";
+    // x.menu.nodes.insert(x.menu.nodes.end(),face_label);
 ❱
 ◀private: static▶ void ☀Add_Local_Manipulation_Options(Select_Menu & x, Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
 
@@ -74,6 +80,18 @@ class
     x.menu.nodes.insert(x.menu.nodes.end(),face_label);
     
     face_label.state.faces[0].label.message = ":duplicate";
+    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    
+    face_label.state.faces[0].label.message = ":up";
+    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    
+    face_label.state.faces[0].label.message = ":down";
+    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    
+    face_label.state.faces[0].label.message = ":first";
+    x.menu.nodes.insert(x.menu.nodes.end(),face_label);
+    
+    face_label.state.faces[0].label.message = ":last";
     x.menu.nodes.insert(x.menu.nodes.end(),face_label);
 ❱
 
