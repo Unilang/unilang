@@ -26,6 +26,17 @@ enum_cpp(
         ],
 )
 
+enum_cpp(
+    name = "local_manipulation_option",
+    values = [
+        "delete",
+        "duplicate",
+        "up",
+        "down",
+        "first",
+        "last",
+        ],
+)
 
 hcp(
     name = "schema_tree_menu_creation_settings",
@@ -89,6 +100,7 @@ hcp(
         "//code/utilities/data_structures/tree/generic:child_lookup_map",
         "//code/utilities/data_structures/tree/generic:child_lookup_map_find",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:global_manipulation_option",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:local_manipulation_option",
     ],
 )
 
