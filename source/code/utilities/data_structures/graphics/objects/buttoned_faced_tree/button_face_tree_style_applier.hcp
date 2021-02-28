@@ -17,6 +17,7 @@ class
 ❪"code/utilities/types/strings/transformers/removing/lib"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/buildable_face_tree_action_doer"❫
 ❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/button_faced_label_style_applier"❫
 ⚞⚟
 
 
@@ -25,8 +26,8 @@ class
 ◀public: static▶ void ☀Apply_Theme(Button_Face_Tree & tree, Child_Lookup_Map const& schema, Style_Lookup_Map const& schema_styles)❰
 
     for (auto it = tree.nodes.begin(); it != tree.nodes.end(); ++it){
-        //auto full_name = With_Child_Name(tree,tree.nodes.parent(it),it->name);
-        //Button_Faced_Label_Style_Applier::Apply_Theme(tree,schema_styles,full_name);
+        auto full_name = With_Child_Name(tree,tree.nodes.parent(it),it->label.state.faces[0].name);
+        Button_Faced_Label_Style_Applier::Apply_Theme(*it,schema_styles,full_name);
     }
 ❱
 
