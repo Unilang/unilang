@@ -58,17 +58,38 @@ class
         Buildable_Face_Tree_Action_Doer::Do_Label_Action(tree,Buildable_Label_Action::DUPLICATE);
         break;
         case Local_Manipulation_Option::UP:
+        Buildable_Face_Tree_Action_Doer::Do_Label_Action(tree,Buildable_Label_Action::MOVE_SIBLING_UP);
         break;
         case Local_Manipulation_Option::DOWN:
+        Buildable_Face_Tree_Action_Doer::Do_Label_Action(tree,Buildable_Label_Action::MOVE_SIBLING_DOWN);
         break;
         case Local_Manipulation_Option::FIRST:
+        Buildable_Face_Tree_Action_Doer::Do_Label_Action(tree,Buildable_Label_Action::MOVE_SIBLING_FIRST);
         break;
         case Local_Manipulation_Option::LAST:
+        Buildable_Face_Tree_Action_Doer::Do_Label_Action(tree,Buildable_Label_Action::MOVE_SIBLING_LAST);
         break;
     }
     
 ❱
 ◀private: static▶ void ☀Handle_Global_Tree_Actions(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, std::string const& message)❰
+
+    switch (enum_cast_to_Global_Manipulation_Option(message)){
+        case Global_Manipulation_Option::DRAW_CHILDREN_ONLY:
+        break;
+        
+        case Global_Manipulation_Option::DRAW_SIGNIFIED_ONLY:
+        break;
+        
+        case Global_Manipulation_Option::DRAW_ALL:
+        break;
+        
+        case Global_Manipulation_Option::APPLY_COLOR_THEME:
+        break;
+        
+        case Global_Manipulation_Option::SORT_BY_SCHEMA:
+        break;
+    }
 ❱
 
 ◀private: static▶ void ☀Add_Child_Node(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, std::string const& message)❰
