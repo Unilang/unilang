@@ -44,6 +44,8 @@ class
             is_over = true;
         }
         
+        return Should_Break::NO;
+        
     });
     
     return is_over;

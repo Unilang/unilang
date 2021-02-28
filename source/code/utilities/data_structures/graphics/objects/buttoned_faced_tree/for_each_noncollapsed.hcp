@@ -1,6 +1,7 @@
 class
 ❪iostream❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/data/buttoned_faced_label"❫
+❪"code/utilities/data_structures/should_break/should_break"❫
 ⚯
 ⚞⚟
 
@@ -33,7 +34,10 @@ static void Iterate(const tree<Buttoned_Faced_Label>& tr, tree<Buttoned_Faced_La
         
         //do
         if (!subtree_collapsed){
-            fun(it,depth);
+            auto should_break = fun(it,depth);
+            if (should_break == Should_Break::YES){
+                break;
+            }
         }
         
         //collapse

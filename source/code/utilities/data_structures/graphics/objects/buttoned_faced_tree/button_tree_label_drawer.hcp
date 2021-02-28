@@ -73,6 +73,8 @@ class
         
         //draw the label
         Append(labels.types,Buttoned_Faced_Label_Drawer::Draw(font_chars,*it,current_pos,pc_input).types);
+        
+        return Should_Break::NO;
     });
     
     elements.types += branches.types;
@@ -81,7 +83,7 @@ class
     
 ❱
 
-◀private: static▶ Frame_Elements  ☀Possibly_Add_Branches(tree<Buttoned_Faced_Label> const& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, Faced_Label const& label, Position const& start_pos, Position & current_pos, int const& depth)❰
+◀private: static▶ Frame_Elements  ☀Possibly_Add_Branches(tree<Buttoned_Faced_Label> const& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, Faced_Label const& label, Position const& start_pos, Position const& current_pos, int const& depth)❰
 
     Frame_Elements elements;
     

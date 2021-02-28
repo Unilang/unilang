@@ -63,7 +63,7 @@ class
 
     //was an element clicked?
     //decide to show the action menu 
-    Schema_Menu_Handler::Handle_Menu_Logic(elements,font_chars,pc_input,state.tree.state,state.schema,state.schema_styles,how_to_open);
+    Schema_Menu_Handler::Handle_Menu_Logic(elements,pos,font_chars,pc_input,state.tree.state,state.schema,state.schema_styles,how_to_open);
     
     
     return elements;

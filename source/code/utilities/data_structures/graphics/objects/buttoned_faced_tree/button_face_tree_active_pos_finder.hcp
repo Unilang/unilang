@@ -1,0 +1,71 @@
+class
+❪string❫
+❪unordered_map❫
+❪utility❫
+❪cstdlib❫
+❪"code/utilities/fonts/bdf/settings/character_segment"❫
+❪"code/utilities/data_structures/graphics/objects/label/data/label_settings"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/data/positioned_buttoned_faced_label"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/positioned_button_face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/label/label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_eventer"❫
+❪"code/utilities/peripheral/mouse/state/mouse_state"❫
+❪"code/utilities/fonts/bdf/character_maps/character_maps"❫
+❪"code/utilities/data_structures/counters/unique_max_counter/unique_max_counter"❫
+⚯
+❪"code/utilities/data_structures/graphics/objects/mouse/events/mouse_events_checker"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/vertical_line"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/horizontal_line"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/l_line"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/right_arrow"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/buttoned_faced_label_is_active"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_is_active"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_set_active"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_tree_global_navigation"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/buttoned_faced_label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/for_each_noncollapsed"❫
+⚞⚟
+
+◀public: static▶ Position ☀Find_Active_Pos(Button_Face_Tree & tree, Position const& pos)❰
+    
+    return Find_Through_Iteration(pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
+❱
+
+◀private: static▶ Position ☀Find_Through_Iteration(Position const& pos, const tree<Buttoned_Faced_Label>& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, tree<Buttoned_Faced_Label>::pre_order_iterator end)❰
+    
+    auto start_pos = pos;
+    auto current_pos = pos;
+    
+    For_Each_Noncollapsed::Iterate(tr,it,end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
+        
+        
+        // move the draw cursor and return the position if found
+        if (it->label.state.faces[it->label.state.index].label.user_state.is_active){
+            
+            Shift_Over_To_Left_Of_Cell(it->label,start_pos,current_pos);
+            return Should_Break::YES;
+        }
+        Adjust_Positions_For_Next_Cell(it->label,start_pos,current_pos,depth);
+        
+        
+        return Should_Break::NO;
+    });
+    
+    return current_pos;
+❱
+
+◀private: static▶ void  ☀Adjust_Positions_For_Next_Cell(Faced_Label const& label, Position const& start_pos, Position & current_pos, int const& depth)❰
+        auto dim = Faced_Label_Drawer::Get_Dimensions(label);
+        current_pos.x = start_pos.x + 10 * depth;
+        current_pos.y += dim.y-1;
+❱
+◀private: static▶ void  ☀Shift_Over_To_Left_Of_Cell(Faced_Label const& label, Position const& start_pos, Position & current_pos)❰
+        auto dim = Faced_Label_Drawer::Get_Dimensions(label);
+        current_pos.x += dim.x -1;
+❱

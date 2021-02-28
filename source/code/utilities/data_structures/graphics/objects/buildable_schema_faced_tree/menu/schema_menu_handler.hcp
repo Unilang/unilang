@@ -42,14 +42,15 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_full_path_name"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_tree_menu_creator"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_tree_menu_click_handler"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_active_pos_finder"❫
 ⚞⚟
 
-◀public: static▶ void ☀Handle_Menu_Logic(Frame_Elements & elements, Character_Maps const& font_chars, Pc_Input_State const& pc_input, Buildable_Face_Tree_State & state, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, Schema_Menu_Open_Strategy const& how_to_open)❰
+◀public: static▶ void ☀Handle_Menu_Logic(Frame_Elements & elements, Position const& pos, Character_Maps const& font_chars, Pc_Input_State const& pc_input, Buildable_Face_Tree_State & state, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, Schema_Menu_Open_Strategy const& how_to_open)❰
 
 
     //was an element clicked?
     //decide to show the action menu 
-    Possibly_Open_Menu(pc_input,state,lookup,style_lookup,how_to_open);
+    Possibly_Open_Menu(pc_input,pos,state,lookup,style_lookup,how_to_open);
     
     //how to draw and handle menu clicks
     Handle_Menu(elements,font_chars,lookup,style_lookup,state,pc_input,how_to_open);
@@ -57,20 +58,23 @@ class
 
 
 
-◀private: static▶ void ☀Possibly_Open_Menu(Pc_Input_State const& pc_input, Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, Schema_Menu_Open_Strategy const& how_to_open)❰
+◀private: static▶ void ☀Possibly_Open_Menu(Pc_Input_State const& pc_input, Position const& pos, Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, Schema_Menu_Open_Strategy const& how_to_open)❰
 
     if (how_to_open != Schema_Menu_Open_Strategy::DONT_OPEN){
         
         auto settings = Create_Menu_Settings(pc_input);
         auto menu_out = Schema_Tree_Menu_Creator::Create_Menu(tree.structure,lookup,settings,tree.selected_node);
         tree.menu.menu = menu_out.menu;
-        tree.menu.pos = Decide_Menu_Location(pc_input,tree,how_to_open);
+        tree.menu.pos = Decide_Menu_Location(pc_input,pos,tree,how_to_open);
         tree.menu.visible = true;
     }
 ❱
 
-◀private: static▶ Position ☀Decide_Menu_Location(Pc_Input_State const& pc_input, Buildable_Face_Tree_State & tree, Schema_Menu_Open_Strategy const& how_to_open)❰
+◀private: static▶ Position ☀Decide_Menu_Location(Pc_Input_State const& pc_input, Position const& pos, Buildable_Face_Tree_State & tree, Schema_Menu_Open_Strategy const& how_to_open)❰
 
+    if (how_to_open == Schema_Menu_Open_Strategy::ALONGSIDE){
+        return Button_Face_Tree_Active_Pos_Finder::Find_Active_Pos(tree.structure,pos);
+    }
     return pc_input.mouse.pos;
 ❱
 

@@ -133,6 +133,7 @@ hcp(
         "//code/utilities/data_structures/tree/generic:child_lookup_map_find",
         "//code/utilities/types/strings/transformers/removing:lib",
         "//code/utilities/types/vectors/observers:lib",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_active_pos_finder",
     ],
 )
 
