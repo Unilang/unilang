@@ -25,8 +25,15 @@ class
 
 ◀public: static▶ void ☀Apply_Theme(Button_Face_Tree & tree, Child_Lookup_Map const& schema, Style_Lookup_Map const& schema_styles)❰
 
-    for (auto it = tree.nodes.begin(); it != tree.nodes.end(); ++it){
-        auto full_name = With_Child_Name(tree,tree.nodes.parent(it),it->label.state.faces[0].name);
+    for (auto it = tree.nodes.begin(); it != tree.nodes.end(); ++it)
+    {
+        std::string full_name;
+        if (tree.nodes.depth(it) > 0){
+            full_name = With_Child_Name(tree,tree.nodes.parent(it),it->label.state.faces[0].name);
+        }
+        else{
+            full_name = it->label.state.faces[0].name + "/";
+        }
         Button_Faced_Label_Style_Applier::Apply_Theme(*it,schema_styles,full_name);
     }
 ❱
