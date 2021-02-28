@@ -48,7 +48,7 @@ class
         // move the draw cursor and return the position if found
         if (it->label.state.faces[it->label.state.index].label.user_state.is_active){
             
-            Shift_Over_To_Left_Of_Cell(it->label,start_pos,current_pos);
+            Shift_Over_To_Left_Of_Cell(it->label,start_pos,current_pos,depth);
             return Should_Break::YES;
         }
         Adjust_Positions_For_Next_Cell(it->label,start_pos,current_pos,depth);
@@ -65,7 +65,7 @@ class
         current_pos.x = start_pos.x + 10 * depth;
         current_pos.y += dim.y-1;
 ❱
-◀private: static▶ void  ☀Shift_Over_To_Left_Of_Cell(Faced_Label const& label, Position const& start_pos, Position & current_pos)❰
+◀private: static▶ void  ☀Shift_Over_To_Left_Of_Cell(Faced_Label const& label, Position const& start_pos, Position & current_pos, int const& depth)❰
         auto dim = Faced_Label_Drawer::Get_Dimensions(label);
-        current_pos.x += dim.x -1;
+        current_pos.x = start_pos.x + 10 * depth + dim.x -1;
 ❱
