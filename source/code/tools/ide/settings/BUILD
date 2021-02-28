@@ -77,6 +77,7 @@ hcp(
         "//code/utilities/graphics/imgui/render/elements:rectangle_drawer",
         "//code/utilities/graphics/sdl:standard_sdl_init_settings",
         "//code/utilities/image:stb_image_setter",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:style_theme_applier",
     ],
 )
 

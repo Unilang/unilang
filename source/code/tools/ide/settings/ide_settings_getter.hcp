@@ -36,6 +36,7 @@ class
 ❪"code/utilities/data_structures/graphics/image/positioned_image_data"❫
 ❪"code/utilities/image/stb_image_setter"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/buildable_schema_faced_tree_default_schema"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/style_theme_applier"❫
 ⚞⚟
 
 ◀public: static▶ Ide_Settings ☀Get()❰
@@ -87,6 +88,9 @@ class
       btree.state.schema_styles = Style_Lookup_Map_Getter::Get_Default_Theme();
       btree.pos.x = 220;
       btree.pos.y = 100;
+      
+      //apply initial theme
+      Style_Theme_Applier::Apply_Theme(btree.state);
       
       //add
       Ide_Element e;
