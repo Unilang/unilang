@@ -18,6 +18,7 @@ class
 ❪"code/tools/reflexivity/deps_define/scan/deps_repo_scanner"❫
 ❪"code/utilities/build/self_builder"❫
 ❪"code/tools/reflexivity/target_build_file_refresher"❫
+❪"code/utilities/logo/unilang_logo_creator"❫
 ⚞⚟
 
 
@@ -42,6 +43,11 @@ class
     if (settings.refresh_unilang_documentation){
         std::cout << "Generating Unilang Documentation..." << std::endl;
         //Unilang_Documentation_Generator::Generate();
+    }
+    
+    if (settings.refresh_unilang_logo){
+        std::cout << "Generating Unilang Logo..." << std::endl;
+        Unilang_Logo_Creator::Create();
     }
     
     //generate unilang documentation

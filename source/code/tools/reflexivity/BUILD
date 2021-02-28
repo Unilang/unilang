@@ -78,6 +78,7 @@ hcp(
         "//code/utilities/program/common_actions/locale:lib",
         "//code/utilities/program/name:program_name_getter",
         "//code/utilities/types/strings/transformers/appending:lib",
+        "//code/utilities/logo:unilang_logo_creator",
     ],
 )
 
