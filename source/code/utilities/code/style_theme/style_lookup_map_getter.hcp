@@ -28,7 +28,7 @@ class
 
 ◀private: static▶ Style_Theme ☀Code()❰
     Style_Theme theme;
-    theme.label_styles.emplace_back(Default_Label_Styles::Blue());
+    theme.label_styles.emplace_back(Default_Label_Styles::Gray());
     theme.label_styles.emplace_back(Default_Label_Styles::Gray());
     return theme;
 ❱
