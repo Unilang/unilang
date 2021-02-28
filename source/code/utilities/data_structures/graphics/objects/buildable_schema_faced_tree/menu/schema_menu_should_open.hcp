@@ -20,17 +20,17 @@ class
         //try to select node through clicking
         state.tree.state.selected_node = Button_Face_Tree_Click_Finder::Find_Clicked_Label(state.tree.state.structure);
         if (state.tree.state.selected_node != state.tree.state.structure.nodes.end()){
-            return true;
+            return AT_MOUSE;
         }
         
         //try to select node through keyboard on current active
         if (pc_input.keyboard.alt == Key_State::DOWN || pc_input.keyboard.alt == Key_State::PRESSED){
             state.tree.state.selected_node = Button_Face_Tree_Active_Finder::Find_Active_Label(state.tree.state.structure);
             if (state.tree.state.selected_node != state.tree.state.structure.nodes.end()){
-                return true;
+                return ALONGSIDE;
             }
         }
     }
     
-    return false;
+    return DONT_OPEN;
 ❱
