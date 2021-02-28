@@ -114,6 +114,15 @@ hcp(
 )
 
 hcp(
+    name = "button_face_tree_active_finder",
+    deps = [
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/data:buttoned_faced_label",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree",
+        "@tree",
+    ],
+)
+
+hcp(
     name = "button_face_tree_full_path_name",
     deps = [
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/data:buttoned_faced_label",

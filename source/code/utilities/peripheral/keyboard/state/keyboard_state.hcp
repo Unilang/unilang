@@ -15,6 +15,7 @@ public:
     Key_State ctrl = Key_State::NONE;
     Key_State esc = Key_State::NONE;
     Key_State tab = Key_State::NONE;
+    Key_State alt = Key_State::NONE;
     
     Key_State one = Key_State::NONE;
     Key_State two = Key_State::NONE;

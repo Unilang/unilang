@@ -1,0 +1,21 @@
+class
+❪vector❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/data/buttoned_faced_label"❫
+❪"src/tree.hh"❫
+⚯
+
+⚞⚟
+
+
+◀public: static▶ tree<Buttoned_Faced_Label>::pre_order_iterator ☀Find_Active_Label(Button_Face_Tree const& tree)❰
+
+    auto found_node = tree.nodes.end();
+    for (auto it = tree.nodes.begin(); it != tree.nodes.end(); ++it){
+        if (it->label.state.faces[it->label.state.index].label.user_state.is_active){
+            found_node = it;
+            break;
+        }
+    }
+    return found_node;
+❱

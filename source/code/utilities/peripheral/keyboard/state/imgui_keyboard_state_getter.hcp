@@ -21,6 +21,7 @@ class
     x.ctrl = Key_Detector::Get_Ctrl_State();
     x.esc = Key_Detector::Get_Escape_State();
     x.tab = Key_Detector::Get_Tab_State();
+    x.alt = Key_Detector::Get_Alt_State();
     
     x.one = Key_Detector::Get_One_State();
     x.two = Key_Detector::Get_Two_State();
