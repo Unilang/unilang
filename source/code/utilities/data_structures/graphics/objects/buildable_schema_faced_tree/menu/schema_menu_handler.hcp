@@ -64,10 +64,16 @@ class
         auto settings = Create_Menu_Settings(pc_input);
         auto menu_out = Schema_Tree_Menu_Creator::Create_Menu(tree.structure,lookup,settings,tree.selected_node);
         tree.menu.menu = menu_out.menu;
-        tree.menu.pos = pc_input.mouse.pos;
+        tree.menu.pos = Decide_Menu_Location(pc_input,tree,how_to_open);
         tree.menu.visible = true;
     }
 ❱
+
+◀private: static▶ Position ☀Decide_Menu_Location(Pc_Input_State const& pc_input, Buildable_Face_Tree_State & tree, Schema_Menu_Open_Strategy const& how_to_open)❰
+
+    return pc_input.mouse.pos;
+❱
+
 
 ◀private: static▶ Schema_Tree_Menu_Creation_Settings ☀Create_Menu_Settings(Pc_Input_State const& pc_input)❰
     
