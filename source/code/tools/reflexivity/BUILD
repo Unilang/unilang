@@ -74,11 +74,11 @@ hcp(
         "//code/utilities/code:concept_tree_to_image",
         "//code/utilities/filesystem/files/creating:lib",
         "//code/utilities/filesystem/paths:lib",
+        "//code/utilities/logo:unilang_logo_creator",
         "//code/utilities/output/publisher/essay:essay_publisher",
         "//code/utilities/program/common_actions/locale:lib",
         "//code/utilities/program/name:program_name_getter",
         "//code/utilities/types/strings/transformers/appending:lib",
-        "//code/utilities/logo:unilang_logo_creator",
     ],
 )
 

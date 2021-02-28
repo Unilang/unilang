@@ -12,7 +12,7 @@ enum_cpp(
         "local",
         "rename",
         "insert",
-        ],
+    ],
 )
 
 enum_cpp(
@@ -23,7 +23,7 @@ enum_cpp(
         "draw_all",
         "apply_color_theme",
         "sort_by_schema",
-        ],
+    ],
 )
 
 enum_cpp(
@@ -35,7 +35,7 @@ enum_cpp(
         "down",
         "first",
         "last",
-        ],
+    ],
 )
 
 hcp(
@@ -57,6 +57,7 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_label_action",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree/data:buildable_face_tree",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree/data:positioned_buildable_face_tree",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_menu_type",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_tree_menu_click_handler",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_tree_menu_creation_settings",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_tree_menu_creator",
@@ -84,13 +85,14 @@ hcp(
         "//code/utilities/types/tree:full_path_name",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_menu_type",
     ],
 )
 
 hcp(
     name = "schema_tree_menu_creator",
     deps = [
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:global_manipulation_option",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:local_manipulation_option",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_tree_menu_creation_settings",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_full_path_name",
@@ -99,8 +101,6 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/select_menu",
         "//code/utilities/data_structures/tree/generic:child_lookup_map",
         "//code/utilities/data_structures/tree/generic:child_lookup_map_find",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:global_manipulation_option",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:local_manipulation_option",
     ],
 )
 
@@ -110,7 +110,12 @@ hcp(
         "//code/utilities/code/style_theme",
         "//code/utilities/code/style_theme:style_lookup_map",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_action_doer",
+        "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_style_applier",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree/data:buildable_face_tree",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:style_theme_applier",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:global_manipulation_option",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:local_manipulation_option",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_label:button_faced_label_style_applier",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/premade:buttoned_faced_label_premades",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_full_path_name",
         "//code/utilities/data_structures/graphics/objects/faced_tree:tree_label_click_finder",
@@ -118,10 +123,5 @@ hcp(
         "//code/utilities/data_structures/tree/generic:child_lookup_map_find",
         "//code/utilities/types/strings/transformers/removing:lib",
         "//code/utilities/types/vectors/observers:lib",
-        "//code/utilities/data_structures/graphics/objects/buttoned_faced_label:button_faced_label_style_applier",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:global_manipulation_option",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:local_manipulation_option",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:style_theme_applier",
-        "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_style_applier",
     ],
 )
