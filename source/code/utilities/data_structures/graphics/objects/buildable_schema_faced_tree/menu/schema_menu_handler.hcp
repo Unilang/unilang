@@ -23,6 +23,7 @@ class
 ❪"code/utilities/code/style_theme/style_lookup_map"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_tree_menu_creation_settings"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_menu_type"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_menu_open_strategy"❫
 ⚯
 ❪"code/utilities/data_structures/graphics/objects/mouse/events/mouse_events_checker"❫
 ❪"code/utilities/types/vectors/operators/lib"❫
@@ -43,22 +44,22 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_tree_menu_click_handler"❫
 ⚞⚟
 
-◀public: static▶ void ☀Handle_Menu_Logic(Frame_Elements & elements, Character_Maps const& font_chars, Pc_Input_State const& pc_input, Buildable_Face_Tree_State & state, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, bool const& label_first_selected)❰
+◀public: static▶ void ☀Handle_Menu_Logic(Frame_Elements & elements, Character_Maps const& font_chars, Pc_Input_State const& pc_input, Buildable_Face_Tree_State & state, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, Schema_Menu_Open_Strategy const& how_to_open)❰
 
 
     //was an element clicked?
     //decide to show the action menu 
-    Possibly_Open_Menu(pc_input,state,lookup,style_lookup,label_first_selected);
+    Possibly_Open_Menu(pc_input,state,lookup,style_lookup,how_to_open);
     
     //how to draw and handle menu clicks
-    Handle_Menu(elements,font_chars,lookup,style_lookup,state,pc_input,label_first_selected);
+    Handle_Menu(elements,font_chars,lookup,style_lookup,state,pc_input,how_to_open);
 ❱
 
 
 
-◀private: static▶ void ☀Possibly_Open_Menu(Pc_Input_State const& pc_input, Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, bool label_first_selected)❰
+◀private: static▶ void ☀Possibly_Open_Menu(Pc_Input_State const& pc_input, Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, Schema_Menu_Open_Strategy const& how_to_open)❰
 
-    if (label_first_selected){
+    if (how_to_open != Schema_Menu_Open_Strategy::DONT_OPEN){
         
         auto settings = Create_Menu_Settings(pc_input);
         auto menu_out = Schema_Tree_Menu_Creator::Create_Menu(tree.structure,lookup,settings,tree.selected_node);
@@ -120,12 +121,12 @@ class
     return Schema_Menu_Type::INSERT;
 ❱
 
-◀private: static▶ void ☀Handle_Menu(Frame_Elements & elements, Character_Maps const& font_chars, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, Buildable_Face_Tree_State & tree, Pc_Input_State const& pc_input, bool const& label_first_selected)❰
+◀private: static▶ void ☀Handle_Menu(Frame_Elements & elements, Character_Maps const& font_chars, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, Buildable_Face_Tree_State & tree, Pc_Input_State const& pc_input, Schema_Menu_Open_Strategy const& how_to_open)❰
 
     if (tree.menu.visible){
         elements.types += Tree_Label_Drawer::Draw(font_chars,tree.menu.menu,tree.menu.pos,pc_input).types;
         
-        if (!label_first_selected){
+        if (how_to_open == Schema_Menu_Open_Strategy::DONT_OPEN){
             if (pc_input.mouse.left.clicked || pc_input.mouse.right.clicked){
                 
                 tree.menu.visible = false;

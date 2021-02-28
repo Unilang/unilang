@@ -41,6 +41,8 @@ hcp(
         "//code/utilities/peripheral/pc:pc_input_state",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_menu_open_strategy",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_menu_should_open",
     ],
 )
 

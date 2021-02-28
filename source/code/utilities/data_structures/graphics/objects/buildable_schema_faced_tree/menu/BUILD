@@ -38,6 +38,15 @@ enum_cpp(
     ],
 )
 
+enum_cpp(
+    name = "schema_menu_open_strategy",
+    values = [
+        "at_mouse",
+        "alongside",
+        "dont_open",
+    ],
+)
+
 hcp(
     name = "schema_tree_menu_creation_settings",
     deps = [
@@ -85,6 +94,7 @@ hcp(
         "//code/utilities/types/tree:full_path_name",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_menu_open_strategy",
     ],
 )
 
@@ -134,5 +144,6 @@ hcp(
         "//code/utilities/peripheral/pc:pc_input_state",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_click_finder",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_active_finder",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_menu_open_strategy",
     ],
 )
