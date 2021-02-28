@@ -18,6 +18,8 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/button_faced_label_style_applier"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/global_manipulation_option"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/local_manipulation_option"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/style_theme_applier"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/buildable_face_tree_style_applier"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Handle_Menu_Click(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup)❰
@@ -43,7 +45,7 @@ class
         Handle_Local_Tree_Actions(tree,lookup,message);
     }
     if (symbol == "!"){
-        Handle_Global_Tree_Actions(tree,lookup,message);
+        Handle_Global_Tree_Actions(tree,lookup,style_lookup,message);
     }
 
 ❱
@@ -72,7 +74,7 @@ class
     }
     
 ❱
-◀private: static▶ void ☀Handle_Global_Tree_Actions(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, std::string const& message)❰
+◀private: static▶ void ☀Handle_Global_Tree_Actions(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, std::string const& message)❰
 
     switch (enum_cast_to_Global_Manipulation_Option(message)){
         case Global_Manipulation_Option::DRAW_CHILDREN_ONLY:
@@ -85,6 +87,7 @@ class
         break;
         
         case Global_Manipulation_Option::APPLY_COLOR_THEME:
+        Buildable_Face_Tree_Style_Applier::Apply_Theme(tree,lookup,style_lookup);
         break;
         
         case Global_Manipulation_Option::SORT_BY_SCHEMA:

@@ -26,3 +26,6 @@ class
 ◀public: static▶ void ☀Apply_Theme(Buildable_Face_Tree & tree, Child_Lookup_Map const& schema, Style_Lookup_Map const& schema_styles)❰
     Button_Face_Tree_Style_Applier::Apply_Theme(tree.state.structure,schema,schema_styles);
 ❱
+◀public: static▶ void ☀Apply_Theme(Buildable_Face_Tree_State & state, Child_Lookup_Map const& schema, Style_Lookup_Map const& schema_styles)❰
+    Button_Face_Tree_Style_Applier::Apply_Theme(state.structure,schema,schema_styles);
+❱

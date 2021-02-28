@@ -182,7 +182,7 @@ enum_cpp(
 hcp(
     name = "button_face_tree_style_applier",
     deps = [
-        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:buttoned_face_tree",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree",
         "//code/utilities/data_structures/tree/generic:child_lookup_map",
         "//code/utilities/code/style_theme:style_lookup_map",
         "//code/utilities/code/style_theme:style_theme",

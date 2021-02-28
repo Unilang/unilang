@@ -90,5 +90,6 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_action_doer",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_style_applier",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:buildable_schema_faced_tree_state",
     ],
 )
