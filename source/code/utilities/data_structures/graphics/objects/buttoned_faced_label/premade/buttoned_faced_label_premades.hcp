@@ -84,8 +84,12 @@ class
 ❱
 
 ◀public: static▶ Buttoned_Faced_Label ☀Unilang_Root_Node()❰
-    return Closed_Unilang_NonLeaf_Node("code");
+    auto label = Closed_Unilang_NonLeaf_Node("code");
+    label.label.state.faces[0].label.user_state.is_active = true;
+    return label;
 ❱
 ◀public: static▶ Buttoned_Faced_Label ☀Opened_Unilang_Root_Node()❰
-    return Opened_Unilang_NonLeaf_Node("code");
+    auto label = Opened_Unilang_NonLeaf_Node("code");
+    label.label.state.faces[0].label.user_state.is_active = true;
+    return label;
 ❱

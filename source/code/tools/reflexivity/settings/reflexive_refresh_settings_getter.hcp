@@ -16,6 +16,7 @@ class
     x.refresh_toolchain_conversion_tests = true;
     x.reformat_build_files = true;
     x.refresh_unilang_documentation = true;
+    x.refresh_unilang_logo = true;
     x.refresh_unilang_concept_tree_image = true;
     x.refresh_essays = true;
     return x;
