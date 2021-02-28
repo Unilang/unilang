@@ -125,3 +125,14 @@ hcp(
         "//code/utilities/types/vectors/observers:lib",
     ],
 )
+
+hcp(
+    name = "schema_menu_should_open",
+    deps = [
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:buildable_schema_faced_tree",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:positioned_buildable_schema_faced_tree",
+        "//code/utilities/peripheral/pc:pc_input_state",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_click_finder",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_active_finder",
+    ],
+)

@@ -57,36 +57,12 @@ class
     elements.types += Button_Tree_Label_Drawer::Draw(font_chars,state.tree.state.structure,pos,pc_input).types;
     
 
-    bool label_first_selected = Is_Menu_Initiated(state,pos,pc_input);
+    bool should_open = Schema_Menu_Should_Open_Menu::Check(state,pc_input);
     
     //was an element clicked?
     //decide to show the action menu 
-    Schema_Menu_Handler::Handle_Menu_Logic(elements,font_chars,pc_input,state.tree.state,state.schema,state.schema_styles,label_first_selected);
+    Schema_Menu_Handler::Handle_Menu_Logic(elements,font_chars,pc_input,state.tree.state,state.schema,state.schema_styles,should_open);
     
     
     return elements;
 ❱
-
-◀private: static▶ bool ☀Is_Menu_Initiated(Buildable_Schema_Faced_Tree_State & state, Position const& pos, Pc_Input_State const& pc_input)❰
-
-    //find the element that has been right-clicked
-    //TODO: Drawing the tree should return this information.
-    if (!state.tree.state.menu.visible){
-        
-        //try to select node through clicking
-        state.tree.state.selected_node = Button_Face_Tree_Click_Finder::Find_Clicked_Label(state.tree.state.structure);
-        if (state.tree.state.selected_node != state.tree.state.structure.nodes.end()){
-            return true;
-        }
-        
-        //try to select node through keyboard on current active
-        if (pc_input.keyboard.alt == Key_State::DOWN || pc_input.keyboard.alt == Key_State::PRESSED){
-            state.tree.state.selected_node = Button_Face_Tree_Active_Finder::Find_Active_Label(state.tree.state.structure);
-            if (state.tree.state.selected_node != state.tree.state.structure.nodes.end()){
-                return true;
-            }
-        }
-    }
-    
-    return false;
-❱       

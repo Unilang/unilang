@@ -1,0 +1,36 @@
+class
+❪string❫
+❪unordered_map❫
+❪utility❫
+❪cstdlib❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data/buildable_schema_faced_tree"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data/positioned_buildable_schema_faced_tree"❫
+❪"code/utilities/peripheral/pc/pc_input_state"❫
+⚯
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_click_finder"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_active_finder"❫
+⚞⚟
+
+◀public: static▶ bool ☀Check(Buildable_Schema_Faced_Tree_State & state, Pc_Input_State const& pc_input)❰
+
+    //find the element that has been right-clicked
+    //TODO: Drawing the tree should return this information.
+    if (!state.tree.state.menu.visible){
+        
+        //try to select node through clicking
+        state.tree.state.selected_node = Button_Face_Tree_Click_Finder::Find_Clicked_Label(state.tree.state.structure);
+        if (state.tree.state.selected_node != state.tree.state.structure.nodes.end()){
+            return true;
+        }
+        
+        //try to select node through keyboard on current active
+        if (pc_input.keyboard.alt == Key_State::DOWN || pc_input.keyboard.alt == Key_State::PRESSED){
+            state.tree.state.selected_node = Button_Face_Tree_Active_Finder::Find_Active_Label(state.tree.state.structure);
+            if (state.tree.state.selected_node != state.tree.state.structure.nodes.end()){
+                return true;
+            }
+        }
+    }
+    
+    return false;
+❱
