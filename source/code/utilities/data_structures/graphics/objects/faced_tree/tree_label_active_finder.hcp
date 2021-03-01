@@ -1,0 +1,20 @@
+class
+❪vector❫
+❪"code/utilities/data_structures/graphics/objects/faced_tree/face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/data/faced_label"❫
+❪"src/tree.hh"❫
+⚯
+
+⚞⚟
+
+◀public: static▶ tree<Faced_Label>::pre_order_iterator ☀Find_Active_Label(Face_Tree const& tree)❰
+
+    auto found_node = tree.nodes.end();
+    for (auto it = tree.nodes.begin(); it != tree.nodes.end(); ++it){
+        if (it->state.faces[it->state.index].label.user_state.is_active){
+            found_node = it;
+            break;
+        }
+    }
+    return found_node;
+❱

@@ -1,0 +1,33 @@
+class
+❪vector❫
+❪"code/utilities/data_structures/graphics/objects/faced_tree/face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/data/faced_label"❫
+❪"src/tree.hh"❫
+⚯
+
+⚞⚟
+
+◀public: static▶ void ☀Perform(Face_Tree & tree)❰
+
+    for (auto it = tree.nodes.begin(); it != tree.nodes.end(); ++it){
+        if (it->state.faces[it->state.index].label.user_state.is_active){
+            
+            //turn off
+            it->state.faces[it->state.index].label.user_state.is_active = false;
+            
+            
+            //turn previous on
+            if (it == tree.nodes.begin()){
+                auto bottom = tree.nodes.end();
+                --bottom;
+                bottom->state.faces[bottom->state.index].label.user_state.is_active = true;
+            }
+            else {
+                --it;
+                it->state.faces[it->state.index].label.user_state.is_active = true;
+            }
+            
+            break;
+        }
+    }
+❱

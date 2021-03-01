@@ -43,6 +43,9 @@ class
         Add_Children_Names_For_Appending(x,structure,lookup,it);
     }
     
+    auto first = x.menu.nodes.begin();
+    first->state.faces[0].label.user_state.is_active = true;
+    
     return x;
 ❱
 

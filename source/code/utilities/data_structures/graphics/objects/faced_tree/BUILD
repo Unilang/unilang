@@ -40,3 +40,32 @@ hcp(
         "@tree",
     ],
 )
+
+hcp(
+    name = "tree_label_active_finder",
+    deps = [
+        "//code/utilities/data_structures/graphics/objects/faced_label/data:faced_label",
+        "//code/utilities/data_structures/graphics/objects/faced_tree:face_tree",
+        "@tree",
+    ],
+)
+
+hcp(
+    name = "faced_tree_next_active",
+    deps = [
+        "//code/utilities/data_structures/graphics/objects/faced_label/data:faced_label",
+        "//code/utilities/data_structures/graphics/objects/faced_tree:face_tree",
+        "@tree",
+    ],
+)
+
+hcp(
+    name = "faced_tree_previous_active",
+    deps = [
+        "//code/utilities/data_structures/graphics/objects/faced_label/data:faced_label",
+        "//code/utilities/data_structures/graphics/objects/faced_tree:face_tree",
+        "@tree",
+    ],
+)
+
+

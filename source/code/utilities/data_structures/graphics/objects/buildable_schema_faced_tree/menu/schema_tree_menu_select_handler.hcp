@@ -9,6 +9,7 @@ class
 ❪"code/utilities/code/style_theme/style_theme"❫
 ⚯
 ❪"code/utilities/data_structures/graphics/objects/faced_tree/tree_label_click_finder"❫
+❪"code/utilities/data_structures/graphics/objects/faced_tree/tree_label_active_finder"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/premade/buttoned_faced_label_premades"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_full_path_name"❫
 ❪"code/utilities/data_structures/tree/generic/child_lookup_map_find"❫
@@ -23,9 +24,9 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_menu_selection_performer"❫
 ⚞⚟
 
-◀public: static▶ void ☀Handle_Menu_Click(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup)❰
+◀public: static▶ void ☀Handle_Menu_Select(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup)❰
 
-    auto found = Tree_Label_Click_Finder::Find_Clicked_Label(tree.menu.menu);
+    auto found = Tree_Label_Active_Finder::Find_Active_Label(tree.menu.menu);
     if (found != tree.menu.menu.nodes.end()){
         Schema_Menu_Selection_Performer::Handle_Menu_Selection(tree,lookup,style_lookup,found->state.faces[0].label.message);
     }
