@@ -7,7 +7,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree"❫
 ❪"code/utilities/data_structures/tree/generic/child_lookup_map"❫
 ❪"code/utilities/data_structures/graphics/objects/select_menu/select_menu"❫
-❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_tree_menu_creation_settings"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/create/schema_tree_menu_creation_settings"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/global_manipulation_option"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/local_manipulation_option"❫
 ⚯
@@ -43,16 +43,17 @@ class
         Add_Children_Names_For_Appending(x,structure,lookup,it);
     }
     
-    //activate the first meny item automatically
-    auto first = x.menu.nodes.begin();
-    if (first != x.menu.nodes.end()){
-        first->state.faces[0].label.user_state.is_active = true;
-    }
+    Activate_First_Menu_Item(x);
     
     return x;
 ❱
 
-
+◀private: static▶ void ☀Activate_First_Menu_Item(Select_Menu & x)❰
+    auto first = x.menu.nodes.begin();
+    if (first != x.menu.nodes.end()){
+        first->state.faces[0].label.user_state.is_active = true;
+    }
+❱
 ◀private: static▶ void ☀Add_Global_Manipulation_Options(Select_Menu & x, Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
 
     //style
