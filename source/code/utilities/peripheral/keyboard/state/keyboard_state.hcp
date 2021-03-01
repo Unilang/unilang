@@ -9,6 +9,8 @@ class
 ◀
 public:
 
+    //todo:
+    //deprecate all of these explicit names and use a generic array instead (this way configs can use int)
     Key_State shift = Key_State::NONE;
     Key_State backspace = Key_State::NONE;
     Key_State delete_ = Key_State::NONE;
@@ -37,6 +39,8 @@ public:
     Key_State up = Key_State::NONE;
     Key_State down = Key_State::NONE;
     
+    //TODO: keep these
+    Key_State key_states[512];
     std::vector<char> buffered_chars;
 
 ▶

@@ -489,3 +489,36 @@ class
     }
     return false;
 ❱
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Shift Button
+◀public: static▶ bool ☀Key_Index_Down(int key_index)❰
+    if (ImGui::IsKeyDown(key_index)){
+        return true;
+    }
+    return false;
+❱
+◀public: static▶ bool ☀Key_Index_Pressed(int key_index)❰
+    if (ImGui::IsKeyPressed(key_index,true)){
+        return true;
+    }
+    return false;
+❱
+◀public: static▶ Key_State ☀Get_Key_Index_State(int key_index)❰
+
+    if (Key_Index_Pressed(key_index)){ return Key_State::PRESSED; }
+    if (Key_Index_Down(key_index)){ return Key_State::DOWN; }
+    return Key_State::NONE;
+❱

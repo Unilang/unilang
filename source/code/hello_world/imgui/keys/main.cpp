@@ -15,7 +15,7 @@ int main()
     auto during = [](SDL_Window* window){
         ImGuiIO &io = ImGui::GetIO();
         for (size_t i = 0; i < 512; ++i){
-            std::cout << io.KeysDownDuration[i] << " ";
+            std::cout << io.KeysDown[i] << " ";
         }
         std::cout << std::endl;
     };
