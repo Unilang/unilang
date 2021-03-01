@@ -120,6 +120,28 @@ class
     return Key_State::NONE;
 ❱
 
+//Enter Button
+◀public: static▶ bool ☀Enter_Down()❰
+    auto key_index = 40;
+    if (ImGui::IsKeyDown(key_index)){
+        return true;
+    }
+    return false;
+❱
+◀public: static▶ bool ☀Enter_Pressed()❰
+    auto key_index = 40;
+    if (ImGui::IsKeyPressed(key_index,true)){
+        return true;
+    }
+    return false;
+❱
+◀public: static▶ Key_State ☀Get_Enter_State()❰
+
+    if (Enter_Pressed()){ return Key_State::PRESSED; }
+    if (Enter_Down()){ return Key_State::DOWN; }
+    return Key_State::NONE;
+❱
+
 //Alt Button
 ◀public: static▶ bool ☀Alt_Down()❰
     auto key_index = 226;

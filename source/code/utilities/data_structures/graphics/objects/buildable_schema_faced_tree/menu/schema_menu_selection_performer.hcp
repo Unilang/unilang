@@ -88,7 +88,13 @@ class
 
 ◀private: static▶ void ☀Add_Child_Node(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, std::string const& message)❰
 
+    //create the node
     auto x = Create_Styled_Unilang_Node_Via_Parent(tree,tree.selected_node,lookup,style_lookup,message);
+    
+    //make it active
+    x.label.state.faces[x.label.state.faces.size()-1].label.user_state.is_active = true;
+    
+    //add it
     tree.structure.nodes.append_child(tree.selected_node,x);
 ❱
 ◀private: static▶ void ☀Replace_Selected_Node(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, std::string const& message)❰
