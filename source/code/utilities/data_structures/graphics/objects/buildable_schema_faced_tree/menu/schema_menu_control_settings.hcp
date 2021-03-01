@@ -1,0 +1,13 @@
+class
+❪vector❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    int choose_menu_global = 30;
+    int choose_menu_local = 31;
+    int choose_menu_rename = 32;
+▶
+

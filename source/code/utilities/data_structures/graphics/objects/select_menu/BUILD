@@ -8,5 +8,12 @@ hcp_and_hcp_pos(
     name = "select_menu",
     deps = [
         "//code/utilities/data_structures/graphics/objects/faced_tree:face_tree",
+        "//code/utilities/data_structures/graphics/objects/select_menu:select_menu_control_settings",
+    ],
+)
+
+hcp(
+    name = "select_menu_control_settings",
+    deps = [
     ],
 )

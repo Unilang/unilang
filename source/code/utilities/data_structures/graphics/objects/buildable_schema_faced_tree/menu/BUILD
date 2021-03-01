@@ -46,6 +46,13 @@ enum_cpp(
         "dont_open",
     ],
 )
+
+hcp(
+    name = "schema_menu_control_settings",
+    deps = [
+    ],
+)
+
 hcp(
     name = "schema_menu_handler",
     deps = [
@@ -91,6 +98,7 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_menu_open_strategy",
         "//code/utilities/data_structures/graphics/objects/faced_tree:faced_tree_next_active",
         "//code/utilities/data_structures/graphics/objects/faced_tree:faced_tree_previous_active",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_menu_control_settings",
     ],
 )
 

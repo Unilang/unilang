@@ -1,14 +1,23 @@
 class
 ❪vector❫
 ❪"code/utilities/data_structures/graphics/objects/faced_tree/face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/select_menu/select_menu_control_settings"❫
 ⚯
 
 ⚞⚟
 
 ◀public:
 
+    //the name of the menu
     std::string name;
+    
+    //whether the menu is currently visible
     bool visible=false;
+    
+    //the contents of the menu
     Face_Tree menu;
+    
+    //pc input control for the menu
+    Select_Menu_Control_Settings key_control;
 ▶
 

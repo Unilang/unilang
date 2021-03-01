@@ -46,6 +46,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_active_pos_finder"❫
 ❪"code/utilities/data_structures/graphics/objects/faced_tree/faced_tree_next_active"❫
 ❪"code/utilities/data_structures/graphics/objects/faced_tree/faced_tree_previous_active"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_menu_control_settings"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Handle_Menu_Logic(Frame_Elements & elements, Position const& pos, Character_Maps const& font_chars, Pc_Input_State const& pc_input, Buildable_Face_Tree_State & state, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, Schema_Menu_Open_Strategy const& how_to_open)❰
@@ -121,13 +122,20 @@ class
 
 
 ◀private: static▶ Schema_Menu_Type ☀Choose_Menu_Type(Pc_Input_State const& pc_input)❰
-    if (pc_input.keyboard.one == Key_State::DOWN || pc_input.keyboard.one == Key_State::PRESSED){
+
+    //keyboard input
+    Schema_Menu_Control_Settings control_settings;
+    auto pick_global_key_state = pc_input.keyboard.key_states[control_settings.choose_menu_global];
+    auto pick_local_key_state = pc_input.keyboard.key_states[control_settings.choose_menu_local];
+    auto pick_rename_key_state = pc_input.keyboard.key_states[control_settings.choose_menu_rename];
+    
+    if (pick_global_key_state == Key_State::DOWN || pick_global_key_state == Key_State::PRESSED){
         return Schema_Menu_Type::GLOBAL;
     }
-    if (pc_input.keyboard.two == Key_State::DOWN || pc_input.keyboard.two == Key_State::PRESSED){
+    if (pick_local_key_state == Key_State::DOWN || pick_local_key_state == Key_State::PRESSED){
         return Schema_Menu_Type::LOCAL;
     }
-    if (pc_input.keyboard.three == Key_State::DOWN || pc_input.keyboard.three == Key_State::PRESSED){
+    if (pick_rename_key_state == Key_State::DOWN || pick_rename_key_state == Key_State::PRESSED){
         return Schema_Menu_Type::RENAME;
     }
     
@@ -136,6 +144,12 @@ class
 
 ◀private: static▶ void ☀Handle_Menu(Frame_Elements & elements, Character_Maps const& font_chars, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, Buildable_Face_Tree_State & tree, Pc_Input_State const& pc_input, Schema_Menu_Open_Strategy const& how_to_open)❰
 
+
+    //keyboard input
+    auto select_key_state = pc_input.keyboard.key_states[tree.menu.key_control.select_active];
+    auto up_key_state = pc_input.keyboard.key_states[tree.menu.key_control.navigate_up];
+    auto down_key_state = pc_input.keyboard.key_states[tree.menu.key_control.navigate_down];
+    
     if (tree.menu.visible){
         elements.types += Tree_Label_Drawer::Draw(font_chars,tree.menu.menu,tree.menu.pos,pc_input).types;
         
@@ -148,20 +162,21 @@ class
             }
             
             //user selected a menu item
-            else if (pc_input.keyboard.enter == Key_State::PRESSED){
+            else if (select_key_state == Key_State::PRESSED){
                 tree.menu.visible = false;
                 Schema_Tree_Menu_Select_Handler::Handle_Menu_Select(tree, lookup,style_lookup);
             }
             
             //user navigated up
-            else if (pc_input.keyboard.up == Key_State::PRESSED){
+            else if (up_key_state == Key_State::PRESSED){
                 Faced_Tree_Previous_Active::Perform(tree.menu.menu);
             }
             
             //user navigated down
-            else if (pc_input.keyboard.down == Key_State::PRESSED){
+            else if (down_key_state == Key_State::PRESSED){
                 Faced_Tree_Next_Active::Perform(tree.menu.menu);
             }
+            
             
             
         }
