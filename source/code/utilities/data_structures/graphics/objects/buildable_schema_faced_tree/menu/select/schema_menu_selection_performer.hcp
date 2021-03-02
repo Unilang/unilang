@@ -91,6 +91,9 @@ class
     //create the node
     auto x = Create_Styled_Unilang_Node_Via_Parent(tree,tree.selected_node,lookup,style_lookup,message);
     
+    //make everything else in the tree inactive
+    //TODO
+    
     //make it active
     x.label.state.faces[x.label.state.faces.size()-1].label.user_state.is_active = true;
     
