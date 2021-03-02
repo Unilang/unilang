@@ -13,3 +13,5 @@ transfer_unilang_java("cpu_limits", "/home/luxe/Desktop/repos/bazel-buildfarm/sr
 transfer_unilang_java("mem_limits", "/home/luxe/Desktop/repos/bazel-buildfarm/src/main/java/build/buildfarm/worker/resources/MemLimits.java")
 
 transfer_unilang_java("resource_limits", "/home/luxe/Desktop/repos/bazel-buildfarm/src/main/java/build/buildfarm/worker/resources/ResourceLimits.java")
+
+transfer_unilang_java("execution_debug_info", "/home/luxe/Desktop/repos/bazel-buildfarm/src/main/java/build/buildfarm/worker/ExecutionDebugInfo.java")
