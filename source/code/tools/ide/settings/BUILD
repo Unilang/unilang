@@ -40,7 +40,7 @@ hcp(
 )
 
 hcp(
-    name = "ide_settings_getter",
+    name = "ide_default_settings_getter",
     deps = [
         "//code/tools/ide/settings:ide_settings",
         "//code/utilities/code:concept_string_tree_getter",

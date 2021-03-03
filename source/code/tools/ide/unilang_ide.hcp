@@ -4,7 +4,7 @@ class
 ❪"code/tools/ide/program_options/program_options"❫
 ⚯
 ❪"code/tools/ide/settings/ide_settings"❫
-❪"code/tools/ide/settings/ide_settings_getter"❫
+❪"code/tools/ide/settings/ide_default_settings_getter"❫
 ❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
 ❪"code/utilities/graphics/imgui/loop/mechanics"❫
 ❪"code/utilities/graphics/imgui/ui_renders"❫
@@ -24,7 +24,7 @@ class
     Ide_Settings s;
     
     //lambdas into main application loop
-    s = Ide_Settings_Getter::Get();
+    s = Ide_Default_Settings_Getter::Get();
     
     //perform initial file load if requested
     if (!po.File().empty()){
