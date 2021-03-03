@@ -11,6 +11,7 @@ hcp(
         "//code/tools/ide/program_options:lib",
         "//code/tools/ide/settings:ide_settings",
         "//code/tools/ide/settings:ide_default_settings_getter",
+        "//code/tools/ide/settings:ide_settings_getter",
         "//code/utilities/data_structures/graphics/image:positioned_image_data",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/graphics/imgui:ui_renders",
