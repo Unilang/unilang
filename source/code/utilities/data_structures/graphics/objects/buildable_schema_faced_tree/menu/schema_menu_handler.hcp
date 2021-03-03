@@ -70,7 +70,15 @@ class
         auto menu_out = Schema_Tree_Menu_Creator::Create_Menu(tree.structure,lookup,settings,tree.selected_node);
         tree.menu.menu = menu_out.menu;
         tree.menu.pos = Decide_Menu_Location(pc_input,pos,tree,how_to_open);
-        tree.menu.visible = true;
+        
+        //does the generated meny actually have menu items?
+        //if it doesn't let's keep the menu invisible.  
+        //otherwise we bring up an empty menu that the yser can't see.
+        //and its confusing, because they have to do something to make the meny disappear
+        //before their actions have another effect.
+        if (tree.menu.menu.nodes.size() > 0){
+            tree.menu.visible = true;
+        }
     }
 ❱
 
