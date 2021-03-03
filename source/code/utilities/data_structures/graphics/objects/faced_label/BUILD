@@ -122,3 +122,14 @@ hcp(
         "//code/utilities/peripheral/mouse/state:mouse_state",
     ],
 )
+
+hcp(
+    name = "faced_label_highlight_text",
+    deps = [
+        "//code/utilities/data_structures/graphics/objects/faced_label/data:positioned_faced_label",
+        "//code/utilities/data_structures/graphics/objects/faced_label/data:faced_label",
+        "//code/utilities/peripheral/pc:pc_input_state",
+        "//code/utilities/fonts/bdf/character_maps:character_maps",
+        "//code/utilities/data_structures/graphics/objects/cursor:label_cursor_action_doer",
+    ],
+)

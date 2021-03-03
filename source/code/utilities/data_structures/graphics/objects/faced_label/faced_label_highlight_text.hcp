@@ -1,0 +1,26 @@
+class
+❪string❫
+❪unordered_map❫
+❪utility❫
+❪cstdlib❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/data/positioned_faced_label"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/data/faced_label"❫
+❪"code/utilities/peripheral/pc/pc_input_state"❫
+❪"code/utilities/fonts/bdf/character_maps/character_maps"❫
+⚯
+❪"code/utilities/data_structures/graphics/objects/cursor/label_cursor_action_doer"❫
+⚞⚟
+
+◀public: static▶ void ☀Highlight_Text(Character_Maps const& font_chars, Position pos, Faced_Label const& label, Pc_Input_State const& pc_input)❰
+
+
+    //remove any existing cursors
+    label.state.faces[label.state.index].label.cursors.cursors.clear();
+    
+    //create a full cursor box selection
+    Label_Cursor_Selection sel;
+    Label_Cursor_Action_Doer::Perform_Action(font_chars,pos,label.state.faces[label.state.index].label,sel,Text_Box_Action::SELECT_ALL,pc_input);
+    
+    //add it as an existing cursor
+    label.state.faces[label.state.index].label.cursors.cursors.emplace_back(sel);
+❱

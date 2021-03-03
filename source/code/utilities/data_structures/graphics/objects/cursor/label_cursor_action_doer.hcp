@@ -22,6 +22,12 @@ class
 
     //we assume the textbox is already active
     auto action = Text_Box_Action_Decider::Decide(pc_input);
+    Perform_Action(font_chars,pos,label,selection,action,pc_input);
+❱
+
+
+◀public: static▶ void ☀Perform_Action(Character_Maps const& font_chars, Position pos, Label_Settings & label, Label_Cursor_Selection & selection, Text_Box_Action const& action, Pc_Input_State const& pc_input)❰
+
     switch (action){
         case Text_Box_Action::SELECT_FORWARD:    Maybe_Selection_Forwards(font_chars,pos,label,selection);        break;
         case Text_Box_Action::NAVIGATE_FORWARD:  Maybe_NonSelection_Forwards(font_chars,pos,label,selection);     break;
@@ -33,6 +39,7 @@ class
         case Text_Box_Action::PASTE:             Maybe_Paste(font_chars,pos,label,selection);                     break;
         case Text_Box_Action::DELETE: //todo
         
+        //purposefully empty
         case Text_Box_Action::ADD_CHARS:
         case Text_Box_Action::NONE:
         break;
@@ -45,6 +52,7 @@ class
 ❱
 
 
+//how to perform each action
 ◀private: static▶ void ☀Maybe_Selection_Forwards(Character_Maps const& font_chars, Position pos, Label_Settings & label, Label_Cursor_Selection & selection)❰
     if (label.cursors.ability.can_select_forward){
         Label_Cursor_Actions::Selection_Forwards(font_chars,pos,label,selection);
