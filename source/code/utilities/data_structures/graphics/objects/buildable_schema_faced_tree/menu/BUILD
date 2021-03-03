@@ -111,5 +111,6 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_click_finder",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_active_finder",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_menu_open_strategy",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu:schema_menu_control_settings",
     ],
 )
