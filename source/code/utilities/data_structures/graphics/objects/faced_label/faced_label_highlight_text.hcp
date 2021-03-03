@@ -19,6 +19,7 @@ class
     
     //create a full cursor box selection
     Label_Cursor_Selection sel;
+    sel.label_cursor = label.state.faces[label.state.index].label.styles.regular_active.cursor_style;
     Label_Cursor_Action_Doer::Perform_Action(font_chars,pos,label.state.faces[label.state.index].label,sel,Text_Box_Action::SELECT_ALL,pc_input);
     
     //add it as an existing cursor
