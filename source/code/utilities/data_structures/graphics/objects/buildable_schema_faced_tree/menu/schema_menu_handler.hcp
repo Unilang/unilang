@@ -57,7 +57,7 @@ class
     Possibly_Open_Menu(pc_input,pos,state,lookup,style_lookup,how_to_open);
     
     //how to draw and handle menu clicks
-    Handle_Menu(elements,font_chars,lookup,style_lookup,state,pc_input,how_to_open);
+    Handle_Menu(elements,font_chars,pos,lookup,style_lookup,state,pc_input,how_to_open);
 ❱
 
 
@@ -142,7 +142,7 @@ class
     return Schema_Menu_Type::INSERT;
 ❱
 
-◀private: static▶ void ☀Handle_Menu(Frame_Elements & elements, Character_Maps const& font_chars, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, Buildable_Face_Tree_State & tree, Pc_Input_State const& pc_input, Schema_Menu_Open_Strategy const& how_to_open)❰
+◀private: static▶ void ☀Handle_Menu(Frame_Elements & elements, Character_Maps const& font_chars, Position const& pos, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, Buildable_Face_Tree_State & tree, Pc_Input_State const& pc_input, Schema_Menu_Open_Strategy const& how_to_open)❰
 
 
     //keyboard input
@@ -158,13 +158,13 @@ class
             //user clicked a menu item
             if (pc_input.mouse.left.clicked || pc_input.mouse.right.clicked){
                 tree.menu.visible = false;
-                Schema_Tree_Menu_Click_Handler::Handle_Menu_Click(tree, lookup,style_lookup);
+                Schema_Tree_Menu_Click_Handler::Handle_Menu_Click(font_chars, pos, tree, lookup,style_lookup, pc_input);
             }
             
             //user selected a menu item
             else if (select_key_state == Key_State::PRESSED){
                 tree.menu.visible = false;
-                Schema_Tree_Menu_Select_Handler::Handle_Menu_Select(tree, lookup,style_lookup);
+                Schema_Tree_Menu_Select_Handler::Handle_Menu_Select(font_chars, pos, tree, lookup,style_lookup, pc_input);
             }
             
             //user navigated up

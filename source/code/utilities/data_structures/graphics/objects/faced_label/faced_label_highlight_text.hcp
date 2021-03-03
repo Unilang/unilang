@@ -11,7 +11,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/cursor/label_cursor_action_doer"❫
 ⚞⚟
 
-◀public: static▶ void ☀Highlight_Text(Character_Maps const& font_chars, Position pos, Faced_Label const& label, Pc_Input_State const& pc_input)❰
+◀public: static▶ void ☀Highlight_Text(Character_Maps const& font_chars, Position pos, Faced_Label & label, Pc_Input_State const& pc_input)❰
 
 
     //remove any existing cursors

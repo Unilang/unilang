@@ -7,6 +7,8 @@ class
 ❪"code/utilities/data_structures/tree/generic/child_lookup_map"❫
 ❪"code/utilities/code/style_theme/style_lookup_map"❫
 ❪"code/utilities/code/style_theme/style_theme"❫
+❪"code/utilities/fonts/bdf/character_maps/character_maps"❫
+❪"code/utilities/peripheral/pc/pc_input_state"❫
 ⚯
 ❪"code/utilities/data_structures/graphics/objects/faced_tree/tree_label_click_finder"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/premade/buttoned_faced_label_premades"❫
@@ -21,14 +23,17 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/local_manipulation_option"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/style_theme_applier"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/buildable_face_tree_style_applier"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_highlight_text"❫
 ⚞⚟
 
-◀public: static▶ void ☀Handle_Menu_Selection(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, std::string message)❰
+
+
+◀public: static▶ void ☀Handle_Menu_Selection(Buildable_Face_Tree_State & tree, Character_Maps const& font_chars, Position const& pos, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, std::string message, Pc_Input_State const& pc_input)❰
     
     //TODO: I'd rather determine this by the menu type instead of a character symbol seen in the menu item
     auto symbol = Remove_And_Get_First_Char(message);
     if (symbol == "+"){
-        Add_Child_Node(tree,lookup,style_lookup,message);
+        Add_Child_Node(tree,font_chars,pos,lookup,style_lookup,message,pc_input);
     }
     if (symbol == "~"){
         Replace_Selected_Node(tree,lookup,style_lookup,message);
@@ -87,17 +92,17 @@ class
     }
 ❱
 
-◀private: static▶ void ☀Add_Child_Node(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, std::string const& message)❰
+◀private: static▶ void ☀Add_Child_Node(Buildable_Face_Tree_State & tree, Character_Maps const& font_chars, Position const& pos, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, std::string const& message, Pc_Input_State const& pc_input)❰
 
     //create the node
     auto x = Create_Styled_Unilang_Node_Via_Parent(tree,tree.selected_node,lookup,style_lookup,message);
     
-    //make everything else in the tree inactive
+    //make everything in the tree inactive except for the new label
     Button_Face_Tree_Set_Active::Set_Active(tree.structure,false);
-    
-    
-    //make it active
     x.label.state.faces[x.label.state.faces.size()-1].label.user_state.is_active = true;
+    
+    //for convenience, select the dummy text of the new label so the user can get to replacing it right away
+    Faced_Label_Highlight_Text::Highlight_Text(font_chars, pos, x.label, pc_input);
     
     //add it
     tree.structure.nodes.append_child(tree.selected_node,x);

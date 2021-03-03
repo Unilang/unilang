@@ -26,6 +26,8 @@ hcp(
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_active_pos_finder",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/select:schema_menu_selection_performer",
+        "//code/utilities/fonts/bdf/character_maps:character_maps",
+        "//code/utilities/peripheral/pc:pc_input_state",
     ],
 )
 
@@ -51,6 +53,8 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_active_pos_finder",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/select:schema_menu_selection_performer",
         "//code/utilities/data_structures/graphics/objects/faced_tree:tree_label_active_finder",
+        "//code/utilities/fonts/bdf/character_maps:character_maps",
+        "//code/utilities/peripheral/pc:pc_input_state",
     ],
 )
 
@@ -75,5 +79,8 @@ hcp(
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_active_pos_finder",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_set_active",
+        "//code/utilities/fonts/bdf/character_maps:character_maps",
+        "//code/utilities/peripheral/pc:pc_input_state",
+        "//code/utilities/data_structures/graphics/objects/faced_label:faced_label_highlight_text",
     ],
 )
