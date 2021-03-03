@@ -29,24 +29,26 @@ class
     x.name = settings.menu_name;
     
     if (settings.add_global_manipulation_options){
-        Add_Global_Manipulation_Options(x,structure,lookup,it);
+        Add_Global_Manipulation_Options(x,structure,settings,lookup,it);
     }
     if (settings.add_local_manipulation_options){
-        Add_Local_Manipulation_Options(x,structure,lookup,it);
+        Add_Local_Manipulation_Options(x,structure,settings,lookup,it);
     }
     
     if (settings.add_sibiling_rename_options){
-        Add_Sibling_Names_For_Renaming(x,structure,lookup,it);
+        Add_Sibling_Names_For_Renaming(x,structure,settings,lookup,it);
     }
     
     if (settings.add_children_append_options){
-        Add_Children_Names_For_Appending(x,structure,lookup,it);
+        Add_Children_Names_For_Appending(x,structure,settings,lookup,it);
     }
     
     Activate_First_Menu_Item(x);
     
     return x;
 ❱
+    
+    
 
 ◀private: static▶ void ☀Activate_First_Menu_Item(Select_Menu & x)❰
     auto first = x.menu.nodes.begin();
@@ -54,28 +56,28 @@ class
         first->state.faces[0].label.user_state.is_active = true;
     }
 ❱
-◀private: static▶ void ☀Add_Global_Manipulation_Options(Select_Menu & x, Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
+◀private: static▶ void ☀Add_Global_Manipulation_Options(Select_Menu & x, Button_Face_Tree const& structure, Schema_Tree_Menu_Creation_Settings const& settings, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
 
     //style
     auto face_label = Faced_Label_Premades::Highlightable_Single_Plain_White_Box();
     
     for (auto const& it: Global_Manipulation_Option_all_strings()){
-        face_label.state.faces[0].label.message = "!" + it;
+        face_label.state.faces[0].label.message = settings.global_symbol + it;
         x.menu.nodes.insert(x.menu.nodes.end(),face_label);
     }
 ❱
-◀private: static▶ void ☀Add_Local_Manipulation_Options(Select_Menu & x, Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
+◀private: static▶ void ☀Add_Local_Manipulation_Options(Select_Menu & x, Button_Face_Tree const& structure, Schema_Tree_Menu_Creation_Settings const& settings, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
 
     //style
     auto face_label = Faced_Label_Premades::Highlightable_Single_Plain_White_Box();
     
     for (auto const& it: Local_Manipulation_Option_all_strings()){
-        face_label.state.faces[0].label.message = ":" + it;
+        face_label.state.faces[0].label.message = settings.local_symbol + it;
         x.menu.nodes.insert(x.menu.nodes.end(),face_label);
     }
 ❱
 
-◀private: static▶ void ☀Add_Sibling_Names_For_Renaming(Select_Menu & x, Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
+◀private: static▶ void ☀Add_Sibling_Names_For_Renaming(Select_Menu & x, Button_Face_Tree const& structure, Schema_Tree_Menu_Creation_Settings const& settings, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
 
     //style
     auto face_label = Faced_Label_Premades::Highlightable_Single_Plain_White_Box();
@@ -87,13 +89,13 @@ class
         auto full_name = Button_Face_Tree_Full_Path_Name::Get(structure,parent);
         auto strs = Child_Lookup_Map_Find::Get_Children(lookup,full_name);
         for (auto const& it: strs){
-            face_label.state.faces[0].label.message = "~" + it;
+            face_label.state.faces[0].label.message = settings.sibling_symbol + it;
             x.menu.nodes.insert(x.menu.nodes.end(),face_label);
         }
     }
 ❱
 
-◀private: static▶ void ☀Add_Children_Names_For_Appending(Select_Menu & x, Button_Face_Tree const& structure, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
+◀private: static▶ void ☀Add_Children_Names_For_Appending(Select_Menu & x, Button_Face_Tree const& structure, Schema_Tree_Menu_Creation_Settings const& settings, Child_Lookup_Map const& lookup, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
 
     //style
     auto face_label = Faced_Label_Premades::Highlightable_Single_Plain_White_Box();
@@ -102,7 +104,7 @@ class
     auto full_name = Button_Face_Tree_Full_Path_Name::Get(structure,it);
     auto strs = Child_Lookup_Map_Find::Get_Children(lookup,full_name);
     for (auto const& it: strs){
-        face_label.state.faces[0].label.message = "+" + it;
+        face_label.state.faces[0].label.message = settings.children_append_symbol + it;
         x.menu.nodes.insert(x.menu.nodes.end(),face_label);
     }
 ❱
