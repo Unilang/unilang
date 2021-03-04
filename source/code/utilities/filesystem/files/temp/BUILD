@@ -33,3 +33,17 @@ cc_library(
         "//code/utilities/filesystem/paths:lib",
     ],
 )
+
+
+cc_library(
+    name = "incrementing_tmp_images",
+    srcs = ["incrementing_tmp_images.cpp"],
+    hdrs = ["incrementing_tmp_images.hpp"],
+    deps = [
+        "//code/utilities/filesystem/files/creating:lib",
+        "//code/utilities/filesystem/files/deleting:lib",
+        "//code/utilities/random/files:random_files",
+        "//code/utilities/filesystem/paths:lib",
+        "//code/utilities/filesystem/files/temp:temp_dir",
+    ],
+)

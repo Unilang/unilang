@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include "code/utilities/filesystem/files/creating/lib.hpp"
 #include "code/utilities/filesystem/files/deleting/lib.hpp"

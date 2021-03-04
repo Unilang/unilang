@@ -32,6 +32,7 @@ hcp(
         "//code/tools/ide/frame:everything_draw_settings",
         "//code/tools/ide/frame:everything_drawer",
         "//code/utilities/filesystem/files/temp:temp_dir",
+        "//code/utilities/filesystem/files/temp:incrementing_tmp_images",
         "@tree",
     ],
 )

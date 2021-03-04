@@ -26,6 +26,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/string_tree_to_buttoned_face_tree"❫
 ❪"code/tools/ide/settings/ide_settings_getter"❫
 ❪"code/utilities/filesystem/files/temp/temp_dir"❫
+❪"code/utilities/filesystem/files/temp/incrementing_tmp_images"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Create()❰
@@ -39,11 +40,14 @@ class
     draw_settings.draw_mouse = false;
     draw_settings.draw_elements = true;
     
-    //the base path to save these files
+    //how to save image frames to disk
+    Incrementing_Tmp_Images output_dir(true);
     
-    Temp_Dir output_dir(true);
     
-    Draw_To_Image(s,draw_settings,output_dir.Path() + "/1.png");
+    //the simulation of using the unilang ide
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    s.desktop.input.keyboard.key_states[226] = Key_State::PRESSED;
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
     
     
     std::cout << output_dir.Path() << std::endl;
