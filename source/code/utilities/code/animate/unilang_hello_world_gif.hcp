@@ -21,11 +21,12 @@ class
 ❪"code/utilities/filesystem/paths/lib"❫
 ❪"code/utilities/types/tree/converters/tree_full_paths_getter"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/string_tree_to_buttoned_face_tree"❫
+❪"code/tools/ide/settings/ide_settings_getter"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Create()❰
 
-
+    auto s = Ide_Settings_Getter::Get("");
     
     
 ❱

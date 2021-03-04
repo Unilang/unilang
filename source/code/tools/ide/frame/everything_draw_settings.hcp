@@ -1,0 +1,14 @@
+class
+❪string❫
+❪vector❫
+⚯
+
+⚞⚟
+
+◀
+public:
+    
+    bool ፠draw_background፠ = true;
+    bool ፠draw_mouse፠ = true;
+    bool ፠draw_elements፠ = true;
+▶

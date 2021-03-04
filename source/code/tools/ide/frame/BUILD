@@ -27,6 +27,7 @@ hcp(
         "//code/utilities/peripheral/pc:pc_input_state_getter",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
+        "//code/tools/ide/frame:everything_drawer",
         "@imgui//:imgui_sdl_opengl3",
     ],
 )
@@ -60,6 +61,26 @@ hcp(
         "//code/utilities/types/vectors/operators:lib",
     ],
 )
+
+hcp(
+    name = "everything_draw_settings",
+    deps = [
+    ],
+)
+
+hcp(
+    name = "everything_drawer",
+    deps = [
+        "//code/tools/ide/settings:ide_settings",
+        "//code/utilities/peripheral/pc:pc_input_state",
+        "//code/tools/ide/frame:everything_draw_settings",
+        "//code/utilities/data_structures/graphics/objects/mouse/draw:mouse_frame_getter",
+        "//code/tools/ide/frame:ide_element_drawer",
+        "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/data_structures/graphics/objects:frame_elements",
+    ],
+)
+
 
 hcp(
     name = "ide_element_drawer",

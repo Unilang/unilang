@@ -26,15 +26,10 @@ class
     Frame_Elements elements;
     auto before = [&]()                  {
         
-        
-        
         //we do things here because the GL context is needed for images
         for (auto & it: s.elements.types){
             Gl_Context_Element_Load::Load_Image_If_Needed(it);
         }
-        
-        
-        
     };
     auto logic =  [&](SDL_Window* window) {
     

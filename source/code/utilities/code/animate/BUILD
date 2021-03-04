@@ -27,6 +27,7 @@ hcp(
         "//code/utilities/personal/hosting:hosting_repo",
         "//code/utilities/types/strings/transformers/appending:lib",
         "//code/utilities/types/tree/converters:tree_full_paths_getter",
+        "//code/tools/ide/settings:ide_settings_getter",
         "@tree",
     ],
 )
