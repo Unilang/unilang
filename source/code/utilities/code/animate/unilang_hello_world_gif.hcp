@@ -27,6 +27,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/string_tree_to_buttoned_face_tree"❫
 ❪"code/tools/ide/settings/ide_settings_getter"❫
 ❪"code/utilities/filesystem/files/temp/temp_dir"❫
+❪"code/utilities/peripheral/keyboard/state/key_codes"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Create()❰
@@ -44,13 +45,18 @@ class
     Incrementing_Tmp_Images output_dir(true);
     
     
+    //keys
+    Key_Codes key_codes;
+    
+    
     //the simulation of using the unilang ide
     Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Press_Button_And_Draw_Image(s,output_dir,draw_settings,226);
-    Press_Button_And_Draw_Image(s,output_dir,draw_settings,40);
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Press_Button_And_Draw_Image(s,output_dir,draw_settings,226);
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.alt);
+    Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.enter);
+    Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.alt);
+    Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.enter);
+    Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.h);
+    Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.e);
     
     
     std::cout << output_dir.Path() << std::endl;
@@ -69,12 +75,10 @@ class
     Cairo_Render_Settings settings;
     settings.file_name = file_name;
     
-    //calculate and draw
-    std::cout << "calculate" << std::endl;
+    //calculate and draw (we calculate twice because things may not change frame over frame perfectly like I'd want to show)
+    //this should be fixed, but also doing it twice should ensure any of those small subtleties don't show up in the rendered example
+    Everything_Drawer::Draw(s,draw_settings,s.desktop.input);
     auto frames = Everything_Drawer::Draw(s,draw_settings,s.desktop.input);
-    std::cout << frames.types.size() << std::endl;
-    
-    std::cout << "draw" << std::endl;
     Frame_Renderer::Render(frames,settings);
     
 ❱

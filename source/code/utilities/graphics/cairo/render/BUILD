@@ -46,5 +46,15 @@ hcp(
 
 hcp(
     name = "cairo_render_settings",
-    deps = [],
+    deps = [
+        "//code/utilities/graphics/cairo/render:cairo_surface_settings",
+    ],
 )
+
+hcp(
+    name = "cairo_surface_settings",
+    deps = [
+        "//code/utilities/data_structures/position:position"
+    ],
+)
+

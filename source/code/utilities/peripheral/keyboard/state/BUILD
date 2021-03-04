@@ -35,3 +35,9 @@ hcp(
         "//code/utilities/graphics/imgui/loop:mechanics",
     ],
 )
+
+hcp(
+    name = "key_codes",
+    deps = [
+    ],
+)

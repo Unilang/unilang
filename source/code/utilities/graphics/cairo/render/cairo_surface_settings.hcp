@@ -1,0 +1,15 @@
+class
+❪vector❫
+❪string❫
+❪"code/utilities/data_structures/position/position"❫
+⚯
+
+⚞⚟
+
+◀public:
+
+        //if you don't use an explicit size, we will derive the minimum size to fit all the rendered elements
+        bool use_explicit = false;
+        Position explicit_size;
+        
+▶

@@ -65,18 +65,18 @@ class
     //   x.elements.types.emplace_back(e);
     // }
     
-    {
-      //build
-      Positioned_Buildable_Face_Tree gtree;
-      gtree.state.structure = Faced_Tree_Example2();
-      gtree.pos.x = 400;
-      gtree.pos.y = 100;
+    // {
+    //   //build
+    //   Positioned_Buildable_Face_Tree gtree;
+    //   gtree.state.structure = Faced_Tree_Example2();
+    //   gtree.pos.x = 400;
+    //   gtree.pos.y = 100;
       
-      //add
-      Ide_Element e;
-      e.element = gtree;
-      x.elements.types.emplace_back(e);
-    }
+    //   //add
+    //   Ide_Element e;
+    //   e.element = gtree;
+    //   x.elements.types.emplace_back(e);
+    // }
     
     //create a buildable tree based on unilang's schema
     {
@@ -86,8 +86,8 @@ class
       btree.state.tree.state.structure = Faced_Tree_Example();
       btree.state.schema = Buildable_Schema_Faced_Tree_Default_Schema::Get();
       btree.state.schema_styles = Style_Lookup_Map_Getter::Get_Default_Theme();
-      btree.pos.x = 220;
-      btree.pos.y = 100;
+      btree.pos.x = 20;
+      btree.pos.y = 0;
       
       //apply initial theme
       Style_Theme_Applier::Apply_Theme(btree.state);

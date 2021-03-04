@@ -1,6 +1,7 @@
 class
 ❪vector❫
 ❪string❫
+❪"code/utilities/graphics/cairo/render/cairo_surface_settings"❫
 ⚯
 
 ⚞⚟
@@ -8,4 +9,6 @@ class
 ◀public:
 
         std::string file_name;
+        Cairo_Surface_Settings surface;
+        
 ▶

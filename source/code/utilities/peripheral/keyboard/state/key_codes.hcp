@@ -1,0 +1,72 @@
+class
+❪vector❫
+❪string❫
+❪array❫
+⚯
+⚞⚟
+
+◀
+public:
+
+    //to make things easier, these are names for all of the keycode numbers
+    //they are default assigned for what made sense when I was using imgui.
+    //I'm guessing they might need to be different on different computers
+    //or if you use different input libraries.  Whatever input library you use,
+    //you'll likely want all of the inputs in an input array that is decoupled
+    //from the input library that filled them.  Then you might also want something
+    //like this to map those integers to actual key names.  This might not be the best
+    //solution, but its how I reference the imgui input array based on names instead of
+    //magic int numbers.
+    int one = 30;
+    int two = 31;
+    int three = 32;
+    int four = 33;
+    int five = 34;
+    int six = 35;
+    int seven = 36;
+    int eight = 37;
+    int nine = 38;
+    int zero = 39;
+    
+    int a = 4;
+    int b = 5;
+    int c = 6;
+    int d = 7;
+    int e = 8;
+    int f = 9;
+    int g = 10;
+    int h = 11;
+    int i = 12;
+    int j = 13;
+    int k = 14;
+    int l = 15;
+    int m = 16;
+    int n = 17;
+    int o = 18;
+    int p = 19;
+    int q = 20;
+    int r = 21;
+    int s = 22;
+    int t = 23;
+    int u = 24;
+    int v = 25;
+    int w = 26;
+    int x = 27;
+    int y = 28;
+    int z = 29;
+    
+    int space = 44;
+    
+    int tab = 43;
+    int shift = 225;
+    int ctrl = 224;
+    int alt = 226;
+    int enter = 40;
+    
+    int up = 82;
+    int down = 81;
+    int left = 80;
+    int right = 79;
+    
+
+▶
