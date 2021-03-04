@@ -55,8 +55,7 @@ class
     Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.enter);
     Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.alt);
     Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.enter);
-    Fill_Text_Buffer_And_Draw_Image(s,output_dir,draw_settings,'h');
-    Fill_Text_Buffer_And_Draw_Image(s,output_dir,draw_settings,'e');
+    Type_Message_And_Draw_Images(s,output_dir,draw_settings,"hello world");
     
     
     std::cout << output_dir.Path() << std::endl;
@@ -72,6 +71,12 @@ class
     //calculate and draw (we calculate twice because things may not change frame over frame perfectly like I'd want to show)
     //this should be fixed, but also doing it twice should ensure any of those small subtleties don't show up in the rendered example
     Everything_Drawer::Draw(s,draw_settings,s.desktop.input);
+❱
+
+◀private: static▶ void ☀Type_Message_And_Draw_Images(Ide_Settings & s, Incrementing_Tmp_Images & output_dir, Everything_Draw_Settings const& draw_settings, std::string const& str)❰
+    for (auto const& c: str){
+        Fill_Text_Buffer_And_Draw_Image(s,output_dir,draw_settings,c);
+    }
 ❱
 
 ◀private: static▶ void ☀Fill_Text_Buffer_And_Draw_Image(Ide_Settings & s, Incrementing_Tmp_Images & output_dir, Everything_Draw_Settings const& draw_settings, char c)❰
