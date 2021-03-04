@@ -1,0 +1,3 @@
+convert -background white -alpha remove -delay 13 -loop 0 `ls -v`  output.gif
+convert -background white -alpha remove -delay 13 -loop 0 *.png output.gif
+convert -delay 10 -loop 0 *.png animatedGIF.gif

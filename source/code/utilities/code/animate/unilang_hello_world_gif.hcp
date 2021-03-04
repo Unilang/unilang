@@ -58,6 +58,8 @@ class
     Type_Message_And_Draw_Images(s,output_dir,draw_settings,"hello world");
     
     
+    
+    
     std::cout << output_dir.Path() << std::endl;
 ❱
 
