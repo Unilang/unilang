@@ -46,16 +46,11 @@ class
     
     //the simulation of using the unilang ide
     Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    //Press_Button_And_Draw_Image(s,output_dir,draw_settings,226);
-    //Press_Button_And_Draw_Image(s,output_dir,draw_settings,40);
+    Press_Button_And_Draw_Image(s,output_dir,draw_settings,226);
+    Press_Button_And_Draw_Image(s,output_dir,draw_settings,40);
     Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Press_Button_And_Draw_Image(s,output_dir,draw_settings,226);
     Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    //Press_Button_And_Draw_Image(s,output_dir,draw_settings,226);
     
     
     std::cout << output_dir.Path() << std::endl;
@@ -77,6 +72,7 @@ class
     //calculate and draw
     std::cout << "calculate" << std::endl;
     auto frames = Everything_Drawer::Draw(s,draw_settings,s.desktop.input);
+    std::cout << frames.types.size() << std::endl;
     
     std::cout << "draw" << std::endl;
     Frame_Renderer::Render(frames,settings);

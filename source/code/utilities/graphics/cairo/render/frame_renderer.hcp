@@ -5,6 +5,7 @@ class
 ❪cairo-svg.h❫
 ❪"SDL.h"❫
 ⚯
+❪"code/utilities/graphics/cairo/render/cairo_surface_creator"❫
 ❪"code/utilities/graphics/imgui/render/elements/rectangle_drawer"❫
 ❪"code/utilities/graphics/imgui/render/elements/line_drawer"❫
 ❪"code/utilities/graphics/imgui/render/elements/multi_color_bitmap_drawer"❫
@@ -24,7 +25,7 @@ class
 ◀private: static▶ void ☀Render_Frame_Elements(Frame_Elements const& elements, Cairo_Render_Settings const& settings)❰
     
     //build drawing context
-    auto surface = Build_Surface(elements);
+    auto surface = Cairo_Surface_Creator::Create(elements, settings);
     cairo_t *cr = cairo_create(surface);
     
     //draw background
@@ -36,7 +37,9 @@ class
     for (auto const& it: elements.types){
         std::visit(overloaded {
             [&](Positioned_Rectangle_Settings const& x) {
-                Draw(cr,x);
+                if (Can_Draw(x)){
+                    Draw(cr,x);
+                }
             },
             [&](Positioned_Multi_Color_Bitmap const& x) {
                 Draw(cr,x);
@@ -65,47 +68,21 @@ class
     cairo_surface_destroy(surface), surface = NULL;
 ❱
 
-◀private: static▶ cairo_surface_t* ☀Build_Surface(Frame_Elements const& elements)❰
+◀private: static▶ bool ☀Can_Draw(Positioned_Rectangle_Settings const& shape)❰
 
-    auto pos = Most_Distant_Pixel_Pos(elements);
-    cairo_surface_t *surface = cairo_image_surface_create(CAIRO_FORMAT_RGB24,pos.x,pos.y);
-    return surface;
-❱
-◀private: static▶ Position ☀Most_Distant_Pixel_Pos(Frame_Elements const& elements)❰
-    Position pos;
-    
-    for (auto const& it: elements.types){
-        std::visit(overloaded {
-            [&](Positioned_Rectangle_Settings const& x) {
-                set_equal_if_less(pos.x,x.pos.x + x.shape.dimensions.width);
-                set_equal_if_less(pos.y,x.pos.y + x.shape.dimensions.height);
-            },
-            [&](Positioned_Multi_Color_Bitmap const& x) {
-                for (auto const& it: x.bitmap.pixels){
-                    set_equal_if_less(pos.x,x.pos.x + it.pos.x);
-                    set_equal_if_less(pos.y,x.pos.y + it.pos.y);
-                }
-            },
-            [&](Positioned_Full_Color_Bitmap const& x) {
-                for (auto const& it: x.bitmap.pixels){
-                    set_equal_if_less(pos.x,x.pos.x + it.x);
-                    set_equal_if_less(pos.y,x.pos.y + it.y);
-                }
-            },
-            [&](Positioned_Image_Data const& x) {
-                //TODO
-            },
-            [&](Positioned_Animated_Image_Data const& x) {
-                //TODO
-            },
-            [&](Positioned_Texture const& x) {
-                //TODO
-            }
-            
-        }, it);
+    bool can_draw = true;
+    if (shape.pos.x < 0 || shape.pos.y < 0){
+        std::cerr << "rectangle position is invalid: " << shape.pos.x << "x" << shape.pos.y << " (skipping)" << std::endl;
+        can_draw = false;
     }
-    
-    return pos;
+    auto width = shape.shape.dimensions.width-1;
+    auto height = shape.shape.dimensions.height-1;
+    if (width < 0 || height < 0){
+        std::cerr << "rectangle dimensions are invalid: " << width << "x" << height << " (skipping)" << std::endl;
+        can_draw = false;
+    }
+
+    return can_draw;
 ❱
 
 
@@ -154,6 +131,8 @@ class
 ◀private: static▶ void ☀Draw_Fill_Pixel_By_Pixel(cairo_t *cr, Positioned_Rectangle_Settings const& shape)❰
 
     //draw fill
+    //std::cout << shape.shape.dimensions.width-1 << " x " << shape.shape.dimensions.height-1 << std::endl;
+    //std::cout << shape.pos.x << " x " << shape.pos.y << std::endl;
     for (size_t i = 0; i < shape.shape.dimensions.width-1; ++i){
         for (size_t j = 0; j < shape.shape.dimensions.height-1; ++j){
             
@@ -206,7 +185,7 @@ class
     //they even have a statement about it, but its still confusing, and I get fuzzy results when I try
     //to follow their advice.  Alternatively, I decided to just convert rectangle objects into individual pixels
     //myself and only tell cairo to draw the pixels instead of a full rectangle command.
-    //probably slower to generate an image, but I don't really care about speed for image generation.
+    //probably slower to generate an image this way, but I care more about quality than speed of image generation.
     //https://www.cairographics.org/FAQ/#sharp_lines
 
     Set_Rgb(cr,shape.shape.colors.fill);
@@ -226,9 +205,12 @@ class
 
 
 ◀private: static▶ void ☀Draw_Pixel(cairo_t *cr, Position const& pos, Transparent_Rgb_Color const& color)❰
+    //std::cout << "start" << std::endl;
+    //std::cout << pos.x << " " << pos.y << std::endl;
     Set_Rgb(cr,color);
     cairo_rectangle (cr, pos.x, pos.y, 1, 1);
     cairo_fill (cr);
+    //std::cout << "end" << std::endl;
 ❱
 ◀private: static▶ void ☀Set_Rgb(cairo_t *cr, Transparent_Rgb_Color const& color)❰
     

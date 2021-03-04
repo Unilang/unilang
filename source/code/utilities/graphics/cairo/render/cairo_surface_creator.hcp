@@ -1,0 +1,60 @@
+class
+❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
+❪"code/utilities/data_structures/color/transparent_rgb_color"❫
+❪"code/utilities/graphics/cairo/render/cairo_render_settings"❫
+❪cairo-svg.h❫
+❪"SDL.h"❫
+⚯
+❪"code/utilities/graphics/imgui/render/elements/rectangle_drawer"❫
+❪"code/utilities/graphics/imgui/render/elements/line_drawer"❫
+❪"code/utilities/graphics/imgui/render/elements/multi_color_bitmap_drawer"❫
+❪"code/utilities/data_structures/graphics/bitmap/multi_color_bitmap/positioned_multi_color_bitmap"❫
+❪"code/utilities/data_structures/graphics/bitmap/full_color_bitmap/positioned_full_color_bitmap"❫
+❪"code/utilities/data_structures/graphics/image/positioned_texture"❫
+❪"code/utilities/types/variant/lib"❫
+❪"code/utilities/math/math"❫
+❪"code/utilities/types/general/lib"❫
+⚞⚟
+
+◀public: static▶ cairo_surface_t* ☀Create(Frame_Elements const& elements, Cairo_Render_Settings const& settings)❰
+
+    auto pos = Most_Distant_Pixel_Pos(elements);
+    cairo_surface_t *surface = cairo_image_surface_create(CAIRO_FORMAT_RGB24,pos.x,pos.y);
+    return surface;
+❱
+◀private: static▶ Position ☀Most_Distant_Pixel_Pos(Frame_Elements const& elements)❰
+    Position pos;
+    
+    for (auto const& it: elements.types){
+        std::visit(overloaded {
+            [&](Positioned_Rectangle_Settings const& x) {
+                set_equal_if_less(pos.x,x.pos.x + x.shape.dimensions.width);
+                set_equal_if_less(pos.y,x.pos.y + x.shape.dimensions.height);
+            },
+            [&](Positioned_Multi_Color_Bitmap const& x) {
+                for (auto const& it: x.bitmap.pixels){
+                    set_equal_if_less(pos.x,x.pos.x + it.pos.x);
+                    set_equal_if_less(pos.y,x.pos.y + it.pos.y);
+                }
+            },
+            [&](Positioned_Full_Color_Bitmap const& x) {
+                for (auto const& it: x.bitmap.pixels){
+                    set_equal_if_less(pos.x,x.pos.x + it.x);
+                    set_equal_if_less(pos.y,x.pos.y + it.y);
+                }
+            },
+            [&](Positioned_Image_Data const& x) {
+                //TODO
+            },
+            [&](Positioned_Animated_Image_Data const& x) {
+                //TODO
+            },
+            [&](Positioned_Texture const& x) {
+                //TODO
+            }
+            
+        }, it);
+    }
+    
+    return pos;
+❱
