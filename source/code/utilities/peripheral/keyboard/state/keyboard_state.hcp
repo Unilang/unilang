@@ -1,6 +1,7 @@
 class
 ❪vector❫
 ❪string❫
+❪array❫
 ❪"code/utilities/peripheral/keyboard/state/key_state"❫
 ⚯
 
@@ -40,7 +41,7 @@ public:
     Key_State down = Key_State::NONE;
     
     //TODO: keep these
-    Key_State key_states[512];
+    std::array<Key_State, 512> key_states;
     std::vector<char> buffered_chars;
 
 ▶

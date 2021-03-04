@@ -28,6 +28,9 @@ hcp(
         "//code/utilities/types/strings/transformers/appending:lib",
         "//code/utilities/types/tree/converters:tree_full_paths_getter",
         "//code/tools/ide/settings:ide_settings_getter",
+        "//code/tools/ide/settings:ide_settings",
+        "//code/tools/ide/frame:everything_draw_settings",
+        "//code/tools/ide/frame:everything_drawer",
         "@tree",
     ],
 )

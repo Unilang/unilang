@@ -9,6 +9,9 @@ class
 ❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
 ❪"code/utilities/peripheral/mouse/state/mouse_state"❫
 ❪"code/utilities/peripheral/pc/pc_input_state"❫
+❪"code/tools/ide/settings/ide_settings"❫
+❪"code/tools/ide/frame/everything_draw_settings"❫
+❪"code/tools/ide/frame/everything_drawer"❫
 ❪"src/tree.hh"❫
 ⚯
 ❪"code/utilities/data_structures/graphics/bitmap/premade/tree_button"❫
@@ -28,5 +31,32 @@ class
 
     auto s = Ide_Settings_Getter::Get("");
     
+    //what parts of the experience to draw
+    //only the ide elements please.
+    Everything_Draw_Settings draw_settings;
+    draw_settings.draw_background = false;
+    draw_settings.draw_mouse = false;
+    draw_settings.draw_elements = true;
+    
+    //the base path to save these files
+    auto base_path = Full_Path_To_Desktop();
+    
+    Draw_To_Image(s,draw_settings,base_path + "1.png");
+    
+    
     
 ❱
+
+◀private: static▶ void ☀Draw_To_Image(Ide_Settings & s, Everything_Draw_Settings const& draw_settings, std::string const& file_name)❰
+
+    //draw the elements to an image
+    Cairo_Render_Settings settings;
+    settings.file_name = file_name;
+    
+    //calculate and draw
+    auto frames = Everything_Drawer::Draw(s,draw_settings,s.desktop.input);
+    Frame_Renderer::Render(frames,settings);
+    
+❱
+
+
