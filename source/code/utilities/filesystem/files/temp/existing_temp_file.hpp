@@ -18,6 +18,10 @@ class Existing_Temp_File {
         }
     }
     
+    std::string Path(){
+        return file_name;
+    }
+    
     private:
         bool keep_;
         std::string file_name;

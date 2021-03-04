@@ -27,7 +27,6 @@ class
     x.mouse.mouse = Standard_Mouse::Get();
     
     //make the input is cleared out.
-    //int len = sizeof(x.input.keyboard.key_states)/sizeof(x.input.keyboard.key_states[0]);
     for (size_t i = 0; i < x.input.keyboard.key_states.size(); ++i){
         x.input.keyboard.key_states[i] = Key_State::NONE;
         x.previous_input.keyboard.key_states[i] = Key_State::NONE;

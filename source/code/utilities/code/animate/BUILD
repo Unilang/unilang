@@ -31,6 +31,7 @@ hcp(
         "//code/tools/ide/settings:ide_settings",
         "//code/tools/ide/frame:everything_draw_settings",
         "//code/tools/ide/frame:everything_drawer",
+        "//code/utilities/filesystem/files/temp:temp_dir",
         "@tree",
     ],
 )

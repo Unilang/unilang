@@ -25,6 +25,7 @@ class
 ❪"code/utilities/types/tree/converters/tree_full_paths_getter"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/string_tree_to_buttoned_face_tree"❫
 ❪"code/tools/ide/settings/ide_settings_getter"❫
+❪"code/utilities/filesystem/files/temp/temp_dir"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Create()❰
@@ -39,12 +40,13 @@ class
     draw_settings.draw_elements = true;
     
     //the base path to save these files
-    auto base_path = Full_Path_To_Desktop();
     
-    Draw_To_Image(s,draw_settings,base_path + "1.png");
+    Temp_Dir output_dir(true);
+    
+    Draw_To_Image(s,draw_settings,output_dir.Path() + "/1.png");
     
     
-    
+    std::cout << output_dir.Path() << std::endl;
 ❱
 
 ◀private: static▶ void ☀Draw_To_Image(Ide_Settings & s, Everything_Draw_Settings const& draw_settings, std::string const& file_name)❰

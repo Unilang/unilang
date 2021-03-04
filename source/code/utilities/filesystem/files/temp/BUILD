@@ -21,3 +21,15 @@ cc_library(
         "//code/utilities/filesystem/files/deleting:lib",
     ],
 )
+
+cc_library(
+    name = "temp_dir",
+    srcs = ["temp_dir.cpp"],
+    hdrs = ["temp_dir.hpp"],
+    deps = [
+        "//code/utilities/filesystem/files/creating:lib",
+        "//code/utilities/filesystem/files/deleting:lib",
+        "//code/utilities/random/files:random_files",
+        "//code/utilities/filesystem/paths:lib",
+    ],
+)
