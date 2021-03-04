@@ -1,0 +1,20 @@
+class
+❪string❫
+❪"code/utilities/data_structures/position/position"❫
+⚯
+
+⚞⚟
+
+
+◀
+public:
+
+    std::string input_dir;
+    std::string output_file;
+    
+    int delay = 13;
+    
+    bool get_files_via_ls_v = true;
+    bool get_files_via_wildcard = true;
+
+▶

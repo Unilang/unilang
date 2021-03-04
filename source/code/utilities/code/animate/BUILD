@@ -34,6 +34,8 @@ hcp(
         "//code/utilities/filesystem/files/temp:temp_dir",
         "//code/utilities/filesystem/files/temp:incrementing_tmp_images",
         "//code/utilities/peripheral/keyboard/state:key_codes",
+        "//code/utilities/program/wrappers/convert/settings:image_animated_settings",
+        "//code/utilities/program/wrappers/convert:convert_image_animator",
         "@tree",
     ],
 )

@@ -16,3 +16,11 @@ hcp(
         "//code/utilities/data_structures/dimensions:two_d_dimensions",
     ],
 )
+
+hcp(
+    name = "image_animated_settings",
+    deps = [
+        "//code/utilities/data_structures/dimensions:two_d_dimensions",
+        "//code/utilities/data_structures/position",
+    ],
+)

@@ -1,3 +1,52 @@
-convert -background white -alpha remove -delay 13 -loop 0 `ls -v`  output.gif
-convert -background white -alpha remove -delay 13 -loop 0 *.png output.gif
-convert -delay 10 -loop 0 *.png animatedGIF.gif
+class
+❪string❫
+❪iostream❫
+❪cstdlib❫
+❪fstream❫
+❪"code/utilities/program/call/lib"❫
+❪filesystem❫
+❪"code/utilities/program/wrappers/convert/settings/image_settings"❫
+❪"code/utilities/program/wrappers/convert/settings/image_animated_settings"❫
+⚯
+
+⚞⚟
+
+//creates a base image of a certain dimension and color
+◀public: static▶ void ☀Make(Image_Animated_Settings const& settings) ❰
+
+    auto command = Get_Command(settings);
+    std::cout << command << std::endl;
+    
+
+    //std::cout << command << std::endl;
+    execute_quietly(command);
+❱
+
+◀private: static▶ std::string ☀Get_Command(Image_Animated_Settings const& settings) ❰
+    std::string command;
+    command += "convert ";
+    command += "-delay ";
+    command += std::to_string(settings.delay);
+    command += " ";
+    if (settings.get_files_via_ls_v){
+        command += "`";
+        command += "ls -v ";
+        command += settings.input_dir;
+        command += " | xargs realpath";
+        command += "`";
+    }
+    else if (settings.get_files_via_wildcard){
+        command += settings.input_dir;
+        command += "*";
+    }
+    command += " ";
+    command += settings.output_file;
+    return command;
+
+❱
+
+//examples:
+// convert -background white -alpha remove -delay 13 -loop 0 `ls -v`  output.gif
+// convert -background white -alpha remove -delay 13 -loop 0 *.png output.gif
+// convert -delay 10 -loop 0 *.png animatedGIF.gif
+

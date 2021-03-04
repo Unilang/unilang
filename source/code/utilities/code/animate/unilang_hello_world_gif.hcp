@@ -28,6 +28,8 @@ class
 ❪"code/tools/ide/settings/ide_settings_getter"❫
 ❪"code/utilities/filesystem/files/temp/temp_dir"❫
 ❪"code/utilities/peripheral/keyboard/state/key_codes"❫
+❪"code/utilities/program/wrappers/convert/settings/image_animated_settings"❫
+❪"code/utilities/program/wrappers/convert/convert_image_animator"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Create()❰
@@ -58,7 +60,14 @@ class
     Type_Message_And_Draw_Images(s,output_dir,draw_settings,"hello world");
     
     
-    
+    //animate images
+    Image_Animated_Settings animate_settings;
+    animate_settings.input_dir = output_dir.Path() + "/";
+    animate_settings.output_file = Root_Readme_Directory() + "hello_world.gif";
+    animate_settings.delay = 13;
+    animate_settings.get_files_via_ls_v = true;
+    animate_settings.get_files_via_wildcard = false;
+    Convert_Image_Animator::Make(animate_settings);
     
     std::cout << output_dir.Path() << std::endl;
 ❱
