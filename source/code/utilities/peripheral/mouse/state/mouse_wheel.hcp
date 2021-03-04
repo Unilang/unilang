@@ -11,5 +11,5 @@ public:
 
     //positive=down
     //negative=up
-    float movement;
+    float movement=0.0;
 ▶

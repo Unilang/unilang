@@ -24,4 +24,5 @@ class
     
     //add it as an existing cursor
     label.state.faces[label.state.index].label.cursors.cursors.emplace_back(sel);
+    
 ❱

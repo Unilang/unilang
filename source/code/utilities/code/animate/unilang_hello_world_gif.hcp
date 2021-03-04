@@ -34,7 +34,7 @@ class
 
     auto s = Ide_Settings_Getter::Get("");
     
-    //what parts of the experience to draw
+    //what parts of the experience to draw.
     //only the ide elements please.
     Everything_Draw_Settings draw_settings;
     draw_settings.draw_background = false;
@@ -55,8 +55,8 @@ class
     Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.enter);
     Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.alt);
     Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.enter);
-    Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.h);
-    Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.e);
+    Fill_Text_Buffer_And_Draw_Image(s,output_dir,draw_settings,'h');
+    Fill_Text_Buffer_And_Draw_Image(s,output_dir,draw_settings,'e');
     
     
     std::cout << output_dir.Path() << std::endl;
@@ -65,8 +65,25 @@ class
 ◀private: static▶ void ☀Press_Button_And_Draw_Image(Ide_Settings & s, Incrementing_Tmp_Images & output_dir, Everything_Draw_Settings const& draw_settings, int key)❰
 
     s.desktop.input.keyboard.key_states[key] = Key_State::PRESSED;
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Everything_Drawer::Draw(s,draw_settings,s.desktop.input);
     s.desktop.input.keyboard.key_states[key] = Key_State::NONE;
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    
+    //calculate and draw (we calculate twice because things may not change frame over frame perfectly like I'd want to show)
+    //this should be fixed, but also doing it twice should ensure any of those small subtleties don't show up in the rendered example
+    Everything_Drawer::Draw(s,draw_settings,s.desktop.input);
+❱
+
+◀private: static▶ void ☀Fill_Text_Buffer_And_Draw_Image(Ide_Settings & s, Incrementing_Tmp_Images & output_dir, Everything_Draw_Settings const& draw_settings, char c)❰
+
+    s.desktop.input.keyboard.buffered_chars.emplace_back(c);
+    Everything_Drawer::Draw(s,draw_settings,s.desktop.input);
+    s.desktop.input.keyboard.buffered_chars.clear();
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    
+    //calculate and draw (we calculate twice because things may not change frame over frame perfectly like I'd want to show)
+    //this should be fixed, but also doing it twice should ensure any of those small subtleties don't show up in the rendered example
+    Everything_Drawer::Draw(s,draw_settings,s.desktop.input);
 ❱
 
 ◀private: static▶ void ☀Draw_To_Image(Ide_Settings & s, Everything_Draw_Settings const& draw_settings, std::string const& file_name)❰
@@ -75,16 +92,9 @@ class
     Cairo_Render_Settings settings;
     settings.file_name = file_name;
     
-    //calculate and draw (we calculate twice because things may not change frame over frame perfectly like I'd want to show)
-    //this should be fixed, but also doing it twice should ensure any of those small subtleties don't show up in the rendered example
-    Everything_Drawer::Draw(s,draw_settings,s.desktop.input);
+
     auto frames = Everything_Drawer::Draw(s,draw_settings,s.desktop.input);
     Frame_Renderer::Render(frames,settings);
     
 ❱
-
-
-    // int navigate_up = 82;
-    // int navigate_down = 81;
-    // int select_active = 40;
 
