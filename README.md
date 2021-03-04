@@ -2,6 +2,7 @@
 
 **A universal programming language**
 
+<img width="" height="" src=".readme/hello_world.gif">
 
 </details>
 <details>
