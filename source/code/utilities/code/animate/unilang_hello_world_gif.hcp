@@ -96,7 +96,9 @@ class
     //draw the elements to an image
     Cairo_Render_Settings settings;
     settings.file_name = file_name;
-    
+    settings.surface.use_explicit = true;
+    settings.surface.explicit_size.x = 150;
+    settings.surface.explicit_size.y = 150;
 
     auto frames = Everything_Drawer::Draw(s,draw_settings,s.desktop.input);
     Frame_Renderer::Render(frames,settings);

@@ -18,10 +18,20 @@ class
 
 ◀public: static▶ cairo_surface_t* ☀Create(Frame_Elements const& elements, Cairo_Render_Settings const& settings)❰
 
-    auto pos = Most_Distant_Pixel_Pos(elements);
+    
+    auto pos = Get_Surface_Dimensions(elements,settings);
     cairo_surface_t *surface = cairo_image_surface_create(CAIRO_FORMAT_RGB24,pos.x,pos.y);
     return surface;
 ❱
+
+◀private: static▶ Position ☀Get_Surface_Dimensions(Frame_Elements const& elements, Cairo_Render_Settings const& settings)❰
+    if (settings.surface.use_explicit){
+        return settings.surface.explicit_size;
+    }
+    return Most_Distant_Pixel_Pos(elements);
+❱
+
+
 ◀private: static▶ Position ☀Most_Distant_Pixel_Pos(Frame_Elements const& elements)❰
     Position pos;
     
