@@ -54,17 +54,43 @@ class
     //the simulation of using the unilang ide
     Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
     Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.alt);
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+        Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+        Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+        Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
     Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.enter);
     Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.alt);
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+        Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+        Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+        Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
     Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.enter);
     Type_Message_And_Draw_Images(s,output_dir,draw_settings,"hello world");
     
+    
+    //pause a little bit at the end
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
     
     //animate images
     Image_Animated_Settings animate_settings;
     animate_settings.input_dir = output_dir.Path() + "/";
     animate_settings.output_file = Root_Readme_Directory() + "hello_world.gif";
-    animate_settings.delay = 13;
+    animate_settings.delay = 10;
     animate_settings.get_files_via_ls_v = true;
     animate_settings.get_files_via_wildcard = false;
     Convert_Image_Animator::Make(animate_settings);

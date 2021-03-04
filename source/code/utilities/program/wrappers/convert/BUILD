@@ -48,5 +48,6 @@ hcp(
         "//code/utilities/program/call:lib",
         "//code/utilities/program/wrappers/convert/settings:image_settings",
         "//code/utilities/program/wrappers/convert/settings:image_animated_settings",
+        "//code/utilities/filesystem/paths:lib",
     ],
 )

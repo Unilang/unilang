@@ -7,6 +7,7 @@ class
 ❪filesystem❫
 ❪"code/utilities/program/wrappers/convert/settings/image_settings"❫
 ❪"code/utilities/program/wrappers/convert/settings/image_animated_settings"❫
+❪"code/utilities/filesystem/paths/lib"❫
 ⚯
 
 ⚞⚟
@@ -19,7 +20,9 @@ class
     
 
     //std::cout << command << std::endl;
-    execute_quietly(command);
+    Create_Path_And_Temporarily_Move_To_It_To_Call_Function(settings.input_dir,[&](){
+        execute_quietly(command);
+    });
 ❱
 
 ◀private: static▶ std::string ☀Get_Command(Image_Animated_Settings const& settings) ❰
@@ -32,7 +35,6 @@ class
         command += "`";
         command += "ls -v ";
         command += settings.input_dir;
-        command += " | xargs realpath";
         command += "`";
     }
     else if (settings.get_files_via_wildcard){
