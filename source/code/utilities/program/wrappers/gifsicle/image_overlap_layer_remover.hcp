@@ -1,0 +1,29 @@
+class
+❪string❫
+❪iostream❫
+❪cstdlib❫
+❪fstream❫
+❪"code/utilities/program/call/lib"❫
+❪filesystem❫
+⚯
+
+⚞⚟
+
+//sometimes subsequent frames of an animated gif appear stacked on top of one another.
+//I'm not sure why this happens, but it this function will fix it.
+◀public: static▶ void ☀Fix(std::string const& file_in, std::string const& file_out) ❰
+
+    std::string command;
+    command += "gifsicle -U --disposal=previous -O2 ";
+    command += file_in;
+    command += " > ";
+    command += file_out;
+    
+    execute(command);
+❱
+
+◀public: static▶ void ☀Fix(std::string const& file_in) ❰
+
+    Fix(file_in,file_in +"_converted");
+    execute_quietly("mv " + file_in +"_converted " + file_in);
+❱

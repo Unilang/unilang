@@ -31,6 +31,7 @@ class
 ❪"code/utilities/program/wrappers/convert/settings/image_animated_settings"❫
 ❪"code/utilities/program/wrappers/convert/convert_image_animator"❫
 ❪"code/utilities/program/wrappers/convert/image_transparent"❫
+❪"code/utilities/program/wrappers/gifsicle/image_overlap_layer_remover"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Create()❰
@@ -81,6 +82,8 @@ class
     animate_settings.get_files_via_ls_v = true;
     animate_settings.get_files_via_wildcard = false;
     Convert_Image_Animator::Make(animate_settings);
+    
+    Image_Overlap_Layer_Remover::Fix(animate_settings.output_file);
     
     std::cout << output_dir.Path() << std::endl;
 ❱

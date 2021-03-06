@@ -37,6 +37,7 @@ hcp(
         "//code/utilities/program/wrappers/convert/settings:image_animated_settings",
         "//code/utilities/program/wrappers/convert:convert_image_animator",
         "//code/utilities/program/wrappers/convert:image_transparent",
+        "//code/utilities/program/wrappers/gifsicle:image_overlap_layer_remover",
         "@tree",
     ],
 )
