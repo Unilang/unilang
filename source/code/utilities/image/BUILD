@@ -49,3 +49,10 @@ hcp(
         "//code/utilities/streams/filestreams:lib",
     ],
 )
+
+hcp(
+    name = "data_uri_getter",
+    deps = [
+        "//code/utilities/program/call:lib",
+    ],
+)

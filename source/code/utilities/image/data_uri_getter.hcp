@@ -1,1 +1,15 @@
-//https://unix.stackexchange.com/questions/247843/how-to-generate-a-data-uri-from-an-image-file
+class
+❪string❫
+❪iostream❫
+❪algorithm❫
+⚯
+❪"code/utilities/program/call/lib"❫
+⚞⚟
+
+//https://unix.stackexchange.com/questions/247843/how-to-generate-a-data-uri-from-an-image-fileclass
+◀public: static▶ std::string ☀Get(std::string file_name)❰
+
+    auto mime_type = execute("file -bN --mime-type " + file_name);
+    auto content = execute("base64 -w0 < " + file_name);
+    return "url('data:" + mime_type + ";base64," + content + "')";
+ ❱
