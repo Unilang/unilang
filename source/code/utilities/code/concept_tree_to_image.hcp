@@ -21,6 +21,7 @@ class
 ❪"code/utilities/filesystem/paths/lib"❫
 ❪"code/utilities/types/tree/converters/tree_full_paths_getter"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/string_tree_to_buttoned_face_tree"❫
+❪"code/utilities/program/wrappers/convert/image_transparent"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Create()❰
@@ -46,6 +47,8 @@ class
     auto host_folder = Bazel_Derived_Root_Of_Repo();
     settings.file_name = host_folder + ".readme/unilang_concept_tree.png";
     Frame_Renderer::Render(elements,settings);
+    
+    Image_Transparent::Convert(settings.file_name);
     
     
 ❱

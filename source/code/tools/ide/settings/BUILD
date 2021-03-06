@@ -54,6 +54,7 @@ hcp(
         "//code/utilities/data_structures/graphics/gui_desktop:gui_desktop_getter",
         "//code/utilities/data_structures/graphics/image:positioned_image_data",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:buildable_schema_faced_tree_default_schema",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:style_theme_applier",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/premade:buttoned_faced_label_premades",
         "//code/utilities/data_structures/graphics/objects/cursor/premade:blue_cursor",
         "//code/utilities/data_structures/graphics/objects/faced_label:faced_label_converter",
@@ -77,15 +78,15 @@ hcp(
         "//code/utilities/graphics/imgui/render/elements:rectangle_drawer",
         "//code/utilities/graphics/sdl:standard_sdl_init_settings",
         "//code/utilities/image:stb_image_setter",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:style_theme_applier",
     ],
 )
 
 hcp(
     name = "ide_settings_getter",
     deps = [
-        "//code/tools/ide/settings:ide_settings",
+        "//code/tools/ide/global_actions:save_state_serializer",
         "//code/tools/ide/settings:ide_default_settings_getter",
+        "//code/tools/ide/settings:ide_settings",
         "//code/utilities/code:concept_string_tree_getter",
         "//code/utilities/code/style_theme:style_lookup_map_getter",
         "//code/utilities/colors/defaults:rectangle_shades",
@@ -97,6 +98,7 @@ hcp(
         "//code/utilities/data_structures/graphics/gui_desktop:gui_desktop_getter",
         "//code/utilities/data_structures/graphics/image:positioned_image_data",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:buildable_schema_faced_tree_default_schema",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:style_theme_applier",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/premade:buttoned_faced_label_premades",
         "//code/utilities/data_structures/graphics/objects/cursor/premade:blue_cursor",
         "//code/utilities/data_structures/graphics/objects/faced_label:faced_label_converter",
@@ -120,8 +122,6 @@ hcp(
         "//code/utilities/graphics/imgui/render/elements:rectangle_drawer",
         "//code/utilities/graphics/sdl:standard_sdl_init_settings",
         "//code/utilities/image:stb_image_setter",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:style_theme_applier",
-        "//code/tools/ide/global_actions:save_state_serializer",
     ],
 )
 

@@ -41,7 +41,6 @@ hcp(
     ],
 )
 
-
 cpp_main(
     name = "reflexive_refresh",
     deps = [
@@ -92,8 +91,8 @@ cpp_main(
 cpp_main(
     name = "hello_world_gif",
     deps = [
-        "//code/utilities/filesystem/paths:lib",
         "//code/utilities/code/animate:unilang_hello_world_gif",
+        "//code/utilities/filesystem/paths:lib",
     ],
 )
 

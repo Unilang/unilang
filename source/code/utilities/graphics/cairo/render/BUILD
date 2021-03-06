@@ -54,7 +54,6 @@ hcp(
 hcp(
     name = "cairo_surface_settings",
     deps = [
-        "//code/utilities/data_structures/position:position"
+        "//code/utilities/data_structures/position",
     ],
 )
-

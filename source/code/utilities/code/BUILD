@@ -31,6 +31,7 @@ hcp(
         "//code/utilities/peripheral/mouse/state:mouse_state",
         "//code/utilities/peripheral/pc:pc_input_state",
         "//code/utilities/personal/hosting:hosting_repo",
+        "//code/utilities/program/wrappers/convert:image_transparent",
         "//code/utilities/types/strings/transformers/appending:lib",
         "//code/utilities/types/tree/converters:tree_full_paths_getter",
         "@tree",

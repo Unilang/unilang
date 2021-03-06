@@ -29,11 +29,10 @@ cc_library(
     deps = [
         "//code/utilities/filesystem/files/creating:lib",
         "//code/utilities/filesystem/files/deleting:lib",
-        "//code/utilities/random/files:random_files",
         "//code/utilities/filesystem/paths:lib",
+        "//code/utilities/random/files:random_files",
     ],
 )
-
 
 cc_library(
     name = "incrementing_tmp_images",
@@ -42,8 +41,8 @@ cc_library(
     deps = [
         "//code/utilities/filesystem/files/creating:lib",
         "//code/utilities/filesystem/files/deleting:lib",
-        "//code/utilities/random/files:random_files",
-        "//code/utilities/filesystem/paths:lib",
         "//code/utilities/filesystem/files/temp:temp_dir",
+        "//code/utilities/filesystem/paths:lib",
+        "//code/utilities/random/files:random_files",
     ],
 )

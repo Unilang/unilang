@@ -164,7 +164,7 @@ hcp(
     name = "for_each_noncollapsed",
     deps = [
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/data:buttoned_faced_label",
-        "//code/utilities/data_structures/should_break:should_break",
+        "//code/utilities/data_structures/should_break",
         "@tree",
     ],
 )
