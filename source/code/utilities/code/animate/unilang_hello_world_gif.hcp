@@ -30,6 +30,7 @@ class
 ❪"code/utilities/peripheral/keyboard/state/key_codes"❫
 ❪"code/utilities/program/wrappers/convert/settings/image_animated_settings"❫
 ❪"code/utilities/program/wrappers/convert/convert_image_animator"❫
+❪"code/utilities/program/wrappers/convert/image_transparent"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Create()❰
@@ -131,6 +132,8 @@ class
 
     auto frames = Everything_Drawer::Draw(s,draw_settings,s.desktop.input);
     Frame_Renderer::Render(frames,settings);
+    
+    Image_Transparent::Convert(file_name);
     
 ❱
 

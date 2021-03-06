@@ -36,6 +36,7 @@ hcp(
         "//code/utilities/peripheral/keyboard/state:key_codes",
         "//code/utilities/program/wrappers/convert/settings:image_animated_settings",
         "//code/utilities/program/wrappers/convert:convert_image_animator",
+        "//code/utilities/program/wrappers/convert:image_transparent",
         "@tree",
     ],
 )
