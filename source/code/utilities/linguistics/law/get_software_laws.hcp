@@ -65,6 +65,7 @@ class
     x.laws.emplace_back(Schneiers_Law());
     x.laws.emplace_back(Wadlers_Law());
     x.laws.emplace_back(Brown_Window_Theory());
+    x.laws.emplace_back(Stroustrups_Rule());
     
 return x;
 ❱
@@ -396,5 +397,11 @@ return x;
     Software_Law law;
     law.name = "Broken Window Theory";
     law.description = "Visible signs of crime, anti-social behavior, and civil disorder create an urban environment that encourages further crime and disorder, including serious crimes.";
+    return law;
+❱
+◀private: static▶ Software_Law ☀Stroustrups_Rule()❰
+    Software_Law law;
+    law.name = "Stroustrup's Rule";
+    law.description = "For new features, people insist on LOUD explicit syntax.  For established features, people want terse notation.";
     return law;
 ❱

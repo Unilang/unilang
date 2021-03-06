@@ -21,3 +21,9 @@ class
     
     execute_quietly(command);
 ❱
+
+◀public: static▶ void ☀Convert(std::string const& file_in) ❰
+
+    Convert(file_in,file_in +"_converted");
+    execute_quietly("mv " + file_in +"_converted " + file_in);
+❱

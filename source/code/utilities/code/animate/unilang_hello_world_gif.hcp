@@ -52,26 +52,12 @@ class
     
     
     //the simulation of using the unilang ide
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_Image_N_Times(s,draw_settings,output_dir,1);
     Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.alt);
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-        Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-        Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-        Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_Image_N_Times(s,draw_settings,output_dir,8);
     Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.enter);
     Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.alt);
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-        Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-        Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-        Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
-    Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    Draw_Image_N_Times(s,draw_settings,output_dir,8);
     Press_Button_And_Draw_Image(s,output_dir,draw_settings,key_codes.enter);
     Type_Message_And_Draw_Images(s,output_dir,draw_settings,"hello world");
     
@@ -96,6 +82,12 @@ class
     Convert_Image_Animator::Make(animate_settings);
     
     std::cout << output_dir.Path() << std::endl;
+❱
+
+◀private: static▶ void ☀Draw_Image_N_Times(Ide_Settings & s, Everything_Draw_Settings const& draw_settings, Incrementing_Tmp_Images & output_dir, int times)❰
+    for (size_t i = 0; i < times; ++i){
+        Draw_To_Image(s,draw_settings,output_dir.Next_Image_Name());
+    }
 ❱
 
 ◀private: static▶ void ☀Press_Button_And_Draw_Image(Ide_Settings & s, Incrementing_Tmp_Images & output_dir, Everything_Draw_Settings const& draw_settings, int key)❰
