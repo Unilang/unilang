@@ -30,6 +30,8 @@ class
     Append_With_Newline(str,"build --incompatible_use_python_toolchains=false");
     Append_With_Newline(str,"build --incompatible_use_specific_tool_files=false");
     
+    Append_With_Newline(str,"build --keep_going");
+    
     //trying to fix java jni issue
     //Append_With_Newline(str,"build --javabase=@embedded_jdk//:jdk");
     //Append_With_Newline(str,"build --javabase=@bazel_tools//tools/jdk:remote_jdk");

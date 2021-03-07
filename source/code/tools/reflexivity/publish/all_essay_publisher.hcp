@@ -44,6 +44,15 @@ class
     
     auto all_essays = Get_Essays();
     
+    //check if any files don't exist
+    for (auto const& e: all_essays){
+        if (!File_Exists(e.json_file_name)){
+            std::cout << "doesn't exist" << std::endl;
+            std::cout << execute("pwd") << std::endl;
+            exit(-1);
+        }
+    }
+    
     //publish essays
     std::cout << "generating essays..." << std::endl;
     for (auto const& it: all_essays){
@@ -62,11 +71,6 @@ class
     Essay e;
     
     e.json_file_name = Linguistics_Json_Data_Getter::Get();
-    if (!File_Exists(e.json_file_name)){
-        std::cout << "doesn't exist" << std::endl;
-        std::cout << execute("pwd") << std::endl;
-        exit(-1);
-    }
     e.style = Essay_Style::POETIC;
     x.emplace_back(e);
     
