@@ -12,7 +12,7 @@ class
 
 //gives you the identifier name
 //including prefix (hungarian notation)
-//identifier (properly cased)
+//identifier (properly cased according to various rules)
 //suffix (units)
 //other identifier adjustments based on data member properties
 ◀public: static▶ std::string ☀Derive_Name(model::DataMember const& item, Module_Settings const& settings, bool is_global, bool is_member)❰

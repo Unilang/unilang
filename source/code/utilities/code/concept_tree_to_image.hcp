@@ -24,6 +24,8 @@ class
 ❪"code/utilities/program/wrappers/convert/image_transparent"❫
 ⚞⚟
 
+
+//turn the concept tree into a simple tree image showing the whole schema
 ◀public: static▶ void ☀Create()❰
 
 
