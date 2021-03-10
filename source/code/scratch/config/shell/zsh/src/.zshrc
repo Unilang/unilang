@@ -45,7 +45,7 @@ plugins=(
     git-flow
     git-hubflow
     git-prompt
-    git-remote-branch
+    # git-remote-branch (errors on mac because the program is not installed)
     git
     gitfast
     gnu-utils
