@@ -10,13 +10,147 @@ class
 
 ◀public: static▶ Best_Practices ☀Get() ❰
 	Best_Practices x;
-    x.all.emplace_back(X());
+    x.all.emplace_back(Kiss());
+    x.all.emplace_back(Follow_Standard_Conventions());
+    x.all.emplace_back(Boyscout());
+    x.all.emplace_back(Rootcause());
+    x.all.emplace_back(Needless_Complexity());
+    x.all.emplace_back(Needless_Repetition());
     
 return x;
 ❱
 
-◀private: static▶ Best_Practice ☀X() ❰
+//clean code
+◀private: static▶ Best_Practice ☀Kiss() ❰
     Best_Practice x;
-    x.text = "";
+    x.text = "Keep it simple stupid";
     return x;
 ❱
+◀private: static▶ Best_Practice ☀Follow_Standard_Conventions() ❰
+    Best_Practice x;
+    x.text = "Follow standard conventions";
+    return x;
+❱
+◀private: static▶ Best_Practice ☀Boyscout() ❰
+    Best_Practice x;
+    x.text = "Boyscout rule.  Leave code better than you found it";
+    return x;
+❱
+◀private: static▶ Best_Practice ☀Rootcause() ❰
+    Best_Practice x;
+    x.text = "Always find the root cause";
+    return x;
+❱
+
+//code smells:
+//rigidity
+//fragility
+//immobility
+//opacity
+◀private: static▶ Best_Practice ☀Needless_Complexity() ❰
+    Best_Practice x;
+    x.text = "Avoid needless complexity";
+    return x;
+❱
+◀private: static▶ Best_Practice ☀Needless_Repetition() ❰
+    Best_Practice x;
+    x.text = "Avoid needless repetition";
+    return x;
+❱
+
+//design:
+// keep configurable data at high level
+// prefer polymorphism to if/else or switch/case
+// Separate multi-threading code
+// prevent over-configurability
+// use dependency injection
+// follow law of demeter.  A class should know its direct dependencies
+
+//objects and data structures:
+// hide internal structure
+// prefer data structures
+// avoid hybrid data structures (half object and half data)
+// should be small
+// do one thing
+// small number of instance variables
+// base class should know nothing about their derivatives
+// better to have many functions than to pass some code into a function to select a behavior
+// prefer non-static methods to static methods
+
+//functions:
+//small
+//use descriptive names
+//prefer fewer arguments
+//have no side effects
+//don't use flag arguments.  split the method into several independent ones
+
+//comments:
+// dont be redundant
+// dont add obvious noise
+// don't use closing brace comments
+// dont comment out code.  jsut remove it.
+// always try to explain yourself with coe
+// use as explanation of intent
+// use as clarification of the code
+// use as a warning of consequences
+
+//structure:
+// keep lines short
+// don't break indentation
+// seperate concepts vetically
+// don't use horizontal alignment
+// related code should appear vertically dense
+// use whitespace to associate related things and dissociate weakly related things
+
+//understandability:
+// be consistent
+// put the processing for boundry conditions in one place.
+// use explanaory variables
+// avoi negative conditionals
+// don't write methods that wonly work correctly depending on external state
+// prefer dedicated value objects to primitive types
+
+//naming:
+// choose descriptive and unambiguous names
+// make meaningful distinctions
+// use pronounceable names
+// use searchable names
+// replace magic numbers with named constants
+// avoid encodings
+// don't append prefixes or type information
+
+
+//tests:
+//one assert per test
+//readable
+//fast
+//independent
+//repeatable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
