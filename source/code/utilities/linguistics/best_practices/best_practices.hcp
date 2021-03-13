@@ -1,0 +1,13 @@
+class
+❪string❫
+❪vector❫
+❪"code/utilities/linguistics/best_practices/best_practice"❫
+⚯
+
+⚞⚟
+
+◀public:
+
+std::vector<Best_Practice> all;
+▶
+

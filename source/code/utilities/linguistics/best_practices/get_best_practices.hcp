@@ -1,0 +1,22 @@
+class
+❪string❫
+❪iostream❫
+❪cstdlib❫
+❪iostream❫
+❪"code/utilities/linguistics/best_practices/best_practices"❫
+⚯
+
+⚞⚟
+
+◀public: static▶ Best_Practices ☀Get() ❰
+	Best_Practices x;
+    x.all.emplace_back(X());
+    
+return x;
+❱
+
+◀private: static▶ Best_Practice ☀X() ❰
+    Best_Practice x;
+    x.text = "";
+    return x;
+❱
