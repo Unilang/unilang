@@ -1,0 +1,12 @@
+class
+❪vector❫
+❪string❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    std::string name;
+    std::string content;
+▶

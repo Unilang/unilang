@@ -829,6 +829,55 @@ class
     Dependency_Specification spec;
     spec.lib_name = "andres_graph";
     Add_Unilang_Github_Mirror(spec,"graph","bd456cb6b2ec207e15b10c7c470f8db1e5491547","0fa9b77db99620c93c1d2da34de958aeeab3305ed06139a5be4d3cf9a2500d88");
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"],)
+
+licenses(["notice"])  # BSD 3-Clause like
+
+cc_library(
+    name = "andres_graph",
+    hdrs = glob([
+        "include/andres/*.hxx",
+        "include/andres/ilp/*.hxx",
+        "include/andres/graph/*.hxx",
+        "include/andres/graph/multicut/*.hxx",
+        "include/andres/graph/multicut-lifted/*.hxx",
+        "include/andres/graph/twocut/*.hxx",
+        "include/andres/graph/twocut-lifted/*.hxx",
+        "include/andres/graph/hdf5/*.hxx",
+        "include/andres/graph/detail/*.hxx",
+    ]),
+    copts = ["-Wno-everything"],
+    includes = ["include"],
+)
+
+[cc_test(
+    name = "test-graph-" + test_name.replace("/", "-"),
+    srcs = ["src/andres/graph/unit-test/" + test_name + ".cxx"],
+    deps = [":andres_graph"],
+) for test_name in (
+    "graph",
+    "digraph",
+    "shortest-paths",
+    "paths",
+    "components",
+    "max-flow",
+    "graph-complete",
+    "graph-grid",
+    "dfs",
+    "bfs",
+    "cut-vertices",
+    "bridges",
+    "minimum-spanning-tree",
+    "lifting",
+    "multicut-lifted/kernighan-lin",
+    "multicut-lifted/greedy-additive",
+    "multicut/kernighan-lin",
+    "multicut/greedy-additive",
+)]
+)RAW_STRING";
+
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Cpp_Graph_Library()❰

@@ -3,6 +3,7 @@ class
 ❪string❫
 ❪"code/tools/reflexivity/deps_define/data/dependency_location"❫
 ❪"code/tools/reflexivity/deps_define/data/build_definitions"❫
+❪"code/tools/reflexivity/deps_define/data/patch_file"❫
 ⚯
 
 ⚞⚟
@@ -28,7 +29,13 @@ class
     //information on building the dependency
     //patches are inevitable, and they are described here
     std::vector<std::string> patch_cmds;
+    
+    //reference preexisting files
     std::vector<std::string> patch_files;
+    
+    //reference files encoded in this structure
+    std::vector<Patch_File> inline_patch_files;
+    
     std::vector<std::string> patch_args;
     
     //sometimes the dependency itself is a bazel repo that already has bazel files inside of it.

@@ -28,16 +28,13 @@ class
         auto source_data = Create_Main_Third_Party_Sourcing_File(all_specs);
         
         //write it out to a file
-        Write_To_File("third_party_libraries.bzl",source_data);
+        Write_To_File_With_Auto_Gen_Comment("third_party_libraries.bzl",Source_Language::PYTHON,source_data);
     
     });
 ❱
 
 ◀private: static▶ std::string ☀Create_Main_Third_Party_Sourcing_File(Dependency_Specifications const& all_specs)❰
     std::string result;
-    
-    //generated file comment
-    Append_With_Newline(result,Generated_Comment_Getter::Get());
     
     //add load statements
     Add_Load_Statement(result,all_specs);
