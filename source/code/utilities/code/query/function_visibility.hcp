@@ -1,0 +1,28 @@
+class
+
+❪"code/utilities/code/concept_static_tree_structs"❫
+❪"code/utilities/comments/doxygen/settings/doxygen_parameter_direction"❫
+❪"code/utilities/code/class_access"❫
+⚯
+❪"code/utilities/types/converters/lib"❫
+❪"code/utilities/types/strings/transformers/stripping/lib"❫
+❪"code/utilities/types/strings/observers/other/lib"❫
+❪"code/utilities/code/symbols/token_attribute_settings"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+⚞⚟
+
+◀public: static▶ Class_Access ☀Get(model::Function const& mem)❰
+
+    auto str = First_Element_Or_Default(mem.function_specifiers).value;
+    
+    Class_Access access = Class_Access::PRIVATE;
+    
+    Token_Attribute_Settings symbols;
+    if (Contains_Substring(str,symbols.data_member.access._public)){
+        access = Class_Access::PUBLIC;
+    }
+    else if (Contains_Substring(str,symbols.data_member.access._protected)){
+        access = Class_Access::PROTECTED;
+    }
+    return access;
+❱

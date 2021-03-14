@@ -106,5 +106,6 @@ hcp(
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
         "//code/utilities/types/vectors/converters:lib",
+        "//code/utilities/code/query:function_visibility",
     ],
 )

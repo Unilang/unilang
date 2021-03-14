@@ -103,6 +103,20 @@ hcp(
 )
 
 hcp(
+    name = "function_visibility",
+    deps = [
+        "//code/utilities/code:class_access",
+        "//code/utilities/code:concept_static_tree_structs",
+        "//code/utilities/code/symbols:token_attribute_settings",
+        "//code/utilities/comments/doxygen/settings:doxygen_parameter_direction",
+        "//code/utilities/types/converters:lib",
+        "//code/utilities/types/strings/observers/other:lib",
+        "//code/utilities/types/strings/transformers/stripping:lib",
+        "//code/utilities/types/vectors/observers:lib",
+    ],
+)
+
+hcp(
     name = "data_member_storage_specifier",
     deps = [
         "//code/utilities/code:concept_static_tree_structs",
