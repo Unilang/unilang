@@ -38,7 +38,7 @@ class
         auto build_file_path = folder_name + "/build.BUILD";
         if (Should_Print_Build_File(spec)){
             auto source_data  = Create_File_Content(spec);
-            Write_To_File(build_file_path,source_data);
+            Write_To_File_With_Auto_Gen_Comment(build_file_path,Source_Language::PYTHON,source_data);
         }
         
         
@@ -54,12 +54,13 @@ class
 
 ◀private: static▶ bool ☀Should_Print_Build_File(Dependency_Specification const& spec)❰
 
-    return false;
+    return !spec.build_defs.raw_starlark.empty();
 ❱
 
 ◀private: static▶ std::string ☀Create_File_Content(Dependency_Specification const& spec)❰
 
     std::string x;
+    x += spec.build_defs.raw_starlark;
     return x;
 ❱
 
