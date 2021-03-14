@@ -26,6 +26,7 @@ class
     x.laws.emplace_back(Conway_Law());
     x.laws.emplace_back(Robustness_Principle());
     x.laws.emplace_back(Eighty_Twenty_Rule());
+    x.laws.emplace_back(Pareto_Fallacy());
     x.laws.emplace_back(Peter_Principle());
     x.laws.emplace_back(Kerchkhoff_Principle());
     x.laws.emplace_back(Linus_Law());
@@ -66,6 +67,8 @@ class
     x.laws.emplace_back(Wadlers_Law());
     x.laws.emplace_back(Brown_Window_Theory());
     x.laws.emplace_back(Stroustrups_Rule());
+    x.laws.emplace_back(Iceberg_Fallacy());
+    x.laws.emplace_back(LGTM_Dilemma());
     
 return x;
 ❱
@@ -153,6 +156,12 @@ return x;
     law.name = "80-20 Rule";
     law.alternative_names.emplace_back("Pareto Principle");
     law.description = "For many phenomena, 80% of consequences stem from 20% of the causes.";
+    return law;
+❱
+◀private: static▶ Software_Law ☀Pareto_Fallacy() ❰
+    Software_Law law;
+    law.name = "Pareto Fallacy";
+    law.description = "When you're 80% done, you think you only have 20% left";
     return law;
 ❱
 ◀private: static▶ Software_Law ☀Peter_Principle() ❰
@@ -405,3 +414,17 @@ return x;
     law.description = "For new features, people insist on LOUD explicit syntax.  For established features, people want terse notation.";
     return law;
 ❱
+◀private: static▶ Software_Law ☀Iceberg_Fallacy() ❰
+    Software_Law law;
+    law.name = "Iceberg Fallacy";
+    law.description = "The cost of development of a new software product is the only ~25% of the total cost of ownership management sees and budgets for.";
+    return law;
+❱
+◀private: static▶ Software_Law ☀LGTM_Dilemma() ❰
+    Software_Law law;
+    law.name = "LGTM Dilemma";
+    law.alternative_names.emplace_back("The Bikeshedder's Blind Spot");
+    law.description = "If you want to quickly ship a 10 line code change, hide it in a 1500 line pull request.";
+    return law;
+❱
+

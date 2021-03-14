@@ -4,6 +4,6 @@ package(
 
 sh_test(
     name = "main",
-    srcs = ["main.sh"],
     size = "large",
+    srcs = ["main.sh"],
 )
