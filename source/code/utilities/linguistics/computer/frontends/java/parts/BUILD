@@ -102,5 +102,9 @@ hcp(
         "//code/utilities/contributor",
         "//code/utilities/linguistics/computer/frontends/java/settings:java_settings",
         "//code/utilities/linguistics/computer/keywords/visibility:visibility_keyword_getter",
+        "//code/utilities/comments/doxygen/maker:doxygen_block_printer",
+        "//code/utilities/types/vectors/observers:lib",
+        "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/types/vectors/converters:lib",
     ],
 )

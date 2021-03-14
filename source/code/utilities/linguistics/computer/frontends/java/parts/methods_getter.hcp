@@ -7,21 +7,25 @@ class
 ❪"code/utilities/linguistics/computer/frontends/java/settings/java_settings"❫
 
 ⚯
+❪"code/utilities/comments/doxygen/maker/doxygen_block_printer"❫
 ❪"code/utilities/linguistics/computer/keywords/visibility/visibility_keyword_getter"❫
 ❪"code/utilities/code/query/data_member_visibility"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/converters/lib"❫
 ⚞⚟
 
 ◀public: static▶ std::string ☀Get(model::Module const& structure, std::vector<Contributor> const& contributors, Java_Settings const& settings)❰
     std::string x;
     
     
-    // for (auto it: structure.methods.methods){
-    //     x += Doxygen_Block_Printer::Get_Doxygen_Method_Comment(it,structure.methods.methods,bad_temp);
-    //     x += "\n";
-    //     x += Get_Signature(structure.name,it,settings);
-    //     x += "\n";
-    //     x += Get_Possible_Body(it,settings);
-    // }
+    for (auto it: structure.function){
+         x += Doxygen_Block_Printer::Get_Indented_Block(it,structure.function,settings.module,4);
+         x += "\n";
+         x += Get_Signature(First_Element_Or_Default(structure.module_name).value,it,settings);
+         x += "\n";
+         x += Get_Possible_Body(it,settings);
+    }
     
     return x;
 ❱
@@ -48,22 +52,28 @@ class
 
     
     std::string x;
-    // x += Possibly_Get_Static_Keyword(method,settings);
-    // x += " ";
-    // x += Possibly_Get_Abstract_Keyword(method,settings);
-    // x += " ";
-    // x += Visibility_Keyword_Getter::Get(method.class_access,Source_Language::JAVA);
-    // x += " ";
-    // x += Function_Template_Getter(method);
-    // x += " ";
+     x += Possibly_Get_Static_Keyword(method,settings);
+     x += " ";
+     x += Possibly_Get_Abstract_Keyword(method,settings);
+     x += " ";
+     x += Get_Visibility_Specifiers(method);
+     x += " ";
+     x += Function_Template_Getter(method);
+     x += " ";
     // x += Return_Type_Str_Getter::Get_Java(name,method,settings);
-    // x += " ";
+     x += " ";
     // x += Shared_Printer::Derive_Function_Name(name,Code_Type::PRODUCT_TYPE,method,bad_temp);
-    // x += Get_Arguments(method,settings);
-    // x += Possible_Thrown_Exceptions(method,settings);
+     x += Get_Arguments(method,settings);
+     x += Possible_Thrown_Exceptions(method,settings);
     
     
     return x;
+❱
+
+◀private: static▶ std::string ☀Get_Visibility_Specifiers(model::Function const& method)❰
+    // auto x = Data_Member_Visibility::Get(mem);
+    // return Visibility_Keyword_Getter::Get(x,Source_Language::JAVA);
+    return "";
 ❱
 
 ◀private: static▶ std::string ☀Function_Template_Getter(model::Function const& method)❰

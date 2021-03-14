@@ -27,7 +27,7 @@ class
     
     
     for (auto const& it: structure.data_member){
-         x += Doxygen_Block_Printer::Get_Indented_Block(it,settings.module,4);
+        x += Doxygen_Block_Printer::Get_Indented_Block(it,settings.module,4);
         x += "\n";
         x += "    ";
         x += Get_Visibility_Specifiers(it);
@@ -48,24 +48,24 @@ class
     
     return x;
 ❱
-◀public: static▶ std::string ☀Get_Type_Specializations(model::DataMember const& mem)❰
+◀private: static▶ std::string ☀Get_Type_Specializations(model::DataMember const& mem)❰
     return "";
 ❱
 
-◀public: static▶ std::string ☀Get_Real_Type(model::DataMember const& mem)❰
+◀private: static▶ std::string ☀Get_Real_Type(model::DataMember const& mem)❰
     auto type       = First_Element_Or_Default(mem.data_member_type).value;
     auto real_type = Unilang_Type_To_Language_Type_Converter::Convert_To_Language_Type(type, Source_Language::JAVA).name;
     return real_type;
 ❱
-◀public: static▶ std::string ☀Get_Visibility_Specifiers(model::DataMember const& mem)❰
+◀private: static▶ std::string ☀Get_Visibility_Specifiers(model::DataMember const& mem)❰
     auto x = Data_Member_Visibility::Get(mem);
     return Visibility_Keyword_Getter::Get(x,Source_Language::JAVA);
 ❱
-◀public: static▶ std::string ☀Posibily_Get_Final_Specifier(model::DataMember const& mem)❰
+◀private: static▶ std::string ☀Posibily_Get_Final_Specifier(model::DataMember const& mem)❰
     auto x = Data_Member_Mutability::Get(mem);
     return Mutability_Keyword_Getter::Get(x,Source_Language::JAVA);
 ❱
-◀public: static▶ std::string ☀Posibily_Get_Static_Specifier(model::DataMember const& mem)❰
+◀private: static▶ std::string ☀Posibily_Get_Static_Specifier(model::DataMember const& mem)❰
     auto x = Data_Member_Storage_Specifier::Get(mem);
     return Storage_Keyword_Getter::Get(x,Source_Language::JAVA);
 ❱
