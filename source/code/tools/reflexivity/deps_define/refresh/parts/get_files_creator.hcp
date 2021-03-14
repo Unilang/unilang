@@ -47,7 +47,7 @@ class
 
         if (Should_Print_Get_File(spec)){
             auto source_data  = Create_Get_File_Content(spec,folder_name);
-            Write_To_File(folder_name + "/get.bzl",source_data);
+            Write_To_File_With_Auto_Gen_Comment(folder_name + "/get.bzl",Source_Language::PYTHON,source_data);
         }
 ❱
 
@@ -76,7 +76,6 @@ class
 ◀private: static▶ std::string ☀Create_Http_Archive_Get_File_Content(Dependency_Specification spec, std::string const& folder_name)❰
     std::string result;
     
-    Append_With_Newline(result,Generated_Comment_Getter::Get());
     Append_With_Newline(result,"load(\"@bazel_tools//tools/build_defs/repo:http.bzl\", \"http_archive\")");
     Append_With_Newline(result,"");
     Append(result,"def ");
@@ -181,7 +180,6 @@ class
 ◀private: static▶ std::string ☀Create_Local_Get_File_Content(Dependency_Specification spec, std::string const& folder_name)❰
 
     std::string result;
-    Append_With_Newline(result,Generated_Comment_Getter::Get());
     Append_With_Newline(result,"");
     Append(result,"def ");
     Append(result,Fix_Casing_For_Bazel(spec.lib_name));
