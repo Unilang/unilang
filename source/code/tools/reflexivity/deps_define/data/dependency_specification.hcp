@@ -2,6 +2,7 @@ class
 ❪vector❫
 ❪string❫
 ❪"code/tools/reflexivity/deps_define/data/dependency_location"❫
+❪"code/tools/reflexivity/deps_define/data/build_definitions"❫
 ⚯
 
 ⚞⚟
@@ -43,5 +44,5 @@ class
     //this represents the content for the entire build file
     //we want to generate things as much as possible for flexibility and introspection.
     //these contents may be described in other ways, and effectively transformed into a final string here.
-    std::string build_content;
+    Build_Definitions build_defs;
 ▶

@@ -14,6 +14,7 @@ hcp(
 hcp(
     name = "dependency_specification",
     deps = [
+        "//code/tools/reflexivity/deps_define/data:build_definitions",
         "//code/tools/reflexivity/deps_define/data:dependency_location",
     ],
 )
@@ -35,6 +36,12 @@ hcp(
 
 hcp(
     name = "dependency_location",
+    deps = [
+    ],
+)
+
+hcp(
+    name = "build_definitions",
     deps = [
     ],
 )

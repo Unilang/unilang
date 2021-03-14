@@ -16,6 +16,7 @@ class
     x.all.emplace_back(Rootcause());
     x.all.emplace_back(Needless_Complexity());
     x.all.emplace_back(Needless_Repetition());
+    x.all.emplace_back(Preemptive_Pluralization());
     
 return x;
 ❱
@@ -65,6 +66,11 @@ return x;
 // prevent over-configurability
 // use dependency injection
 // follow law of demeter.  A class should know its direct dependencies
+◀private: static▶ Best_Practice ☀Preemptive_Pluralization() ❰
+    Best_Practice x;
+    x.text = "Assume we might have two of everything.";
+    return x;
+❱
 
 //objects and data structures:
 // hide internal structure

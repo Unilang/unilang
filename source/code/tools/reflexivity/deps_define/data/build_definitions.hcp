@@ -1,0 +1,14 @@
+class
+❪vector❫
+❪string❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    //optional way to express it:
+    std::string raw_starlark;
+    
+    //more concrete way to express it:
+▶
