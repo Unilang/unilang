@@ -65,5 +65,7 @@ class
 ❱
 
 ◀private: static▶ void ☀Possibly_Print_Patch_Files(Dependency_Specification const& spec, std::string const& folder_name)❰
-    Write_To_File(folder_name + "/patches/BUILD","package(default_visibility = [\"//visibility:public\"])");
+    std::string file_name = folder_name + "/patches/BUILD";
+    std::string content = "package(default_visibility = [\"//visibility:public\"])";
+    Write_To_File_With_Auto_Gen_Comment(file_name,Source_Language::PYTHON,content);
 ❱
