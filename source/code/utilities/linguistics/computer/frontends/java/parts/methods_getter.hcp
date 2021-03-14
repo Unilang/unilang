@@ -11,6 +11,7 @@ class
 ❪"code/utilities/linguistics/computer/keywords/visibility/visibility_keyword_getter"❫
 ❪"code/utilities/code/query/function_visibility"❫
 ❪"code/utilities/code/query/data_member_visibility"❫
+❪"code/utilities/code/query/function_return_type_getter"❫
 ❪"code/utilities/types/vectors/observers/lib"❫
 ❪"code/utilities/types/vectors/operators/lib"❫
 ❪"code/utilities/types/vectors/converters/lib"❫
@@ -61,7 +62,7 @@ class
      x += " ";
      x += Function_Template_Getter(method);
      x += " ";
-    // x += Return_Type_Str_Getter::Get_Java(name,method,settings);
+     x += Function_Return_Type_Getter::Get_Real_Type(method,Source_Language::JAVA);
      x += " ";
     // x += Shared_Printer::Derive_Function_Name(name,Code_Type::PRODUCT_TYPE,method,bad_temp);
      x += Get_Arguments(method,settings);

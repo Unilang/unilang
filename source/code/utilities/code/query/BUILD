@@ -156,3 +156,16 @@ hcp(
         "//code/utilities/linguistics/computer:source_language",
     ],
 )
+
+hcp(
+    name = "function_return_type_getter",
+    deps = [
+        "//code/utilities/contributor:contributor",
+        "//code/utilities/code:concept_static_tree_structs",
+        "//code/utilities/types/vectors/observers:lib",
+        "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/types/vectors/converters:lib",
+        "//code/utilities/linguistics/computer/types/generic:unilang_type_to_language_type_converter",
+        "//code/utilities/linguistics/computer:source_language",
+    ],
+)

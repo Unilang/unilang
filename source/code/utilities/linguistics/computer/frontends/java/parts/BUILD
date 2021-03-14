@@ -108,5 +108,6 @@ hcp(
         "//code/utilities/types/vectors/operators:lib",
         "//code/utilities/types/vectors/converters:lib",
         "//code/utilities/code/query:function_visibility",
+        "//code/utilities/code/query:function_return_type_getter",
     ],
 )
