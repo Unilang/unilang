@@ -36,7 +36,10 @@ class
 ❱
 
 ◀private: static▶ void ☀Make_Sure_A_BUILD_File_Is_Available(std::string const& folder_name)❰
-    Write_To_File(folder_name + "/BUILD","package(default_visibility = [\"//visibility:public\"])");
+    
+    std::string file_name = folder_name + "/BUILD";
+    std::string content = "package(default_visibility = [\"//visibility:public\"])";
+    Write_To_File_With_Auto_Gen_Comment(file_name,Source_Language::PYTHON,content);
 ❱
 
 
