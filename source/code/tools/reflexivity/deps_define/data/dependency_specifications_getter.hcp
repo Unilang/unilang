@@ -528,6 +528,51 @@ class
     spec.lib_name = "bazel";
     Add_Unilang_Github_Mirror(spec,"bazel","2895cd5ce6797a22279dc7482926371ae9ea78b5","e3138b869f19c480c1bb28e553cfd7d67ecaf8d86df66ba70dc7e156b40c0aab");
     spec.patch_cmds.emplace_back("find . -name 'BUILD' -type f -delete");
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"])
+
+proto_library(
+    name = "build_proto",
+    srcs = ["src/main/protobuf/build.proto"],
+)
+
+cc_proto_library(
+    name = "build_proto_cpp",
+    deps = [":build_proto"],
+)
+
+proto_library(
+    name = "spawn_proto",
+    srcs = ["src/main/protobuf/spawn.proto"],
+)
+
+cc_proto_library(
+    name = "spawn_proto_cpp",
+    deps = [":spawn_proto"],
+)
+
+proto_library(
+    name = "workspace_log_proto",
+    srcs = ["src/main/java/com/google/devtools/build/lib/bazel/debug/workspace_log.proto"],
+)
+
+cc_proto_library(
+    name = "workspace_log_proto_cpp",
+    deps = [":workspace_log_proto"],
+)
+
+proto_library(
+    name = "analysis_proto",
+    srcs = ["src/main/protobuf/analysis.proto"],
+    deps = [":build_proto"],
+)
+
+cc_proto_library(
+    name = "analysis_proto_cpp",
+    deps = [":analysis_proto"],
+)
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Bazel_Skylib()❰
@@ -614,6 +659,19 @@ class
     Dependency_Specification spec;
     spec.lib_name = "backward_cpp";
     Add_Unilang_Github_Mirror(spec,"backward-cpp","aa3f253efc7281148e9159eda52b851339fe949e","16ea32d5337735ed3e7eacd71d90596a89bc648c557bb6007c521a2cb6b073cc");
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"],)
+
+cc_library(
+    name = "backward_cpp",
+    srcs = ["backward.cpp"],
+    hdrs = ["backward.hpp"],
+    includes = [
+    ],
+)
+)RAW_STRING";
+
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀DeathHandler()❰
@@ -712,6 +770,41 @@ class
     Dependency_Specification spec;
     spec.lib_name = "asmjit";
     Add_Unilang_Github_Mirror(spec,"asmjit","3d510b3540776d4961f5eac83af3643d31cde18b","e1097de5bf57d6801dd38373b6c495b4612f74ecd9bff5db9aa4db4ab93c76a2");
+
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"],)
+
+cc_library(
+    name = "asmjit",
+    srcs = glob([
+        "src/asmjit/base/*.cpp",
+        "src/asmjit/x86/*.cpp",
+        "src/asmjit/core/*.cpp",
+    ]),
+    hdrs = glob([
+        "src/asmjit/x86/*.h",
+        "src/asmjit/base/*.h",
+        "src/asmjit/*.h",
+        "src/asmjit/core/*.h",
+    ]),
+    copts = [
+        "-DASMJIT_STATIC",
+        "-fno-tree-vectorize",
+        "-fmerge-all-constants",
+        "-DTH_BLAS_MKL",
+    ],
+    includes = [
+        "asmjit/",
+        "src/",
+    ],
+    linkopts = [
+        "-lrt",
+    ],
+    linkstatic = True,
+)
+)RAW_STRING";
+
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Nasm()❰
@@ -736,6 +829,23 @@ class
     Dependency_Specification spec;
     spec.lib_name = "asap";
     Add_Unilang_Github_Mirror(spec,"asap","0a1bb6137dd5229898a6ae39cff0809e233350b3","c6f0a4f5709d07a07bdbfc9d761b46dd6efa80d9c8ff01804bc32c177f32b37e");
+    
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "asap",
+    hdrs = glob(
+        [
+            "include/**/*.h",
+            "include/**/*.cpp",
+        ],
+    ),
+    includes = ["include"],
+)
+)RAW_STRING";
+
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Spdlog()❰
@@ -1924,6 +2034,23 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "ascii_art";
     Add_Unilang_Github_Mirror(spec,"ascii_art","fede354e511b5be12726a67abaa3d561ffc763db","f9c39de719465379496a44f02e2886074af962a3d2497bb0a9d2fbb91af935cd");
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"],)
+
+cc_library(
+    name = "lib",
+    srcs = ["ascii_art.c"],
+    hdrs = ["ascii_art.h"],
+)
+
+cc_binary(
+    name = "sample",
+    srcs = ["sample.c"],
+    deps = ["lib"],
+)
+)RAW_STRING";
+
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀InfoWare()❰
@@ -1989,6 +2116,16 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "AudioFile";
     Add_Unilang_Github_Mirror(spec,"AudioFile","1c77de76f4f396f1019088f3cd9da5141148ee76","aa893a464546b686dd4d2555eafe2a0e9f4a96713328cf6e37603d7e9af02348");
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"],)
+
+cc_library(
+    name = "lib",
+    hdrs = ["AudioFile.h"],
+)
+)RAW_STRING";
+
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Wave()❰
