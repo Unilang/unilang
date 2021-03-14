@@ -79,6 +79,7 @@ hcp(
         "//code/utilities/code/query:data_member_mutability",
         "//code/utilities/code/query:data_member_storage_specifier",
         "//code/utilities/code/query:data_member_visibility",
+        "//code/utilities/code/query:data_member_type_getter",
         "//code/utilities/comments/doxygen/maker:doxygen_block_printer",
         "//code/utilities/contributor",
         "//code/utilities/linguistics/computer/frontends/java/settings:java_settings",

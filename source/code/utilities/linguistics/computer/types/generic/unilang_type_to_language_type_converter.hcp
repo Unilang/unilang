@@ -9,19 +9,6 @@ class
 ❪"code/utilities/types/strings/transformers/casing/lib"❫
 ⚞⚟
 
-◀public: static▶ bool ☀Is_A_Unilang_Type(std::string const& unilang_type)❰
-
-    //get lookup table (eventually from YAML)
-    auto table = Unilang_Type_To_Language_Type_Table_Getter::Get_Lookup_Table();
-    auto adjusted_unilang_type = Adjusted_Unilang_Type(unilang_type);
-    
-    //get the value out of the table if it exists
-    if (Exists_In_Unordered_Map(table.values,adjusted_unilang_type)){
-        return true;
-    }
-    return false;
-❱
-
 ◀public: static▶ Language_Type ☀Convert_To_Language_Type(std::string unilang_type,Source_Language source_language)❰
     
     //get lookup table (eventually from YAML)
@@ -54,6 +41,19 @@ class
         results = table.values.at(adjusted_unilang_type);
 	}
 	return results.inferred_properties;
+❱
+
+◀public: static▶ bool ☀Is_A_Unilang_Type(std::string const& unilang_type)❰
+
+    //get lookup table (eventually from YAML)
+    auto table = Unilang_Type_To_Language_Type_Table_Getter::Get_Lookup_Table();
+    auto adjusted_unilang_type = Adjusted_Unilang_Type(unilang_type);
+    
+    //get the value out of the table if it exists
+    if (Exists_In_Unordered_Map(table.values,adjusted_unilang_type)){
+        return true;
+    }
+    return false;
 ❱
 
 ◀private: static▶ Language_Type ☀Convert_Equivalent_Language_Type_To_Specific_Language(Cross_Language_Type type_collection, Source_Language source_language)❰
@@ -95,5 +95,9 @@ class
 
 
 ◀private: static▶ std::string ☀Adjusted_Unilang_Type(std::string const& unilang_type)❰
-    return As_Lowercase(unilang_type);
+    auto name = As_Lowercase(unilang_type);
+    if (name == ""){
+        name = "void";
+    }
+    return name;
 ❱

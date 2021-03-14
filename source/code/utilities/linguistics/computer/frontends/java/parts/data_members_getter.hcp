@@ -14,6 +14,7 @@ class
 ❪"code/utilities/code/query/data_member_mutability"❫
 ❪"code/utilities/code/query/data_member_visibility"❫
 ❪"code/utilities/code/query/data_member_storage_specifier"❫
+❪"code/utilities/code/query/data_member_type_getter"❫
 ❪"code/utilities/types/vectors/observers/lib"❫
 ❪"code/utilities/types/vectors/operators/lib"❫
 ❪"code/utilities/types/vectors/converters/lib"❫
@@ -53,9 +54,7 @@ class
 ❱
 
 ◀private: static▶ std::string ☀Get_Real_Type(model::DataMember const& mem)❰
-    auto type       = First_Element_Or_Default(mem.data_member_type).value;
-    auto real_type = Unilang_Type_To_Language_Type_Converter::Convert_To_Language_Type(type, Source_Language::JAVA).name;
-    return real_type;
+    return Data_Member_Type_Getter::Get_Real_Type(mem,Source_Language::JAVA);
 ❱
 ◀private: static▶ std::string ☀Get_Visibility_Specifiers(model::DataMember const& mem)❰
     auto x = Data_Member_Visibility::Get(mem);

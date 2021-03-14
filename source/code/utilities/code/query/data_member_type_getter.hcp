@@ -1,0 +1,19 @@
+class
+❪fstream❫
+❪iostream❫
+❪"code/utilities/contributor/contributor"❫
+❪"code/utilities/code/concept_static_tree_structs"❫
+❪"code/utilities/linguistics/computer/source_language"❫
+
+⚯
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/converters/lib"❫
+❪"code/utilities/linguistics/computer/types/generic/unilang_type_to_language_type_converter"❫
+⚞⚟
+
+◀public: static▶ std::string ☀Get_Real_Type(model::DataMember const& mem, Source_Language const& language)❰
+    auto type       = First_Element_Or_Default(mem.data_member_type).value;
+    auto real_type = Unilang_Type_To_Language_Type_Converter::Convert_To_Language_Type(type, language).name;
+    return real_type;
+❱
