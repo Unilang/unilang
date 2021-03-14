@@ -992,6 +992,18 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "arithmetic_type_tools";
     Add_Unilang_Github_Mirror(spec,"arithmetic_type_tools","2336d0c40671795b7d33bb27679453d2c56a5526","887fe101708ed0478e98aae9446a28dc278790d86d219f4eaf7c0a4ca7841eac");
+    
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "lib",
+    hdrs = ["arithmetic_type_tools.hpp"],
+    include_prefix = "arithmetic_type_tools",
+)
+)RAW_STRING";
+
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀clamp_cast()❰
