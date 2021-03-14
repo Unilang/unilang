@@ -78,7 +78,7 @@ class
 
 ◀private: static▶ std::string ☀Function_Template_Getter(model::Function const& method)❰
     std::string x;
-    //x += Get_Template_Syntax(method.template_arguments);
+    x += Get_Template_Syntax(method.function_template_argument);
     return x;
 ❱
 
