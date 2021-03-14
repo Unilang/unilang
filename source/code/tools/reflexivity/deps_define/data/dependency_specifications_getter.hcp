@@ -1060,12 +1060,54 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "big_integer_cpp";
     Add_Unilang_Github_Mirror(spec,"BigIntegerCPP","79e7b023bf5157c0f8d308d3791cf3b081d1e156","1c9505406accb1216947ca60299ed70726eade7c9458c7c7f94ca2aea68d288e");
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"])
+
+# doesn't build.  needs patched
+cc_library(
+    name = "big_integer_cpp",
+    srcs = glob(
+        [
+            "**/*.cpp",
+        ],
+        exclude = [
+            "Security/Random.cpp",
+            "Security/SecureRandom.cpp",
+            "BigInteger Application.cpp",
+        ],
+    ),
+    hdrs = glob(
+        [
+            "**/*.h",
+            "**/*.hpp",
+        ],
+        exclude = [
+            "Security/Random.h",
+            "Security/SecureRandom.h",
+        ],
+    ),
+)
+)RAW_STRING";
+
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀BigNumber()❰
     Dependency_Specification spec;
     spec.lib_name = "BigNumber";
     Add_Unilang_Github_Mirror(spec,"BigNumber","4a65e2d4149a61632f9b31fff8aaddd0187681dd","a77ef3362a9ed5986cc158d45fab8e6797ba4cabeb26b92d89d4333d55a08c3f");
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"],)
+
+cc_library(
+    name = "lib",
+    srcs = ["src/bignumber.cpp"],
+    hdrs = ["src/bignumber.h"],
+    includes = ["src"],
+)
+)RAW_STRING";
+
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀LittleBigInt()❰
@@ -1407,6 +1449,48 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "blah";
     Add_Unilang_Github_Mirror(spec,"blah","3fa9f997916ab4b7e14efe5771a59c6ed5b42d85","c0e5f93b414a67006b7aec9539dd0fc7e24d4c6eee364229edf5ef88cc5d0371");
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"])
+
+#build headers
+hdrs = glob(
+    include = [
+        "include/**/*.h",
+        "include/**/*.hpp",
+        "src/**/*.hpp",
+        "src/**/*.h",
+    ],
+    exclude = [
+    ],
+)
+
+cc_library(
+    name = "hdrs",
+    hdrs = hdrs,
+    includes = [
+        "include",
+    ],
+)
+
+cc_library(
+    name = "blah",
+    srcs = glob(["src/**/*.cpp"]),
+    copts = [
+        "-DOPENGL_ENABLED",
+        "-DBLAH_USE_OPENGL",
+        "-DSDL2_ENABLED",
+        "-DBLAH_USE_SDL2",
+    ],
+    includes = [
+    ],
+    deps = [
+        ":hdrs",
+        "@system//:SDL2",
+        "@system//:SDL2_hdrs",
+    ],
+)
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀xscreensaver()❰
