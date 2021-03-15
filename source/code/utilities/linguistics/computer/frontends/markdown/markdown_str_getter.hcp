@@ -137,7 +137,10 @@ class
         
     //print each sentence
     for (auto const& it: p.paragraph_sentence){
-        Append(text,Possibly_Get_Sentence(it,contributors,settings));
+        auto txt = Possibly_Get_Sentence(it,contributors,settings);
+        if (!txt.empty()){
+            Append(text,Possibly_Get_Sentence(it,contributors,settings));
+        }
     }
     
     //add extra line since we printed sentences under the title

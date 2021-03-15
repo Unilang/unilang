@@ -83,9 +83,12 @@ class
             
             x += "<p>";
             for (auto const& s: p.paragraph_sentence){
-                Comment_Grammar_Settings grammar;
-                Append(x,Grammar_Adjuster::Get_Adjusted(Get_Sentence(s),grammar));
-                x += "  ";
+                
+                if (!s.sentence_text.empty()){
+                    Comment_Grammar_Settings grammar;
+                    Append(x,Grammar_Adjuster::Get_Adjusted(Get_Sentence(s),grammar));
+                    x += "  ";
+                }
             }
             
             x += "</p>";
