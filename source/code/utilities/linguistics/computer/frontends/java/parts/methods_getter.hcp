@@ -65,7 +65,7 @@ class
      x += Function_Return_Type_Getter::Get_Real_Type(method,Source_Language::JAVA);
      x += " ";
     // x += Shared_Printer::Derive_Function_Name(name,Code_Type::PRODUCT_TYPE,method,bad_temp);
-     x += Get_Arguments(method,settings);
+     x += Get_Argument_List(method,settings);
      x += Possible_Thrown_Exceptions(method,settings);
     
     
@@ -100,7 +100,7 @@ class
     return special;
 ❱
 
-◀private: static▶ std::string ☀Get_Arguments(model::Function const& method, Java_Settings const& settings)❰
+◀private: static▶ std::string ☀Get_Argument_List(model::Function const& method, Java_Settings const& settings)❰
     std::string x;
     // x += "(";
     //     Call_Function_On_All_Elements_Except_Last_Element_Then_Call_Function_On_Last_Element(method.function_arguments
