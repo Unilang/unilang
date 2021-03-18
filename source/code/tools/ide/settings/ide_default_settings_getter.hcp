@@ -65,22 +65,17 @@ class
     //   x.elements.types.emplace_back(e);
     // }
     
-    // {
-    //   //build
-    //   Positioned_Buildable_Face_Tree gtree;
-    //   gtree.state.structure = Faced_Tree_Example2();
-    //   gtree.pos.x = 400;
-    //   gtree.pos.y = 100;
-      
-    //   //add
-    //   Ide_Element e;
-    //   e.element = gtree;
-    //   x.elements.types.emplace_back(e);
-    // }
+    Add_Generic_Test_Tree(x); //good for experiments
+    Add_Starting_Code_Tree(x);
+  
     
-    //create a buildable tree based on unilang's schema
-    {
-      
+    
+    return x;
+❱
+
+
+◀private: static▶ void  ☀Add_Starting_Code_Tree(Ide_Settings & x)❰
+
       //build
       Positioned_Buildable_Schema_Faced_Tree btree;
       btree.state.tree.state.structure = Faced_Tree_Example();
@@ -96,11 +91,20 @@ class
       Ide_Element e;
       e.element = btree;
       x.elements.types.emplace_back(e);
-  }
-  
-    
-    
-    return x;
+❱
+
+◀private: static▶ void  ☀Add_Generic_Test_Tree(Ide_Settings & x)❰
+
+      //build
+      Positioned_Buildable_Face_Tree gtree;
+      gtree.state.structure = Faced_Tree_Example2();
+      gtree.pos.x = 400;
+      gtree.pos.y = 100;
+      
+      //add
+      Ide_Element e;
+      e.element = gtree;
+      x.elements.types.emplace_back(e);
 ❱
 
 ◀private: static▶ Button_Face_Tree ☀Faced_Tree_Example()❰
@@ -143,6 +147,14 @@ class
    auto n9=tr.nodes.append_child(n7,x);
    auto n10=tr.nodes.append_child(n9,x);
    auto n11=tr.nodes.append_child(n10,x);
+   
+   auto root_name = Buttoned_Faced_Label_Premades::Opened_Unilang_Node("<root>");
+   auto child_name = Buttoned_Faced_Label_Premades::Opened_Unilang_Node("<child>");
+   
+   auto n12=tr.nodes.append_child(n11,root_name);
+   auto n13=tr.nodes.append_child(n12,child_name);
+   auto n14=tr.nodes.append_child(n12,child_name);
+   auto n15=tr.nodes.append_child(n12,child_name);
     
     return tr;
 ❱

@@ -74,11 +74,24 @@ class
         
         case Buildable_Label_Action::MOVE_SIBLING_LAST: Move_Sibling_Last(tree);
         break;
+        
+        case Buildable_Label_Action::MOVE_CHILDREN_TO_NEW_PARENT: Move_Children_To_New_Parent(tree);
+        break;
     }
 ❱
 
 
-
+◀private: static▶ void ☀Move_Children_To_New_Parent(Buildable_Face_Tree_State & tree)❰
+    
+    //if its a root node, there is no parent, and the operation doesn't make sense to do
+    if (tree.structure.nodes.depth(tree.selected_node) <= 0){
+        return;
+    }
+    
+    
+    auto parent = tree.structure.nodes.parent(tree.selected_node);
+    tree.structure.nodes.insert_after(parent,*parent);
+❱
 ◀private: static▶ void ☀Add_Sibling_Before(Buildable_Face_Tree_State & tree)❰
     
     auto x = Buttoned_Faced_Label_Premades::Single_Plain_White_Box_For_Tree();

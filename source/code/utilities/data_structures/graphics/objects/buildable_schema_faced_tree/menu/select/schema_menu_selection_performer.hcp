@@ -68,6 +68,9 @@ class
         case Local_Manipulation_Option::LAST:
         Buildable_Face_Tree_Action_Doer::Do_Label_Action(tree,Buildable_Label_Action::MOVE_SIBLING_LAST);
         break;
+        case Local_Manipulation_Option::MOVE_CHILDREN_TO_NEW_PARENT:
+        Buildable_Face_Tree_Action_Doer::Do_Label_Action(tree,Buildable_Label_Action::MOVE_CHILDREN_TO_NEW_PARENT);
+        break;
     }
     
 ❱
@@ -110,7 +113,7 @@ class
 ◀private: static▶ void ☀Replace_Selected_Node(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, std::string const& message)❰
 
     //I think this will always be valid because you won't have the choice to replace on a non-parent node.
-    //so this should not through a navigation error.
+    //so this should not throw a navigation error.
     auto parent = tree.structure.nodes.parent(tree.selected_node);
     
     

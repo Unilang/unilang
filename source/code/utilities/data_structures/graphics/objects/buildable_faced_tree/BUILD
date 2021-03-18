@@ -28,6 +28,7 @@ enum_cpp(
         "move_sibling_down",
         "move_sibling_first",
         "move_sibling_last",
+        "move_children_to_new_parent",
     ],
 )
 
