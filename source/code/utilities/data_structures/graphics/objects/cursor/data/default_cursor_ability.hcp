@@ -1,0 +1,15 @@
+class
+❪"code/utilities/data_structures/graphics/objects/cursor/data/cursor_ability"❫
+⚯
+
+⚞⚟
+
+◀public: static▶ Cursor_Ability ☀No_Edit()❰
+
+    //make it so a user can't change the label value
+    Cursor_Ability x;
+    x.can_backward_delete = false;
+    x.can_paste=false;
+    x.can_foward_insert=false;
+    return x;
+❱

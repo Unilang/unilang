@@ -92,19 +92,9 @@ class
     auto parent = tree.structure.nodes.parent(tree.selected_node);
     auto new_parent = tree.structure.nodes.insert_after(parent,*parent);
     
-    
+    //reparent the remaining nodes
     auto last_child = tree.structure.nodes.sibling(tree.selected_node,tree.structure.nodes.number_of_siblings(tree.selected_node)+1);
     tree.structure.nodes.reparent(new_parent,tree.selected_node,last_child);
-    
-    // for (size_t i = tree.structure.nodes.index(tree.selected_node); i < tree.structure.nodes.number_of_siblings(tree.selected_node)+1; ++i){
-
-    //         //extract subtree
-    //         auto current_child = tree.structure.nodes.sibling(tree.selected_node,i);
-    //         auto end_marker = tree.structure.nodes.next_sibling(current_child);
-    //         auto subtree = tree.structure.nodes.subtree(current_child,end_marker);
-            
-            
-    // }
 
 ❱
 ◀private: static▶ void ☀Add_Sibling_Before(Buildable_Face_Tree_State & tree)❰

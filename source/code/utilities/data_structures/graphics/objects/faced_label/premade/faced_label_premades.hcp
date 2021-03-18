@@ -18,6 +18,7 @@ class
 ❪"code/utilities/colors/defaults/color_defaults"❫
 ❪"code/utilities/data_structures/graphics/objects/cursor/premade/blue_cursor"❫
 ❪"code/utilities/data_structures/graphics/objects/cursor/premade/red_cursor"❫
+❪"code/utilities/data_structures/graphics/objects/cursor/data/default_cursor_ability"❫
 ⚞⚟
 
 ◀public: static▶ Faced_Label ☀Highlightable_Single_Plain_White_Box()❰
@@ -87,12 +88,11 @@ class
     face.label.styles = Default_Label_Styles::Plain_Gray_Box();
 
     //the signifier should not be editable
-    face.label.cursors.ability.can_backward_delete = false;
-    face.label.cursors.ability.can_paste=false;
-    face.label.cursors.ability.can_foward_insert=false;
+    face.label.cursors.ability = Default_Cursor_Ability::No_Edit();
     
     return face;
 ❱
+
 ◀public: static▶ Label_Face ☀Signified_Face()❰
     Label_Face face;
     face.name = "<value>";

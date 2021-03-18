@@ -33,6 +33,13 @@ hcp(
 )
 
 hcp(
+    name = "default_cursor_ability",
+    deps = [
+        "//code/utilities/data_structures/graphics/objects/cursor/data:cursor_ability",
+    ],
+)
+
+hcp(
     name = "controlled_label_cursor_selections",
     deps = [
         "//code/utilities/data_structures/graphics/objects/cursor/data:cursor_ability",

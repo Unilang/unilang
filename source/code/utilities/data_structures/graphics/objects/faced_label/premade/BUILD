@@ -23,5 +23,6 @@ hcp(
         "//code/utilities/graphics/imgui:ui_renders",
         "//code/utilities/graphics/imgui/render/elements:full_color_bitmap_drawer",
         "//code/utilities/graphics/imgui/render/elements:rectangle_drawer",
+        "//code/utilities/data_structures/graphics/objects/cursor/data:default_cursor_ability",
     ],
 )
