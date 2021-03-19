@@ -92,3 +92,12 @@ hcp(
         "//code/utilities/types/vectors/observers:lib",
     ],
 )
+
+
+hcp(
+    name = "buttoned_faced_label_first_face_no_edit",
+    deps = [
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/data:buttoned_faced_label",
+        "//code/utilities/data_structures/graphics/objects/cursor/data:default_cursor_ability",
+    ],
+)
