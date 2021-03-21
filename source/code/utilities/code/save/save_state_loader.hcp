@@ -15,7 +15,7 @@ class
 ◀public: static▶ Ide_Elements ☀Load(std::string const& file_name)❰
     
     //load raw json first so that we understand the version it was saved at
-    auto json = Json_File_Io::Read_Compressed_Json_From_File(file_name,Json_Compression_Format::BSON);
+    auto json = Deserialize_Save_File(file_name);
     int version = json["version"];
     
     //provide forward compatibility on the json object by adjusting it to meet the needs of the current version
@@ -29,7 +29,7 @@ class
         x = json.get<Save_State>();
     }
     catch(std::exception const& e){
-        std::cerr << "We can't deserialize the object properly :(" << std::endl;
+        std::cerr << "We couldn't convert the json to the c++ object properly :(" << std::endl;
         std::cerr << "Here is the library exception: " << e.what() << std::endl;
         std::cerr << "What this means is that the upgrade patching mechanism for the saved format did not properly adjust your data for proper deserialization." << std::endl;
         std::cerr << "How to fix it?  The right patch needs added or corrected inside the editor's save state loader." << std::endl;
@@ -42,7 +42,19 @@ class
     return x.elements;
 ❱
 
-
+◀private: static▶ nlohmann::json ☀Deserialize_Save_File(std::string const& file_name)❰
+    
+    nlohmann::json json;
+    try {
+        json = Json_File_Io::Read_Compressed_Json_From_File(file_name,Json_Compression_Format::BSON);
+    }
+    catch(std::exception const& e){
+        std::cerr << "We couldn't deserialize the unilang file into json correctly :(" << std::endl;
+        std::cerr << "Here is the library exception: " << e.what() << std::endl;exit(-1);
+        exit(-1);
+    }
+    return json;
+❱
 
 ◀private: static▶ void ☀Upgrade_Json_For_Deserialization_Compadibility(nlohmann::json & j, int version)❰
 
