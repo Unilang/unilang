@@ -35,7 +35,7 @@ enum_cpp(
         "down",
         "first",
         "last",
-        "move_children_to_new_parent"
+        "move_children_to_new_parent",
     ],
 )
 

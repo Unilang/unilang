@@ -12,6 +12,7 @@ hcp(
         "//code/utilities/colors/defaults:rectangle_shades",
         "//code/utilities/data_structures/graphics/bitmap/full_color_bitmap",
         "//code/utilities/data_structures/graphics/bitmap/pixel:pixel_slider",
+        "//code/utilities/data_structures/graphics/objects/cursor/data:default_cursor_ability",
         "//code/utilities/data_structures/graphics/objects/cursor/premade:blue_cursor",
         "//code/utilities/data_structures/graphics/objects/cursor/premade:red_cursor",
         "//code/utilities/data_structures/graphics/objects/faced_label/data:faced_label",
@@ -23,6 +24,5 @@ hcp(
         "//code/utilities/graphics/imgui:ui_renders",
         "//code/utilities/graphics/imgui/render/elements:full_color_bitmap_drawer",
         "//code/utilities/graphics/imgui/render/elements:rectangle_drawer",
-        "//code/utilities/data_structures/graphics/objects/cursor/data:default_cursor_ability",
     ],
 )
