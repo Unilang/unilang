@@ -16,15 +16,18 @@ class
 ⚞⚟
 
 ◀public: static▶ std::string ☀Get_Adjusted(std::string comment_text, Comment_Grammar_Settings const& grammar)❰
+
+    //get trimmed text
     std::string str = comment_text;
     trim(str);
     
+    //make sentence entire sentence adjustments
     std::vector<std::string> warnings;
-    
     warnings += Possibly_Fix_Setences_Ending_In_A_Preposition(str,grammar);
     warnings += Possibly_Fix_Setences_That_Use_Cliche(str,grammar);
   
-    //deconstruct sentence and perform actions on each word
+    //deconstruct sentence and perform actions on each word.
+    //make single word adjustments.
     auto words = Words_Deriver::Derive(comment_text);
     for (auto & word: words){
         warnings += Potentially_Spellcheck_Word(word,grammar);
@@ -64,13 +67,24 @@ class
   return false;
 ❱
 
-◀private: static▶ std::vector<std::string> ☀Potentially_Fix_Redundancy(std::string & sentence, Comment_Grammar_Settings const& grammar)❰
+◀private: static▶ std::vector<std::string> ☀Potentially_Spellcheck_Word(std::string & word, Comment_Grammar_Settings const& grammar)❰
+  std::vector<std::string> warnings;
+  
+  if (grammar.spellcheck.warn_about_misspellings){
+    //TODO
+    x
+  }
+  
+  return warnings;
+❱
+
+◀private: static▶ std::vector<std::string> ☀Potentially_Fix_Redundancy(std::string & word, Comment_Grammar_Settings const& grammar)❰
   std::vector<std::string> warnings;
   //TODO: https://github.com/tygerpatch/BetaGama/blob/master/pythonpath/redundancy.py
   return warnings;
 ❱
 
-◀private: static▶ std::vector<std::string> ☀Potentially_Fix_Political_Correctness(std::string & sentence, Comment_Grammar_Settings const& grammar)❰
+◀private: static▶ std::vector<std::string> ☀Potentially_Fix_Political_Correctness(std::string & word, Comment_Grammar_Settings const& grammar)❰
   std::vector<std::string> warnings;
   //whitelist allowlist
   //blacklist denylist
