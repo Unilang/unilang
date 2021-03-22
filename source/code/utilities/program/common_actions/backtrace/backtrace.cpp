@@ -104,7 +104,7 @@ std::ostream &symbolize_stacktrace(std::ostream &stream, const StackTrace &trace
 }
 
 std::string get_stacktrace(){
-    auto stracktrace = populate_stacktrace(1);
+    auto stracktrace = populate_stacktrace(0);
     return symbolize_stacktrace(stracktrace);
 }
 

@@ -9,28 +9,29 @@ void func3();
 
 
 void func1(){
-    //func2();
-    func3();
+    func2();
 }
 
 void func2(){
+    
+    func3();
+}
+
+void func3(){
+    std::cout << "sdfsdf" << std::endl;
 
     //induce a segfault crash
     int* x = (int*) -1;
     int y = *x;
 }
 
-void func3(){
-    throw std::runtime_error("error");
-}
-
 int main(){
+    Bind_All_Signals_To_Handler([](int i){
+        std::string stackTrace = get_stacktrace();
+        std::cout << stackTrace << std::endl;
+        exit(-1);
+    });
     
-    try{
 
         func1();
-    }
-    catch(std::exception e){
-        std::cout << get_symbolized_stacktrace(e) << std::endl;
-    }
 }

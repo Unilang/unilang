@@ -13,7 +13,7 @@ cc_library(
         "@abseil//absl/debugging:stacktrace",
         "@abseil//absl/debugging:symbolize",
         "@fmt",
-    ]
+    ],
 )
 
 cc_library(
@@ -21,11 +21,11 @@ cc_library(
     srcs = ["exceptions.cpp"],
     hdrs = ["exceptions.hpp"],
     deps = [
+        "//code/utilities/program/common_actions/backtrace",
         "@abseil//absl/base:core_headers",
         "@abseil//absl/debugging:stacktrace",
         "@abseil//absl/debugging:symbolize",
-        "//code/utilities/program/common_actions/backtrace:backtrace",
-        "@fmt",
         "@boost//:algorithm",
-    ]
+        "@fmt",
+    ],
 )

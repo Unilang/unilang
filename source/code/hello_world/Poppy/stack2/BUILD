@@ -8,7 +8,7 @@ cc_binary(
     name = "main",
     srcs = ["main.cpp"],
     deps = [
+        "//code/utilities/program/common_actions/signals:all_signal_setter",
         "@Poppy",
-        "//code/utilities/program/common_actions/signals:all_signal_setter"
     ],
 )
