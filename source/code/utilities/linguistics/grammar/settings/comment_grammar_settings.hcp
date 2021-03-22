@@ -3,6 +3,7 @@ class
 ❪string❫
 ❪unordered_map❫
 ❪"code/utilities/comments/doxygen/settings/doxygen_block_options"❫
+❪"code/utilities/linguistics/grammar/settings/comment_grammar_spellcheck_settings"❫
 ❪"code/utilities/linguistics/grammar/settings/comment_grammar_puncuation_settings"❫
 ❪"code/utilities/linguistics/grammar/settings/comment_grammar_preposition_settings"❫
 ❪"code/utilities/linguistics/grammar/settings/comment_grammar_cliche_settings"❫
@@ -15,6 +16,7 @@ class
 public:
      
    //grammar settings on exported comment
+   Comment_Grammar_Spellcheck_Settings spellcheck;
    Comment_Grammar_Puncuation_Settings puncuation;
    Comment_Grammar_Preposition_Settings prepositions;
    Comment_Grammar_Cliche_Settings cliches;

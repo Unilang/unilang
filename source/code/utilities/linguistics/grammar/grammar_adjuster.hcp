@@ -27,6 +27,7 @@ class
     //deconstruct sentence and perform actions on each word
     auto words = Words_Deriver::Derive(comment_text);
     for (auto & word: words){
+        warnings += Potentially_Spellcheck_Word(word,grammar);
         warnings += Potentially_Sensor_Bad_Words(word,grammar);
         warnings += Potentially_Auto_Correct_Words(word,grammar);
         warnings += Potentially_Auto_Retaste_Words(word,grammar);
