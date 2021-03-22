@@ -69,6 +69,7 @@ class
     x.laws.emplace_back(Stroustrups_Rule());
     x.laws.emplace_back(Iceberg_Fallacy());
     x.laws.emplace_back(LGTM_Dilemma());
+    x.laws.emplace_back(Proebsting_Law());
     
 return x;
 ❱
@@ -425,6 +426,12 @@ return x;
     law.name = "LGTM Dilemma";
     law.alternative_names.emplace_back("The Bikeshedder's Blind Spot");
     law.description = "If you want to quickly ship a 10 line code change, hide it in a 1500 line pull request.";
+    return law;
+❱
+◀private: static▶ Software_Law ☀Proebsting_Law() ❰
+    Software_Law law;
+    law.name = "Proebsting Law";
+    law.description = "Compiler advances double computing power every 18 years";
     return law;
 ❱
 

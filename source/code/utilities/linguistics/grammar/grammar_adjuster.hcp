@@ -45,6 +45,37 @@ class
         warnings += Potentially_Auto_Fix_Already_Correct_Words(word,grammar);
         warnings += Potentially_Auto_Capitalize_Words(word,grammar);
         warnings += Potentially_Auto_Full_Caps_Words(word,grammar);
+        warnings += Potentially_Fix_NonEnglish_Words(word,grammar);
+        
+        
+        //SID:
+        //1. Short.
+        //2. Intuitive (read naturally as close to human speech as possible)
+        //3. Descriptive (a name must reflect what it does/possesses in the most efficient way
+        
+        //Avoid Contractions:
+        //onItmClk = onItemClick
+        
+        //Avoid Context Duplication:
+        //handleMenuItemClick = handleClick (assuming the context is menuItem)
+        
+        //Naming functions:
+          //A/HC/LC Pattern:
+          //prefix? + action (A) + high context (HC) + low context? (LC)
+
+          //EXAMPLE:
+          // Name                  Prefix  Action (A)         High context (HC)  Low context (LC)
+          // getUser                       get                User  
+          // getUserMessages               get                User               Messages
+          // handleClickOutside            handle             Click              Outside
+          // shouldDisplayMessage  should  Display            Message 
+        
+          //Action names: get,set,reset,fetch,remove,delete,compose,handle
+          //Prefixes: is,has,should,min/max,prev/next,
+        
+        
+      //Correct use of singular/plural
+        
     }
     
     //reconstruct back into a sentence
@@ -101,6 +132,16 @@ class
   //TODO: https://github.com/tygerpatch/BetaGama/blob/master/pythonpath/redundancy.py
   return warnings;
 ❱
+◀private: static▶ std::vector<std::string> ☀Potentially_Fix_Redundancy(std::string & word, Comment_Grammar_Settings const& grammar)❰
+  //amigos = friends
+  //primer = first
+
+  //TODO
+  std::vector<std::string> warnings;
+  return warnings;
+❱
+
+
 
 ◀private: static▶ std::vector<std::string> ☀Potentially_Fix_Political_Correctness(std::string & word, Comment_Grammar_Settings const& grammar)❰
   std::vector<std::string> warnings;
