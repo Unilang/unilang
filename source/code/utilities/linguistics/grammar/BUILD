@@ -15,5 +15,9 @@ hcp(
         "//code/utilities/types/strings/transformers/trimming:lib",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/linguistics/dictionary:dictionary_getter",
+        "//code/utilities/linguistics/dictionary:dictionary_spellcheck",
+        "//code/utilities/output/printers:lib",
+        "@nuspell",
     ],
 )

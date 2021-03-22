@@ -1,0 +1,15 @@
+class
+❪vector❫
+❪string❫
+❪unordered_map❫
+⚯
+
+⚞⚟
+
+◀
+public:
+   
+   bool spelled_correctly;
+   std::vector<std::string> suggestions;
+
+▶

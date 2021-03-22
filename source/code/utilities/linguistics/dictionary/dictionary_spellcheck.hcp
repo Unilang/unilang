@@ -1,0 +1,23 @@
+class
+❪string❫
+❪"dictionary.hxx"❫
+❪"finder.hxx"❫
+❪"code/utilities/linguistics/dictionary/dictionary_spellcheck_results"❫
+⚯
+❪iostream❫
+⚞⚟
+
+◀public: static▶ Dictionary_Spellcheck_Results ☀Check(nuspell::Dictionary const& dict, std::string const& word)❰
+
+    //if the word is correctly spelled, there are nor suggestions
+    Dictionary_Spellcheck_Results x;
+    if (dict.spell(word)) {
+        x.spelled_correctly = true;
+        return x;
+    }
+    
+    //populate suggestions
+    x.spelled_correctly = false;
+    dict.suggest(word, x.suggestions);
+    return x;
+❱

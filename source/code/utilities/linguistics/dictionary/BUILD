@@ -15,3 +15,26 @@ hcp(
         "//code/utilities/streams/filestreams/read_all:lib",
     ],
 )
+
+hcp(
+    name = "dictionary_getter",
+    deps = [
+        "@nuspell"
+    ],
+)
+
+hcp(
+    name = "dictionary_spellcheck_results",
+    deps = [
+    ],
+)
+
+
+hcp(
+    name = "dictionary_spellcheck",
+    deps = [
+        "@nuspell",
+        "//code/utilities/linguistics/dictionary:dictionary_spellcheck_results",
+    ],
+)
+

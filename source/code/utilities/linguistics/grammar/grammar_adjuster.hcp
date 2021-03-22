@@ -4,6 +4,8 @@ class
 ❪"code/utilities/linguistics/grammar/settings/comment_grammar_settings"❫
 ❪vector❫
 ❪iostream❫
+❪"dictionary.hxx"❫
+❪"finder.hxx"❫
 ⚯
 ❪"code/utilities/types/strings/observers/splitting/words_deriver"❫
 ❪"code/utilities/types/strings/transformers/trimming/lib"❫
@@ -13,6 +15,9 @@ class
 ❪"code/utilities/types/vectors/operators/lib"❫
 ❪"code/utilities/types/vectors/observers/lib"❫
 ❪"code/utilities/types/general/lib"❫
+❪"code/utilities/linguistics/dictionary/dictionary_getter"❫
+❪"code/utilities/linguistics/dictionary/dictionary_spellcheck"❫
+❪"code/utilities/output/printers/lib"❫
 ⚞⚟
 
 ◀public: static▶ std::string ☀Get_Adjusted(std::string comment_text, Comment_Grammar_Settings const& grammar)❰
@@ -21,16 +26,19 @@ class
     std::string str = comment_text;
     trim(str);
     
-    //make sentence entire sentence adjustments
+    //make entire sentence adjustments
     std::vector<std::string> warnings;
     warnings += Possibly_Fix_Setences_Ending_In_A_Preposition(str,grammar);
     warnings += Possibly_Fix_Setences_That_Use_Cliche(str,grammar);
+    
+    //get a dictionary that we may need for various analysis
+    auto dictionary = Dictionary_Getter::Get();
   
     //deconstruct sentence and perform actions on each word.
     //make single word adjustments.
     auto words = Words_Deriver::Derive(comment_text);
     for (auto & word: words){
-        warnings += Potentially_Spellcheck_Word(word,grammar);
+        warnings += Potentially_Spellcheck_Word(word,grammar,dictionary);
         warnings += Potentially_Sensor_Bad_Words(word,grammar);
         warnings += Potentially_Auto_Correct_Words(word,grammar);
         warnings += Potentially_Auto_Retaste_Words(word,grammar);
@@ -39,10 +47,10 @@ class
         warnings += Potentially_Auto_Full_Caps_Words(word,grammar);
     }
     
-    //reconsruct back into a sentence
+    //reconstruct back into a sentence
     str = Put_Words_Into_A_Sentence(words);
     
-    //apply possible grammar changes
+    //make more entire sentence adjustments
     warnings += Potentially_Fix_Redundancy(str,grammar);
     warnings += Potentially_Fix_Political_Correctness(str,grammar);
     Potentially_Capitalize(str,grammar);
@@ -67,12 +75,19 @@ class
   return false;
 ❱
 
-◀private: static▶ std::vector<std::string> ☀Potentially_Spellcheck_Word(std::string & word, Comment_Grammar_Settings const& grammar)❰
+◀private: static▶ std::vector<std::string> ☀Potentially_Spellcheck_Word(std::string & word, Comment_Grammar_Settings const& grammar, nuspell::Dictionary const& dictionary)❰
   std::vector<std::string> warnings;
   
   if (grammar.spellcheck.warn_about_misspellings){
-    //TODO
-    x
+    auto results = Dictionary_Spellcheck::Check(dictionary,word);
+    if (!results.spelled_correctly){
+      std::string warning;
+      warning += word;
+      warning += " is spelled wrong.";
+      warning += " suggestions: ";
+      warning += Stream_Str(results.suggestions);
+      Add_Warning(warnings,warning);
+    }
   }
   
   return warnings;

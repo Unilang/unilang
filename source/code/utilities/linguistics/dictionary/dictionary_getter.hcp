@@ -1,0 +1,29 @@
+class
+❪string❫
+❪"dictionary.hxx"❫
+❪"finder.hxx"❫
+⚯
+❪iostream❫
+⚞⚟
+
+◀public: static▶ nuspell::Dictionary ☀Get()❰
+
+    using namespace std;
+
+    //get default dictionary
+    auto dict_list = vector<pair<string, string>>();
+    nuspell::search_default_dirs_for_dicts(dict_list);
+    
+    //get the english dictionary
+    auto dict_name_and_path = nuspell::find_dictionary(dict_list, "en_US");
+    
+    //quit if we can't find it
+    if (dict_name_and_path == end(dict_list)){
+        exit(1);
+    }
+    
+    //create dictionary
+    auto& dict_path = dict_name_and_path->second;
+    auto dict = nuspell::Dictionary::load_from_path(dict_path);
+    return dict;
+❱
