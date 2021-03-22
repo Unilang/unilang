@@ -77,9 +77,14 @@ class
     for (auto const& l: structure.literature){
         for (auto const& p: l.paragraph){
             
-            x += "<h3>";
-            for (auto const& it: p.paragraph_title){Append(x,it.value);}
-            x += "</h3>\n";
+            //possibly add title
+            std::string title;
+            for (auto const& it: p.paragraph_title){Append(title,it.value);}
+            if (!title.empty()){
+                x += "<h3>";
+                x += title;
+                x += "</h3>\n";
+            }
             
             x += "<p>";
             for (auto const& s: p.paragraph_sentence){
@@ -91,7 +96,7 @@ class
                 }
             }
             
-            x += "</p>";
+            x += "</p>\n";
         }
     }
     
