@@ -141,6 +141,7 @@ class
     //backtrace / stacktrace
     x.specs.emplace_back(Backward_Cpp());
     x.specs.emplace_back(DeathHandler());
+    x.specs.emplace_back(Poppy());
     //https://github.com/ianlancetaylor/libbacktrace
     //https://github.com/certik/stacktrace
     //https://github.com/google/breakpad
@@ -679,6 +680,24 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "death_handler";
     Add_Unilang_Github_Mirror(spec,"DeathHandler","6b8599b81d54734e42f09c146cbde1049f1e8b69","b67c3f7a2fa6bd42588f231dc9de61a2d49b2bbab61735000ef05b2bfa272ad9");
+    return spec;
+❱
+◀private: static▶ Dependency_Specification ☀Poppy()❰
+    Dependency_Specification spec;
+    spec.lib_name = "Poppy";
+    Add_Unilang_Github_Mirror(spec,"Poppy","9643a498f015a7ade7693ff4b9fb976588f93dc6","905921192994f6243efc8dc15691135c0486720b49011fc35473b6ea7635e9f3");
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"],)
+
+cc_library(
+    name = "Poppy",
+    srcs = [],
+    hdrs = ["PoppyDebugTools.h"],
+    includes = [
+    ],
+)
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀PrettyPrint()❰

@@ -5,6 +5,6 @@ package(
 )
 
 cpp_main(
-    name = "str_join",
+    name = "main",
     deps = ["@abseil//absl/strings"],
 )
