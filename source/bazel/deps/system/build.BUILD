@@ -228,13 +228,29 @@ cc_import(
     shared_library = "usr/lib/x86_64-linux-gnu/libXxf86vm.so",
 )
 
+cc_import(
+    name = "icuuc",
+    shared_library = "usr/lib/x86_64-linux-gnu/libicuuc.so",
+)
+
+cc_import(
+    name = "icudata",
+    shared_library = "usr/lib/x86_64-linux-gnu/libicudata.so",
+)
+
+#headers
 cc_library(
     name = "xkbcommon_hdrs",
     hdrs = glob(["usr/include/xkbcommon/**/*.h"]),
     includes = ["usr/include"],
 )
 
-#headers
+cc_library(
+    name = "unicode_hdrs",
+    hdrs = glob(["usr/include/unicode/**/*.h"]),
+    includes = ["usr/include"],
+)
+
 cc_library(
     name = "GL_hdrs",
     hdrs = glob(["usr/include/GL/**/*.h"]),

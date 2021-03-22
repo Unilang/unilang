@@ -138,6 +138,10 @@ class
     x.specs.emplace_back(include_what_you_use());
     x.specs.emplace_back(indicators());
     
+    //Spelling / Grammar
+    x.specs.emplace_back(nuspell());
+    //https://github.com/hunspell/hunspell
+    
     //backtrace / stacktrace
     x.specs.emplace_back(Backward_Cpp());
     x.specs.emplace_back(DeathHandler());
@@ -574,6 +578,46 @@ cc_proto_library(
     name = "analysis_proto_cpp",
     deps = [":analysis_proto"],
 )
+)RAW_STRING";
+    return spec;
+❱
+◀private: static▶ Dependency_Specification ☀nuspell()❰
+    Dependency_Specification spec;
+    spec.lib_name = "nuspell";
+    Add_Unilang_Github_Mirror(spec,"nuspell","3cf62b59e2eba32b09ee3cdbd0ca4d92c6f214f0","0a477f8a64427d2828745b8b0c136b48f4d93ecff2f5ac10a6f7d62427e57684");
+    spec.patch_files.emplace_back("p1");
+    spec.patch_args.emplace_back("-p1");
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"])
+
+hdrs = glob(
+    include = [
+        "src/nuspell/*.hxx",
+        "src/nuspell/*.h",
+    ],
+    exclude = [
+    ],
+)
+
+srcs = glob(
+    include = [
+        "src/nuspell/*.cxx",
+    ],
+    exclude = [
+        "src/nuspell/main.cxx",
+    ],
+)
+
+cc_library(
+    name = "nuspell",
+    hdrs = hdrs,
+    srcs = srcs,
+    copts = ["-Wno-everything"],
+    includes = ["src/nuspell"],
+    deps = ["@system//:unicode_hdrs","@system//:icuuc","@system//:icudata"],
+)
+
 )RAW_STRING";
     return spec;
 ❱
