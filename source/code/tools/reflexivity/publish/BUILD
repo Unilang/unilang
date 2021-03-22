@@ -9,6 +9,7 @@ hcp(
     deps = [
         "//code/tools/reflexivity/publish:essay_list_maker",
         "//code/utilities/assets/literature:a_box_full_of_pencils_json_data_getter",
+        "//code/utilities/assets/literature:language_context_json_data_getter",
         "//code/utilities/assets/literature:linguistics_json_data_getter",
         "//code/utilities/data_structures/graph/unique_str_vertex_graph:lib",
         "//code/utilities/filesystem/files/creating:lib",

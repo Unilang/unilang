@@ -27,6 +27,7 @@ class
 ❪"code/utilities/program/wrappers/graphviz/graphviz_image_maker"❫
 ❪"code/utilities/filesystem/paths/lib"❫
 ❪"code/utilities/assets/literature/linguistics_json_data_getter"❫
+❪"code/utilities/assets/literature/language_context_json_data_getter"❫
 ❪"code/utilities/assets/literature/a_box_full_of_pencils_json_data_getter"❫
 ❪"code/tools/reflexivity/publish/essay_list_maker"❫
 ❪"code/utilities/output/publisher/essay/essay_publisher"❫
@@ -72,6 +73,10 @@ class
     Essay e;
     
     e.json_file_name = Linguistics_Json_Data_Getter::Get();
+    e.style = Essay_Style::POETIC;
+    x.emplace_back(e);
+    
+    e.json_file_name = Language_Context_Json_Data_Getter::Get();
     e.style = Essay_Style::POETIC;
     x.emplace_back(e);
     
