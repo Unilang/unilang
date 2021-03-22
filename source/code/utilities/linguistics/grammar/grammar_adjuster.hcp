@@ -79,12 +79,15 @@ class
   std::vector<std::string> warnings;
   
   if (grammar.spellcheck.warn_about_misspellings){
-    auto results = Dictionary_Spellcheck::Check(dictionary,word);
+    auto fixed_word = As_Chars_Removed(word,".?-\",;");
+    auto results = Dictionary_Spellcheck::Check(dictionary,fixed_word);
     if (!results.spelled_correctly){
       std::string warning;
+      warning += fixed_word;
+      warning += " => spelled wrong";
+      warning += " => analyzed as => ";
       warning += word;
-      warning += " is spelled wrong.";
-      warning += " suggestions: ";
+      warning += " => suggestions: ";
       warning += Stream_Str(results.suggestions);
       Add_Warning(warnings,warning);
     }

@@ -32,13 +32,37 @@ std::string& Remove_First_Instance_Of_Char(std::string & str, char const& c){
         return str;
 }
 
+std::string As_Chars_Removed(std::string const& str, std::string const& chars){
+    
+    std::string result;
+    for (auto const& it: str){
+        
+        bool found = false;
+        for (auto const& c: chars){
+            if (c == it){
+                found = true;
+                break;
+            }
+        }
+        
+        if (!found){
+            result += it;
+        }
+    }
+    return result;
+}
+
+std::string& Remove_Spaces(std::string & str)
+{
+    return Remove_All_Instances_Of_Char(str,' ');
+}
 std::string& Remove_Commas(std::string & str)
 {
 	return Remove_All_Instances_Of_Char(str,',');
 }
-std::string& Remove_Spaces(std::string & str)
+std::string& Remove_Question_Marks(std::string & str)
 {
-    return Remove_All_Instances_Of_Char(str,' ');
+    return Remove_All_Instances_Of_Char(str,'?');
 }
 std::string& Remove_Double_Quotes(std::string & str)
 {

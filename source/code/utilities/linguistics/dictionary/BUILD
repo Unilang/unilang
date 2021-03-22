@@ -19,7 +19,7 @@ hcp(
 hcp(
     name = "dictionary_getter",
     deps = [
-        "@nuspell"
+        "@nuspell",
     ],
 )
 
@@ -29,12 +29,10 @@ hcp(
     ],
 )
 
-
 hcp(
     name = "dictionary_spellcheck",
     deps = [
-        "@nuspell",
         "//code/utilities/linguistics/dictionary:dictionary_spellcheck_results",
+        "@nuspell",
     ],
 )
-
