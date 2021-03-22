@@ -1,6 +1,6 @@
 #include "code/tools/ide/unilang_ide.hpp"
 #include "code/tools/ide/program_options/program_options.hpp"
-
+#include "code/utilities/program/common_actions/main/catching_main.hpp"
 
 //other programming editors for inspiration:
 // fructure (racket): https://github.com/disconcision/fructure
@@ -39,6 +39,8 @@
 //drag functionality to reformat tree
 int main(int argc, char** argv)
 {
-    Program_Options po(argc,argv);
-    return Unilang_Ide::Run(po);
+    return Catching_Main::Run([&](){
+        Program_Options po(argc,argv);
+        return Unilang_Ide::Run(po);
+    });
 }

@@ -1,0 +1,38 @@
+class
+❪string❫
+❪iostream❫
+❪"code/utilities/program/common_actions/signals/all_signal_setter"❫
+❪"code/utilities/program/common_actions/backtrace/backtrace"❫
+❪"code/utilities/program/common_actions/backtrace/exceptions"❫
+⚯
+❪locale❫
+❪clocale❫
+⚞⚟
+
+
+◀
+public:
+    template <typename Fun>
+    static int Run(Fun fun){
+        
+        //catch any and all signals and report a backtrace before existing
+        Bind_All_Signals_To_Handler([](int i){
+            std::string stackTrace = get_stacktrace();
+            std::cout << stackTrace << std::endl;
+            exit(1);
+        });
+        
+        
+        //run the user's custom main function.
+        //catch everything and report it.
+        try {
+            return fun();
+        }
+        catch (std::exception e){
+            std::cout << get_symbolized_stacktrace(e) << std::endl;
+            exit(1);
+        }
+        return 1;
+    }
+▶
+

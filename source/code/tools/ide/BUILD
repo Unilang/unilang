@@ -38,5 +38,6 @@ cpp_main(
     deps = [
         "//code/tools/ide:unilang_ide",
         "//code/tools/ide/program_options:lib",
+        "//code/utilities/program/common_actions/main:catching_main",
     ],
 )
