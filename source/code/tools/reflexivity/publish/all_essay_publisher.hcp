@@ -58,10 +58,11 @@ class
     //publish essays
     std::cout << "generating essays..." << std::endl;
     for (auto const& it: all_essays){
+        std::cout << "    " << it.json_file_name << std::endl;
         Essay_Publisher::Generate_And_Publish(it);
     }
     
-    std::cout << "essay list..." << std::endl;
+    std::cout << "generating essay list..." << std::endl;
     Essay_List_Maker::Make(all_essays);
     
 ❱
