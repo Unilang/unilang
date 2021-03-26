@@ -132,7 +132,7 @@ class
   //TODO: https://github.com/tygerpatch/BetaGama/blob/master/pythonpath/redundancy.py
   return warnings;
 ❱
-◀private: static▶ std::vector<std::string> ☀Potentially_Fix_Redundancy(std::string & word, Comment_Grammar_Settings const& grammar)❰
+◀private: static▶ std::vector<std::string> ☀Potentially_Fix_NonEnglish_Words(std::string & word, Comment_Grammar_Settings const& grammar)❰
   //amigos = friends
   //primer = first
 

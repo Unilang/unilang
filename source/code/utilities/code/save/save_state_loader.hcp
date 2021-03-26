@@ -49,7 +49,8 @@ class
         json = Json_File_Io::Read_Compressed_Json_From_File(file_name,Json_Compression_Format::BSON);
     }
     catch(std::exception const& e){
-        std::cerr << "We couldn't deserialize the unilang file into json correctly :(" << std::endl;
+        std::cerr << "We couldn't deserialize the unilang file into generic json :(" << std::endl;
+        std::cerr << "This usually means the file is corrupt and not even valid compressed json." << std::endl;
         std::cerr << "Here is the library exception: " << e.what() << std::endl;exit(-1);
         exit(-1);
     }
