@@ -18,6 +18,7 @@ class
 ❪"code/utilities/linguistics/dictionary/dictionary_getter"❫
 ❪"code/utilities/linguistics/dictionary/dictionary_spellcheck"❫
 ❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/web/url/url_identifier"❫
 ⚞⚟
 
 ◀public: static▶ std::string ☀Get_Adjusted(std::string comment_text, Comment_Grammar_Settings const& grammar)❰
@@ -94,16 +95,6 @@ class
     }
     
     return str;
-❱
-
-◀private: static▶ bool ☀Looks_Like_Url(std::string const& sentence)❰
-  if (Begins_With(sentence,"http://")){
-    return true;
-  }
-  if (Begins_With(sentence,"https://")){
-    return true;
-  }
-  return false;
 ❱
 
 ◀private: static▶ std::vector<std::string> ☀Potentially_Spellcheck_Word(std::string & word, Comment_Grammar_Settings const& grammar, nuspell::Dictionary const& dictionary)❰
@@ -221,7 +212,7 @@ class
 ◀private: static▶ void ☀Potentially_Capitalize(std::string & comment_text, Comment_Grammar_Settings const& grammar)❰
 
   
-  if (Looks_Like_Url(comment_text)){
+  if (Url_Identifier::Looks_Like_Url(comment_text)){
     return;
   }
   
@@ -241,7 +232,7 @@ class
 ❱
 ◀private: static▶ void ☀Potentially_Punctuate(std::string & comment_text, Comment_Grammar_Settings const& grammar)❰
 
-  if (Looks_Like_Url(comment_text)){
+  if (Url_Identifier::Looks_Like_Url(comment_text)){
     return;
   }
   

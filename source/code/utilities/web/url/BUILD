@@ -18,3 +18,11 @@ hcp(
     deps = [
     ],
 )
+
+hcp(
+    name = "url_identifier",
+    deps = [
+        "//code/utilities/types/strings/observers/other:lib",
+    ],
+)
+

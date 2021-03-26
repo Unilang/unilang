@@ -18,6 +18,7 @@ hcp(
         "//code/utilities/types/strings/transformers/trimming:lib",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/web/url:url_identifier",
         "@nuspell",
     ],
 )
