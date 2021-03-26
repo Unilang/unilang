@@ -6,7 +6,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/cursor/data/default_cursor_ability"❫
 ⚞⚟
 
-◀private: static▶ void ☀Apply_No_Edit(Buttoned_Faced_Label & label)❰
+◀public: static▶ void ☀Apply_No_Edit(Buttoned_Faced_Label & label)❰
 
     
     if (label.label.state.faces.size() >= 1){
