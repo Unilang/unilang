@@ -81,7 +81,7 @@ class
 
 //path stuff
 ◀private: static▶ std::string ☀Unilang_Bazel_Test_Directory()❰
-    return Bazel_Workspace_Directory() + "/code/hello_world/transcompilation/";
+    return Bazel_Workspace_Directory() + "/code/examples/transcompilation/";
 ❱
 ◀private: static▶ void ☀Move_To_Unilang_Bazel_Test_Directory() ❰
     auto build_from = Unilang_Bazel_Test_Directory();

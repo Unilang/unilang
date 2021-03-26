@@ -1,0 +1,13 @@
+class
+❪variant❫
+❪"code/examples/variant/a"❫
+❪"code/examples/variant/b"❫
+⚯
+
+⚞⚟
+
+◀public:
+
+  std::variant<A,B> types;
+  
+▶
