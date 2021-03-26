@@ -118,9 +118,9 @@ class
     for (auto const& it : groups.group_name){
         group_names.emplace_back(it.value);
     }
-    auto authors = First_Element_Or_Default(structure.author);
+    auto authors = First_Element_Or_Default(structure.module_author);
     std::vector<std::string> author_names;
-    for (auto const& it : authors.author_name){
+    for (auto const& it : authors.module_author_name){
         author_names.emplace_back(it.value);
     }
     auto bugs = First_Element_Or_Default(structure.bug);
