@@ -1,0 +1,13 @@
+class
+❪vector❫
+❪string❫
+❪unordered_map❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    std::unordered_map<std::string,std::string> ፠map፠;
+▶
+

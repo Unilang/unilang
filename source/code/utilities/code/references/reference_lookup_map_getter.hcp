@@ -1,0 +1,18 @@
+class
+❪vector❫
+❪string❫
+❪unordered_map❫
+❪"code/utilities/code/references/reference_lookup_map"❫
+⚯
+
+⚞⚟
+
+◀public: static▶ Reference_Lookup_Map ☀Get_Default_References()❰
+
+    Reference_Lookup_Map x;
+    
+    //PK -> FK
+    x.map.insert({"code/","code/"});
+    
+    return x;
+❱
