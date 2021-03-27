@@ -32,6 +32,15 @@ class
     //take the original string tree (code concept representation)
     auto str_tree = Concept_String_Tree_Getter::Get();
     
+    //convert the label tree to drawable frame elements
+    Frame_Elements elements = Render_As_Button_Tree(str_tree);
+    
+    Convert_To_Image(elements);
+    
+❱
+
+◀private: static▶ Frame_Elements ☀Render_As_Button_Tree(String_Tree const& str_tree)❰
+
     //and convert it into a label tree
     auto label_tree = String_Tree_To_Buttoned_Face_Tree::Convert(str_tree);
     
@@ -41,16 +50,32 @@ class
     auto unilang_font_lookup = Unilang_Character_Maps::Get();
     elements.types += Button_Tree_Label_Drawer::Draw(unilang_font_lookup,label_tree,pc_input).types;
     
+    return elements;
+❱
+
+◀private: static▶ Frame_Elements ☀Render_As_Schema_Tree(String_Tree const& str_tree)❰
+
+    //and convert it into a label tree
+    auto label_tree = String_Tree_To_Buttoned_Face_Tree::Convert(str_tree);
+    
+    //convert the label tree to drawable frame elements
+    Frame_Elements elements;
+    Pc_Input_State pc_input;
+    auto unilang_font_lookup = Unilang_Character_Maps::Get();
+    elements.types += Button_Tree_Label_Drawer::Draw(unilang_font_lookup,label_tree,pc_input).types;
+    
+    return elements;
+❱
+
+◀private: static▶ void ☀Convert_To_Image(Frame_Elements const& elements)❰
+
     //draw the elements to an image
     Cairo_Render_Settings settings;
     
-    //auto host_folder = Hosting_Repo::Get();
-    //settings.file_name = host_folder + "/unilang_concept_tree.png";
     auto host_folder = Bazel_Derived_Root_Of_Repo();
     settings.file_name = host_folder + ".readme/unilang_concept_tree.png";
     Frame_Renderer::Render(elements,settings);
     
+    //additional cleanuo
     Image_Transparent::Convert(settings.file_name);
-    
-    
 ❱

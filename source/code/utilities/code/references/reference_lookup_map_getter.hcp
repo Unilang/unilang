@@ -11,7 +11,7 @@ class
 
     Reference_Lookup_Map x;
     
-    //PK -> FK
+    //Foreign Key -> Primary Key
     x.map.insert({"code/","code/"});
     
     return x;

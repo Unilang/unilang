@@ -23,6 +23,7 @@ class
     patches.emplace_back(Patch_1);
     patches.emplace_back(Patch_2);
     patches.emplace_back(Patch_3);
+    patches.emplace_back(Patch_4);
     
     //add more
     return patches;
@@ -62,6 +63,17 @@ class
                         face["draw"] = true;
                     }
             }
+        }
+    }
+❱
+
+◀private: static▶ void ☀Patch_4(nlohmann::json & j)❰
+    for (auto & element: j["elements"]["types"]){
+        
+        //if its the variant structure we care about
+        if (element["element"]["index"] == 1){
+            element["element"]["value"]["state"]["references"].clear();
+            element["element"]["value"]["state"]["references"]["map"] = nlohmann::json::object();
         }
     }
 ❱

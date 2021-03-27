@@ -11,6 +11,7 @@ hcp(
         "//code/utilities/code/style_theme:style_lookup_map",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree/data:buildable_face_tree",
         "//code/utilities/data_structures/tree/generic:child_lookup_map",
+        "//code/utilities/code/references:reference_lookup_map",
     ],
 )
 
