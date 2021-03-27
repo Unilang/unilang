@@ -42,7 +42,7 @@ The IDE can be used the following way.
 ```
 git clone git@github.com:luxe/unilang.git
 cd unilang
-./user_run_optimized //code/tools/ide:main
+./user_run_optimized //code/programs/ide:main
 ```
 Various CIs are used to test the correctness of the build.  Referencing these builds may help you acquire any additional dependencies.  The reason we use multiple CIs is to ensure a general consensus and catch any outlying issues.  However, these services have limitations at their free tier, and so full builds/tests are not performed.  
 
