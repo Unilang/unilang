@@ -168,7 +168,7 @@ message Message {
 )RAW_LITERAL";
     test.contents.test_contents = LR"RAW_LITERAL(
 #include <iostream>
-#include "code/examples/transcompilation/protobuf_to_cpp/empty/example.pb.h"
+#include "code/programs/examples/transcompilation/protobuf_to_cpp/empty/example.pb.h"
 int main(){
     GOOGLE_PROTOBUF_VERIFY_VERSION;
         return 0;
@@ -207,7 +207,7 @@ message Message {
 )RAW_LITERAL";
     test.contents.test_contents = LR"RAW_LITERAL(
 #include <iostream>
-#include "code/examples/transcompilation/protobuf_to_cpp/string_get_set/example.pb.h"
+#include "code/programs/examples/transcompilation/protobuf_to_cpp/string_get_set/example.pb.h"
 int main(){
 
     // I would have just a set "hello world" as the default
