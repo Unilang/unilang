@@ -1,0 +1,25 @@
+class
+❪vector❫
+❪"code/programs/deskstock/settings/value_get_settings"❫
+❪"code/programs/deskstock/settings/system_effect_settings"❫
+❪"code/programs/deskstock/settings/startup_settings"❫
+❪"code/programs/deskstock/settings/monitor_settings"❫
+⚯
+
+⚞⚟
+
+◀
+public:
+    
+    //start up
+    Startup_Settings ፠startup፠;
+    
+    //how to monitor
+    Monitor_Settings ፠monitor፠;
+    
+    //how to get the value
+    Value_Get_Settings ፠how_to_get_value፠;
+    
+    //what to do with the value
+    System_Effect_Settings ፠system_effects፠;
+▶

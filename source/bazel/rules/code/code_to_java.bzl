@@ -12,6 +12,6 @@ def code_to_java(name):
         name = target_name,
         srcs = [input_name],
         outs = [output_name],
-        tools = ["//code/tools/transcompilers/code/code_to_java:code_to_java"],
-        cmd = "$(location //code/tools/transcompilers/code/code_to_java:code_to_java) -i $(SRCS) -o $@",
+        tools = ["//code/programs/transcompilers/code/code_to_java:code_to_java"],
+        cmd = "$(location //code/programs/transcompilers/code/code_to_java:code_to_java) -i $(SRCS) -o $@",
     )

@@ -1,0 +1,45 @@
+class
+❪string❫
+❪iostream❫
+❪vector❫
+❪SFML/Window.hpp❫
+❪SFML/Window/Joystick.hpp❫
+❪SFML/Graphics.hpp❫
+❪SFML/Graphics/Transformable.hpp❫
+❪"code/utilities/peripheral/keyboard/F310_gamepad/data/f310_gamepad_phases"❫
+❪"code/programs/games/word_build/gui/core/regular_actions/regular_action"❫
+⚯
+⚞⚟
+
+◀public: static▶ Regular_Action ☀Get(F310_Gamepad_Phases const& phases) ❰
+    
+    if (!phases.previous.center.start && phases.current.center.start){
+        return Regular_Action::RESTART_GAME;
+    }
+    if (!phases.previous.center.back && phases.current.center.back){
+        return Regular_Action::END_GAME;
+    }
+    
+    if (!phases.previous.center.center && phases.current.center.center){
+        return Regular_Action::GO_TO_MENU;
+    }
+    
+    if (!phases.previous.arrows.left && phases.current.arrows.left){
+        return Regular_Action::MOVE_LEFT;
+    }
+    if (!phases.previous.arrows.right && phases.current.arrows.right){
+        return Regular_Action::MOVE_RIGHT;
+    }
+    if (!phases.previous.buttons.right && phases.current.buttons.right){
+        return Regular_Action::SELECT;
+    }
+    if (!phases.previous.buttons.down && phases.current.buttons.down){
+        return Regular_Action::CLEAR;
+    }
+    if (!phases.previous.buttons.left && phases.current.buttons.left){
+        return Regular_Action::BACKSPACE;
+    }
+    
+    
+    return Regular_Action::NONE;
+❱

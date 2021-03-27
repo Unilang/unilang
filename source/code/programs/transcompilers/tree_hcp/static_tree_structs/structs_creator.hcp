@@ -1,0 +1,156 @@
+class
+❪vector❫
+❪string❫
+❪unordered_map❫
+❪fstream❫
+❪"code/programs/transcompilers/hcp-compiler/programatic/data/function"❫
+❪"code/utilities/data_structures/tree/generic/string_tree"❫
+❪"code/utilities/data_structures/tree/generic/string_to_string_tree"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+⚯
+❪"code/programs/transcompilers/hcp-compiler/programatic/data/code"❫
+❪"code/programs/transcompilers/hcp-compiler/programatic/code_getter"❫
+❪"code/utilities/types/strings/transformers/wrap/lib"❫
+❪"code/utilities/streams/filestreams/read_all/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/strings/transformers/casing/case_modifier"❫
+❪"code/utilities/types/tree/shortest_unique_name"❫
+❪"code/utilities/types/tree/converters/tree_full_paths_getter"❫
+❪"code/utilities/types/tree/children_path_names"❫
+❪"code/utilities/types/strings/transformers/search_replace/lib"❫
+❪"code/utilities/types/strings/observers/characteristic/is_cpp_keyword_checker"❫
+❪"code/programs/transcompilers/tree_hcp/shared/path_naming"❫
+❪"code/programs/transcompilers/shared/json_gen"❫
+⚞⚟
+
+◀public: static▶ void ☀Create(std::string const& input_file, std::string const& path_without_extension)❰
+    auto all_text = Read_Entire_File_Into_String(input_file);
+    auto str_tree = String_To_String_Tree::Convert(all_text);
+    
+    Create_Header(str_tree,path_without_extension);
+    
+    Create_Source(str_tree,path_without_extension);
+❱
+
+◀private: static▶ void ☀Create_Header(String_Tree const& str_tree, std::string const& path_without_extension)❰
+    std::string filename = path_without_extension + ".hpp";
+    std::ofstream outfile(filename);
+    outfile << Get_All_Header_Includes();
+    outfile << std::endl;
+    
+    outfile << "namespace model {\n";
+    
+    
+    outfile << "//forward declares" << std::endl;
+    auto full_paths = Tree_Full_Paths_Getter::Get_All_Paths_Ordered(str_tree);
+    for (auto const& it: full_paths){
+        outfile << Create_Forward_Declare(str_tree,it);
+    }
+    
+    outfile << "//decelerations" << std::endl;
+    for (auto const& it: full_paths){
+        outfile << Create_Struct_Definition(str_tree,it);
+    }
+    
+    outfile << "} //namespace: model\n";
+❱
+
+◀private: static▶ std::string ☀Get_All_Header_Includes()❰
+    std::string x;
+    x += "#pragma once\n";
+    x += "#include <vector>\n";
+    x += "#include <string>\n";
+    x += "#include " + As_Wrapped_In_Double_Quotes("src/tree.hh") + "\n";
+    x += Json_Gen::all_nlohmann_serialization_headers() + "\n";
+    return x;
+❱
+
+
+◀private: static▶ std::string ☀Create_Forward_Declare(String_Tree const& str_tree, std::string const& full_path)❰
+
+    std::string x;
+    //x += "template <typename T> ";
+    x += "struct " + Path_Naming::Get_Struct_Typename(str_tree,full_path) + ";\n";
+    return x;
+❱
+◀private: static▶ std::string ☀Create_Struct_Definition(String_Tree const& str_tree, std::string const& full_path)❰
+    std::string x;
+    //x += "template <typename T> ";
+    auto type_name = Path_Naming::Get_Struct_Typename(str_tree,full_path);
+    x += "struct " + type_name + "{\n";
+        auto children = Children_Path_Names::Get_All_Children_Names(str_tree,full_path);
+        for (auto const& it: children){
+            //x += "    std::vector<" + Path_Naming::Get_Struct_Typename(str_tree,it) + "<T>> " + Path_Naming::Get_Struct_Identifier(str_tree,it) + ";\n";
+            x += "    std::vector<" + Path_Naming::Get_Struct_Typename(str_tree,it) + "> " + Path_Naming::Get_Struct_Identifier(str_tree,it) + ";\n";
+        }
+        
+        x += Decide_Id_Decl();
+        
+        //if child leaf
+        if (children.empty()){
+            x += "    std::string value;\n";
+        }
+        
+        
+    x += "};\n\n";
+    
+    x += Json_Gen::nlohmann_serialization_interface_methods(type_name);
+    x += "\n";
+    return x;
+❱
+
+◀private: static▶ std::string ☀Decide_Id_Decl()❰
+
+    std::string x;
+    //idea 1:
+    //add a pointer back to the visual tree node
+    //x += "    tree<std::string>::pre_order_iterator nodePtr;\n";
+
+    //idea 2:
+    //a unique string to re-identify the element in the tree
+    //x += "    std::string tree_id;\n";
+
+    //idea 3:
+    //index of a pre-order
+    x += "    int tree_id;\n";
+    return x;
+❱
+
+◀private: static▶ void ☀Create_Source(String_Tree const& str_tree, std::string const& path_without_extension)❰
+    std::ofstream outfile(path_without_extension + ".cpp");
+    outfile << "#include ";
+    outfile << '"';
+    outfile << path_without_extension << ".hpp";
+    outfile << '"';
+    outfile << std::endl;
+    
+    auto full_paths = Tree_Full_Paths_Getter::Get_All_Paths_Ordered(str_tree);
+    for (auto const& it: full_paths){
+        outfile << Get_Implementation_Funcs(str_tree,it);
+    }
+    
+    outfile.close();
+❱
+
+◀private: static▶ std::string ☀Get_Implementation_Funcs(String_Tree const& str_tree, std::string const& full_path)❰
+    
+    auto type_name = Path_Naming::Get_Struct_Typename(str_tree,full_path);
+    auto children = Children_Path_Names::Get_All_Children_Names(str_tree,full_path);
+    
+    std::vector<std::string> data_members;
+    for (auto const& it: children){
+        data_members.emplace_back(Path_Naming::Get_Struct_Identifier(str_tree,it));
+    }
+    
+    if (children.empty()){
+        data_members.emplace_back("tree_id");
+        data_members.emplace_back("value");
+    }
+    
+    std::string x;
+    x += "namespace model {\n";
+    x += Json_Gen::nlohmann_serialization_implementation_methods(type_name,data_members);
+    x += "\n} //namespace: model\n";
+    return x;
+❱

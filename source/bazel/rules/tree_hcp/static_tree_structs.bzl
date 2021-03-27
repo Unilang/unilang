@@ -13,8 +13,8 @@ def static_tree_structs(name):
         name = target_name,
         srcs = [in_file],
         outs = [outfile1, outfile2],
-        tools = ["//code/tools/transcompilers/tree_hcp/static_tree_structs:static_tree_structs"],
-        cmd = "$(location //code/tools/transcompilers/tree_hcp/static_tree_structs:static_tree_structs) -i $(SRCS) --name {}  -o $(@D)".format(name + "_static_tree_structs"),
+        tools = ["//code/programs/transcompilers/tree_hcp/static_tree_structs:static_tree_structs"],
+        cmd = "$(location //code/programs/transcompilers/tree_hcp/static_tree_structs:static_tree_structs) -i $(SRCS) --name {}  -o $(@D)".format(name + "_static_tree_structs"),
     )
 
     #compile cpp object

@@ -1,0 +1,95 @@
+class
+❪"code/utilities/data_structures/compass_directions/compass_direction_diagnonal_movement"❫
+❪"code/utilities/data_structures/point/point_line"❫
+❪"code/utilities/data_structures/point/point_mover"❫
+⚯
+❪"code/utilities/types/general/lib"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/vectors/converters/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/strings/observers/converting/lib"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/utilities/program/common_actions/exits/lib"❫
+❪"code/utilities/web/lib"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/web/automate/browser/default_browser_settings_getter"❫
+❪"code/utilities/web/automate/browser/browser_creator"❫
+❪"code/utilities/web/automate/navigation/browser_navigator"❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/utilities/data_structures/point/point"❫
+❪"code/utilities/data_structures/point/point_line_intersections_getter"❫
+❪"code/utilities/data_structures/point/point_line_to_points"❫
+❪"code/utilities/types/int/int"❫
+❪"code/programs/puzzles/advent_of_code/2019/int_code_computer"❫
+⚞⚟
+
+
+◀public: static▶ void ☀Test_1(std::vector<std::string> lines) ❰
+
+    
+    //run computer
+    Int_Code_Computer_State state;
+    state.memory = {"1102","34915192","34915192","7","4","7","99","0"};
+    auto result = Int_Code_Computer::Run(state,{});
+    //std::cout << result << std::endl;
+    
+    Exit_If_Not_Equal(Last_Element(result),"1219070632396864");
+❱
+◀public: static▶ void ☀Test_2(std::vector<std::string> lines) ❰
+
+    
+    //run computer
+    Int_Code_Computer_State state;
+    state.memory = {"104","1125899906842624","99"};
+    auto result = Int_Code_Computer::Run(state,{});
+    //std::cout << result << std::endl;
+    
+    Exit_If_Not_Equal(Last_Element(result),"1125899906842624");
+❱
+◀public: static▶ void ☀Test_3(std::vector<std::string> lines) ❰
+
+    
+    //run computer
+    Int_Code_Computer_State state;
+    state.memory = {"109","1","204","-1","1001","100","1","100","1008","100","16","101","1006","101","0","99"};
+    auto result = Int_Code_Computer::Run(state,{});
+    //std::cout << result << std::endl;
+    
+    Exit_If_Not_Equal(result[0],"109");
+    Exit_If_Not_Equal(result[1],"1");
+    Exit_If_Not_Equal(result[2],"204");
+    Exit_If_Not_Equal(result[3],"-1");
+    Exit_If_Not_Equal(result[4],"1001");
+    Exit_If_Not_Equal(result[5],"100");
+    Exit_If_Not_Equal(result[6],"1");
+    Exit_If_Not_Equal(result[7],"100");
+    Exit_If_Not_Equal(result[8],"1008");
+    Exit_If_Not_Equal(result[9],"100");
+    Exit_If_Not_Equal(result[10],"16");
+    Exit_If_Not_Equal(result[11],"101");
+    Exit_If_Not_Equal(result[12],"1006");
+    Exit_If_Not_Equal(result[13],"101");
+    Exit_If_Not_Equal(result[14],"0");
+    Exit_If_Not_Equal(result[15],"99");
+❱
+
+◀public: static▶ void ☀Part_1(std::vector<std::string> lines) ❰
+
+    //get program input
+    auto num_strs = Split_Into_Parts_From_Comma(lines[0]);
+    
+    //run computer
+    Int_Code_Computer_State state;
+    state.memory = num_strs;
+    auto result = Int_Code_Computer::Run(state,{"2"});
+    //std::cout << nums << std::endl;
+    std::cout << result << std::endl;
+    
+    //Exit_If_Not_Equal(Last_Element(result),14522484);
+    
+❱
+◀public: static▶ void ☀Part_2(std::vector<std::string> const& lines) ❰
+
+❱

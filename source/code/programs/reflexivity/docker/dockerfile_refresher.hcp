@@ -1,0 +1,100 @@
+class
+❪string❫
+❪vector❫
+❪"code/programs/reflexivity/docker/data/apt_get_command"❫
+❪"code/programs/reflexivity/docker/data/docker_settings"❫
+⚯
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/utilities/types/vectors/converters/lib"❫
+❪"code/utilities/filesystem/files/deleting/lib"❫
+❪"code/utilities/types/strings/transformers/casing/lib"❫
+❪"code/utilities/linguistics/computer/file_extension/file_extension_getter"❫
+❪"code/programs/reflexivity/docker/data/docker_settings_getter"❫
+❪"code/programs/reflexivity/comment/generated_comment_getter"❫
+⚞⚟
+
+◀public: static▶ void ☀Refresh()❰
+
+    bool create_uncached_dockerfile = true;
+    bool create_cached_dockerfile = false;
+
+    if (create_uncached_dockerfile){
+        auto settings = Docker_Settings_Getter::Get_Uncached_Dockerfile();
+        Write_To_File(Get_DockerFile_Path(),Create_Dockerfile_Contents(settings));
+    }
+    
+    //maybe upload to dockerhub
+    
+    if (create_cached_dockerfile){
+        auto settings = Docker_Settings_Getter::Get_Cached_Dockerfile();
+        Write_To_File(Get_DockerFile_Path(),Create_Dockerfile_Contents(settings));
+    }
+
+❱
+
+◀private: static▶ std::string ☀Get_DockerFile_Path()❰
+    std::string f = Bazel_Derived_Root_Of_Repo();
+    f += "Dockerfile";
+    return f;
+❱
+◀private: static▶ std::string ☀Get_Docker_From_Command(Docker_Settings const& settings)❰
+    std::string str;
+    Append(str,"FROM ");
+    Append(str,settings.base_container);
+    return str;
+❱
+
+
+
+
+◀private: static▶ std::string ☀Docker_Intro_Comments(Docker_Settings const& settings)❰
+std::string str;
+Append_With_Newline(str,settings.intro_comment);
+Append(str,Get_Docker_From_Command(settings));
+Append_With_Newline(str,settings.pre_steps);
+return str;
+❱
+
+◀private: static▶ std::string ☀Create_Dockerfile_Contents(Docker_Settings const& settings)❰
+
+    std::string str;
+    Append_With_Newline(str,Generated_Comment_Getter::Get());
+    Append_With_Newline(str,Docker_Intro_Comments(settings));
+    
+    //create all the ppa commands
+    Append(str,Get_Add_Ppa_Statements(settings));
+    
+    //create all the apt get install commands
+    Append(str,Get_Install_Statements(settings));
+    Append_With_Newline(str,settings.post_steps);
+    return str;
+❱
+
+
+◀private: static▶ std::string ☀Get_Add_Ppa_Statements(Docker_Settings const& settings)❰
+    std::string str;
+    for (auto const& it: settings.ppas){
+        str += "RUN add-apt-repository ";
+        str += "ppa:";
+        str += it.user;
+        str += "/";
+        str += it.ppa_name;
+        str += "\n";
+    }
+    return str;
+❱
+◀private: static▶ std::string ☀Get_Install_Statements(Docker_Settings const& settings)❰
+    std::string str;
+    for (auto const& it: settings.gets){
+        str += "RUN ";
+        for (auto const& def: it.defines){
+            str += def.first + "=" + def.second + " ";
+        }
+        str += "apt-get install -y ";
+        str += it.name;
+        str += "\n";
+    }
+    return str;
+❱

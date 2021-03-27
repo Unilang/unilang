@@ -1,0 +1,78 @@
+class
+❪"code/utilities/data_structures/compass_directions/compass_direction_diagnonal_movement"❫
+❪"code/utilities/data_structures/point/point_line"❫
+❪"code/utilities/data_structures/point/point_mover"❫
+⚯
+❪"code/utilities/types/general/lib"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/vectors/converters/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/strings/observers/converting/lib"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/utilities/program/common_actions/exits/lib"❫
+❪"code/utilities/web/lib"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/web/automate/browser/default_browser_settings_getter"❫
+❪"code/utilities/web/automate/browser/browser_creator"❫
+❪"code/utilities/web/automate/navigation/browser_navigator"❫
+
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/utilities/data_structures/point/point"❫
+❪"code/utilities/data_structures/point/point_line_intersections_getter"❫
+❪"code/utilities/data_structures/point/point_line_to_points"❫
+❪"code/programs/puzzles/advent_of_code/2019/int_code_computer"❫
+⚞⚟
+
+◀public: static▶ void ☀Part_1(std::vector<std::string> lines) ❰
+
+    //get program input
+    auto num_strs = Split_Into_Parts_From_Comma(lines[0]);
+    
+    
+    //set memory directly
+    num_strs[1] = "12";
+    num_strs[2] = "2";
+    
+    
+    //run computer
+    Int_Code_Computer_State state;
+    state.memory = num_strs;
+    Int_Code_Computer::Run(state,{});
+    
+    
+    //observe memory directly
+    Exit_If_Not_Equal(state.memory[0],"4714701");
+❱
+
+◀public: static▶ void ☀Part_2(std::vector<std::string> lines) ❰
+
+    //get program input
+    auto num_strs = Split_Into_Parts_From_Comma(lines[0]);
+    
+    
+    auto seek_result = "19690720";
+    size_t answer = 0;
+    
+    Nested_Loop(0,100,0,100,[&](size_t i, size_t j, bool & stop){
+        
+        auto nums2 = num_strs;
+        
+        //set memory directly
+        nums2[1] = std::to_string(i);
+        nums2[2] = std::to_string(j);
+        
+        //run computer
+        Int_Code_Computer_State state;
+        state.memory = nums2;
+        Int_Code_Computer::Run(state,{});
+        
+        if (state.memory[0] == seek_result){
+            answer = 100 * i + j;
+            stop = true;
+        }
+    });
+    
+    Exit_If_Not_Equal(std::to_string(answer),"5121");
+❱

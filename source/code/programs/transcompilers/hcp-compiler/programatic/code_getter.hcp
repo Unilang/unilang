@@ -1,0 +1,25 @@
+class
+❪iostream❫
+❪thread❫
+❪string❫
+❪"code/programs/transcompilers/hcp-compiler/programatic/data/code"❫
+❪"code/programs/transcompilers/hcp-compiler/programatic/function_getter"❫
+❪"code/programs/transcompilers/hcp-compiler/programatic/header_getter"❫
+⚯
+❪"code/programs/transcompilers/hcp-compiler/official/unicode_parser_symbols/lib"❫
+❪"code/utilities/types/converters/lib"❫
+⚞⚟
+
+◀public: static▶ std::wstring ☀Get(Code const& code)❰
+    std::wstring x;
+    x += L"class";
+    x += L"\n";
+    x += Header_Getter::Get(code.headers);
+    x += INHERITENCE_START;
+    x += INHERITENCE_END;
+    x += L"\n\n";
+    for (auto const& it: code.functions){
+        x += Function_Getter::Get(it);
+    }
+    return x;
+❱

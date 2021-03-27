@@ -1,0 +1,520 @@
+class
+❪iostream❫
+❪string❫
+❪set❫
+❪map❫
+❪"code/programs/gcalviz/exporters/data/node_edge_data"❫
+❪"code/programs/gcalviz/exporters/data/edge_data"❫
+❪"code/utilities/time/date/rfc333_datetime_to_epoch_converter"❫
+❪"code/utilities/time/date/rfc333_datetime_within_range_checker"❫
+❪"code/utilities/web/endpoints/gcal/data/gcal_sorted_events"❫
+❪"code/programs/gcalviz/exporters/formatters/gexf_attribute"❫
+⚯
+❪"code/utilities/types/strings/transformers/search_replace/lib"❫
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/utilities/data_structures/counters/unique_counter/unique_counter"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/types/strings/observers/comparing/lib"❫
+❪"code/utilities/types/strings/observers/other/lib"❫
+❪"code/utilities/formats/json/extraction/json_extractor"❫
+❪"code/utilities/formats/xml/xml_string_escaper"❫
+⚞⚟
+
+◀public: static▶ std::string ☀Format(Node_Edge_Data const& node_edge_data, std::map<std::string,nlohmann::json> const& user_data)❰
+    std::string file_results = Start(node_edge_data);
+    Append(file_results,Build_Node_Section(node_edge_data,user_data));
+    Append(file_results,Build_Edge_Section(node_edge_data));
+    Append(file_results,End());
+    return file_results;
+❱
+
+◀private: static▶ std::string ☀Build_Node_Section(Node_Edge_Data const& node_edge_data, std::map<std::string,nlohmann::json> const& user_data)❰
+
+    std::string file_results;
+    Append_With_Newline(file_results,"<nodes>");
+    for (auto const& node: node_edge_data.nodes){
+        Append(file_results,"<node ");
+        Append_Key_Value(file_results,"id",node);
+        Append_Key_Value(file_results,"label",node);
+        Append_With_Newline(file_results,">");
+        
+        Append_With_Newline(file_results,Get_Node_Attributes_For_User(node,user_data));
+        
+        Append_With_Newline(file_results,"</node>");
+    }
+    Append_With_Newline(file_results,"</nodes>");
+    return file_results;
+❱
+
+◀private: static▶ std::string ☀Get_Node_Attributes_For_User(std::string const& id, std::map<std::string,nlohmann::json> const& user_data)❰
+    std::string result;
+    auto attrs = Get_Gexf_Attribute_Spec();
+    
+    auto found = user_data.find(id);
+    if (found != user_data.end()){
+        
+        //get the json blob (while stepping into the first object name)
+        auto json_blob = found->second;
+        
+        for (size_t i = 0; i < attrs.size(); ++i){
+            
+            
+            std::string attr_value;
+            if (attrs[i].type == "string"){
+                attr_value = Json_Extractor::Extract_String(json_blob,attrs[i].extract);
+            }
+            else if (attrs[i].type == "integer"){
+                attr_value = std::to_string(Json_Extractor::Extract_Integer(json_blob,attrs[i].extract));
+            }
+            
+            if (!attr_value.empty()){
+                
+                attr_value = Xml_String_Escaper::As_Escaped(attr_value);
+                Append(result,"<attvalue ");
+                Append_Key_Value(result,"for",std::to_string(i));
+                Append_Key_Value(result,"value",attr_value);
+                Append_With_Newline(result," />");
+            }
+        }
+        
+        Append_With_Newline(result,"<attvalues>");
+        Append_With_Newline(result,"</attvalues>");
+    }
+    return result;
+❱
+
+◀private: static▶ std::string ☀Build_Edge_Section(Node_Edge_Data const& node_edge_data)❰
+
+    bool record_weight = true;
+    bool record_time = true;
+    
+    std::string file_results;
+    Append_With_Newline(file_results,"<edges>");
+    for (auto const& edge: node_edge_data.edges.hash_table){
+        auto e = From_JSON_String<Edge_Data>(edge.first);
+        Append(file_results,"<edge ");
+        Append_Key_Value(file_results,"source",e.connection.source);
+        Append_Key_Value(file_results,"target",e.connection.target);
+        
+        auto start_epoch = Rfc333_Datetime_To_Epoch_Converter::Convert(e.interval.start);
+        auto end_epoch = Rfc333_Datetime_To_Epoch_Converter::Convert(e.interval.end);
+        
+        //why is google inconsistent about when a meeting started / ended?
+        //i.e. why does google say a meeting ended before it even started?
+        //not sure. but gephi needs it to be consistent so we'll flip them.
+        if (end_epoch < start_epoch){
+            std::swap(start_epoch,end_epoch);
+        }
+        
+        
+        if (record_time){
+            Append_Key_Value(file_results,"start",Epoch_To_YYY_MM_DD(start_epoch));
+            Append_Key_Value(file_results,"end",Epoch_To_YYY_MM_DD(end_epoch));
+        }
+        
+        if (record_weight){
+            Append_Key_Value(file_results,"weight",std::to_string(edge.second));
+        }
+        Append_With_Newline(file_results,"/>");
+    }
+    Append_With_Newline(file_results,"</edges>");
+    
+    return file_results;
+❱
+
+
+◀private: static▶ std::string ☀Epoch_To_YYY_MM_DD(unsigned long epoch)❰
+    time_t rawtime = epoch;
+    struct tm  ts;
+    char       buf[80];
+    ts = *localtime(&rawtime);
+    strftime(buf, sizeof(buf), "%Y-%m-%d", &ts);
+    std::string result = buf;
+    return result;
+❱
+
+◀private: static▶ std::string ☀Start(Node_Edge_Data const& node_edge_data)❰
+    
+        //settings
+        std::string graph_mode = Derive_Graph_Mode(node_edge_data);
+        std::string edge_type = Derive_Edge_Type(node_edge_data);
+        std::string time_format = "date";
+        std::string meta_modification_date = "";
+        std::string meta_creator = "Trevor Hickey";
+        std::string meta_description = "calnet output";
+        std::string meta_keywords = "social network, calnet";
+
+        std::string str;
+        
+        //schema
+        Append_With_Newline(str,"<?xml version=\"1.1\" encoding=\"UTF-8\"?>");
+        Append_With_Newline(str,"<gexf xmlns=\"http://www.gexf.net/1.3draft\"");
+        Append_With_Newline(str,"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+        Append_With_Newline(str,"xsi:schemaLocation=\"http://www.gexf.net/1.3draft");
+        Append_With_Newline(str,"http://www.gexf.net/1.3draft/gexf.xsd\"");
+        Append_With_Newline(str,"version=\"1.3\">");
+        
+        //meta
+        Append(str,"<meta ");
+        Append_Key_Value(str,"lastmodifieddate",meta_modification_date);
+        Append_With_Newline(str,">");
+        Append_With_Newline(str,"<creator>");
+        Append_With_Newline(str,meta_creator);
+        Append_With_Newline(str,"</creator>");
+        Append_With_Newline(str,"<description>");
+        Append_With_Newline(str,meta_description);
+        Append_With_Newline(str,"</description>");
+        Append_With_Newline(str,"<keywords>");
+        Append_With_Newline(str,meta_keywords);
+        Append_With_Newline(str,"</keywords>");
+        Append_With_Newline(str,"</meta>");
+        
+        //graph
+        Append(str,"<graph ");
+        Append_Key_Value(str,"mode",graph_mode);
+        Append_Key_Value(str,"defaultedgetype",edge_type);
+        Append_Key_Value(str,"timeformat",time_format);
+        Append_With_Newline(str,">");
+        
+        //attribute definitions
+        Append_With_Newline(str,"<attributes class=\"node\">");
+        auto attrs = Get_Gexf_Attribute_Spec();
+        for (size_t i = 0; i < attrs.size(); ++i){
+            Append(str,"<attribute ");
+            Append_Key_Value(str,"id",std::to_string(i));
+            Append_Key_Value(str,"title",attrs[i].title);
+            Append_Key_Value(str,"type",attrs[i].type);
+            Append_With_Newline(str,">");
+            
+            Append(str,"<default>");
+            Append(str,attrs[i].default_value);
+            Append_With_Newline(str,"</default>");
+            Append_With_Newline(str,"</attribute>");
+            
+            
+        }
+        Append_With_Newline(str,"</attributes>");
+    
+    
+        return str;
+❱
+
+◀private: static▶ std::vector<Gexf_Attribute> ☀Get_Gexf_Attribute_Spec()❰
+
+        std::vector<Gexf_Attribute> attributes;
+        
+        Gexf_Attribute temp;
+        Json_Extraction_Step step;
+        
+        temp.title = "first";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"preferredFirstName");
+        attributes.emplace_back(temp);
+        
+        temp.title = "last";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"preferredLastName");
+        attributes.emplace_back(temp);
+        
+        temp.title = "businessTitle";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"businessTitle");
+        attributes.emplace_back(temp);
+        
+        temp.title = "org_part";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"supervisoryOrg");
+        attributes.emplace_back(temp);
+        
+        temp.title = "is_manager";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"isManager");
+        attributes.emplace_back(temp);
+        
+        temp.title = "type";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"employeeType");
+        attributes.emplace_back(temp);
+        
+        temp.title = "years";
+        temp.type = "integer";
+        temp.default_value = "0";
+        Set_Employee_Extraction_Step(temp,"years");
+        attributes.emplace_back(temp);
+        
+        temp.title = "buildingAddress";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"buildingAddress");
+        attributes.emplace_back(temp);
+        
+        temp.title = "floorNumber";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"floorNumber");
+        attributes.emplace_back(temp);
+        
+        temp.title = "numTotalReports";
+        temp.type = "integer";
+        temp.default_value = "0";
+        Set_Employee_Extraction_Step(temp,"numTotalReports");
+        attributes.emplace_back(temp);
+        
+        temp.title = "numFteReports";
+        temp.type = "integer";
+        temp.default_value = "0";
+        Set_Employee_Extraction_Step(temp,"numFteReports");
+        attributes.emplace_back(temp);
+        
+        temp.title = "numExtReports";
+        temp.type = "integer";
+        temp.default_value = "0";
+        Set_Employee_Extraction_Step(temp,"numExtReports");
+        attributes.emplace_back(temp);
+        
+        temp.title = "buildingCode";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"buildingCode");
+        attributes.emplace_back(temp);
+        
+        temp.title = "city";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"city1");
+        attributes.emplace_back(temp);
+        
+        temp.title = "zipcode";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"zipcode");
+        attributes.emplace_back(temp);
+        
+        temp.title = "phoneNumber";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"phoneNumber");
+        attributes.emplace_back(temp);
+        
+        temp.title = "agency";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"agency");
+        attributes.emplace_back(temp);
+        
+        temp.title = "costCenter";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"costCenter");
+        attributes.emplace_back(temp);
+        
+        temp.title = "costCenterId";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"costCenterId");
+        attributes.emplace_back(temp);
+        
+        temp.title = "dribbleUrl";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"dribbleUrl");
+        attributes.emplace_back(temp);
+        
+        temp.title = "duoPhoneNumber";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"duoPhoneNumber");
+        attributes.emplace_back(temp);
+        
+        temp.title = "employeeId";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"employeeId");
+        attributes.emplace_back(temp);
+        
+        temp.title = "endDate";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"endDate");
+        attributes.emplace_back(temp);
+        
+        temp.title = "facebookProfileUrl";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"facebookProfileUrl");
+        attributes.emplace_back(temp);
+        
+        temp.title = "githubUrl";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"githubUrl");
+        attributes.emplace_back(temp);
+        
+        temp.title = "instagramProfileUrl";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"instagramProfileUrl");
+        attributes.emplace_back(temp);
+        
+        temp.title = "isActive";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"isActive");
+        attributes.emplace_back(temp);
+        
+        temp.title = "isEaadmin";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"isEaadmin");
+        attributes.emplace_back(temp);
+        
+        temp.title = "jobProfile";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"jobProfile");
+        attributes.emplace_back(temp);
+        
+        temp.title = "linkedinProfileUrl";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"linkedinProfileUrl");
+        attributes.emplace_back(temp);
+        
+        temp.title = "managerId";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"managerId");
+        attributes.emplace_back(temp);
+        
+        temp.title = "months";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"months");
+        attributes.emplace_back(temp);
+        
+        temp.title = "nickName";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"nickName");
+        attributes.emplace_back(temp);
+        
+        temp.title = "personalEmail";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"personalEmail");
+        attributes.emplace_back(temp);
+        
+        temp.title = "phoneNumberFlag";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"phoneNumberFlag");
+        attributes.emplace_back(temp);
+        
+        temp.title = "pronoun";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"pronoun");
+        attributes.emplace_back(temp);
+        
+        temp.title = "pronunciationTips";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"pronunciationTips");
+        attributes.emplace_back(temp);
+        
+        temp.title = "quote";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"quote");
+        attributes.emplace_back(temp);
+        
+        temp.title = "seatNumber";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"seatNumber");
+        attributes.emplace_back(temp);
+        
+        temp.title = "startDate";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"startDate");
+        attributes.emplace_back(temp);
+        
+        temp.title = "twitterProfileUrl";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"twitterProfileUrl");
+        attributes.emplace_back(temp);
+        
+        temp.title = "unixName";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"unixName");
+        attributes.emplace_back(temp);
+        
+        temp.title = "upPhotoUrl";
+        temp.type = "string";
+        temp.default_value = "unknown";
+        Set_Employee_Extraction_Step(temp,"upPhotoUrl");
+        attributes.emplace_back(temp);
+        
+        return attributes;
+❱
+
+◀private: static▶ void ☀Set_Employee_Extraction_Step(Gexf_Attribute& attr, std::string name)❰
+    Json_Extraction_Step step;
+    step.key = "employee";
+    step.index = false;
+    attr.extract.desired_key = name;
+    attr.extract.steps.clear();
+    attr.extract.steps.emplace_back(step);
+❱
+
+
+◀private: static▶ std::string ☀Derive_Graph_Mode(Node_Edge_Data const& node_edge_data)❰
+    for (auto const& edge: node_edge_data.edges.hash_table){
+        auto e = From_JSON_String<Edge_Data>(edge.first);
+        if (!e.interval.start.empty() && !e.interval.end.empty()){
+            return "dynamic";
+        }
+        else{
+            return "static";
+        }
+    }
+    
+    //not sure
+    return "slice";
+❱
+◀private: static▶ std::string ☀Derive_Edge_Type(Node_Edge_Data const& node_edge_data)❰
+
+    for (auto const& edge: node_edge_data.edges.hash_table){
+        auto e = From_JSON_String<Edge_Data>(edge.first);
+        if (e.connection.type == Edge_Type::DIRECTED){
+            return "directed";
+        }
+        else if (e.connection.type == Edge_Type::UNDIRECTED){
+            return "undirected";
+        }
+    }
+
+    //not sure
+    return "mutual";
+❱
+
+
+
+
+◀private: static▶ std::string ☀End()❰
+    std::string str;
+    Append_With_Newline(str,"</graph>");
+    Append_With_Newline(str,"</gexf>");
+    return str;
+❱

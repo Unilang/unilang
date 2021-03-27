@@ -1,0 +1,150 @@
+class
+❪"code/programs/repo_tools/build_determinism/settings/settings_getter"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/program/wrappers/git/repo_establisher/repo_establisher"❫
+❪"code/utilities/program/wrappers/bazel/setup/wrapper/bazel_wrapper_deriver"❫
+❪"code/programs/repo_tools/build_determinism/determinism_ab_runner"❫
+❪"code/programs/repo_tools/build_determinism/reporter"❫
+❪"code/programs/repo_tools/build_determinism/subcommand_filter"❫
+❪"code/programs/repo_tools/build_determinism/determinism_problem_getter"❫
+❪"code/utilities/random/lib"❫
+❪"code/utilities/random/files/random_files"❫
+❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
+❪"code/utilities/program/wrappers/bazel/bazel_runner"❫
+❪"code/utilities/filesystem/files/moving/lib"❫
+❪"code/utilities/types/strings/observers/path/lib"❫
+❪"code/programs/repo_tools/build_determinism/settings/ab_settings"❫
+⚯
+⚞⚟
+
+
+◀public: static▶ void ☀Attempt_To_Isolate_Nondeterministic_Files(Determinism_Pairings const& results, Settings const& settings, Ab_Settings const& ab_settings) ❰
+
+    //Isolate subcommands that are nondeterministic
+    Maybe_Output_And_Flush_With_Newline(settings.verbose,"filtering results...");
+    auto filtered_results = Subcommand_Filter::Filter_By_Subcommands_That_Cause_Nondeterminism(results.nondeterministic);
+    
+    //Convert results into specific files that are nondeterministic
+    Maybe_Output_And_Flush_With_Newline(settings.verbose,"collecting nondeterministic objects...");
+    std::map<std::string,tools::protos::SpawnExec> file_map;
+    for (auto const& it: filtered_results){
+        auto problems = Determinism_Problem_Getter::Get(it);
+        for (auto const& problem: problems){
+            if (!problem.file_path.empty()){
+                file_map.insert({problem.file_path,it.first});
+            }
+        }
+    }
+    
+    //decide whether to actually isolate files
+    if (!file_map.empty()){
+        std::string message = std::to_string(file_map.size()) + " files will need isolated";
+        Maybe_Output_And_Flush_With_Newline(settings.verbose,message);
+        auto isolation_folder = Isolate_Nondeterministic_Files(file_map,settings,ab_settings);
+        Create_Differences(file_map,isolation_folder,settings);
+    }
+    else{
+        Maybe_Output_And_Flush_With_Newline(settings.verbose,"there are no files to isolate because there were no nondeterministic behavior observed");
+    }
+
+❱
+
+◀private: static▶ std::string ☀Isolate_Nondeterministic_Files(std::map<std::string,tools::protos::SpawnExec> const& file_map, Settings const& settings, Ab_Settings const& ab_settings) ❰
+
+    auto isolation_folder = Random_Files::Random_Tmp_Directory();
+    auto isolation_folder_a = isolation_folder + "/a";
+    auto isolation_folder_b = isolation_folder + "/b";
+    execute("mkdir -p " + isolation_folder_a);
+    execute("mkdir -p " + isolation_folder_b);
+    
+    if (settings.concurrency == Concurrency::PARALLEL){
+        for (auto const& it: file_map){
+            auto file_a = ab_settings.a_path + "/" + it.first;
+            auto file_b = ab_settings.b_path + "/" + it.first;
+            Copy_File_To_Dir_And_Report_Problems(file_a,isolation_folder_a);
+            Copy_File_To_Dir_And_Report_Problems(file_b,isolation_folder_b);
+        }
+    }
+    
+    
+    else if (settings.concurrency == Concurrency::SEQUENTIAL){
+        
+        //copy files from previous build
+        for (auto const& it: file_map){
+            auto file_b = ab_settings.b_path + "/" + it.first;
+            Copy_File_To_Dir_And_Report_Problems(file_b,isolation_folder_b);
+        }
+        
+        //do another build to regenerate the nondeterministic files
+        Maybe_Output_And_Flush_With_Newline(settings.verbose,"we must do a rebuild since we did single sequential directory");
+        auto bazel = Prepend_Cd_Path(settings.setup.bazel_wrapper.program_name,ab_settings.a_path);
+        Bazel_Runner::Build_Target(bazel,ab_settings.a_build,settings.setup.config_settings,settings.target_name);
+        
+        //copy files from previous build
+        for (auto const& it: file_map){
+            auto file_a = ab_settings.a_path + "/" + it.first;
+            Copy_File_To_Dir_And_Report_Problems(file_a,isolation_folder_a);
+        }
+    }
+    
+    Maybe_Output_And_Flush_With_Newline(settings.verbose,"files have been isolated to " + isolation_folder);
+    
+    return isolation_folder;
+❱
+
+
+◀private: static▶ void ☀Create_Differences(std::map<std::string,tools::protos::SpawnExec> const& file_map, std::string const& isolation_folder, Settings const& settings)❰
+    
+    for (auto const& it: file_map){
+        auto file_a = isolation_folder + "/a/" + Get_File_Name(it.first);
+        auto file_b = isolation_folder + "/b/" + Get_File_Name(it.first);
+        
+        execute("nm -a " + file_a + " > " + file_a + "_nm_debug_symbols.txt");
+        execute("nm -a " + file_b + " > " + file_b + "_nm_debug_symbols.txt");
+        Create_Diff_File_If_Different(isolation_folder,Get_File_Name(it.first),file_a,file_b,"_nm_debug_symbols.txt");
+        
+        execute("nm -C " + file_a + " > " + file_a + "_nm_symbols_demangled.txt");
+        execute("nm -C " + file_b + " > " + file_b + "_nm_symbols_demangled.txt");
+        Create_Diff_File_If_Different(isolation_folder,Get_File_Name(it.first),file_a,file_b,"_nm_symbols_demangled.txt");
+        
+        execute("nm -g " + file_a + " > " + file_a + "_nm_external_symbols.txt");
+        execute("nm -g " + file_b + " > " + file_b + "_nm_external_symbols.txt");
+        Create_Diff_File_If_Different(isolation_folder,Get_File_Name(it.first),file_a,file_b,"_nm_external_symbols.txt");
+        
+        execute("nm --synthetic " + file_a + " > " + file_a + "_nm_synthetic.txt");
+        execute("nm --synthetic " + file_b + " > " + file_b + "_nm_synthetic.txt");
+        Create_Diff_File_If_Different(isolation_folder,Get_File_Name(it.first),file_a,file_b,"_nm_synthetic.txt");
+        
+        execute("nm -u " + file_a + " > " + file_a + "_nm_undefined_symbols.txt");
+        execute("nm -u " + file_b + " > " + file_b + "_nm_undefined_symbols.txt");
+        Create_Diff_File_If_Different(isolation_folder,Get_File_Name(it.first),file_a,file_b,"_nm_undefined_symbols.txt");
+        
+        execute("readelf -a --wide " + file_a + " > " + file_a + "_readelf_all.txt");
+        execute("readelf -a --wide " + file_b + " > " + file_b + "_readelf_all.txt");
+        Create_Diff_File_If_Different(isolation_folder,Get_File_Name(it.first),file_a,file_b,"_readelf_all.txt");
+        
+        //strip
+        //-strip-all, -s Strip all debug and symbol information from the executable to make it smaller.
+        //-strip-debug, -S Strip all debug information from the executable to make it smaller.
+        //-strip-debug This option causes opt to strip debug information from the module before applying other optimizations. It is essentially the same as -strip but it ensures that stripping of debug information is done first.
+    }
+❱
+
+
+◀private: static▶ void ☀Create_Diff_File_If_Different(std::string const& isolation_folder, std::string const& base_name, std::string const& file_a, std::string const& file_b, std::string const& extension)❰
+
+    std::string diff_command = "diff " + file_a + extension + " " + file_b + extension;
+    auto diff = execute(diff_command);
+    if (!diff.empty()){
+        execute(diff_command + " > " + isolation_folder + "/" + base_name + "_diff_" + extension);
+    }
+❱
+
+◀private: static▶ void ☀Copy_File_To_Dir_And_Report_Problems(std::string const& file, std::string const& folder)❰
+    if (File_Exists(file)){
+        Copy_File_To_Dir(file,folder);
+    }
+    else{
+        std::cerr << file << " does not exist." << std::endl;
+    }
+❱

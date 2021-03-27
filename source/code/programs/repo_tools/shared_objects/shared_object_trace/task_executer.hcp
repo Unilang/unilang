@@ -1,0 +1,160 @@
+class
+❪iostream❫
+❪string❫
+❪utility❫
+❪"code/programs/repo_tools/shared_objects/shared_object_trace/program_options/program_options"❫
+❪"code/utilities/filesystem/files/getting/lib"❫
+❪"code/utilities/filesystem/files/observers/other/lib"❫
+❪"code/programs/repo_tools/shared_objects/shared_object_trace/file_and_type"❫
+❪"code/utilities/filesystem/files/observers/other/file_and_ldd_results"❫
+❪"code/utilities/filesystem/files/observers/other/ldd_results_getter"❫
+❪"code/utilities/filesystem/files/observers/other/recursive_ldd_results_getter"❫
+❪"code/programs/repo_tools/shared_objects/shared_object_trace/correlated_so_ldd"❫
+❪"code/programs/repo_tools/shared_objects/shared_object_trace/correlation_results"❫
+❪"code/utilities/language_basic/std_hackery/std_aliases"❫
+⚯
+❪"code/utilities/program/common_actions/exits/lib"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/filesystem/files/getting/lib"❫
+❪"code/utilities/types/strings/observers/other/lib"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/strings/observers/path/lib"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/programs/repo_tools/shared_objects/shared_object_trace/so_ldd_correlation_visualizer"❫
+❪"code/programs/repo_tools/shared_objects/shared_object_trace/ignore_deps"❫
+⚞⚟
+
+//we need a faster way to check file types, and get ldd results
+//would be really nice to have a library solution.
+//libmagic
+
+//consider "readelf"
+//https://unix.stackexchange.com/questions/120015/how-to-find-out-the-dynamic-libraries-executables-loads-when-run
+
+
+//consider "strace -e trace=open myprogram"
+
+◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
+
+    //cli verify
+    if (options.Run_Dir().empty()){
+        Exit_With_Error("provide path to external dir");
+    }
+    if (options.Dep().empty()){
+        Exit_With_Error("pass a third party dep name");
+    }
+    
+    //move into external dir of bazel repo
+    Set_Path(options.Run_Dir());
+    
+    auto all_correlations = Get_All_So_Ldd_Correlations(options.Dep());
+    std::cout << all_correlations.connections.size() << std::endl;
+    
+        for (auto const& it2: all_correlations.connections){
+            std::cout << it2.ldd.file << std::endl;
+        }
+    So_Ldd_Correlation_Visualizer::Visualize(all_correlations,options.Out_Dir(),options.Dep());
+❱
+
+◀private: static▶ Correlation_Results ☀Get_All_So_Ldd_Correlations(std::string const& dep_name)❰
+
+    Correlation_Results x;
+    
+    //get all the shared library files from this third party dependency
+    Output_And_Flush("Getting shared objects from " + dep_name + "...");
+    auto sos = Get_Shared_Objects_From_Dir(dep_name);
+    Output_And_Flush_With_Newline(" " + std::to_string(sos.size()) + " found");
+    x.original_sos = sos;
+    
+    
+    auto dirs = Get_Dir_Names_Excluding(Ignore_Deps::Dirs_To_Skip(dep_name));
+    for (auto dir: dirs){
+        Output_And_Flush("Getting LDD data from " + dir + "...");
+        auto ldd_results = Recursive_Ldd_Results_Getter::Get_From_Dir(dir);
+        Output_And_Flush(" " + std::to_string(ldd_results.size()) + " ldd results");
+        
+        auto correlations = Get_Correlations(sos,ldd_results);
+        x.connections += correlations;
+        Output_And_Flush_With_Newline(" " + std::to_string(correlations.size()) + " correlations");
+    }
+    
+    return x;
+❱
+
+
+◀private: static▶ std::vector<Correlated_So_Ldd> ☀Get_Correlations(std::vector<File_And_Type> const& sos, std::vector<File_And_Ldd_Results> const& ldd)❰
+    std::vector<Correlated_So_Ldd> x;
+    
+    for (auto const& ldd_result: ldd){
+        for (auto const& so: sos){
+            x += Get_Correlations(so,ldd_result);
+        }
+    }
+    
+    return x;
+❱
+
+◀private: static▶ std::vector<Correlated_So_Ldd> ☀Get_Correlations(File_And_Type const& so, File_And_Ldd_Results const& ldd)❰
+    
+    std::vector<Correlated_So_Ldd> x;
+    for (auto const& entry: ldd.results.entries){
+        if (Get_File_Name(so.file) == Get_File_Name(entry.so)){
+            
+            //store
+            Correlated_So_Ldd temp;
+            temp.so = so;
+            temp.ldd = ldd;
+            x.emplace_back(temp);
+        }
+        if (Get_File_Name(so.file) == Get_File_Name(entry.pointing_at)){
+            
+            //store
+            Correlated_So_Ldd temp;
+            temp.so = so;
+            temp.ldd = ldd;
+            x.emplace_back(temp);
+        }
+    }
+    return x;
+❱
+
+//extracting info from filesystem
+
+
+
+◀private: static▶ std::vector<File_And_Type> ☀Get_Shared_Objects_From_Dir(std::string dep)❰
+
+    std::string identifier_for_shared_object = "shared object";
+    
+    auto files = Recursively_Get_All_Paths_To_Files_From_Path(dep);
+    std::vector<File_And_Type> results;
+    
+    for (auto const& it: files){
+        auto type = Type_Of_File(it);
+        if (Contains_Substring(type,identifier_for_shared_object)){
+            File_And_Type x;
+            x.file = it;
+            x.type = type;
+            results.emplace_back(x);
+        }
+    }
+    return results;
+❱
+
+◀private: static▶ strings ☀Get_Dir_Names_Excluding(strings deps)❰
+
+    strings paths;
+    
+    auto dirs = Get_Dirs_Of_Path();
+    for (auto dir: Get_Dirs_Of_Path()){
+        if (!In_Vector(deps,dir)){
+            paths.emplace_back(dir);
+        }
+    }
+    
+    Sort_And_Remove_Duplicates(paths);
+    
+    return paths;
+❱

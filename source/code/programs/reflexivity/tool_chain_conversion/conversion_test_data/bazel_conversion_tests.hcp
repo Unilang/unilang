@@ -1,0 +1,12 @@
+class
+❪vector❫
+❪string❫
+❪"code/programs/reflexivity/tool_chain_conversion/conversion_test_data/bazel_conversion_test"❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    std::vector<Bazel_Conversion_Test> tests;
+▶

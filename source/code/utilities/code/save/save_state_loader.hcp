@@ -1,8 +1,8 @@
 class
-❪"code/tools/ide/settings/ide_elements"❫
+❪"code/programs/ide/settings/ide_elements"❫
 ❪"code/utilities/formats/json/converters/json_file_io"❫
 ⚯
-❪"code/tools/ide/global_actions/global_action_decider"❫
+❪"code/programs/ide/global_actions/global_action_decider"❫
 ❪"code/utilities/program/wrappers/zenity/file_selector/file_selector"❫
 ❪"code/utilities/formats/json/converters/lib"❫
 ❪"code/utilities/code/concept_string_tree_parser"❫

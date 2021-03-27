@@ -1,0 +1,26 @@
+class
+❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
+❪"code/programs/ide/settings/ide_element"❫
+⚯
+❪"code/utilities/types/variant/lib"❫
+❪"code/utilities/image/stb_image_setter"❫
+❪"code/utilities/image/stb_animated_image_setter"❫
+⚞⚟
+
+◀public: static▶ void ☀Load_Image_If_Needed(Ide_Element & it)❰
+    
+        std::visit(overloaded {
+            [&](Positioned_Buildable_Face_Tree & x) {
+            },
+            [&](Positioned_Buildable_Schema_Faced_Tree & x) {
+            },
+            [&](Positioned_Image_Data & x) {
+                
+                Stb_Image_Setter::Set(x);
+            },
+            [&](Positioned_Animated_Image_Data & x) {
+                
+                Stb_Animated_Image_Setter::Set(x);
+            },
+        }, it.element);
+❱

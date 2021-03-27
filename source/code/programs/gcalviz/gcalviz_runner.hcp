@@ -1,0 +1,123 @@
+class
+❪"code/programs/gcalviz/meta_settings"❫
+❪iostream❫
+❪set❫
+⚯
+❪"code/utilities/web/endpoints/gcal/gcal_getter"❫
+❪"code/utilities/web/endpoints/gcal/gcal_credentials"❫
+❪"code/utilities/web/endpoints/gcal/data/gcal_sorted_events"❫
+❪"code/programs/gcalviz/settings/default_settings_getter"❫
+❪"code/utilities/types/strings/transformers/search_replace/lib"❫
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/utilities/formats/json/converters/json_file_io"❫
+❪"code/utilities/time/date/rfc333_datetime_to_epoch_converter"❫
+❪"code/utilities/time/date/rfc333_datetime_within_range_checker"❫
+❪"code/utilities/data_structures/counters/unique_counter/unique_counter"❫
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/types/strings/observers/comparing/lib"❫
+❪"code/utilities/types/strings/observers/other/lib"❫
+❪"code/utilities/formats/json/attribute_check/json_attribute_check_settings"❫
+❪"code/utilities/formats/json/attribute_check/json_attribute_checker"❫
+❪"code/programs/gcalviz/exporters/connections_exporter"❫
+❪"code/programs/gcalviz/exporters/metrics_exporter"❫
+❪"code/programs/gcalviz/exporters/email_exporter"❫
+❪"code/programs/gcalviz/exporters/email_user_info_exporter"❫
+❪"code/programs/gcalviz/exporters/user_location_info_exporter"❫
+❪"code/utilities/program/common_actions/signals/lib"❫
+❪"code/utilities/web/automate/navigation/browser_navigator"❫
+⚞⚟
+
+◀public: static▶ void ☀Run(Meta_Settings const& meta) ❰
+    
+    //load in all of the settings
+    auto settings = Default_Settings_Getter::Get();
+    
+    //GETTING THE DATA
+    //scrape all the meetings (this will connect directly to gcal and make rest calls)
+    //unless we decide to only scrape the top and append it to an onshore copy somewhere.
+    //basically, I just want to get all of the REST calls out of the way, and just work on an already downloaded dataset.
+    //if you have the space and time, scrape it all out of google.
+    if (settings.exports.pit_rooms.do_export){
+        auto pit_rooms = Gcal_Getter::Get_All_Pittsburgh_Room_Events(settings.credentials);
+        Json_File_Io::Write_Json_To_File(pit_rooms,settings.exports.pit_rooms.path);
+    }
+    
+    //we got a lot of calendar data now, but in terms of employee interaction, there is a lot of "junk data".
+    //junk data being "hidden meetings", "meetings without start times", "meetings without attendees", "canceled meetings", etc.
+    if (settings.exports.pit_events.do_export){
+        Filter_Sort_By_Original_Start_Time(settings.exports.pit_rooms.path,settings.exports.pit_events.path);
+    }
+    
+    //VISUALIZING THE DATA
+    //all of the events we have are valid for social network analysis, and organized chronologically
+    //now we can build a social network out of it in various ways
+    if (settings.exports.pit_connections.do_export){
+        Connections_Exporter::CreateGraphML(settings.exports.pit_events.path,
+                                            settings.exports.pit_connections.path,
+                                            settings.exports.pit_connections_file_gexf,
+                                            settings.exports.pit_user_info.path);
+    }
+    
+    //EXTRA STATS
+    //in terms of all the data we scraped, lets extract out the emails
+    if (settings.exports.pit_emails.do_export){
+        Email_Exporter::Export_Emails(settings.exports.pit_rooms.path,settings.exports.pit_emails.path);
+    }
+    
+    if (settings.exports.pit_user_info.do_export){
+        Email_User_Info_Exporter::Export_Info(settings.exports.pit_emails.path,settings.exports.pit_user_info.path);
+    }
+    
+    if (settings.exports.pit_user_location.do_export){
+        User_Location_Info_Exporter::Export_Info(settings.exports.pit_emails.path,settings.exports.pit_user_location.path);
+    }
+    
+    //in terms of all the data we scraped, lets just get some various metrics about it
+    if (settings.exports.pit_emails.do_export){
+        Metrics_Exporter::Export_Metrics(settings.exports.pit_rooms.path,settings.exports.pit_metrics.path);
+    }
+    
+❱
+◀public: static▶ void ☀Filter_Sort_By_Original_Start_Time(std::string const& all_pit_room_events_file, std::string const& sorted_room_events_file) ❰
+
+        //read in all the room data
+        Gcal_Rooms pit_rooms;
+        std::cout << "loading..." << std::endl;
+        Json_File_Io::Read_Json_From_File(pit_rooms,all_pit_room_events_file);
+        
+        
+        //filter out anything that doesn't have these attributes
+        Json_Attribute_Check_Settings check_settings;
+        check_settings.attributes = {
+            {"originalStartTime","dateTime"},
+            {"attendees"}
+        };
+        
+        //flatten away the rooms and only keep events that have certain attributes
+        std::cout << "flattening..." << std::endl;
+        Gcal_Sorted_Events sorted;
+        for (auto const& x: pit_rooms.rooms){
+            for (auto const& y: x.events){
+                if (Json_Attribute_Checker::Has_Attributes(y,check_settings)){
+                    sorted.events.emplace_back(y);
+                }
+            }
+        }
+        
+        //sort them chronologically
+        std::cout << "sorting..." << std::endl;
+        std::sort(sorted.events.begin(),sorted.events.end(),[](nlohmann::json const& a, nlohmann::json const& b){
+            
+            auto result = Rfc333_Datetime_To_Epoch_Converter::Convert(a["originalStartTime"]["dateTime"])
+            < Rfc333_Datetime_To_Epoch_Converter::Convert(b["originalStartTime"]["dateTime"]);
+            
+            return result;
+        });
+        
+        //write the events back
+        std::cout << "writing..." << std::endl;
+        Json_File_Io::Write_Json_To_File(sorted,sorted_room_events_file);
+❱

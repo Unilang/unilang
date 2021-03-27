@@ -12,8 +12,8 @@ def string_tree_getter(name):
         name = target_name,
         srcs = [in_file],
         outs = [outfile],
-        tools = ["//code/tools/transcompilers/tree_hcp/string_tree_getter:string_tree_getter"],
-        cmd = "$(location //code/tools/transcompilers/tree_hcp/string_tree_getter:string_tree_getter) -i $(SRCS) -o $@",
+        tools = ["//code/programs/transcompilers/tree_hcp/string_tree_getter:string_tree_getter"],
+        cmd = "$(location //code/programs/transcompilers/tree_hcp/string_tree_getter:string_tree_getter) -i $(SRCS) -o $@",
     )
 
     #compile hcp file

@@ -1,0 +1,42 @@
+class
+❪vector❫
+❪string❫
+❪"code/utilities/program/wrappers/bazel/setup/wrapper/bazel_wrapper"❫
+❪"code/utilities/program/wrappers/git/repo_establisher/repo_location"❫
+❪"code/programs/repo_tools/build_determinism/settings/report_settings"❫
+❪"code/programs/repo_tools/build_determinism/settings/ab_settings"❫
+❪"code/utilities/program/wrappers/bazel/run_environment"❫
+❪"code/utilities/data_structures/concurrency"❫
+❪"code/utilities/program/wrappers/bazel/build_settings"❫
+❪"code/utilities/program/wrappers/bazel/setup/bazel_setup"❫
+⚯
+
+⚞⚟
+
+◀
+public:
+    
+    //be verbose about what the tool is doing
+    bool verbose;
+    
+    //setting up repo and calling bazel
+    std::vector<Repo_Location> repos;
+    Bazel_Setup setup;
+    
+    //what target to test and how to test it
+    std::string target_name;
+    Concurrency concurrency;
+    
+    
+    std::vector<Ab_Settings> ab_tests;
+    
+    //types of tests to run
+    int environment_scan;
+    int augmented_scan;
+    
+    bool do_default_diagnosis;
+    
+    //result settings
+    std::string result_path;
+    Report_Settings report;
+▶

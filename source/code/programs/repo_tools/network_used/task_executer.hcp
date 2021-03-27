@@ -1,0 +1,63 @@
+class
+❪iostream❫
+❪string❫
+❪utility❫
+❪thread❫
+❪"code/programs/repo_tools/network_used/program_options/program_options"❫
+❪"code/programs/repo_tools/network_used/settings/settings_getter"❫
+❪"code/utilities/program/wrappers/git/repo_establisher/repo_establisher"❫
+❪"code/utilities/program/wrappers/tshark/tshark_spawner"❫
+❪"code/utilities/program/processes/lib"❫
+❪"code/utilities/output/printers/lib"❫
+⚯
+⚞⚟
+
+
+◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
+    
+    //get the default settings modified by user's program options.
+    auto settings = Settings_Getter::Get(options);
+    
+    Maybe_Output_And_Flush_With_Newline(settings.verbose,"setting up repo...");
+    auto e_repo = Repo_Establisher::Establish_And_Get_Path(settings.repo);
+    
+    
+    std::string results;
+    std::thread t([&](){ results = Tshark_Spawner::Spawn_And_Get_Results_When_Killed(); });
+    
+    auto pid = Wait_Until_We_Have_A_Pid_Of("tshark");
+    
+    std::cout << pid << std::endl;
+    
+    //Send_Ctrl_C_To_Pid(pid);
+    
+    //wait until tshark is killed
+    t.join();
+    
+    std::cout << results << std::endl;
+❱
+
+/*
+#!/bin/bash
+mapfile -t lines < <(./bazel query --output label_kind '//external:*' 2>/dev/null)
+for line in "${lines[@]}"
+do
+        kind=${line% //external:*}
+        repo=${line##* //external:}
+        case $kind in
+        'bind rule')
+                # These yield "not a repository" errors when queried.
+                continue
+                ;;
+        'source file')
+                # This eliminates @WORKSPACE -- we might want to revisit this.
+                continue
+                ;;
+        esac
+        query_pattern="@${repo}//...:all"
+        if      ./bazel query --noshow_progress "$query_pattern" > /dev/null
+        then    echo "PASS: $query_pattern (${kind})"
+        else    echo "FAIL: $query_pattern (${kind})"
+        fi
+done
+*/

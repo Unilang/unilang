@@ -1,0 +1,77 @@
+class
+❪"all_ast_markers"❫
+❪"code/utilities/streams/filestreams/lib"❫
+❪"code/utilities/types/strings/transformers/casing/lib"❫
+❪"code/programs/transcompilers/enum_cpp/enum_cpp_maker"❫
+⚯
+
+⚞⚟
+
+◀public: static▶ void ☀Create_Enum_Files(All_Ast_Markers const& all_ast_markers,std::string output_directory) ❰
+
+  //root
+  Create_Token_Group_Enum_Header(all_ast_markers.root,all_ast_markers.body_root,output_directory);
+  Create_Token_Group_Enum_Source(all_ast_markers.root,all_ast_markers.body_root,output_directory);
+
+  //leaves
+  Create_Token_Name_Enum_Header(all_ast_markers.root,all_ast_markers.body_root,output_directory);
+  Create_Token_Name_Enum_Source(all_ast_markers.root,all_ast_markers.body_root,output_directory);
+❱
+
+
+◀private: static▶ void ☀Create_Token_Group_Enum_Header(Ast_Markers const& root, Ast_Markers const& body_root,std::string output_directory) ❰
+    
+
+    //build up specific info for tokens
+    auto file_name = output_directory + "/token_group";
+    std::vector<Enum> enums;
+    enums.emplace_back(root.groups);
+    enums.emplace_back(body_root.groups);
+    
+    //generic enum creator
+    Enum_Cpp_Maker::Create_Enums_Header(file_name,enums);
+❱
+
+
+◀private: static▶ void ☀Create_Token_Group_Enum_Source(Ast_Markers const& root, Ast_Markers const& body_root,std::string output_directory) ❰
+
+    //build up specific info for tokens
+    auto file_name = output_directory + "/token_group";
+    std::vector<Enum> enums;
+    enums.emplace_back(root.groups);
+    enums.emplace_back(body_root.groups);
+    
+    //generic enum creator
+    Enum_Cpp_Maker::Create_Enums_Source(file_name,enums);
+❱
+
+◀private: static▶ void ☀Create_Token_Name_Enum_Header(Ast_Markers const& root, Ast_Markers const& body_root,std::string output_directory) ❰
+    
+    //build up specific info for tokens
+    auto file_name = output_directory + "/token_name";
+    std::vector<Enum> enums;
+    enums.emplace_back(root.leaves);
+    enums.emplace_back(body_root.leaves);
+    
+    //generic enum creator
+    Enum_Cpp_Maker::Create_Enums_Header(file_name,enums);
+❱
+
+
+◀private: static▶ void ☀Create_Token_Name_Enum_Source(Ast_Markers const& root, Ast_Markers const& body_root,std::string output_directory) ❰
+
+    //build up specific info for tokens
+    auto file_name = output_directory + "/token_name";
+    std::vector<Enum> enums;
+    enums.emplace_back(root.leaves);
+    enums.emplace_back(body_root.leaves);
+
+    //generic enum creator
+    Enum_Cpp_Maker::Create_Enums_Source(file_name,enums);
+❱
+
+
+
+
+
+

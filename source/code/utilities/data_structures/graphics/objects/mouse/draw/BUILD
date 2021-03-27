@@ -7,7 +7,7 @@ load("//bazel/rules/enum_cpp:enum_cpp.bzl", "enum_cpp")
 hcp(
     name = "mouse_frame_getter",
     deps = [
-        "//code/tools/ide/settings:ide_settings",
+        "//code/programs/ide/settings:ide_settings",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/data_structures/graphics/objects/mouse/draw:mouse_selection_drawer",
         "//code/utilities/data_structures/graphics/objects/mouse/events:mouse_events_checker",
@@ -21,7 +21,7 @@ hcp(
 hcp(
     name = "mouse_selection_drawer",
     deps = [
-        "//code/tools/ide/settings:ide_settings",
+        "//code/programs/ide/settings:ide_settings",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/graphics/imgui/loop:mechanics",
         "//code/utilities/peripheral/mouse/state:mouse_state",
@@ -33,7 +33,7 @@ hcp(
 hcp(
     name = "view_anchor_adjuster",
     deps = [
-        "//code/tools/ide/settings:ide_settings",
+        "//code/programs/ide/settings:ide_settings",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/data_structures/graphics/objects/mouse:anchor_mouse",
         "//code/utilities/graphics/imgui/loop:mechanics",

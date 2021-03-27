@@ -1,0 +1,16 @@
+class
+❪string❫
+❪iostream❫
+❪"code/utilities/games/ur/ur_state_getter"❫
+❪"code/programs/games/ur/state/game_state"❫
+⚯
+⚞⚟
+
+◀public: static▶ Game_State ☀Get() ❰
+    Game_State x;
+    
+    x.bg_color = sf::Color(0,0,0);
+    x.ur_state = Ur_State_Getter::Starting_State();
+    
+    return x;
+❱

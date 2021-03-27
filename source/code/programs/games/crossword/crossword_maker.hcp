@@ -1,0 +1,128 @@
+class
+❪string❫
+❪"code/utilities/data_structures/point/point_mover"❫
+❪"code/programs/games/crossword/settings/crossword_puzzle_settings"❫
+❪"code/utilities/data_structures/point/directional_point"❫
+❪"code/utilities/language_basic/std_hackery/std_aliases"❫
+⚯
+❪iostream❫
+❪"code/programs/games/crossword/settings/crossword_puzzle_settings_getter"❫
+❪"code/utilities/types/strings/transformers/casing/lib"❫
+❪"code/utilities/types/vectors/creators/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/random/lib"❫
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/programs/games/crossword/html_exporter"❫
+❪"code/programs/games/crossword/random_word_placer"❫
+❪"code/utilities/types/strings/transformers/casing/letter_case_setter"❫
+❪"code/utilities/types/string_grid/random_letter_filler"❫
+❪"code/utilities/types/string_grid/words_finder"❫
+⚞⚟
+
+◀public: static▶ void ☀Make()❰
+
+    //puzzle settings
+    auto settings = Crossword_Puzzle_Settings_Getter::Get();
+    
+    //adjustments on words
+    Adjust_Word_Lists(settings);
+
+    //create multiple grids
+    auto grids = Build_Grids(settings);
+    
+    //create artifacts
+    if (settings.output.create_puzzle_artifact){
+        Html_Exporter::Export(grids,settings,settings.output.puzzle_file_name);
+    }
+❱
+
+◀private: static▶ string_grids ☀Build_Grids(Crossword_Puzzle_Settings  settings)❰
+    string_grids grids;
+    
+    //add standard boards
+    grids.emplace_back(Get_Completed_Grid(settings));
+    //grids.emplace_back(Get_Completed_Grid(settings));
+    
+    //add bigger grid
+    //settings.dimensions.x = 8;
+    //settings.dimensions.y = 6;
+    //grids.emplace_back(Get_Completed_Grid(settings));
+    return grids;
+❱
+
+◀private: static▶ std::vector<std::vector<std::string>> ☀Get_Completed_Grid(Crossword_Puzzle_Settings const& settings)❰
+
+    //create empty grid
+    auto grid = Create_N_By_N_Vector_Of_Strs(settings.dimensions.x,settings.dimensions.y,settings.empty_cell_symbol);
+    
+    //place letter spread (this may be empty)
+    //this was done as an attempt to add vowels
+    auto letter_spread = Get_Letter_Spread(settings);
+    std::cout << "letter spread: " << letter_spread << std::endl;
+    Random_Word_Placer::Randomly_Place_Word_Set(grid,settings,letter_spread);
+    std::cout << Table_As_Column_Aligned(grid) << std::endl;
+    
+    //place words (this is the main algorithm)
+    //we can come up with different core algorithms here.
+    Random_Word_Placer::Randomly_Place_Word_Set(grid,settings,settings.words);
+    Random_Word_Placer::Randomly_Place_Word_Set(grid,settings,settings.decoy_words);
+    
+    //TODO: verify properties about the puzzle
+    //depending on which algorithm we use, there may be certain properties
+    //about the puzzle that we want to check after its created.
+    
+    //take a terminal peek
+    //std::cout << std::endl << Table_As_Column_Aligned(grid) << std::endl;
+    if (settings.output.create_answer_artifact){
+        //Html_Exporter::Export(grid,settings,settings.output.answer_file_name);
+    }
+    
+    //fill empty spaces
+    if (settings.use_probability_select){
+        Random_Letter_Filler::Fill_Chars_With_Random_Letters(grid,settings.empty_cell_symbol,settings.letter_case);
+    }
+    else{
+        Random_Letter_Filler::Fill_Chars_With_Random_Letters(grid,settings.empty_cell_symbol,settings.choose_char_likelyhood);
+    }
+    std::cout << Table_As_Column_Aligned(grid) << std::endl;
+    
+    
+    //look for answers
+    //auto words_found = Words_Finder::Words_Found_In_Grid(grid,settings.dictionary_words);
+    //std::cout << words_found.size() << std::endl;
+    
+    return grid;
+❱
+
+◀private: static▶ strings ☀Get_Letter_Spread(Crossword_Puzzle_Settings const& settings)❰
+    strings x;
+    for (auto const& it: settings.starting_char_likelyhood){
+        auto amount = RandomIntFromRange(0,it.second);
+        for (size_t i = 0; i < amount; ++i){
+            x.emplace_back(it.first);
+        }
+    }
+    
+    return x;
+❱
+
+◀private: static▶ void ☀Adjust_Word_Lists(Crossword_Puzzle_Settings & settings)❰
+
+    //clean up the wordlist based on our expectations
+    Sort_And_Remove_Duplicates(settings.words);
+    Sort_For_Colums(settings.words,settings.words_per_row);
+    Sort_And_Remove_Duplicates(settings.decoy_words);
+    
+    Letter_Case_Setter::Set_Casing(settings.starting_char_likelyhood,settings.letter_case);
+    Letter_Case_Setter::Set_Casing(settings.words,settings.letter_case);
+    Letter_Case_Setter::Set_Casing(settings.decoy_words,settings.letter_case);
+❱
+
+
+
+
+

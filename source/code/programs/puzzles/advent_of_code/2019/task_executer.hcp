@@ -1,0 +1,85 @@
+class
+❪"code/utilities/data_structures/compass_directions/compass_direction_diagnonal_movement"❫
+❪"code/utilities/data_structures/point/point_line"❫
+❪"code/utilities/data_structures/point/point_mover"❫
+⚯
+❪"code/utilities/types/general/lib"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/strings/observers/converting/lib"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/utilities/program/common_actions/exits/lib"❫
+❪"code/utilities/web/lib"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/web/automate/browser/default_browser_settings_getter"❫
+❪"code/utilities/web/automate/browser/browser_creator"❫
+❪"code/utilities/web/automate/navigation/browser_navigator"❫
+
+❪"code/utilities/formats/json/converters/lib"❫
+❪pybind11/embed.h❫
+❪"code/utilities/data_structures/point/point"❫
+❪"code/utilities/data_structures/point/point_line_intersections_getter"❫
+❪"code/utilities/data_structures/point/point_line_to_points"❫
+❪"code/programs/puzzles/advent_of_code/advent_of_code_input_getter"❫
+❪"code/programs/puzzles/advent_of_code/2019/day_1"❫
+❪"code/programs/puzzles/advent_of_code/2019/day_2"❫
+❪"code/programs/puzzles/advent_of_code/2019/day_3"❫
+❪"code/programs/puzzles/advent_of_code/2019/day_4"❫
+❪"code/programs/puzzles/advent_of_code/2019/day_5"❫
+❪"code/programs/puzzles/advent_of_code/2019/day_6"❫
+❪"code/programs/puzzles/advent_of_code/2019/day_7"❫
+❪"code/programs/puzzles/advent_of_code/2019/day_8"❫
+❪"code/programs/puzzles/advent_of_code/2019/day_9"❫
+⚞⚟
+
+◀public: static▶ void ☀Execute_Needed_Tasks() ❰
+    
+    std::vector<std::string> lines;
+    
+    lines = Advent_Of_Code_Input_Getter::Get("2019","1");
+    Day_1::Part_1(lines);
+    Day_1::Part_2(lines);
+
+    // lines = Advent_Of_Code_Input_Getter::Get("2");
+    // Day_2::Part_1(lines);
+    // Day_2::Part_2(lines);
+
+    //lines = Advent_Of_Code_Input_Getter::Get("3");
+    //Day_3::Part_1(lines);
+    //Day_3::Part_2(lines);
+
+    // lines = Advent_Of_Code_Input_Getter::Get("4");
+    // Day_4::Part_1(lines);
+    // Day_4::Part_2(lines);
+    
+    lines = Advent_Of_Code_Input_Getter::Get("2019","5");
+    Day_5::Part_1(lines);
+    Day_5::Part_2(lines);
+    
+    // lines = Advent_Of_Code_Input_Getter::Get("6");
+    // Day_6::Part_1(lines);
+    // Day_6::Part_2(lines);
+    
+    // lines = Advent_Of_Code_Input_Getter::Get("7");
+    // Day_7::Part_1(lines);
+    // Day_7::Part_2(lines);
+    
+    // lines = Advent_Of_Code_Input_Getter::Get("8");
+    // Day_8::Part_1(lines);
+    // Day_8::Part_2(lines);
+    
+    lines = Advent_Of_Code_Input_Getter::Get("2019","9");
+    Day_9::Test_1(lines);
+    Day_9::Test_2(lines);
+    Day_9::Test_3(lines);
+    Day_9::Part_1(lines);
+    Day_9::Part_2(lines);
+❱
+
+
+
+
+
+
+

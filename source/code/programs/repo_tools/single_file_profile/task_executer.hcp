@@ -1,0 +1,114 @@
+class
+❪iostream❫
+❪string❫
+❪utility❫
+❪"code/programs/repo_tools/single_file_profile/program_options/program_options"❫
+❪"code/utilities/build/profiler/data/profile_settings"❫
+❪"code/utilities/build/profiler/data/profile_results"❫
+⚯
+❪"code/utilities/program/wrappers/git/branch_switcher"❫
+❪"code/utilities/types/vectors/converters/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/build/profiler/branch_profile_compilation_timer"❫
+❪"code/utilities/math/math"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/types/converters/lib"❫
+❪"code/utilities/filesystem/paths/lib"❫
+⚞⚟
+
+
+//profile the improvements of a file's compilation across two branches
+◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
+
+    //step into the repo
+    Set_Path(options.Run_Dir());
+    
+    //decide how to profile
+    Profile_Settings a_settings;
+    a_settings.branch_name = options.Branches()[0];
+    a_settings.file_name = options.File();
+    a_settings.trials = 6;
+    
+    Profile_Settings b_settings;
+    b_settings.branch_name = options.Branches()[1];
+    b_settings.file_name = options.File();
+    b_settings.trials = 6;
+    
+    //profile both branches
+    auto a_profiles = Branch_Profile_Compilation_Timer::Switch_Branch_And_Do_Profiles(a_settings);
+    auto b_profiles = Branch_Profile_Compilation_Timer::Switch_Branch_And_Do_Profiles(b_settings);
+    
+    //report results
+    auto results = Summarize_Results(a_profiles,b_profiles);
+    std::cout << results << std::endl;
+
+❱
+
+◀private: static▶ std::string ☀Summarize_Results(Profile_Results const& a, Profile_Results const& b) ❰
+
+
+    std::vector<std::vector<std::string>> results;
+    results.emplace_back(Get_Trial_Info(a));
+    results.emplace_back(Get_Trial_Info(b));
+    
+    //final
+    std::string x;
+    x += a.file_name;
+    x += "\n";
+    x += Table_As_Column_Aligned(results);
+    x += Get_Improvement(a.times,b.times);
+    return x;
+❱
+
+◀private: static▶ std::vector<std::string> ☀Get_Trial_Info(Profile_Results const& x) ❰
+    std::vector<std::string> results;
+    
+    results.emplace_back(x.branch_name + " ");
+    results.emplace_back(Get_List_Style(x.times) + " ");
+    results.emplace_back(Get_Avg_Style(x.times));
+    
+    return results;
+❱
+
+◀private: static▶ std::string ☀Get_Improvement(std::vector<int> const& a, std::vector<int> const& b) ❰
+    
+    auto before = Math::average(a);
+    auto after = Math::average(b);
+    
+    auto improvement = before - after;
+    auto percent_improvement = 100 - ((static_cast<float>(after) / static_cast<float>(before)) * 100);
+    
+    std::string result;
+    result += "reduced by " + std::to_string(improvement) + "s ";
+    result += "(";
+    result += as_string_with_precision(percent_improvement,0);
+    result += "%";
+    result += ")";
+    return result;
+❱
+
+
+◀private: static▶ std::string ☀Get_Avg_Style(std::vector<int> const& x)❰
+    std::string result;
+    result += "AVG: ";
+    result += std::to_string(Math::average(x));
+    result += "s";
+    return result;
+❱
+◀private: static▶ std::string ☀Get_List_Style(std::vector<int> const& x)❰
+    auto s_list = As_Seconds_List(x);
+    return Elements_As_Square_Bracket_Comma_Seperated_List(s_list);
+❱
+
+
+
+//utils
+◀private: static▶ std::vector<std::string> ☀As_Seconds_List(std::vector<int> const& x)❰
+    std::vector<std::string> results;
+    
+    for (auto const& it: x){
+        results.emplace_back(std::to_string(it) + "s");
+    }
+    
+    return results;
+❱

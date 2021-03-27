@@ -1,0 +1,107 @@
+class
+❪iostream❫
+❪string❫
+❪utility❫
+❪"code/programs/repo_tools/build_determinism/program_options/program_options"❫
+❪"code/programs/repo_tools/build_determinism/settings/settings"❫
+⚯
+❪"code/utilities/program/wrappers/bazel/setup/default_bazel_setup_settings"❫
+❪"code/utilities/program/wrappers/git/repo_establisher/default_repo_location_getter"❫
+⚞⚟
+
+◀public: static▶ Settings ☀Get(Program_Options const& options) ❰
+
+    //settings
+    auto settings = Default_Settings();
+    
+    settings.repos = Build_Repo_Locations(options);
+    
+    
+    if (!options.Target().empty()){
+        settings.target_name = options.Target();
+    }
+    if (!options.Output_Dir().empty()){
+        settings.result_path = options.Output_Dir();
+    }
+    if (!options.Bazel().empty()){
+        settings.setup.bazel_wrapper.derive = false;
+        settings.setup.bazel_wrapper.program_name = options.Bazel();
+    }
+    else{
+        settings.setup.bazel_wrapper.derive = true;
+    }
+    if (options.Verbose()){
+        settings.verbose = true;
+        settings.setup.verbose = true;
+    }
+    
+    if (options.Synthesize()){
+        settings.report.print_nondeterministic_programs = false;
+        settings.report.print_nondeterministic_problems = false;
+        settings.report.print_nondeterministic_subcommands = false;
+        settings.report.print_nondeterministic_synthesized_statements = true;
+    }
+    
+    settings.environment_scan = options.Environment_Scan();
+    settings.augmented_scan = options.Augmented_Scan();
+    
+    
+    //only do a regular diagnosis by default if none of the scans have been chosen
+    if (settings.environment_scan == 0 && settings.augmented_scan == 0){
+        settings.do_default_diagnosis = true;
+    }
+    else{
+        settings.do_default_diagnosis = false;
+    }
+    
+    return settings;
+❱
+
+
+◀private: static▶ std::vector<Repo_Location> ☀Build_Repo_Locations(Program_Options const& options)❰
+    std::vector<Repo_Location> repos;
+    
+    //add all the repo locations that are remote and expected branches
+    for (auto const& it: options.Branches()){
+        Repo_Location x = Default_Repo_Location_Getter::Default_Repo_Location_From_Url_And_Expected_Branch(options.Url(),it);
+        repos.emplace_back(x);
+    }
+    
+    //add all the repo locations that are existing paths
+    for (auto const& it: options.Run_Dirs()){
+        Repo_Location x = Default_Repo_Location_Getter::Default_Repo_Location_From_Run_Dir(it);
+        repos.emplace_back(x);
+    }
+    
+    return repos;
+❱
+
+
+◀private: static▶ Settings ☀Default_Settings()❰
+    Settings settings;
+    
+    settings.verbose = false;
+    
+    //calling bazel
+    settings.setup = Default_Bazel_Setup_Settings::Get();
+    
+    //what target to build and how to build it
+    settings.target_name = "//atg/hello_world/cuda:hello_world_nvcc";
+    settings.concurrency = Concurrency::SEQUENTIAL;
+    
+    
+    settings.environment_scan = 0;
+    settings.augmented_scan = 0;
+    settings.do_default_diagnosis = false;
+    
+    //handling outputs of tool
+    settings.result_path = "/home/thickey/Desktop/build_determinism_results";
+    settings.report.print_nondeterministic_programs = true;
+    settings.report.print_nondeterministic_problems = true;
+    settings.report.print_nondeterministic_subcommands = true;
+    settings.report.print_nondeterministic_synthesized_statements = true;
+    
+    
+    return settings;
+❱
+

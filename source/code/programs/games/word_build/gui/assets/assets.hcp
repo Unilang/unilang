@@ -1,0 +1,45 @@
+class
+❪string❫
+❪SFML/Audio.hpp❫
+❪SFML/Graphics.hpp❫
+❪"code/programs/games/word_build/gui/assets/user_assets"❫
+❪"code/utilities/peripheral/sound/sfml/sound"❫
+❪"code/utilities/graphics/sfml/data/moving_text"❫
+❪memory❫
+⚯
+
+⚞⚟
+
+
+◀
+public:
+    
+    
+    //global assets
+    sf::Font main_font;
+    
+    //main meny
+    sf::Text title_sequence;
+    std::vector<Moving_Text> floating_p1_letters;
+    std::vector<Moving_Text> floating_p2_letters;
+    
+    //game specific
+    std::vector<sf::Text> letters;
+    sf::Text countdown;
+    sf::Text no_action_countdown;
+    sf::Text score;
+    sf::Text percentage;
+    
+    Sound new_round;
+    
+    
+    //these are displayed during the game
+    std::vector<sf::Text> game_answers;
+    
+    //these are displayed at the end of the game
+    std::vector<sf::Text> answers;
+    sf::Text end_percentage;
+    
+    User_Assets p1;
+    User_Assets p2;
+▶

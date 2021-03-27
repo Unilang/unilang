@@ -1,0 +1,209 @@
+class
+❪string❫
+❪iostream❫
+❪memory❫
+❪utility❫
+❪memory❫
+❪"code/programs/games/word_build/gui/assets/assets"❫
+❪"code/programs/games/word_build/gui/state/game_state"❫
+❪SFML/Window.hpp❫
+❪SFML/Audio.hpp❫
+⚯
+❪"code/utilities/peripheral/sound/sfml/sound_loader"❫
+❪"code/utilities/fonts/font_files/droid_sans_mono"❫
+❪"code/utilities/assets/puyo"❫
+❪"code/utilities/fonts/sfml/font_loader"❫
+⚞⚟
+
+◀public: static▶ Assets ☀Load(Game_State const& state) ❰
+    Assets x;
+    
+    Font_Loader::Load_Font(x.main_font,Droid_Sans_Mono::Get());
+    
+    //title sequence
+    x.title_sequence.setFont(x.main_font);
+    x.title_sequence.setCharacterSize(150);
+    x.title_sequence.setFillColor(state.title_color);
+    x.title_sequence.setOutlineColor(sf::Color(255,255,255));
+    x.title_sequence.setOutlineThickness(3);
+    x.title_sequence.setString("Word Scramble!");
+    Center_Text(x.title_sequence);
+    
+    
+    
+    //player 1 cursor
+    x.p1.pointer = sf::CircleShape(20, 3);
+    x.p1.pointer.setFillColor(state.p1_state.color);
+    x.p1.pointer_x_offset = 225;
+    x.p1.pointer_y_offset = 480;
+    x.p1.selection_y_offset = 455;
+    
+    
+    //player 2 cursor
+    x.p2.pointer = sf::CircleShape(20, 3);
+    x.p2.pointer.setFillColor(state.p2_state.color);
+    
+    x.p2.pointer.rotate(180);
+    x.p2.pointer_x_offset = 270;
+    x.p2.pointer_y_offset = 315;
+    x.p2.selection_y_offset = 333;
+    
+    
+    //set player scores
+    x.p1.score.setFont(x.main_font);
+    x.p1.score.setCharacterSize(90);
+    x.p2.score.setFont(x.main_font);
+    x.p2.score.setCharacterSize(90);
+    x.p2.score.setPosition(220,150);
+    x.p1.score.setPosition(220,530);
+    x.p1.score.setString("0");
+    x.p2.score.setString("0");
+    x.p1.score.setFillColor(state.base_color);
+    x.p2.score.setFillColor(state.base_color);
+    
+    //countdown timer
+    x.countdown.setFont(x.main_font);
+    x.countdown.setCharacterSize(90);
+    x.countdown.setFillColor(state.base_color);
+    Top_Right_Text(x.countdown);
+    
+    //no action countdown timer
+    x.no_action_countdown.setFont(x.main_font);
+    x.no_action_countdown.setCharacterSize(50);
+    x.no_action_countdown.setFillColor(state.base_color);
+    Top_Right_Text(x.no_action_countdown);
+    x.no_action_countdown.move(15,85);
+    
+    //stats
+    x.p1.stats.setFont(x.main_font);
+    x.p1.stats.setCharacterSize(35);
+    x.p1.stats.setFillColor(state.p1_state.color);
+    x.p1.stats.setString("0");
+    
+    x.p2.stats.setFont(x.main_font);
+    x.p2.stats.setCharacterSize(35);
+    x.p2.stats.setFillColor(state.p2_state.color);
+    x.p2.stats.setString("0");
+    
+    //player score
+    x.score.setFont(x.main_font);
+    x.score.setCharacterSize(90);
+    x.score.setFillColor(state.base_color);
+    
+    //player percentage
+    x.percentage.setFont(x.main_font);
+    x.percentage.setCharacterSize(50);
+    x.percentage.setFillColor(state.base_color);
+    
+    //player percentage
+    x.end_percentage.setFont(x.main_font);
+    x.end_percentage.setCharacterSize(25);
+    x.end_percentage.setFillColor(state.base_color);
+    
+    //player combo bar
+    x.p1.combo_bar = sf::RectangleShape(sf::Vector2f(0, 20));
+    x.p1.combo_bar.setPosition(325,x.p1.pointer_y_offset+105);
+    x.p1.combo_bar.setFillColor(state.p1_state.color);
+    
+    x.p2.combo_bar = sf::RectangleShape(sf::Vector2f(0, 20));
+    x.p2.combo_bar.setPosition(325,x.p2.pointer_y_offset-125);
+    x.p2.combo_bar.setFillColor(state.p2_state.color);
+    
+    //combo text
+   x.p1.combo_number.setFont(x.main_font);
+   x.p1.combo_number.setCharacterSize(40);
+   x.p1.combo_number.setPosition(0,x.p1.pointer_y_offset+90);
+   x.p1.combo_number.setFillColor(state.p1_state.color);
+   
+   x.p2.combo_number.setFont(x.main_font);
+   x.p2.combo_number.setCharacterSize(40);
+   x.p2.combo_number.setPosition(0,x.p2.pointer_y_offset-140);
+   x.p2.combo_number.setFillColor(state.p2_state.color);
+   
+   
+   
+    Load_Sounds(x);
+    
+    
+    return x;
+    
+    
+❱
+
+◀private: static▶ void ☀Load_Sounds(Assets & x) ❰
+
+    Sound_Loader::Load_Sound(x.new_round,Puyo::Start_Game2());
+    
+    
+    Sound_Loader::Load_Sound(x.p1.combo_out,Puyo::Combo_Out());
+    Sound_Loader::Load_Sound(x.p1.combo1,Puyo::Feli_Combo_1());
+    Sound_Loader::Load_Sound(x.p1.combo2,Puyo::Feli_Combo_2());
+    Sound_Loader::Load_Sound(x.p1.combo3,Puyo::Feli_Combo_3());
+    Sound_Loader::Load_Sound(x.p1.combo4,Puyo::Feli_Combo_4());
+    Sound_Loader::Load_Sound(x.p1.combo5,Puyo::Feli_Combo_5());
+    Sound_Loader::Load_Sound(x.p1.combo6,Puyo::Feli_Combo_6());
+    Sound_Loader::Load_Sound(x.p1.combo7,Puyo::Feli_Combo_7());
+    Sound_Loader::Load_Sound(x.p1.combo8,Puyo::Feli_Combo_8());
+    Sound_Loader::Load_Sound(x.p1.combo9,Puyo::Feli_Combo_9());
+    Sound_Loader::Load_Sound(x.p1.combo10,Puyo::Feli_Combo_10());
+    Sound_Loader::Load_Sound(x.p1.combo11,Puyo::Feli_Combo_11());
+    
+    Sound_Loader::Load_Sound(x.p2.combo_out,Puyo::Combo_Out());
+    Sound_Loader::Load_Sound(x.p2.combo1,Puyo::Ringo_Combo_1());
+    Sound_Loader::Load_Sound(x.p2.combo2,Puyo::Ringo_Combo_2());
+    Sound_Loader::Load_Sound(x.p2.combo3,Puyo::Ringo_Combo_3());
+    Sound_Loader::Load_Sound(x.p2.combo4,Puyo::Ringo_Combo_4());
+    Sound_Loader::Load_Sound(x.p2.combo5,Puyo::Ringo_Combo_5());
+    Sound_Loader::Load_Sound(x.p2.combo6,Puyo::Ringo_Combo_6());
+    Sound_Loader::Load_Sound(x.p2.combo7,Puyo::Ringo_Combo_7());
+    Sound_Loader::Load_Sound(x.p2.combo8,Puyo::Ringo_Combo_8());
+    Sound_Loader::Load_Sound(x.p2.combo9,Puyo::Ringo_Combo_9());
+    Sound_Loader::Load_Sound(x.p2.combo10,Puyo::Ringo_Combo_10());
+    Sound_Loader::Load_Sound(x.p2.combo11,Puyo::Ringo_Combo_11());
+    
+    
+    Sound_Loader::Add_Sound(x.p1.goodMove,Puyo::Success1());
+    Sound_Loader::Add_Sound(x.p1.goodMove,Puyo::Success2());
+    Sound_Loader::Add_Sound(x.p1.goodMove,Puyo::Success3());
+    Sound_Loader::Add_Sound(x.p1.goodMove,Puyo::Success4());
+    Sound_Loader::Add_Sound(x.p1.goodMove,Puyo::Success5());
+    Sound_Loader::Add_Sound(x.p1.goodMove,Puyo::Success6());
+    Sound_Loader::Add_Sound(x.p1.goodMove,Puyo::Success7());
+
+    Sound_Loader::Add_Sound(x.p2.goodMove,Puyo::Success1());
+    Sound_Loader::Add_Sound(x.p2.goodMove,Puyo::Success2());
+    Sound_Loader::Add_Sound(x.p2.goodMove,Puyo::Success3());
+    Sound_Loader::Add_Sound(x.p2.goodMove,Puyo::Success4());
+    Sound_Loader::Add_Sound(x.p2.goodMove,Puyo::Success5());
+    Sound_Loader::Add_Sound(x.p2.goodMove,Puyo::Success6());
+    Sound_Loader::Add_Sound(x.p2.goodMove,Puyo::Success7());
+    
+    
+    
+    
+    Sound_Loader::Add_Sound(x.p1.winGame,Puyo::Feli_Win_1());
+    Sound_Loader::Add_Sound(x.p1.winGame,Puyo::Feli_Win_2());
+    Sound_Loader::Add_Sound(x.p1.winGame,Puyo::Feli_Win_3());
+    Sound_Loader::Add_Sound(x.p1.winGame,Puyo::Feli_Win_4());
+    
+    Sound_Loader::Add_Sound(x.p2.winGame,Puyo::Ringo_Win_1());
+    Sound_Loader::Add_Sound(x.p2.winGame,Puyo::Ringo_Win_2());
+    Sound_Loader::Add_Sound(x.p2.winGame,Puyo::Ringo_Win_3());
+    Sound_Loader::Add_Sound(x.p2.winGame,Puyo::Ringo_Win_4());
+    Sound_Loader::Add_Sound(x.p2.winGame,Puyo::Ringo_Win_5());
+❱
+
+
+
+◀private: static▶ void ☀Center_Text(sf::Text & text)❰
+    text.setPosition(sf::VideoMode::getDesktopMode().width/2.0f,sf::VideoMode::getDesktopMode().height/2.0f);
+    text.setOrigin(text.getLocalBounds().left + text.getLocalBounds().width / 2.0f,
+                           text.getLocalBounds().top + text.getLocalBounds().height / 2.0f);
+❱
+
+◀private: static▶ void ☀Top_Right_Text(sf::Text & text)❰
+    text.setPosition(sf::VideoMode::getDesktopMode().width - 200,0);
+❱
+◀private: static▶ void ☀Top_Left_Text(sf::Text & text)❰
+    text.setPosition(10,10);
+❱

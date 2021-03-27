@@ -11,8 +11,8 @@ class
 ❪"code/utilities/build/efficient_target_deriver/target_augment_settings"❫
 ❪"code/utilities/build/build_repo_establisher/build_repo_settings"❫
 ⚯
-❪"code/tools/repo_tools/bazel_profile_slow_cc_files/results_publisher"❫
-❪"code/tools/repo_tools/bazel_profile_slow_cc_files/results_filter"❫
+❪"code/programs/repo_tools/bazel_profile_slow_cc_files/results_publisher"❫
+❪"code/programs/repo_tools/bazel_profile_slow_cc_files/results_filter"❫
 ❪"code/utilities/filesystem/files/deleting/lib"❫
 ❪"code/utilities/types/vectors/observers/lib"❫
 ❪"code/utilities/types/vectors/converters/lib"❫

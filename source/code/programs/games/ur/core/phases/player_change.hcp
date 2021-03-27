@@ -1,0 +1,57 @@
+class
+❪string❫
+❪iostream❫
+❪vector❫
+❪thread❫
+❪algorithm❫
+❪"code/programs/games/ur/assets/assets"❫
+❪"code/programs/games/ur/state/game_state"❫
+❪SFML/Window.hpp❫
+❪SFML/Window/Joystick.hpp❫
+❪SFML/Graphics.hpp❫
+❪SFML/Graphics/Transformable.hpp❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/utilities/math/math"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/peripheral/keyboard/F310_gamepad/data/f310_events"❫
+⚯
+❪"code/utilities/peripheral/keyboard/joycons/joystick_rotating_checker"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/strings/observers/converting/lib"❫
+❪"code/utilities/types/map/lib"❫
+❪"code/utilities/types/vectors/observers/size_frequency_counter"❫
+❪"code/utilities/linguistics/speak/word_speaker"❫
+❪"code/utilities/colors/converters/converters"❫
+❪"code/utilities/colors/transformers/color_transitioner"❫
+❪"code/utilities/peripheral/keyboard/F310_gamepad/functions/f310_event_synthesizer"❫
+❪"code/utilities/games/ur/ur_logic"❫
+⚞⚟
+
+◀public: static▶ void ☀Give_Player_Another_Turn(Game_State & state, Assets & assets) ❰
+    Reset_Players_For_Turn(state,assets);
+❱
+◀public: static▶ void ☀Move_To_Next_Player(Game_State & state, Assets & assets) ❰
+
+        if (state.ur_state.player_turn == 1){
+            state.ur_state.player_turn = 0;
+        }
+        else {
+            state.ur_state.player_turn = 1;
+        }
+        
+        Reset_Players_For_Turn(state,assets);
+❱
+
+◀private: static▶ void ☀Reset_Player_For_Turn(Ur_Player_State & pstate) ❰
+
+    pstate.phase = Player_Phase::ROLL;
+    pstate.possible_selections.clear();
+    pstate.piece_chosen = 0;
+❱
+
+◀private: static▶ void ☀Reset_Players_For_Turn(Game_State & state, Assets & assets) ❰
+
+    Reset_Player_For_Turn(state.ur_state.players[0]);
+    Reset_Player_For_Turn(state.ur_state.players[1]);
+    assets.piece_selector.setPosition(-100,-100);
+❱

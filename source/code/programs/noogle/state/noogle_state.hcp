@@ -1,0 +1,23 @@
+class
+❪vector❫
+❪string❫
+❪"code/programs/noogle/state/noogle_running_stats"❫
+❪"code/programs/noogle/state/message_queues"❫
+❪"code/programs/noogle/settings/noogle_settings"❫
+❪"code/utilities/program/inputs/config/config_monitor_settings"❫
+⚯
+
+⚞⚟
+
+◀
+public:
+    
+    //running state
+    Message_Queues queues;
+    Noogle_Running_Stats stats;
+    
+    //related to the settings
+    Noogle_Settings default_settings;
+    Noogle_Settings current_settings;
+    Config_Monitor_Settings ms;
+▶

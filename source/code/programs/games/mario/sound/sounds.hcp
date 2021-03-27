@@ -1,0 +1,15 @@
+class
+❪string❫
+❪"code/programs/games/mario/sound/sound"❫
+⚯
+
+⚞⚟
+
+
+◀
+public:
+    
+  Sound main_theme;
+  Sound mario_jump;
+  Sound mario_death;
+▶

@@ -384,7 +384,7 @@ Here we talk about how to use Unilang􏱪
 􏱩The IDE can be used the following way􏱪
 􏱍git clone git@github.com:luxe/unilang.git􏱎
 􏱍cd unilang􏱎
-􏱍./user_run_optimized //code/tools/ide:main􏱎
+􏱍./user_run_optimized //code/programs/ide:main􏱎
 
 􏱩various CIs are used to test the correctness of the build􏱪
 􏱩Referencing these builds may help you acquire any additional dependencies􏱪

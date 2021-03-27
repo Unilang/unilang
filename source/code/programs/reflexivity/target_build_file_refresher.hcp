@@ -1,0 +1,65 @@
+class
+❪"code/programs/reflexivity/settings/reflexive_refresh_settings"❫
+⚯
+❪"code/utilities/build/self_builder"❫
+❪"code/programs/reflexivity/bazel_wrapper/bazel_wrapper_refresher"❫
+❪"code/programs/reflexivity/docker/dockerfile_refresher"❫
+❪"code/programs/reflexivity/bazelrc/bazelrc_refresher"❫
+❪"code/programs/reflexivity/deps_define/refresh/deps_definition_refresher"❫
+⚞⚟
+
+◀public: static▶ void ☀Refresh(Reflexive_Refresh_Settings const& settings)❰
+
+    //required for proper build of monorepo
+    Required_Build_Regeneration(settings);
+    
+    if (settings.refresh_scan_deps_definitions){
+        //Deps_Repo_Scanner::Scan();
+    }
+    
+    
+    //compilation tests from language->language
+    //compilation tests
+    if (settings.refresh_toolchain_conversion_tests){
+        //std::cout << "Generating Tool Chain Conversions..." << std::endl;
+        //Tool_Chain_Conversion_Refresher::Refresh();
+    }
+    
+    //at this point, all BUILD file generation should be done,
+    //and we can reformat it
+    if (settings.reformat_build_files){
+        std::cout << "Reformatting Build Files..." << std::endl;
+        auto results = Self_Builder::Get_Results_Formatting_Build_Files();
+        if (results.results.return_code != 0){
+            std::cerr << results.results.stderr << std::endl;
+        }
+    }
+    
+❱
+
+◀private: static▶ void ☀Required_Build_Regeneration(Reflexive_Refresh_Settings const& settings)❰
+
+    //things within the repository that are generated
+    
+    //root repo stuff
+    if (settings.refresh_bazel_wrapper){
+        std::cout << "Generating Bazel Wrapper..." << std::endl;
+        Bazel_Wrapper_Refresher::Refresh();
+    }
+    
+    if (settings.refresh_bazelrc){
+        std::cout << "Generating .bazelrc..." << std::endl;
+        Bazelrc_Refresher::Refresh();
+    }
+    
+    if (settings.refresh_dockerfile){
+        std::cout << "Generating Dockerfile..." << std::endl;
+        Dockerfile_Refresher::Refresh();
+    }
+    
+    //repo's third party dependencies
+    if (settings.refresh_deps_definitions){
+        std::cout << "Generating 3rd party deps..." << std::endl;
+        Deps_Definition_Refresher::Refresh();
+    }
+❱

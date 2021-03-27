@@ -1,0 +1,259 @@
+class
+❪string❫
+❪vector❫
+❪iostream❫
+❪"code/programs/reflexivity/bazel_wrapper/data/bazel_wrapper_refresh_settings_getter"❫
+❪"code/utilities/filesystem/paths/lib"❫
+⚯
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/programs/reflexivity/comment/generated_comment_getter"❫
+⚞⚟
+
+◀public: static▶ void ☀Refresh()❰
+    auto settings = Bazel_Wrapper_Refresh_Settings_Getter::Get();
+    auto contents = Build_File_Contents(settings);
+    
+    Write_To_File(Get_Bazel_Wrapper_Path(),contents);
+    
+❱
+◀private: static▶ std::string ☀Get_Bazel_Wrapper_Path()❰
+    std::string f = Bazel_Derived_Root_Of_Repo();
+    f += "bazel_wrapper";
+    return f;
+❱
+
+◀private: static▶ std::string ☀Build_File_Contents(Bazel_Wrapper_Refresh_Settings const& settings)❰
+    std::string str;
+    
+    
+    //TODO:
+    //we could consider downloading and using bazelisk
+    //this would also require a .bazelversion file on the root
+    
+    Append_With_Newline(str,"#!/usr/bin/env bash");
+    Append_With_Newline(str,Generated_Comment_Getter::Get());
+    
+    //stop immediately on errors
+    Append_With_Newline(str,"set -euo pipefail");
+    Append_With_Newline(str,"");
+    
+    //top comment
+    Append_With_Newline(str,Top_Comment());
+    Append_With_Newline(str,"");
+    
+    //find the bazel version to use
+    auto find_info = std::find_if(settings.infos.begin(),settings.infos.end(),[&](auto x){
+        return x.bazel_version == settings.bazel_version;
+    });
+    if (find_info == settings.infos.end()){
+        std::cerr << "bazel version not found" << std::endl;
+        exit(1);
+    }
+    
+    
+    //url and hash
+    Append(str,"url=");
+    Append_With_Newline(str,Build_Url(*find_info));
+    Append(str,"sha256=");
+    Append_With_Newline(str,find_info->sha256);
+    Append_With_Newline(str,"");
+    
+    
+    //some pathing variables
+    Append_Bash_Comment_With_Newline(str,"paths to place bazel related artifacts.");
+    Append_Bash_Comment_With_Newline(str,"CONSIDER(thickey): should we really install bazel in the user's home directory?");
+    Append_Bash_Comment_With_Newline(str,"Are we sure they will even have a home repo?  Would it be better to install it inside the repo itself?");
+    Append_Bash_Comment_With_Newline(str,"I think this is fine for now.  We'll see if any problems arise.");
+    Append_Bash_Comment_With_Newline(str,"It may be recomended to have bazel write its cache to the home directory anyway.");
+    Append_With_Newline(str,"cache_root=\"${HOME}/.cache\"");
+    Append_With_Newline(str,"install_dir=\"${cache_root}/bazel/${sha256}\"");
+    Append_With_Newline(str,"bazel=\"${install_dir}/bazel\"");
+    
+    //bash functions
+    Append_With_Newline(str,Robust_Download());
+    Append_With_Newline(str,Bootstrap_Bazel());
+    Append_With_Newline(str,Ensure_Command_Exists());
+    Append_With_Newline(str,Ensure_Barebone_Binaries(settings));
+    Append_With_Newline(str,Ensure_Pre_Bazel_Download_Setup_Env());
+    Append_With_Newline(str,Download_Bazel());
+    Append_With_Newline(str,Post_Bazel_Download_Verify());
+    
+    //main
+    Append_With_Newline(str,"bootstrap_bazel");
+
+    Append_Bash_Comment_With_Newline(str,"If Inside Emacs Bazel tries to be helpful say it's \"entering a");
+    Append_Bash_Comment_With_Newline(str,"directory\" but that actually confuses emacs because then it starts");
+    Append_Bash_Comment_With_Newline(str,"looking for files inside the runfiles tree.");
+    Append_With_Newline(str,"unset INSIDE_EMACS");
+    Append_With_Newline(str,"");
+    
+    Append_Bash_Comment_With_Newline(str,"Run the real bazel that we boostrapped");
+    Append_With_Newline(str,"cd source;");
+    Append_With_Newline(str,"\"${bazel}\" \"$@\"");
+    
+    return str;
+❱
+
+◀private: static▶ std::string ☀Build_Url(Bazel_Version_Info const& settings)❰
+    //typical host by bazel team
+    std::string url;
+    url += "https://github.com/bazelbuild/bazel/releases/download/";
+    url += settings.bazel_version;
+    url += "/bazel-";
+    url += settings.bazel_version;
+    url += "-";
+    url += settings.os;
+    url += "-";
+    url += settings.arch;
+    return url;
+❱
+
+◀private: static▶ std::string ☀Top_Comment()❰
+    std::string str;
+    Append_Bash_Comment_With_Newline(str,"This is the front-end script that bootstraps and calls bazel.");
+    Append_Bash_Comment_With_Newline(str,"Any build commands will go through this script.");
+    Append_Bash_Comment_With_Newline(str,"it is expected to behave the same as the bazel command itself (with bootstraping capability / extra features).");
+    Append_Bash_Comment_With_Newline(str,"We may also consider bazelisk, but bazelisk would likely need bootstrapped as well.");
+    Append_Bash_Comment_With_Newline(str,"Regardless, we'll always want some kind of bare bones shell script to get/call other build tools.");
+    return str;
+❱
+
+◀private: static▶ std::string ☀Robust_Download()❰
+std::string str= R"RAW(
+function robust_download() {
+    while [ 1 ]; do
+        wget "${url}" -O "${in_progress_download}" --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0
+        if [ $? = 0 ]; then break; fi;
+        sleep 1s;
+    done;
+}
+)RAW";
+return str;
+❱
+◀private: static▶ std::string ☀Bootstrap_Bazel()❰
+std::string str= R"RAW(
+function bootstrap_bazel() {
+    if [[ ! -f "${bazel}" ]]; then
+
+        ensure_barebone_binaries
+        pre_bazel_download_setup_env
+        download_bazel
+        post_bazel_download_verify
+
+    fi
+}
+)RAW";
+return str;
+❱
+◀private: static▶ std::string ☀Ensure_Command_Exists()❰
+std::string str= R"RAW(
+function ensure_command_exists() {
+    command -v $1 >/dev/null 2>&1 || { echo >&2 "I require $1 but it's not installed.  Aborting."; exit 1; }
+}
+)RAW";
+return str;
+❱
+◀private: static▶ std::string ☀Ensure_Barebone_Binaries(Bazel_Wrapper_Refresh_Settings const& settings)❰
+    std::string str;
+    Append_With_Newline(str,"function ensure_barebone_binaries() {");
+    Append_With_Newline(str,Comment_About_Bootstrap_Binaries());
+    Append_With_Newline(str,Checks_For_Needed_Binaries(settings));
+    Append(str,Comment_About_Adding_Other_Necessary_Programs());
+    Append_With_Newline(str,"}");
+    return str;
+❱
+
+
+
+◀private: static▶ std::string ☀Comment_About_Bootstrap_Binaries()❰
+    std::string str;
+    Append_Tabbed_Bash_Comment_With_Newline(str,"Check for some bootstraping necessities");
+    Append_Tabbed_Bash_Comment_With_Newline(str,"If these bare-bone requirements don't exist, I considered installing them for the user automatically.");
+    Append_Tabbed_Bash_Comment_With_Newline(str,"For example, one of the online CIs, does not have wget when it spins up.");
+    Append_Tabbed_Bash_Comment_With_Newline(str,"That seems hard to figure out due to the different systems and package managers.");
+    Append_Tabbed_Bash_Comment_With_Newline(str,"For now, we can handle these kinds of dependencies prior to running this script.");
+    Append_Tabbed_Bash_Comment_With_Newline(str,"For example, most CI services have some kind of pre-install phase.  where you can install system packages.");
+    Append_Tabbed_Bash_Comment_With_Newline(str,"We should try to build all of these tools from source as well");
+    return str;
+❱
+
+◀private: static▶ std::string ☀Checks_For_Needed_Binaries(Bazel_Wrapper_Refresh_Settings const& settings)❰
+    std::string str;
+    for (auto const& it: settings.programs_needed){
+        Append_With_Tab(str,"ensure_command_exists ");
+        Append_With_Newline(str,it);
+    }
+    return str;
+❱
+
+◀private: static▶ std::string ☀Comment_About_Adding_Other_Necessary_Programs()❰
+    std::string str;
+    Append_Tabbed_Bash_Comment_With_Newline(str,"Bazel runtime dependencies");
+    Append_Tabbed_Bash_Comment_With_Newline(str,"Do you need some kind of Java tooling installed for bazel first?  If so, add it here!");
+    Append_Tabbed_Bash_Comment_With_Newline(str,"I think sfortson mentioned that he had to install bazel first.  The CIs seem to be fine, but sam was on arch linux");
+    Append_Tabbed_Bash_Comment_With_Newline(str,"I'm not sure if bazel's thing is truely stand-alone or what.  you might need the jvm first.");
+    Append_Tabbed_Bash_Comment_With_Newline(str,"No, bazel comes bundled with a minimal jvm.  We should be fine.");
+    Append_Tabbed_Bash_Comment_With_Newline(str,"We assume no runtime dependencies for running bazel");
+    return str;
+❱
+
+◀private: static▶ std::string ☀Ensure_Pre_Bazel_Download_Setup_Env()❰
+std::string str= R"RAW(
+function pre_bazel_download_setup_env() {
+
+    # Say that we are missing bazel, and will install it
+    echo "INFO: Required bazel version not found."
+    echo "downloading to ${bazel}..." >&2
+
+    # Setup install directory & delete it on failure
+    mkdir -p "${install_dir}"
+    trap 'rm -rf "${install_dir}"' ERR INT TERM
+}
+)RAW";
+return str;
+❱
+◀private: static▶ std::string ☀Download_Bazel()❰
+std::string str= R"RAW(
+function download_bazel() {
+
+    # Download bazel
+    in_progress_download="${install_dir}/in_progress_download"
+    if tty -s; then
+        robust_download
+    else
+        wget "${url}" -O "${in_progress_download}" --no-verbose
+    fi
+}
+)RAW";
+return str;
+❱
+◀private: static▶ std::string ☀Post_Bazel_Download_Verify()❰
+std::string str= R"RAW(
+function post_bazel_download_verify() {
+
+    # Check that our download is valid
+    echo "${sha256}  ${in_progress_download}" | sha256sum --check >&2
+    chmod +x "${in_progress_download}"
+    mv "${in_progress_download}" "${bazel}"
+    trap - ERR INT TERM
+}
+)RAW";
+return str;
+❱
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

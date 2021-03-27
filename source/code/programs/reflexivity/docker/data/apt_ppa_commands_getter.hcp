@@ -1,0 +1,18 @@
+class
+❪vector❫
+❪string❫
+❪"code/programs/reflexivity/docker/data/apt_ppa_command"❫
+⚯
+
+⚞⚟
+
+◀public: static▶ std::vector<Apt_Ppa_Command> ☀Get()❰
+    std::vector<Apt_Ppa_Command> commands;
+    // {
+    //     Apt_Ppa_Command command;
+    //     command.user = "jonathonf";
+    //     command.ppa_name = "ffmpeg-4";
+    //     commands.emplace_back(command);
+    // }
+    return commands;
+❱

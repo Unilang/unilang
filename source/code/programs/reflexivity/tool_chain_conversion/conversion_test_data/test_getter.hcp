@@ -1,0 +1,290 @@
+class
+❪string❫
+❪vector❫
+❪"code/programs/reflexivity/tool_chain_conversion/conversion_test_data/bazel_conversion_tests"❫
+⚯
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+⚞⚟
+
+
+◀public: static▶ Bazel_Conversion_Tests ☀Get_All_Bazel_Tests()❰
+    Bazel_Conversion_Tests x;
+    
+    auto tokens = Get_Tokens::Get();
+    
+    //unilang to x
+    x.tests.emplace_back(Empty_File_Unilang_To_Protobuf(tokens));
+    x.tests.emplace_back(Empty_File_Unilang_To_Protobuf_To_Cpp_Object(tokens));
+    x.tests.emplace_back(Empty_Global_Unilang_To_Protobuf(tokens));
+    x.tests.emplace_back(Empty_Global_Unilang_To_Protobuf_To_Cpp_Object(tokens));
+    x.tests.emplace_back(Empty_Product_Unilang_To_Protobuf(tokens));
+    x.tests.emplace_back(Empty_Product_Unilang_To_Protobuf_To_Cpp_Object(tokens));
+    x.tests.emplace_back(Empty_Sum_Unilang_To_Protobuf(tokens));
+    x.tests.emplace_back(Empty_Sum_Unilang_To_Protobuf_To_Cpp_Object(tokens));
+    
+    //protobuf to x
+    x.tests.emplace_back(Empty_Protobuf_To_Cpp_Object(tokens));
+    x.tests.emplace_back(String_Get_Set_Protobuf_To_Cpp_Object(tokens));
+    
+    
+    return x;
+❱
+◀private: static▶ Bazel_Conversion_Test ☀Empty_File_Unilang_To_Protobuf(All_Language_Tokens const& all_tokens)❰
+    Bazel_Conversion_Test test;
+    test.transcompilation_chain = Transcompilation_Chain_Unilang_Protobuf();
+    test.feature_categorization.emplace_back("empty");
+    test.feature_categorization.emplace_back("file");
+    test.contents.source_contents = LR"RAW_LITERAL()RAW_LITERAL";
+    test.contents.build_contents = LR"RAW_LITERAL(
+package(default_visibility = ["//visibility:public"])
+load("//bazel/rules/unilang:unilang_to_protobuf.bzl", "unilang_to_protobuf")
+unilang_to_protobuf(
+  name = "example"
+)
+)RAW_LITERAL";
+    return test;
+❱
+◀private: static▶ Bazel_Conversion_Test ☀Empty_File_Unilang_To_Protobuf_To_Cpp_Object(All_Language_Tokens const& all_tokens)❰
+    Bazel_Conversion_Test test;
+    test.transcompilation_chain = Transcompilation_Chain_Unilang_Protobuf_Cpp();
+    test.feature_categorization.emplace_back("empty");
+    test.feature_categorization.emplace_back("file");
+    test.contents.source_contents = LR"RAW_LITERAL()RAW_LITERAL";
+    test.contents.build_contents = LR"RAW_LITERAL(
+package(default_visibility = ["//visibility:public"])
+load("//bazel/rules/unilang:unilang_to_protobuf_to_cpp.bzl", "unilang_to_protobuf_to_cpp")
+unilang_to_protobuf_to_cpp(
+  name = "example"
+)
+)RAW_LITERAL";
+    return test;
+❱
+
+◀private: static▶ Bazel_Conversion_Test ☀Empty_Global_Unilang_To_Protobuf(All_Language_Tokens const& all_tokens)❰
+    Bazel_Conversion_Test test;
+    test.transcompilation_chain = Transcompilation_Chain_Unilang_Protobuf();
+    test.feature_categorization.emplace_back("empty");
+    test.feature_categorization.emplace_back("global");
+    test.contents.source_contents = Token_Builder::Create_User_Typed_Token(all_tokens,Token_Name::META_DATA_CODE_TYPE,"g");
+    test.contents.build_contents = LR"RAW_LITERAL(
+package(default_visibility = ["//visibility:public"])
+load("//bazel/rules/unilang:unilang_to_protobuf.bzl", "unilang_to_protobuf")
+unilang_to_protobuf(
+  name = "example"
+)
+)RAW_LITERAL";
+    return test;
+❱
+◀private: static▶ Bazel_Conversion_Test ☀Empty_Global_Unilang_To_Protobuf_To_Cpp_Object(All_Language_Tokens const& all_tokens)❰
+    Bazel_Conversion_Test test;
+    test.transcompilation_chain = Transcompilation_Chain_Unilang_Protobuf_Cpp();
+    test.feature_categorization.emplace_back("empty");
+    test.feature_categorization.emplace_back("global");
+    test.contents.source_contents = Token_Builder::Create_User_Typed_Token(all_tokens,Token_Name::META_DATA_CODE_TYPE,"g");
+    test.contents.build_contents = LR"RAW_LITERAL(
+package(default_visibility = ["//visibility:public"])
+load("//bazel/rules/unilang:unilang_to_protobuf_to_cpp.bzl", "unilang_to_protobuf_to_cpp")
+unilang_to_protobuf_to_cpp(
+  name = "example"
+)
+)RAW_LITERAL";
+    return test;
+❱
+
+
+◀private: static▶ Bazel_Conversion_Test ☀Empty_Product_Unilang_To_Protobuf(All_Language_Tokens const& all_tokens)❰
+    Bazel_Conversion_Test test;
+    test.transcompilation_chain = Transcompilation_Chain_Unilang_Protobuf();
+    test.feature_categorization.emplace_back("empty");
+    test.feature_categorization.emplace_back("product");
+    test.contents.source_contents = Token_Builder::Create_User_Typed_Token(all_tokens,Token_Name::META_DATA_CODE_TYPE,"p");
+    test.contents.build_contents = LR"RAW_LITERAL(
+package(default_visibility = ["//visibility:public"])
+load("//bazel/rules/unilang:unilang_to_protobuf.bzl", "unilang_to_protobuf")
+unilang_to_protobuf(
+  name = "example"
+)
+)RAW_LITERAL";
+    return test;
+❱
+◀private: static▶ Bazel_Conversion_Test ☀Empty_Product_Unilang_To_Protobuf_To_Cpp_Object(All_Language_Tokens const& all_tokens)❰
+    Bazel_Conversion_Test test;
+    test.transcompilation_chain = Transcompilation_Chain_Unilang_Protobuf_Cpp();
+    test.feature_categorization.emplace_back("empty");
+    test.feature_categorization.emplace_back("product");
+    test.contents.source_contents = Token_Builder::Create_User_Typed_Token(all_tokens,Token_Name::META_DATA_CODE_TYPE,"p");
+    test.contents.build_contents = LR"RAW_LITERAL(
+package(default_visibility = ["//visibility:public"])
+load("//bazel/rules/unilang:unilang_to_protobuf_to_cpp.bzl", "unilang_to_protobuf_to_cpp")
+unilang_to_protobuf_to_cpp(
+  name = "example"
+)
+)RAW_LITERAL";
+    return test;
+❱
+
+◀private: static▶ Bazel_Conversion_Test ☀Empty_Sum_Unilang_To_Protobuf(All_Language_Tokens const& all_tokens)❰
+    Bazel_Conversion_Test test;
+    test.transcompilation_chain = Transcompilation_Chain_Unilang_Protobuf();
+    test.feature_categorization.emplace_back("empty");
+    test.feature_categorization.emplace_back("sum");
+    test.contents.source_contents = Token_Builder::Create_User_Typed_Token(all_tokens,Token_Name::META_DATA_CODE_TYPE,"s");
+    test.contents.build_contents = LR"RAW_LITERAL(
+package(default_visibility = ["//visibility:public"])
+load("//bazel/rules/unilang:unilang_to_protobuf.bzl", "unilang_to_protobuf")
+unilang_to_protobuf(
+  name = "example"
+)
+)RAW_LITERAL";
+    return test;
+❱
+◀private: static▶ Bazel_Conversion_Test ☀Empty_Sum_Unilang_To_Protobuf_To_Cpp_Object(All_Language_Tokens const& all_tokens)❰
+    Bazel_Conversion_Test test;
+    test.transcompilation_chain = Transcompilation_Chain_Unilang_Protobuf_Cpp();
+    test.feature_categorization.emplace_back("empty");
+    test.feature_categorization.emplace_back("sum");
+    test.contents.source_contents = Token_Builder::Create_User_Typed_Token(all_tokens,Token_Name::META_DATA_CODE_TYPE,"s");
+    test.contents.build_contents = LR"RAW_LITERAL(
+package(default_visibility = ["//visibility:public"])
+load("//bazel/rules/unilang:unilang_to_protobuf_to_cpp.bzl", "unilang_to_protobuf_to_cpp")
+unilang_to_protobuf_to_cpp(
+  name = "example"
+)
+)RAW_LITERAL";
+    return test;
+❱
+◀private: static▶ Bazel_Conversion_Test ☀Empty_Protobuf_To_Cpp_Object(All_Language_Tokens const& all_tokens)❰
+    Bazel_Conversion_Test test;
+    test.transcompilation_chain = Transcompilation_Chain_Protobuf_Cpp();
+    test.feature_categorization.emplace_back("empty");
+    test.contents.source_contents = LR"RAW_LITERAL(
+syntax = "proto3";
+package demo; // Requried to generate valid code.
+message Message {
+  string foo = 1;
+}
+)RAW_LITERAL";
+    test.contents.test_contents = LR"RAW_LITERAL(
+#include <iostream>
+#include "code/examples/transcompilation/protobuf_to_cpp/empty/example.pb.h"
+int main(){
+    GOOGLE_PROTOBUF_VERIFY_VERSION;
+        return 0;
+}
+)RAW_LITERAL";
+    test.contents.build_contents = LR"RAW_LITERAL(
+load("//bazel/rules/cpp:main.bzl", "cpp_main")
+load("//bazel/rules/protobuf:cpp.bzl", "cpp_proto_object")
+package(
+    default_visibility = ["//visibility:public"],
+)
+
+cpp_proto_object(
+  name = "example"
+)
+
+cpp_main(
+    name = "main",
+    deps = [":example_cpp_proto"]
+)
+)RAW_LITERAL";
+    return test;
+❱
+
+
+◀private: static▶ Bazel_Conversion_Test ☀String_Get_Set_Protobuf_To_Cpp_Object(All_Language_Tokens const& all_tokens)❰
+    Bazel_Conversion_Test test;
+    test.transcompilation_chain = Transcompilation_Chain_Protobuf_Cpp();
+    test.feature_categorization.emplace_back("string_get_set");
+    test.contents.source_contents = LR"RAW_LITERAL(
+syntax = "proto3";
+package demo; // Requried to generate valid code.
+message Message {
+  string foo = 1;
+}
+)RAW_LITERAL";
+    test.contents.test_contents = LR"RAW_LITERAL(
+#include <iostream>
+#include "code/examples/transcompilation/protobuf_to_cpp/string_get_set/example.pb.h"
+int main(){
+
+    // I would have just a set "hello world" as the default
+    // in the proto message, but proto3 doesn't support default values like that.
+    // so I'll just test it here with a get and set.
+    // The other problem I noticed, is that when I did try to give a default string value,
+    // the compiler error, was not very helpful at all.  I think it just said that the protobuf compiler or something
+    // just crashed.  It didn't give me line numbers into the proto message at all.
+    // That might be something we try to improve later if needed
+    GOOGLE_PROTOBUF_VERIFY_VERSION;
+    demo::Message message;
+    message.set_foo("hello world");
+    std::cout << message.foo() << std::endl;
+
+        return 0;
+}
+)RAW_LITERAL";
+
+    test.contents.build_contents = LR"RAW_LITERAL(
+load("//bazel/rules/cpp:main.bzl", "cpp_main")
+load("//bazel/rules/protobuf:cpp.bzl", "cpp_proto_object")
+package(
+    default_visibility = ["//visibility:public"],
+)
+
+cpp_proto_object(
+  name = "example"
+)
+
+cpp_main(
+    name = "main",
+    deps = [":example_cpp_proto"]
+)
+)RAW_LITERAL";
+
+    return test;
+❱
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//utility
+◀private: static▶ std::vector<Artifact_Type> ☀Transcompilation_Chain_Unilang_Protobuf()❰
+    std::vector<Artifact_Type> artifacts;
+    artifacts.emplace_back(Artifact_Type::UNILANG);
+    artifacts.emplace_back(Artifact_Type::PROTOBUF);
+    return artifacts;
+❱
+◀private: static▶ std::vector<Artifact_Type> ☀Transcompilation_Chain_Unilang_Protobuf_Cpp()❰
+    std::vector<Artifact_Type> artifacts;
+    artifacts.emplace_back(Artifact_Type::UNILANG);
+    artifacts.emplace_back(Artifact_Type::PROTOBUF);
+    artifacts.emplace_back(Artifact_Type::CPP);
+    return artifacts;
+❱
+◀private: static▶ std::vector<Artifact_Type> ☀Transcompilation_Chain_Protobuf_Cpp()❰
+    std::vector<Artifact_Type> artifacts;
+    artifacts.emplace_back(Artifact_Type::PROTOBUF);
+    artifacts.emplace_back(Artifact_Type::CPP);
+    return artifacts;
+❱
+

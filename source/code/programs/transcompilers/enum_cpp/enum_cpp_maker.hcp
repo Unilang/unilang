@@ -1,0 +1,313 @@
+class
+❪string❫
+❪vector❫
+❪"code/utilities/streams/filestreams/lib"❫
+❪"code/utilities/types/strings/transformers/casing/lib"❫
+❪"code/programs/transcompilers/enum_cpp/enum"❫
+⚯
+
+⚞⚟
+
+//pure enum goodness
+◀public: static▶ void ☀Create_Enums_Header(std::string const& output_filename_no_extension, std::vector<Enum> const& enums)❰
+    std::ofstream out(output_filename_no_extension + ".hpp");
+    Print_To_Stream_With_Newline(out,"#pragma once");
+    Print_To_Stream_With_Newline(out,"#include <string>");
+    Print_To_Stream_With_Newline(out,"#include <iostream>");
+    Print_To_Stream_With_Newline(out,"#include <vector>");
+    Print_To_Stream_With_Newline(out,"#include <array>");
+    for (auto const& e: enums){
+        Print_Enum_Decl(out,e);
+    }
+    out.close();
+❱
+◀public: static▶ void ☀Create_Enums_Source(std::string const& output_filename_no_extension, std::vector<Enum> const& enums)❰
+    std::ofstream out(output_filename_no_extension + ".cpp");
+    Print_To_Stream(out,"#include \"");
+    Print_To_Stream(out,output_filename_no_extension);
+    Print_To_Stream(out,".hpp");
+    Print_To_Stream_With_Newline(out,"\"");
+    
+    for (auto const& e: enums){
+        Print_Enum_Def(out,e);
+    }
+    out.close();
+❱
+◀private: static▶ void ☀Print_Enum_Decl(std::ofstream & out, Enum e)❰
+
+    Output_Enumerated_Decleration(out,e);
+    Print_To_Stream_With_Newline(out,"");
+
+    Output_Insertion_Operator_Decleration(out,e);
+    Print_To_Stream_With_Newline(out,"");
+
+    //casting
+    Output_As_String_Decleration(out,e);
+    Print_To_Stream_With_Newline(out,"");
+    Output_Enum_Cast_Decleration(out,e);
+    Print_To_Stream_With_Newline(out,"");
+    Output_Vectorized_Enum_Cast_Decleration(out,e);
+    Print_To_Stream_With_Newline(out,"");
+    
+    
+    //iterating
+    Output_Next_Wrap_Decleration(out,e);
+    Print_To_Stream_With_Newline(out,"");
+    Output_Previous_Wrap_Decleration(out,e);
+    Print_To_Stream_With_Newline(out,"");
+    Output_All_Enums_As_Array_Decleration(out,e);
+    Print_To_Stream_With_Newline(out,"");
+    
+    //getting all
+    Output_All_Strings_Decleration(out,e);
+    Print_To_Stream_With_Newline(out,"");
+❱
+◀private: static▶ void ☀Print_Enum_Def(std::ofstream & out, Enum e)❰
+
+    Output_Enumerated_Definition(out,e);
+    Print_To_Stream_With_Newline(out,"");
+
+    Output_Insertion_Operator_Definition(out,e);
+    Print_To_Stream_With_Newline(out,"");
+
+    //casting
+    Output_As_String_Definition(out,e);
+    Print_To_Stream_With_Newline(out,"");
+    Output_Enum_Cast_Definition(out,e);
+    Print_To_Stream_With_Newline(out,"");
+    Output_Vectorized_Enum_Cast_Definition(out,e);
+    Print_To_Stream_With_Newline(out,"");
+    
+    //iterating
+    Output_Next_Wrap_Definition(out,e);
+    Print_To_Stream_With_Newline(out,"");
+    Output_Previous_Wrap_Definition(out,e);
+    Print_To_Stream_With_Newline(out,"");
+    Output_All_Enums_As_Array_Definition(out,e);
+    Print_To_Stream_With_Newline(out,"");
+    
+    //getting all
+    Output_All_Strings_Definition(out,e);
+    Print_To_Stream_With_Newline(out,"");
+❱
+
+
+//decl and def for enum
+◀private: static▶ void ☀Output_Enumerated_Decleration(std::ofstream & out, Enum const& e)❰
+    Print_To_Stream_With_Newline(out,"enum class " + Make_Capital_And_Underscored_In_User_Type_Format(e.name) + "{");
+    for (auto const& it: e.values){
+        Print_To_Stream_With_Newline(out,As_All_Capital_Letters_With_Spaces_As_Underscores(it) + ",");
+    }
+    Print_To_Stream_With_Newline(out,"};");
+❱
+◀private: static▶ void ☀Output_Enumerated_Definition(std::ofstream & out, Enum const& e)❰
+//not needed
+❱
+
+
+//decl and def for vectorized enum_cast
+◀private: static▶ void ☀Output_Vectorized_Enum_Cast_Decleration(std::ofstream & out, Enum const& e)❰
+
+    
+    //return value
+    Print_To_Stream(out,"std::vector<");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out,"> ");
+    
+    //function name
+    Print_To_Stream(out," enum_cast_to_");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    
+    Print_To_Stream(out,"(std::vector<std::string> const& s);");
+❱
+◀private: static▶ void ☀Output_Vectorized_Enum_Cast_Definition(std::ofstream & out, Enum const& e)❰
+
+    //return value
+    Print_To_Stream(out,"std::vector<");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out,"> ");
+    
+    //function name
+    Print_To_Stream(out," enum_cast_to_");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    
+    Print_To_Stream(out,"(std::vector<std::string> const& s){");
+    Print_To_Stream(out,"std::vector<");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out,"> v; ");
+    Print_To_Stream(out,"for (auto const& i: s) {");
+        Print_To_Stream(out,"v.emplace_back(");
+        Print_To_Stream(out,"enum_cast_to_");
+        Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+        Print_To_Stream(out,"(");
+        Print_To_Stream(out,"i");
+        Print_To_Stream(out,")");
+        Print_To_Stream(out,");");
+    Print_To_Stream(out,"}");
+    Print_To_Stream(out,"return v;");
+    Print_To_Stream(out,"}");
+❱
+
+//decl and def for enum_cast
+◀private: static▶ void ☀Output_Enum_Cast_Decleration(std::ofstream & out, Enum const& e)❰
+
+
+
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out," enum_cast_to_");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out,"(std::string const& s);");
+❱
+◀private: static▶ void ☀Output_Enum_Cast_Definition(std::ofstream & out, Enum const& e)❰
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out," enum_cast_to_");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out,"(std::string const& s){");
+    for (auto const& it: e.values){
+        Print_To_Stream(out,"if (s == ");
+        Print_To_Stream(out,"\"");
+        Print_To_Stream(out,As_All_Capital_Letters_With_Spaces_As_Underscores(it));
+        Print_To_Stream(out,"\"");
+        Print_To_Stream(out,"){");
+            Print_To_Stream(out,"return ");
+            Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name) + "::" + As_All_Capital_Letters_With_Spaces_As_Underscores(it));
+            Print_To_Stream(out,";");
+        Print_To_Stream(out,"}");
+    }
+    
+    if (!e.values.empty()){
+        Print_To_Stream(out,"return ");
+        Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name) + "::" + As_All_Capital_Letters_With_Spaces_As_Underscores(e.values[0]));
+        Print_To_Stream(out,";");
+    }
+    
+    Print_To_Stream(out,"}");
+❱
+
+
+//decl and def for as_string
+◀private: static▶ void ☀Output_As_String_Decleration(std::ofstream & out, Enum const& e)❰
+    Print_To_Stream_With_Newline(out,"std::string as_string(" + Make_Capital_And_Underscored_In_User_Type_Format(e.name) + " t);");
+❱
+◀private: static▶ void ☀Output_As_String_Definition(std::ofstream & out, Enum const& e)❰
+    Print_To_Stream_With_Newline(out,"std::string as_string(" + Make_Capital_And_Underscored_In_User_Type_Format(e.name) + " t){");
+    Print_To_Stream_With_Newline(out,"switch (t){");
+    for (auto const& it: e.values){
+        Print_To_Stream_With_Newline(out,"case " + Make_Capital_And_Underscored_In_User_Type_Format(e.name) + "::" + As_All_Capital_Letters_With_Spaces_As_Underscores(it) + ": return \"" + As_All_Capital_Letters_With_Spaces_As_Underscores(it) + "\";");
+    }
+    Print_To_Stream_With_Newline(out,"}");
+    Print_To_Stream_With_Newline(out,"return \"unknown\";");
+    Print_To_Stream_With_Newline(out,"}");
+❱
+
+//decl and def for <<
+◀private: static▶ void ☀Output_Insertion_Operator_Decleration(std::ofstream & out, Enum const& e)❰
+    out << "std::ostream& operator << (std::ostream &out, " << Make_Capital_And_Underscored_In_User_Type_Format(e.name) << " const& e);\n";
+    return;
+❱
+◀private: static▶ void ☀Output_Insertion_Operator_Definition(std::ofstream & out, Enum const& e)❰
+    out << "std::ostream& operator << (std::ostream &out, " << Make_Capital_And_Underscored_In_User_Type_Format(e.name) << " const& e){\n";
+        out << "\tout << as_string(e);\n";
+        out << "\treturn out;\n";
+    out << "}\n";
+    return;
+❱
+
+
+
+
+◀private: static▶ void ☀Output_Next_Wrap_Decleration(std::ofstream & out, Enum const& e)❰
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out," next_wrap(");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out," e );");
+❱
+◀private: static▶ void ☀Output_Previous_Wrap_Decleration(std::ofstream & out, Enum const& e)❰
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out," previous_wrap(");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out," e );");
+❱
+◀private: static▶ void ☀Output_Next_Wrap_Definition(std::ofstream & out, Enum const& e)❰
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out," next_wrap(");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out," e ){");
+    Print_To_Stream(out,"auto as_int = static_cast<int>(e);");
+    Print_To_Stream(out,"auto total = " + std::to_string(e.values.size()) + ";");
+    Print_To_Stream(out,"if (as_int < total-1){return static_cast<");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out,">(as_int + 1);}");
+    
+    Print_To_Stream(out,"return static_cast<");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out,">(0);}");
+❱
+◀private: static▶ void ☀Output_Previous_Wrap_Definition(std::ofstream & out, Enum const& e)❰
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out," previous_wrap(");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out," e ){");
+    Print_To_Stream(out,"auto as_int = static_cast<int>(e);");
+    Print_To_Stream(out,"auto total = " + std::to_string(e.values.size()) + ";");
+    Print_To_Stream(out,"if (as_int != 0){return static_cast<");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out,">(as_int - 1);}");
+    
+    Print_To_Stream(out,"return static_cast<");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out,">(total-1);}");
+❱
+
+
+//decl and def for all strings
+◀private: static▶ void ☀Output_All_Strings_Decleration(std::ofstream & out, Enum const& e)❰
+
+    Print_To_Stream(out,"std::vector<std::string> ");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out,"_all_strings(");
+    Print_To_Stream(out,");");
+❱
+◀private: static▶ void ☀Output_All_Strings_Definition(std::ofstream & out, Enum const& e)❰
+
+    Print_To_Stream(out,"std::vector<std::string> ");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out,"_all_strings(");
+    Print_To_Stream(out,"){");
+    Print_To_Stream(out,"return {");
+    
+    for (auto const& it: e.values){
+        Print_To_Stream(out,"\"");
+        Print_To_Stream(out,As_All_Capital_Letters_With_Spaces_As_Underscores(it));
+        Print_To_Stream(out,"\"");
+        Print_To_Stream(out,",");
+    }
+    
+    Print_To_Stream(out,"};");
+    Print_To_Stream(out,"}");
+❱
+
+
+◀private: static▶ void ☀Output_All_Enums_As_Array_Decleration(std::ofstream & out, Enum const& e)❰
+
+    //return value
+    // Print_To_Stream(out,"std::array<");
+    // Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    // Print_To_Stream(out,"> ");
+    
+    // //function name
+    // Print_To_Stream(out," get_all_");
+    // Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+❱
+
+◀private: static▶ void ☀Output_All_Enums_As_Array_Definition(std::ofstream & out, Enum const& e)❰
+
+    //return value
+    // Print_To_Stream(out,"std::array<");
+    // Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    // Print_To_Stream(out,"> ");
+    
+    // //function name
+    // Print_To_Stream(out," get_all_");
+    // Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+❱

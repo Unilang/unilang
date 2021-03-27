@@ -1,0 +1,38 @@
+class
+❪"code/programs/ide/settings/ide_settings"❫
+❪"code/utilities/peripheral/pc/pc_input_state"❫
+❪"code/programs/ide/frame/everything_draw_settings"❫
+❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
+⚯
+❪"code/utilities/data_structures/graphics/objects/mouse/draw/mouse_frame_getter"❫
+❪"code/programs/ide/frame/ide_element_drawer"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+⚞⚟
+
+
+
+
+
+◀public: static▶ Frame_Elements ☀Draw(Ide_Settings & settings, Everything_Draw_Settings const& draw_settings, Pc_Input_State const& pc_input)❰
+
+    //the order that the frame elements are added, are the order they are drawn.
+    //the last element added has the highest z-index.
+    Frame_Elements elements;
+    
+    //draw the background
+    if (draw_settings.draw_background){
+        elements.types.emplace_back(settings.desktop.background.main_window_backdrop);
+    }
+    
+    //draw the content model
+    if (draw_settings.draw_elements){
+        elements.types += Ide_Element_Drawer::Get(settings,pc_input).types;
+    }
+    
+    //draw the mouse
+    if (draw_settings.draw_mouse){
+        elements.types += Mouse_Frame_Getter::Get(settings,pc_input.mouse).types;
+    }
+    
+    return elements;
+❱

@@ -1,0 +1,129 @@
+class
+❪"code/utilities/output/publisher/essay/essay"❫
+⚯
+❪"code/utilities/formats/pdf/pdf_settings"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/utilities/types/general/lib"❫
+❪"code/utilities/program/common_actions/exits/lib"❫
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/utilities/program/common_actions/locale/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/filesystem/files/getting/lib"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/formats/pdf/latex_template_getter"❫
+❪"code/utilities/web/dropbox/dropbox_uploader"❫
+❪"code/utilities/personal/secret/secret_getter"❫
+❪"code/utilities/filesystem/files/temp/temp_file"❫
+❪"code/utilities/formats/pdf/pdf_creator"❫
+❪"code/utilities/output/upload/file_upload_settings"❫
+❪"code/utilities/output/upload/file_uploader"❫
+❪"code/utilities/formats/html/basic_html_template_getter"❫
+❪"code/utilities/formats/html/body/html_list_maker"❫
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/utilities/filesystem/files/temp/existing_temp_file"❫
+❪"code/utilities/data_structures/graph/unique_str_vertex_graph/lib"❫
+❪"code/utilities/program/wrappers/graphviz/graphviz_image_maker"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/assets/literature/linguistics_json_data_getter"❫
+❪"code/utilities/assets/literature/language_context_json_data_getter"❫
+❪"code/utilities/assets/literature/a_box_full_of_pencils_json_data_getter"❫
+❪"code/programs/reflexivity/publish/essay_list_maker"❫
+❪"code/utilities/output/publisher/essay/essay_publisher"❫
+❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
+⚞⚟
+
+
+//also looks nice: https://github.com/wokalski/wokalski.github.io
+
+//apt-get install pandoc-citeproc
+
+◀public: static▶ void ☀Generate_And_Publish() ❰
+
+    //Unicode please
+    Set_English_UTF8_Locale();
+    
+    auto all_essays = Get_Essays();
+    
+    //check if any files don't exist
+    for (auto const& e: all_essays){
+        if (!File_Exists(e.json_file_name)){
+            std::cout << "doesn't exist" << std::endl;
+            std::cout << execute("pwd") << std::endl;
+            exit(-1);
+        }
+    }
+    
+    //publish essays
+    std::cout << "generating essays..." << std::endl;
+    for (auto const& it: all_essays){
+        std::cout << "    " << it.json_file_name << std::endl;
+        Essay_Publisher::Generate_And_Publish(it);
+    }
+    
+    std::cout << "generating essay list..." << std::endl;
+    Essay_List_Maker::Make(all_essays);
+    
+❱
+
+
+
+◀private: static▶ std::vector<Essay> ☀Get_Essays() ❰
+    std::vector<Essay> x;
+    Essay e;
+    
+    e.json_file_name = Linguistics_Json_Data_Getter::Get();
+    e.style = Essay_Style::POETIC;
+    x.emplace_back(e);
+    
+    e.json_file_name = Language_Context_Json_Data_Getter::Get();
+    e.style = Essay_Style::POETIC;
+    x.emplace_back(e);
+    
+    e.json_file_name = A_Box_Full_Of_Pencils_Json_Data_Getter::Get();
+    e.style = Essay_Style::POETIC;
+    x.emplace_back(e);
+    
+    // e.json_file_name = "language_context";
+    // e.style = Essay_Style::POETIC;
+    // x.emplace_back(e);
+    
+    // e.json_file_name = "consciousness_meaning";
+    // e.style = Essay_Style::SCIENTIFIC;
+    // x.emplace_back(e);
+    
+    // e.json_file_name = "a_traffic_light";
+    // e.style = Essay_Style::SCIENTIFIC;
+    // x.emplace_back(e);
+    
+    // e.json_file_name = "signification";
+    // e.style = Essay_Style::SCIENTIFIC;
+    // x.emplace_back(e);
+    
+    // e.json_file_name = "simulacrums";
+    // e.style = Essay_Style::SCIENTIFIC;
+    // x.emplace_back(e);
+    
+    // e.json_file_name = "triadic_meaning";
+    // e.style = Essay_Style::SCIENTIFIC;
+    // x.emplace_back(e);
+    
+    // e.json_file_name = "a_traffic_light_2";
+    // e.style = Essay_Style::SCIENTIFIC;
+    // x.emplace_back(e);
+    
+    // e.json_file_name = "prose_v_codes";
+    // e.style = Essay_Style::POETIC;
+    // x.emplace_back(e);
+    
+    // e.json_file_name = "ersatz";
+    // e.style = Essay_Style::POETIC;
+    // x.emplace_back(e);
+    
+    // e.json_file_name = "the_bag_snaps";
+    // e.style = Essay_Style::POETIC;
+    // x.emplace_back(e);
+    
+    return x;
+❱

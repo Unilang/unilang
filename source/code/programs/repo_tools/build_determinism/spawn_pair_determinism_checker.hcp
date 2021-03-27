@@ -1,0 +1,38 @@
+class
+❪iostream❫
+❪string❫
+❪utility❫
+❪"src/main/protobuf/spawn.pb.h"❫
+❪"code/programs/repo_tools/build_determinism/data/spawn_pairings"❫
+❪"code/programs/repo_tools/build_determinism/data/determinism_pairings"❫
+❪"code/programs/repo_tools/build_determinism/data/determinism_problem"❫
+❪"code/programs/repo_tools/build_determinism/determinism_problem_getter"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/output/printers/lib"❫
+⚯
+⚞⚟
+
+◀public: static▶ Determinism_Pairings ☀Get_Nondeterminism_Matches(Spawn_Pairings const& pairings)❰
+
+    Determinism_Pairings results;
+    for (auto const& it: pairings.pairs){
+        if (Subcommands_Are_Deterministic(it)){
+            results.deterministic.emplace_back(it);
+        }
+        else{
+            results.nondeterministic.emplace_back(it);
+        }
+    }
+    
+    return results;
+❱
+
+◀private: static▶ bool ☀Subcommands_Are_Deterministic(std::pair<tools::protos::SpawnExec,tools::protos::SpawnExec> const& match)❰
+
+    auto problems = Determinism_Problem_Getter::Get(match);
+    if (!problems.empty()){
+        return false;
+    }
+
+    return true;
+❱

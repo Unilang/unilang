@@ -1,0 +1,143 @@
+class
+❪string❫
+❪iostream❫
+❪vector❫
+❪"code/programs/games/math_game/assets/assets"❫
+❪SFML/Window.hpp❫
+❪SFML/Window/Joystick.hpp❫
+❪SFML/Graphics.hpp❫
+❪SFML/Graphics/Transformable.hpp❫
+❪"code/utilities/peripheral/keyboard/joycons/joycon_state_getter"❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/programs/games/math_game/assets/assets_loader"❫
+❪"code/programs/games/math_game/state/game_state"❫
+❪"code/utilities/time/timer_transition"❫
+⚯
+⚞⚟
+
+◀public: static▶ void ☀Handle_Main(sf::RenderWindow & window, Game_State & state, Assets & assets)❰
+
+        Handle_Player_Status(state,assets);
+        
+        Move_Cursors(state.joycons_current,assets);
+        
+        //decide whether to leave main screen
+        if (state.player1_ready && state.player2_ready){
+            
+            Timer_Transition::Handle_Transition(state.transition_clock,[&](){
+                state.player1_ready = false;
+                state.player2_ready = false;
+                Set_Connection_Status(state,assets);
+                state.screen = Current_Screen::CHARACTER_SELECT;
+                assets.snd_lets_go_fast.sound.play();
+            });
+        }
+❱
+
+◀private: static▶ void ☀Handle_Player_Status(Game_State & state, Assets & assets)❰
+
+    bool redraw_status = false;
+    
+    //is player 1 ready?
+    if (state.joycons_current.left.right && !state.player1_ready){
+        state.player1_ready = true;
+        redraw_status = true;
+        assets.snd_selection.sound.play();
+    }
+    if (state.joycons_current.left.left && state.player1_ready){
+        state.player1_ready = false;
+        redraw_status = true;
+        assets.snd_select_back.sound.play();
+    }
+    
+    //is player 2 ready?
+    if (state.joycons_current.right.right && !state.player2_ready){
+        state.player2_ready = true;
+        redraw_status = true;
+        assets.snd_selection.sound.play();
+    }
+    if (state.joycons_current.right.left && state.player2_ready){
+        state.player2_ready = false;
+        redraw_status = true;
+        assets.snd_select_back.sound.play();
+    }
+    
+    //are the joycons connected?
+    redraw_status = true;
+    
+    
+    //show status
+    if (redraw_status){
+        Set_Connection_Status(state,assets);
+    }
+❱
+
+◀private: static▶ void ☀Set_Connection_Status(Game_State const& state, Assets & assets)❰
+
+    if (!state.joycons_current.left.active){
+        assets.title_screen.player1_status.setString("PLAYER 1 ...");
+        assets.title_screen.player1_status.setFillColor(sf::Color::Red);
+    }
+    else{
+        if (state.player1_ready){
+            assets.title_screen.player1_status.setString("PLAYER 1   READY");
+            assets.title_screen.player1_status.setFillColor(sf::Color::White);
+        }
+        else{
+            assets.title_screen.player1_status.setString("PLAYER 1 ...");
+            assets.title_screen.player1_status.setFillColor(sf::Color::White);
+        }
+    }
+    
+    if (!state.joycons_current.right.active){
+        assets.title_screen.player2_status.setString("PLAYER 2 ...");
+        assets.title_screen.player2_status.setFillColor(sf::Color::Red);
+    }
+    else{
+        if (state.player2_ready){
+            assets.title_screen.player2_status.setString("PLAYER 2   READY");
+            assets.title_screen.player2_status.setFillColor(sf::Color::White);
+        }
+        else{
+            assets.title_screen.player2_status.setString("PLAYER 2 ...");
+            assets.title_screen.player2_status.setFillColor(sf::Color::White);
+        }
+    }
+    
+    //reposition to center
+    // int buffer_space_x = 15;
+    // int buffer_space_y = 5;
+    // assets.player1_status.setPosition(0+buffer_space_x,0+buffer_space_y);
+    // assets.player2_status.setPosition(sf::VideoMode::getDesktopMode().width-(assets.player2_status.getLocalBounds().left
+    //                                                                          +assets.player2_status.getLocalBounds().width)-buffer_space_x,0+buffer_space_y);
+❱
+
+◀private: static▶ void ☀Move_Cursors(Joycons const& joys, Assets & assets)❰
+    
+    int speed = 10;
+    if (joys.left.joystick.left){
+        assets.player1_mouse.move(speed * -1,0);
+    }
+    if (joys.left.joystick.right){
+        assets.player1_mouse.move(speed,0);
+    }
+    if (joys.left.joystick.up){
+        assets.player1_mouse.move(0,speed * -1);
+    }
+    if (joys.left.joystick.down){
+        assets.player1_mouse.move(0,speed);
+    }
+    
+    if (joys.right.joystick.left){
+        assets.player2_mouse.move(speed * -1,0);
+    }
+    if (joys.right.joystick.right){
+        assets.player2_mouse.move(speed,0);
+    }
+    if (joys.right.joystick.up){
+        assets.player2_mouse.move(0,speed * -1);
+    }
+    if (joys.right.joystick.down){
+        assets.player2_mouse.move(0,speed);
+    }
+❱

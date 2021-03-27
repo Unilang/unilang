@@ -1,0 +1,30 @@
+class
+❪string❫
+❪"code/utilities/peripheral/keyboard/joycons/joycons"❫
+❪"code/utilities/peripheral/keyboard/F310_gamepad/data/f310_gamepads"❫
+❪"code/utilities/peripheral/keyboard/F310_gamepad/data/f310_gamepads_phases"❫
+❪"code/utilities/data_structures/color/rgb_color"❫
+❪"code/utilities/linguistics/build_word/game/build_word_puzzle"❫
+❪"code/utilities/linguistics/build_word/game/settings/build_word_game_settings"❫
+❪"code/programs/games/ur/game_phase"❫
+❪"code/utilities/games/ur/state/ur_game_state"❫
+❪SFML/Window.hpp❫
+❪SFML/Graphics.hpp❫
+⚯
+
+⚞⚟
+
+
+◀
+public:
+    
+    //user actions
+    F310_Gamepads_Phases controller;
+    
+    Game_Phase phase = Game_Phase::MAIN_MENU;
+    Ur_Game_State ur_state;
+    
+    //background
+    sf::Color bg_color;
+    
+▶

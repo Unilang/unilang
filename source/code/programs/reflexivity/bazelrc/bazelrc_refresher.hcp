@@ -1,0 +1,75 @@
+class
+❪string❫
+❪vector❫
+❪"code/programs/reflexivity/docker/data/apt_get_command"❫
+❪"code/programs/reflexivity/docker/data/docker_settings"❫
+⚯
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/utilities/types/vectors/converters/lib"❫
+❪"code/utilities/filesystem/files/deleting/lib"❫
+❪"code/utilities/types/strings/transformers/casing/lib"❫
+❪"code/utilities/linguistics/computer/file_extension/file_extension_getter"❫
+❪"code/programs/reflexivity/docker/data/docker_settings_getter"❫
+❪"code/programs/reflexivity/comment/generated_comment_getter"❫
+⚞⚟
+
+◀public: static▶ void ☀Refresh()❰
+
+    Write_To_File(Get_Bazelrc_File_Path(),Create_Bazelrc_Contents());
+
+❱ 
+
+◀private: static▶ std::string ☀Create_Bazelrc_Contents()❰
+    std::string str;
+    Append_With_Newline(str,Generated_Comment_Getter::Get());
+    
+    //backwards compatibility junk
+    Append_With_Newline(str,"build --incompatible_disable_crosstool_file=false");
+    Append_With_Newline(str,"build --incompatible_use_python_toolchains=false");
+    Append_With_Newline(str,"build --incompatible_use_specific_tool_files=false");
+    
+    Append_With_Newline(str,"build --keep_going");
+    
+    //trying to fix java jni issue
+    //Append_With_Newline(str,"build --javabase=@embedded_jdk//:jdk");
+    //Append_With_Newline(str,"build --javabase=@bazel_tools//tools/jdk:remote_jdk");
+    
+    
+    //hermetic toolchain
+    //we don't need to pass crosstool_top anymore and it will one day be deprecated
+    //Append_With_Newline(str,"build --crosstool_top=@llvm_toolchain//:toolchain");
+    
+    //instead we allow cc_toolchain resolution to choose the correct toolchain that was registered through bazel rules
+    //one day this flag will be the default and we can remove it here as well
+    //TODO(thickey): remove flag
+    Append_With_Newline(str,"build --incompatible_enable_cc_toolchain_resolution");
+    
+    Append_With_Newline(str,"build --incompatible_restrict_string_escapes=false");
+    
+    //faster to build here?
+    //codeship does not have this.
+    //https://app.codeship.com/projects/340017/builds/44589606?pipeline=53b461c2-ec88-4fb5-9c37-c59f7a29c29f
+    //Append_With_Newline(str,"build --experimental_sandbox_base=/run/shm");
+    
+    //I don't want the symlinks showing up in the repository.
+    //Its bad for IDEs, and prevents code from accidently relying on their existence
+    //Append_With_Newline(str,"build --experimental_convenience_symlinks=ignore");
+    
+    
+// build --bes_results_url=http://localhost:8080/invocation/
+// build --bes_backend=grpc://localhost:1985
+// build --remote_cache=grpc://localhost:1985
+    
+    //allow unilang to write to places outside of the main repo
+    Append_With_Newline(str,"build:unilang --sandbox_writable_path=" + Full_Path_To_Desktop() + "repos");
+    
+    return str;
+❱
+
+◀private: static▶ std::string ☀Get_Bazelrc_File_Path()❰
+    std::string f = Bazel_Derived_Root_Of_Repo();
+    f += "source/.bazelrc";
+    return f;
+❱

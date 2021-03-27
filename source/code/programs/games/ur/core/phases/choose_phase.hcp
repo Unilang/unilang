@@ -1,0 +1,67 @@
+class
+❪string❫
+❪iostream❫
+❪vector❫
+❪thread❫
+❪algorithm❫
+❪"code/programs/games/ur/assets/assets"❫
+❪"code/programs/games/ur/state/game_state"❫
+❪SFML/Window.hpp❫
+❪SFML/Window/Joystick.hpp❫
+❪SFML/Graphics.hpp❫
+❪SFML/Graphics/Transformable.hpp❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/utilities/math/math"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/peripheral/keyboard/F310_gamepad/data/f310_events"❫
+⚯
+❪"code/utilities/peripheral/keyboard/joycons/joystick_rotating_checker"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/strings/observers/converting/lib"❫
+❪"code/utilities/types/map/lib"❫
+❪"code/utilities/types/vectors/observers/size_frequency_counter"❫
+❪"code/utilities/linguistics/speak/word_speaker"❫
+❪"code/utilities/colors/converters/converters"❫
+❪"code/utilities/colors/transformers/color_transitioner"❫
+❪"code/utilities/peripheral/keyboard/F310_gamepad/functions/f310_event_synthesizer"❫
+❪"code/utilities/games/ur/ur_logic"❫
+❪"code/programs/games/ur/core/phases/player_change"❫
+⚞⚟
+
+◀public: static▶ void ☀Run(Game_State & state, Ur_Player_State & pstate, std::vector<F310_Event> const& events, Assets & assets) ❰
+
+    if (!pstate.possible_selections.empty()){
+        if (In_Vector(events,F310_Event::ARROWS_RIGHT_CLICKED)){
+            Set_Next_Index_In_Round_Robin(pstate.possible_selections,pstate.piece_chosen);
+        }
+        else if (In_Vector(events,F310_Event::ARROWS_LEFT_CLICKED)){
+            Set_Previous_Index_In_Round_Robin(pstate.possible_selections,pstate.piece_chosen);
+        }
+        else if (In_Vector(events,F310_Event::BUTTONS_RIGHT_CLICKED)){
+            pstate.phase = Player_Phase::MOVE;
+        }
+        
+        auto spot_name = pstate.pieces[pstate.possible_selections[pstate.piece_chosen]].current_spot;
+        auto pos = Spot_Name_Position(assets.spots,spot_name);
+        pos.y -= 40;
+        pos.x += 40;
+        assets.piece_selector.setPosition(pos);
+    }
+    else {
+        if (In_Vector(events,F310_Event::BUTTONS_RIGHT_CLICKED)){
+            Player_Change::Move_To_Next_Player(state,assets);
+        }
+    }
+❱
+
+◀private: static▶ sf::Vector2f ☀Spot_Name_Position(Named_Rectangles const& spots, std::string const& spot_name) ❰
+    sf::Vector2f results;
+    
+    for (auto const& it: spots.shapes){
+        if (it.name == spot_name){
+            return it.shape.getPosition();
+        }
+    }
+    
+    return results;
+❱

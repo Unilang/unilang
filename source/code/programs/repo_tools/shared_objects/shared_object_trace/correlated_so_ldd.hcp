@@ -1,0 +1,15 @@
+class
+❪string❫
+❪"code/utilities/filesystem/files/observers/other/file_and_ldd_results"❫
+❪"code/programs/repo_tools/shared_objects/shared_object_trace/file_and_type"❫
+⚯
+
+⚞⚟
+
+◀
+public:
+
+    //these two files have been correlated together.
+    File_And_Type so;
+    File_And_Ldd_Results ldd;
+▶

@@ -1,0 +1,116 @@
+class
+❪iostream❫
+❪string❫
+❪utility❫
+❪vector❫
+❪queue❫
+❪"code/programs/repo_tools/build_third_party_lib/program_options/program_options"❫
+❪"code/utilities/build/profiler/data/profile_settings"❫
+❪"code/utilities/build/profiler/data/profile_results"❫
+❪"code/utilities/build/build_repo_establisher/build_repo_settings"❫
+⚯
+❪"code/utilities/program/wrappers/git/branch_switcher"❫
+❪"code/utilities/types/vectors/converters/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/build/profiler/branch_profile_compilation_timer"❫
+❪"code/utilities/math/math"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/types/converters/lib"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/build/build_repo_establisher/build_repo_establisher"❫
+❪"code/utilities/program/wrappers/bazel/query/bazel_query_runner"❫
+❪"code/utilities/types/queue/lib"❫
+❪"code/programs/repo_tools/build_third_party_lib/visualizer"❫
+⚞⚟
+
+
+◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
+
+    //We establish a repo and a context for building artifacts in it.
+    //This setup tries to be agnostic to any expectations about the repo's hosting, layout, and build system.
+    //It tries to derive things like:
+    //where/how the repository is cloned from, what branch it should be on or whether the repo already exists on the system.
+    //Analyze the repository to learn how to build it
+    auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
+    
+    std::queue<std::string> q;
+    std::vector<std::pair<std::string,std::string>> relationships;
+    
+    //get all the main targets on the third party library provided
+    auto deps = Bazel_Query_Runner::Get_All_Self_Third_Party_Deps(repo_context.program_to_run_build,options.Target());
+    Remove_Targets_That_Look_Like_Direct_Files(deps);
+    Add(q,deps);
+    
+    
+    Observe_Each_Item_In_Queue_Avoiding_Duplicates(q,[&](std::queue<std::string> & q, std::string const& dep){
+        
+        std::string message = "(" + std::to_string(q.size()) + ") querying " + dep + "... ";
+        std::cout << message << std::endl;
+        
+        Explore_The_Direct_Relationships(repo_context, options,q,relationships,dep);
+    });
+    
+    //remove cycles
+    Remove_If(relationships,[&](std::pair<std::string,std::string> p){
+        return p.first == p.second;
+    });
+    
+    std::cout << "printing" << std::endl;
+    Visualizer::Visualize(relationships,"/home/thickey/Desktop",options.Target());
+    // for (auto const& it: deps){
+    //     std::cout << it << std::endl;
+    // }
+    
+❱
+
+◀private: static▶ void ☀Remove_Targets_That_Look_Like_Direct_Files(std::vector<std::string> & deps) ❰
+
+    //covers all (the other checks are not needed)
+    Remove_If(deps ,[&](std::string s){
+        return Contains_Substring(s,".");
+    });
+    
+    //filter out targets that look like direct c++ files
+    Remove_If(deps ,[&](std::string s){
+        return Ends_With(s,".h") || Ends_With(s,".hh") || Ends_With(s,".hpp") || Ends_With(s,".cpp") || Ends_With(s,".cc") || Ends_With(s,".c");
+    });
+    
+    //filter out targets that look like direct cuda files
+    Remove_If(deps ,[&](std::string s){
+        return Ends_With(s,".cu") || Ends_With(s,".cuh");
+    });
+    
+    //filter out targets that look like direct python files
+    Remove_If(deps ,[&](std::string s){
+        return Ends_With(s,".py");
+    });
+    
+    //filter out targets that look like direct config files
+    Remove_If(deps ,[&](std::string s){
+        return Ends_With(s,".yaml") || Ends_With(s,".in");
+    });
+    
+    
+    //filter out other targets that seem like generated file representations
+    Remove_If(deps ,[&](std::string s){
+        return Ends_With(s,"_srcs") || Ends_With(s,"_cu") || Ends_With(s,"_cpp") || Ends_With(s,"_headers") || 
+        Ends_With(s,"_h") || Ends_With(s,"_source") || Ends_With(s,"_config") || Ends_With(s,"_generated_code") || 
+        Ends_With(s,"_stub") || Ends_With(s,"_SRCS") || Ends_With(s,"_protos") || Contains_Substring(s,"_src_") || Contains_Substring(s,"_CPU") || Ends_With(s,"_DEFAULT") ||
+        Ends_With(s,"_cuda") || Ends_With(s,"_test") || Ends_With(s,"_nvrtc") || Ends_With(s,"_ops") || Contains_Substring(s,"_perfkernels_") || Contains_Substring(s,"_native_") ||
+        Contains_Substring(s,"generated_code") || Contains_Substring(s,"generate_code") || Contains_Substring(s,"code_template") 
+        ;
+    });
+❱
+
+◀private: static▶ void ☀Explore_The_Direct_Relationships(Build_Repo_Settings const& repo_context, Program_Options const& options,  std::queue<std::string> & q, std::vector<std::pair<std::string,std::string>> & relationships, std::string const& dep)❰
+
+    //bazel query to get direct 3rd party dependencies
+    auto results = Bazel_Query_Runner::Get_All_Deps_Within_Third_Party(repo_context.program_to_run_build,options.Target(),dep);
+    Remove_Targets_That_Look_Like_Direct_Files(results);
+    
+    //add relationships
+    for (auto const& it: results){relationships.emplace_back(dep,it);}
+    
+    //add the next set of deps to explore
+    for (auto const& it: results){q.push(it);}
+❱

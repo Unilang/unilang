@@ -1,0 +1,20 @@
+class
+❪string❫
+❪iostream❫
+❪"code/programs/games/math_game/state/game_state"❫
+⚯
+⚞⚟
+
+◀public: static▶ Game_State ☀Get() ❰
+    Game_State x;
+    
+    x.player1_ready = false;
+    x.player2_ready = false;
+    
+    x.screen = Current_Screen::MAIN;
+    
+    x.transition_clock.is_transitioning=false;
+    x.transition_clock.transition_duration_ms = 1000;
+    
+    return x;
+❱

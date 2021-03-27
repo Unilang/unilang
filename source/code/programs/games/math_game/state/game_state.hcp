@@ -1,0 +1,31 @@
+class
+❪string❫
+❪"code/utilities/peripheral/keyboard/joycons/joycons"❫
+❪"code/programs/games/math_game/state/current_screen"❫
+❪"code/programs/games/math_game/state/transition_clock"❫
+❪SFML/Window.hpp❫
+⚯
+
+⚞⚟
+
+
+◀
+public:
+    
+    //user actions
+    Joycons joycons_previous;
+    Joycons joycons_current;
+    
+    //what screen we are currently on
+    Current_Screen screen;
+    
+    //user's ready for next screen
+    bool player1_ready=false;
+    bool player2_ready=false;
+    
+    size_t player1_selected_character = 0;
+    size_t player2_selected_character = 5;
+    
+    Transition_Clock transition_clock;
+    
+▶

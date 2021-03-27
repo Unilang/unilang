@@ -1,0 +1,38 @@
+class
+❪vector❫
+❪string❫
+❪"code/programs/reflexivity/bazel_wrapper/data/bazel_wrapper_refresh_settings"❫
+❪"code/programs/reflexivity/bazel_wrapper/data/bazel_version_info_getter"❫
+⚯
+
+⚞⚟
+
+◀public: static▶ Bazel_Wrapper_Refresh_Settings ☀Get()❰
+    Bazel_Wrapper_Refresh_Settings settings;
+    
+    
+    //known bazel versions
+    settings.infos = Bazel_Version_Info_Getter::Get();
+    
+    //choose
+    settings.bazel_version = "4.0.0";
+    
+    
+    //programs needed by bazel wrapper for bootstrapping
+    Add_Needed_Programs(settings.programs_needed,"command");
+    Add_Needed_Programs(settings.programs_needed,"echo");
+    Add_Needed_Programs(settings.programs_needed,"exit");
+    Add_Needed_Programs(settings.programs_needed,"mkdir");
+    Add_Needed_Programs(settings.programs_needed,"rm");
+    Add_Needed_Programs(settings.programs_needed,"chmod");
+    Add_Needed_Programs(settings.programs_needed,"trap");
+    Add_Needed_Programs(settings.programs_needed,"tty");
+    Add_Needed_Programs(settings.programs_needed,"wget");
+    Add_Needed_Programs(settings.programs_needed,"sha256sum");
+    
+    return settings;
+❱
+
+◀private: static▶ void ☀Add_Needed_Programs(std::vector<std::string> & programs_needed, std::string const& program)❰
+    programs_needed.emplace_back(program);
+❱

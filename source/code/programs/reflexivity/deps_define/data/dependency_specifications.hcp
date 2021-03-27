@@ -1,0 +1,12 @@
+class
+❪vector❫
+❪string❫
+❪"code/programs/reflexivity/deps_define/data/dependency_specification"❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    std::vector<Dependency_Specification> specs;
+▶

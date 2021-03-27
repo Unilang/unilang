@@ -18,7 +18,7 @@ hcp(
 hcp(
     name = "cursor_drawer",
     deps = [
-        "//code/tools/ide/settings:ide_settings",
+        "//code/programs/ide/settings:ide_settings",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/data_structures/graphics/objects/cursor:label_cursor_action_doer",
         "//code/utilities/data_structures/graphics/objects/mouse/draw:mouse_frame_getter",
@@ -35,7 +35,7 @@ hcp(
 hcp(
     name = "label_cursor_action_doer",
     deps = [
-        "//code/tools/ide/settings:ide_settings",
+        "//code/programs/ide/settings:ide_settings",
         "//code/utilities/data_structures/graphics/objects/cursor:label_cursor_actions",
         "//code/utilities/data_structures/graphics/objects/cursor:label_cursor_mover",
         "//code/utilities/data_structures/graphics/objects/cursor:text_box_action_decider",
@@ -54,7 +54,7 @@ hcp(
 hcp(
     name = "label_cursor_actions",
     deps = [
-        "//code/tools/ide/settings:ide_settings",
+        "//code/programs/ide/settings:ide_settings",
         "//code/utilities/data_structures/graphics/objects/cursor:label_cursor_mover",
         "//code/utilities/data_structures/graphics/objects/cursor:text_box_action_decider",
         "//code/utilities/data_structures/graphics/objects/label/data:positioned_label",

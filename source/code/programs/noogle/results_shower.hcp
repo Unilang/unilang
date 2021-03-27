@@ -1,0 +1,120 @@
+class
+❪"code/programs/noogle/settings/noogle_settings"❫
+❪"code/utilities/data_structures/queue/finishable_safe_queue.h"❫
+❪"code/programs/noogle/state/noogle_running_stats"❫
+❪"code/programs/noogle/noogle_result"❫
+⚯
+❪iostream❫
+❪string❫
+❪"code/utilities/time/sleeping/lib"❫
+❪"code/utilities/types/strings/observers/other/lib"❫
+❪"code/utilities/types/strings/observers/characteristic/is_month_word_checker"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/strings/observers/char/lib"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/chart/ascii/chart_getter"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/colors/lib"❫
+⚞⚟
+
+//SHOW STEP
+◀public: static▶ void ☀Show_Results(Noogle_Settings const& settings, Noogle_Running_Stats const& stats,FinishableSafeQueue<Noogle_Result> & noogle_results)❰
+
+    int chart_height = 0;
+    while(!noogle_results.is_finished()){
+        
+        if (settings.show.clear_terminal_on_refresh){
+            Clear_Terminal_Up_N_Lines(chart_height);
+        }
+        
+        auto results = Get_Results(stats,settings.show.show_n_results);
+        auto chart = Chart_Getter::Get(results,settings.show.chart);
+        chart_height = height(chart);
+        std::cout << Build_Progress_Message(stats,chart);
+        std::cout.flush();
+        Sleep_For_N_Milliseconds(settings.show.refresh_rate_ms);
+    }
+❱
+
+◀public: static▶ std::vector<std::pair<int,std::string>> ☀Get_Results(Noogle_Running_Stats const& stats, int show_n_results)❰
+    switch (stats.style){
+        case Display_Style::ALL:
+        return stats.currated_results.Top_N_Most_Common(show_n_results);
+        break;
+        
+        case Display_Style::DATE:
+        return stats.currated_results.Top_N_Most_Common_Passing_Predicate(show_n_results,[&](std::string const& str){
+            auto words = Split_By_Spaces(str);
+            for (auto const& it: words){
+                if (Is_Month_Word_Checker::Check(it)){
+                    return true;
+                }
+            }
+            return false;
+        });
+        
+        case Display_Style::NO_DATE:
+        return stats.currated_results.Top_N_Most_Common_Passing_Predicate(show_n_results,[&](std::string const& str){
+            auto words = Split_By_Spaces(str);
+            for (auto const& it: words){
+                if (Is_Month_Word_Checker::Check(it)){
+                    return false;
+                }
+            }
+            return true;
+        });
+        break;
+    }
+    
+    return stats.currated_results.Top_N_Most_Common(show_n_results);
+❱
+
+◀private: static▶ std::string ☀Build_Progress_Message(Noogle_Running_Stats const& stats, std::string const& chart)❰
+        std::string progress;
+        progress += as_string(stats.style);
+        progress += " ";
+        progress += Queue_Progress_As_Str(stats.sites);
+        progress += " ";
+        progress += Queue_Progress_As_Str(stats.htmls);
+        progress += " ";
+        progress += Queue_Progress_As_Str(stats.sanitized);
+        progress += " ";
+        progress += "G: ";
+        progress += std::to_string(stats.google_credential_index);
+        progress += " ";
+        progress += "B: ";
+        progress += std::to_string(stats.bing_credential_index);
+        progress += " ";
+        progress += "results: " + std::to_string(stats.results);
+        progress += "\n";
+        progress += chart;
+        
+        return progress;
+❱
+
+◀private: static▶ std::string ☀Queue_Progress_As_Str(Queue_State const& state)❰
+    
+    //all of it should be green
+    if (state.finished && state.current == state.total){
+        std::string str;
+        str += state.name + " [" + std::to_string(state.current);
+        str += "/" + std::to_string(state.total);
+        str += "]";
+        return colorize_rgb(str,0,255,0);
+    }
+    
+    //maybe just the total is green
+    std::string str;
+    str += state.name + " [" + std::to_string(state.current);
+    str += "/";
+    if (state.finished){
+        str += colorize_rgb(std::to_string(state.total),0,255,0);
+    }
+    else{
+        str += std::to_string(state.total);
+    }
+    str += "]";
+    return str;
+❱

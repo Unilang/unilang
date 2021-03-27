@@ -1,0 +1,17 @@
+class
+❪string❫
+❪iostream❫
+❪"code/programs/games/ily3000/state/game_state"❫
+⚯
+⚞⚟
+
+◀public: static▶ Game_State ☀Get() ❰
+    Game_State x;
+    
+    x.score = 0;
+    x.color.r = 0;
+    x.color.g = 0;
+    x.color.b = 0;
+    
+    return x;
+❱

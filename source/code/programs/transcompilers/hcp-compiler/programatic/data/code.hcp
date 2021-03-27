@@ -1,0 +1,16 @@
+class
+❪iostream❫
+❪vector❫
+❪string❫
+❪"code/programs/transcompilers/hcp-compiler/programatic/data/headers"❫
+❪"code/programs/transcompilers/hcp-compiler/programatic/data/function"❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    Headers ፠headers፠;
+    std::vector<Function> ፠functions፠;
+▶
+

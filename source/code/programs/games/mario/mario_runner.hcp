@@ -1,0 +1,344 @@
+class
+❪"code/utilities/graphics/x11/events/global_event_listener"❫
+❪"code/programs/games/mario/engine/user_input/user_action"❫
+❪"code/programs/games/mario/sprites/sprites"❫
+❪"code/programs/games/mario/engine/physics_state"❫
+❪"code/utilities/graphics/x11/sprite/sprite_window_creator"❫
+❪"code/programs/games/mario/sprites/sprites_loader"❫
+❪"code/programs/games/mario/sound/sounds_loader"❫
+❪"code/programs/games/mario/game_settings"❫
+⚯
+❪"code/utilities/peripheral/sound/music_player"❫
+❪iostream❫
+❪string❫
+❪cstdlib❫
+❪unistd.h❫
+❪X11/Xlib.h❫
+❪X11/Xutil.h❫
+❪X11/xpm.h❫
+❪X11/Xatom.h❫
+❪X11/extensions/shape.h❫
+❪sys/time.h❫
+❪signal.h❫
+❪"code/utilities/graphics/x11/main_state/x11_main_state_creator"❫
+❪"code/utilities/graphics/x11/loop/x11_looper"❫
+❪"code/utilities/graphics/x11/sprite/sprite_loader"❫
+❪"code/utilities/graphics/x11/sprite/sprite_window_drawer"❫
+❪"code/programs/games/mario/engine/user_input/user_action_getter"❫
+❪"code/utilities/types/booleans/lib"❫
+❪"code/utilities/peripheral/sound/sdl/sdl_audio.h"❫
+❪"code/utilities/graphics/x11/geometry/window_geometry_getter"❫
+⚞⚟
+
+
+//can i rotate images?
+//i couldn't figure this out, and just rotated the images during the build system and loaded them as separate assets
+//would be nice to figure this out one day, but having separate assets is probably faster (more space though) and more customizable
+//http://refspecs.linuxbase.org/LSB_5.0.0/LSB-Desktop-generic/LSB-Desktop-generic/app-libxrender.html
+
+//detecting windows:
+//https://cboard.cprogramming.com/linux-programming/125534-accessing-windows-x11.html
+//https://tronche.com/gui/x/xlib/window-information/XQueryTree.html
+
+//common errors:
+//http://www.rahul.net/kenton/40errs.html
+
+◀public: static▶ void ☀Run() ❰
+
+
+    Game_Settings g;
+    g.play_music = true;
+    g.play_sound_effects = true;
+    
+    //create the main display (connect to the X Server). Basically just get everything setup to use X11.
+    //hoping this is all typical x11 boilerplate.
+    //I'm not sure I did it all correctly, but wanted to abstract it away.
+    //hopefully customizable enough for most use cases and I don't have to dig into this much.
+    g.x11.syncronize_debug_mode = false;
+    g.x11.set_error_handler = false;
+    g.x11.check_for_shape_extension = true;
+    
+    //enable SDL stuff
+    SDL_Init(SDL_INIT_AUDIO);
+    initAudio();
+    
+    
+    
+    
+    auto state = X11_Main_State_Creator::Create(g.x11);
+    
+    
+    //we intend to spy on keyboard/mouse events everywhere.
+    //this is like a keylogger.  You could be moving a cusor in
+    //an editor and it will still be registered by the game.
+    Global_Event_Listener::Enable_Events(state);
+    
+    
+    //load all the sprites
+    auto sprites = Sprites_Loader::Load(state);
+    auto sounds = Sounds_Loader::Load();
+    
+    
+    //start some music
+    Music_Player::Maybe_Play(g.play_music,sounds.main_theme.full_path);
+    
+    
+    auto phys = Initial_Mario_Physics();
+    
+    
+    //X11 is notorious for image tearing i guess
+    //originally, I had one giant window, and I used PutImage each cycle to put the sprite in a different place.
+    //this flickered and looked bad.  So Now I make little windows for each sprite, and place the sprite in the window at 0,0 always.
+    //instead of moving the images each cycle, we move the entire window instead.  This looks clean but feels wrong.
+    //I'm not sure if there are any ramifications to doing this.
+    //It basically means that my mario game will have an X11 window for every sprite being shown.
+    //unless i totally missed something in terms of writing images and moving them around in x11, this is the best I can do.
+    //And based on the various complaints I've heard about X this may actually be a correct way to go about this.
+    //fwiw, I see everyone on the internet talking about how X11 tears because its old, and its one of the reasons for wayland.
+    //so I don't know. This model can be revised later.
+    auto mario = Sprite_Window_Creator::Create(state,sprites.mario_stand_right);
+    mario.draw_mask = true;
+    
+    
+    
+    
+    
+    
+    
+    
+    //game loop. n frames a second
+    using namespace std::chrono;
+    using Framerate = duration<steady_clock::rep, std::ratio<1, 250>>;
+    auto next = steady_clock::now() + Framerate{1};
+    User_Action action;
+    while(true)
+    {
+        Update(state,action,mario,phys,sprites,sounds);
+        while (steady_clock::now() < next)
+            ;
+        next += Framerate{1};
+        Render(state,phys,mario);
+    }
+    
+    
+    // Old way of looping.  Not as performant
+    //     X11_Looper::typical_x11_game_loop(state,[&](){
+    //         Update(state,action,mario,phys,sprites,sounds);
+    //         Render(state,phys,mario);
+    //     });
+❱
+
+
+
+◀private: static▶ Physics_State ☀Initial_Mario_Physics()❰
+    Physics_State phys;
+    phys.pos_x = 500;
+    phys.pos_y = 200;
+    phys.total_jump_count = 70;
+    phys.facing = Compass_Direction::EAST;
+    return phys;
+❱
+
+◀private: static▶ void ☀Update(Main_X11_State const& state, User_Action & action, Sprite_Window & mario, Physics_State & phys, Sprites const& sprites, Sounds const& sounds)❰
+
+    // what does the user want to do
+    action = User_Action_Getter::Get(action,state);
+    
+    //get user intentions
+    bool trying_to_go_right = false;
+    bool trying_to_go_left = false;
+    bool trying_to_jump = false;
+    if (action.right_button){
+        trying_to_go_right = true;
+    }
+    if (action.left_button){
+        trying_to_go_left = true;
+    }
+    if (action.up_button){
+        trying_to_jump = true;
+    }
+    else{
+    }
+    
+     // adjust the actors based on user's request
+     if (trying_to_go_right){
+        phys.horizontal_speed = 1;
+        phys.facing = Compass_Direction::EAST;
+     }
+     else if (trying_to_go_left){
+        phys.horizontal_speed = -1;
+        phys.facing = Compass_Direction::WEST;
+     }
+     else{
+        phys.horizontal_speed = 0;
+     }
+     
+     
+     //adjust mario sprite index
+     if ((trying_to_go_right || trying_to_go_left) && !phys.in_a_jump){
+        ++phys.sprite_times;
+        
+         if (phys.sprite_times >= phys.total_sprite_times){
+            phys.sprite_times = 0;
+             if (phys.sprite_index == 2){
+                phys.sprite_index = 0;
+             }
+             else{
+                ++phys.sprite_index;
+             }
+         }
+     }
+     else{
+        phys.sprite_times = 0;
+     }
+     
+     
+     //track current jump
+     if (phys.jump_count != 0){
+        ++phys.jump_count;
+     }
+     
+     //jump only if we haven't jumped yet
+     if (trying_to_jump){
+        if (phys.jump_count == 0){
+            
+            //Music_Player::Play(sounds.mario_jump.full_path,false);
+            playSound(sounds.mario_jump.full_path.c_str(),50);
+            //std::cout << sounds.mario_jump.full_path << std::endl;
+            phys.vertical_speed = -2;
+            phys.jump_count = 1;
+            phys.in_a_jump = true;
+        }
+     }
+     
+     //not trying to jump
+     else{
+        if (phys.in_a_jump){
+            phys.jump_count = phys.total_jump_count;
+            phys.vertical_speed = +2;
+        }
+     }
+     
+     //are we failling yet?
+     if (phys.jump_count >= phys.total_jump_count){
+        phys.vertical_speed = +2;
+     }
+     
+     //update mario's momentum
+     phys.pos_x += phys.horizontal_speed;
+     phys.pos_y += phys.vertical_speed;
+     
+     //has mario landed?
+     if (Is_Actor_On_Window_Pane(state,phys)){
+        //phys.pos_y = 700;
+        phys.vertical_speed = 0;
+        phys.jump_count = 0;
+        phys.in_a_jump = false;
+     }
+     else {
+            //phys.vertical_speed = -2;
+            //phys.jump_count = phys.total_jump_count;
+            phys.in_a_jump = true;
+     }
+     
+     if (Offscreen_Death(state,phys)){
+        std::cout << "dead" << std::endl;
+        playSound(sounds.mario_death.full_path.c_str(),128);
+        phys = Initial_Mario_Physics();
+     }
+     
+     auto geos = Window_Geometry_Getter::Get_All_Window_Geometry(state);
+     //std::cout << geos.size() << std::endl;
+     
+     // change the way things look based on action and curent actor's state
+     Decide_Mario_Look(action,mario.sprite,sprites,phys);
+❱
+
+◀private: static▶ bool ☀Offscreen_Death(Main_X11_State const& state, Physics_State const& phys)❰
+    if (phys.pos_y > state.root_geo.height){
+        return true;
+    }
+    return false;
+❱
+
+◀private: static▶ bool ☀Is_Actor_On_Window_Pane(Main_X11_State const& state, Physics_State const& phys)❰
+    auto geos = Window_Geometry_Getter::Get_All_Window_Geometry(state);
+    
+    for (auto geo: geos){
+        bool y_in_range = false;
+        bool x_in_range = false;
+        int y_offset = 100;
+        int x_offset = 20;
+        if (phys.pos_y >= geo.y-y_offset && phys.pos_y <= geo.y + 4-y_offset){
+            y_in_range = true;
+        }
+
+        if (phys.pos_x >= geo.x-x_offset && phys.pos_x <= geo.x-x_offset + geo.width){
+            x_in_range = true;
+        }
+        
+        if (y_in_range && x_in_range){
+            return true;
+        }
+    }
+    return false;
+❱
+
+◀private: static▶ void ☀Render(Main_X11_State const& state, Physics_State const& phys, Sprite_Window & mario)❰
+
+    //DISPLAY
+    mario.x = phys.pos_x;
+    mario.y = phys.pos_y;
+    Sprite_Window_Drawer::Draw(state,mario);
+❱
+
+
+
+◀private: static▶ void ☀Decide_Mario_Look(User_Action const& action, Sprite & sprite, Sprites const& sprites, Physics_State const& phys) ❰
+    
+    if (phys.facing == Compass_Direction::EAST){
+        if (action.down_button){
+            sprite = sprites.mario_duck_right;
+            //sprite = sprites.mario_stand;
+        }
+        else if (action.right_button){
+            if (phys.sprite_index == 0){
+                sprite = sprites.mario_walk_1_right;
+            }
+            else if (phys.sprite_index == 1){
+                sprite = sprites.mario_walk_2_right;
+            }
+            else if (phys.sprite_index == 2){
+                sprite = sprites.mario_walk_3_right;
+            }
+        }
+        else
+        {
+            sprite = sprites.mario_stand_right;
+        }
+    }
+    else{
+        if (action.down_button){
+            sprite = sprites.mario_duck_left;
+            //sprite = sprites.mario_stand;
+        }
+        else if (action.left_button){
+            if (phys.sprite_index == 0){
+                sprite = sprites.mario_walk_1_left;
+            }
+            else if (phys.sprite_index == 1){
+                sprite = sprites.mario_walk_2_left;
+            }
+            else if (phys.sprite_index == 2){
+                sprite = sprites.mario_walk_3_left;
+            }
+        }
+        else{
+            //figure out
+            sprite = sprites.mario_stand_left;
+        }
+    }
+❱
+
+
+

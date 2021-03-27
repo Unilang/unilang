@@ -1,0 +1,15 @@
+class
+❪string❫
+❪set❫
+❪"code/programs/gcalviz/exporters/data/connection"❫
+❪"code/programs/gcalviz/exporters/data/event_interval"❫
+⚯
+
+⚞⚟
+
+◀
+public:
+    Connection ፠connection፠;
+    Event_Interval ፠interval፠;
+
+▶

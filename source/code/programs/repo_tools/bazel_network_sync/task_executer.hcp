@@ -1,0 +1,55 @@
+class
+❪iostream❫
+❪algorithm❫
+❪"code/programs/repo_tools/bazel_network_sync/program_options/program_options"❫
+❪"code/utilities/build/build_repo_establisher/build_repo_settings"❫
+⚯
+❪"code/utilities/build/build_repo_establisher/build_repo_establisher"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/program/wrappers/strace/network_ip_getter"❫
+❪"code/utilities/program/wrappers/bazel/bazel_runner"❫
+❪"code/utilities/program/wrappers/bazel/sync/bazel_sync_logger"❫
+❪"src/main/java/com/google/devtools/build/lib/bazel/debug/workspace_log.pb.h"❫
+⚞⚟
+
+
+◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
+
+
+    // We establish a repo and a context for building artifacts in it.
+    // This setup tries to be agnostic to any expectations about the repo's hosting, layout, and build system.
+    // It tries to derive things like:
+    // where/how the repository is cloned from, what branch it should be on or whether the repo already exists on the system.
+    // Analyze the repository to learn how to build it
+    auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
+    repo_context.build_settings.environment = Run_Environment::LOCAL;
+    
+    
+    auto urls = Bazel_Sync_Logger::Get_Sync_Urls_From_Test(repo_context);
+    
+    //print urls with their precedence
+    for (auto const& it: urls){
+        for (size_t i = 0; i < it.size(); ++i){
+            std::cout << i << " " << it[i] << std::endl;
+        }
+    }
+    
+    
+    // Print_Ips_Through_Strace_Syncing(repo_context);
+❱
+
+
+
+◀private: static▶ void ☀Print_Ips_Through_Strace_Syncing(Build_Repo_Settings const& repo_context)❰
+
+    //build sync command
+    std::string command = repo_context.program_to_run_build + " sync 2>&1 ";
+    
+    //run, extract, and print IPs
+    auto ips = Network_Ip_Getter::Get_Ips(command);
+    Sort_And_Remove_Duplicates(ips);
+    std::cout << ips.size() << " found." << std::endl;
+    for (auto const& it: ips){
+        std::cout << it << std::endl;
+    }
+❱

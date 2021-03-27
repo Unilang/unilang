@@ -1,0 +1,145 @@
+class
+❪iostream❫
+❪cstdlib❫
+❪thread❫
+❪chrono❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/program/call/lib.hpp"❫
+❪"code/utilities/program/call/process_spawn/process_spawner"❫
+❪"code/utilities/program/call/process_spawn/timed/timed_process_spawner"❫
+❪"code/utilities/time/sleeping/lib"❫
+⚯
+❪"code/utilities/program/wrappers/sendmail/sendmail_sender"❫
+❪"code/utilities/program/wrappers/sendmail/sendmail_settings"❫
+❪"code/utilities/program/wrappers/sendmail/sendmail_settings_getter"❫
+❪"code/utilities/program/wrappers/sendmail/ssmtp_conf_maker"❫
+❪"code/utilities/build/self_builder"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+⚞⚟
+
+◀public: static▶ void ☀Run() ❰
+    
+    
+    while (true) {
+        
+        Move_To_Repo_Root();
+        std::string results;
+        Fresh_Pull(results);
+        Record_Working_Hash(results);
+        Run_Repo_Tasks(results);
+        Fresh_Pull(results);
+        Restart_Self_If_Possible(results);
+        
+    }
+❱
+
+◀private: static▶ void ☀Fresh_Pull(std::string & results) ❰
+
+    auto x = Run_Command_And_Show("git reset --hard HEAD && git clean -d -f;");
+    Run_Command_Show_And_Store_Results_In_Summary("git pull", "sync repo",results);
+❱
+◀private: static▶ void ☀Record_Working_Hash(std::string & results) ❰
+
+    auto x = Run_Command_Show_And_Store_Results_In_Summary("git rev-parse HEAD", "get SHA",results);
+    Append_With_Newline(results,"commit: " + x.results.stdout);
+❱
+◀private: static▶ void ☀Run_Repo_Tasks(std::string & results) ❰
+
+    //docker tests
+    auto x = Self_Builder::Get_Results_Of_Building_Through_Docker_Container();
+    Record_Pass_Fail_Info(results,"docker build",x);
+    
+    x = Self_Builder::Get_Results_Of_Testing_Through_Docker_Container();
+    Record_Pass_Fail_Info(results,"docker test",x);
+    
+    //local tests
+    //x = Self_Builder::Get_Results_Of_Building_Repo_As_Is();
+    //Record_Pass_Fail_Info(results,"local build",x);
+    
+    //x = Self_Builder::Get_Results_Of_Testing_Repo_As_Is();
+    //Record_Pass_Fail_Info(results,"local test",x);
+    
+    
+    //other stats that might be interesting.
+    // - number of dependencies
+    // - number of files
+    // - number of files by language
+    // - number of targets
+    
+    
+❱
+◀private: static▶ void ☀Restart_Self_If_Possible(std::string & results) ❰
+    auto x = Run_Command_Show_And_Store_Results_In_Summary("./user_build //code/programs/bots/worker_bot:main","Rebuild Bot",results);
+    
+    //send email
+    Send_Email_Status(results);
+    
+    //decide whether to restart
+    //a wrapper script will restart the worker
+    if (x.results.return_code == 0){
+        exit(0);
+    }
+❱
+
+
+◀private: static▶ void ☀Send_Email_Status(std::string & results) ❰
+
+    Ssmtp_Conf_Maker::Setup_File();
+    auto sendmail_settings = Sendmail_Settings_Getter::Test_Settings();
+    sendmail_settings.title = "Worker Bot Results";
+    sendmail_settings.message = "These are the results of our recent runs:\n";
+    
+    if (results.size() < 1000){
+        sendmail_settings.message += results;
+    }
+    else {
+        sendmail_settings.message += "failure too big";
+    }
+    Sendmail_Sender::Send(sendmail_settings);
+❱
+
+
+//process reporting utils
+◀private: static▶ Timed_Process_Results ☀Run_Command_Show_And_Store_Results_In_Summary(std::string const& command, std::string const& name, std::string & results) ❰
+
+    auto x = Run_Command_And_Show(command);
+    Record_Pass_Fail_Info(results,name,x);
+    
+    return x;
+❱
+
+◀private: static▶ void ☀Record_Pass_Fail_Info(std::string & results, std::string const& name, Timed_Process_Results const& x)❰
+
+    if (x.results.return_code == 0){
+        std::string title = name + ": PASS";
+        Append(results,title);
+        Append(results," (");
+        Append(results,std::to_string(std::chrono::duration_cast<std::chrono::minutes>(x.time).count()));
+        Append_With_Newline(results,"m)");
+    }
+    else {
+        std::string title = name + ": FAIL";
+        Append(results,title);
+        Append(results," (");
+        Append(results,std::to_string(std::chrono::duration_cast<std::chrono::minutes>(x.time).count()));
+        Append_With_Newline(results,"m)");
+        Append_With_Newline(results,x.results.stderr);
+    }
+    
+❱
+
+◀private: static▶ Timed_Process_Results ☀Run_Command_And_Show(std::string command) ❰
+    std::cout << command << std::endl;
+    auto x = Timed_Process_Spawner::Execute_And_Get_Back_Results(command);
+    if (!x.results.stdout.empty()){
+        std::cout << x.results.stdout << std::endl;
+    }
+    if (!x.results.stderr.empty()){
+        std::cout << x.results.stderr << std::endl;
+    }
+    return x;
+❱
+
+
+
+

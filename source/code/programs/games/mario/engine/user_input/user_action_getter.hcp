@@ -1,0 +1,180 @@
+class
+❪"code/utilities/graphics/x11/events/global_event_listener"❫
+❪"code/programs/games/mario/engine/user_input/user_action"❫
+❪"code/utilities/graphics/x11/data/main_x11_state"❫
+⚯
+❪iostream❫
+❪string❫
+❪cstdlib❫
+❪unistd.h❫
+❪X11/Xlib.h❫
+❪X11/Xutil.h❫
+❪X11/xpm.h❫
+❪X11/extensions/shape.h❫
+❪"code/utilities/types/booleans/lib"❫
+⚞⚟
+
+
+// the problem with most keyboard event library code and such is that it listens in a window.
+// the mario game is basically windowless... or it has a lot of tiny windows.
+// I don't want people to try and click on mario first in order to move him.
+// additionally, I don't want some dumb empty control window that people have to click in /
+// keep focused in order to move mario.  So I think we can listen to all events regardless of the window.
+
+//essentially an x11 keylogger.  kinda brute forced this out of xinput.
+// I think its riddled with UB and leaks everywhere.
+// TODO(thickey): run a sanitizer and fix this sometime
+// needs cleaned up in general, but the main API should be sufficient for me frame by frame.
+//./user_run @xorg_xinput//:xinput -- test-xi2 --root
+
+◀public: static▶ User_Action ☀Get(User_Action const& previous_action, Main_X11_State const& state)❰
+    User_Action action = previous_action;
+    auto cookie = Global_Event_Listener::Get_Cookie(state);
+     while (cookie){
+        Handle_Events(cookie,action);
+        cookie = Global_Event_Listener::Get_Cookie(state);
+        
+        
+        //I see other code do this, but I get segfaulted when I do.
+        //we'll have to wrap all this bs in RAII at some point, run sanitizers and test it all
+        //XFreeEventData(state.d, cookie);
+     }
+     //XFreeEventData(state.d, cookie);
+     return action;
+❱
+     
+◀private: static▶ void ☀Handle_Events(XGenericEventCookie* cookie, User_Action & action) ❰
+
+    //printf("EVENT type %d \n", cookie->evtype);
+            switch (cookie->evtype)
+            {
+                case XI_DeviceChanged:
+                std::cout << "qqqq" << std::endl;
+                    //print_devicechangedevent(display, cookie->data);
+                    break;
+                case XI_HierarchyChanged:
+                std::cout << "qqqq2" << std::endl;
+                    //print_hierarchychangedevent(cookie->data);
+                    break;
+                case XI_RawKeyPress:
+                case XI_RawKeyRelease:
+                case XI_RawButtonPress:
+                case XI_RawButtonRelease:
+                case XI_RawMotion:
+                case XI_RawTouchBegin:
+                case XI_RawTouchUpdate:
+                case XI_RawTouchEnd:
+                    //std::cout << cookie->evtype << std::endl;
+                    //Handle_Raw_Event(static_cast<XIRawEvent *>(cookie->data),cookie->evtype,right_button,left_button);
+                break;
+                case XI_Enter:
+                case XI_Leave:
+                case XI_FocusIn:
+                case XI_FocusOut:
+                std::cout << "qqqq4" << std::endl;
+                    //print_enterleave(cookie->data);
+                    break;
+                case XI_PropertyEvent:
+                     std::cout << "pp" << std::endl;
+                    //print_propertyevent(display, cookie->data);
+                    break;
+                default:
+                //std::cout << "OOO" << std::endl;
+                    Handle_Raw_Event(static_cast<XIRawEvent *>(cookie->data),cookie->evtype,action);
+                break;
+            }
+❱
+
+
+◀private: static▶ void ☀Handle_Raw_Event(XIRawEvent *event, int const& evtype, User_Action & action)❰
+
+
+    if (event->detail == 114){
+        if (evtype == 2){
+            Make_True(action.right_button);
+        }
+        else{
+            Make_False(action.right_button);
+        }
+    }
+    else if (event->detail == 113){
+        if (evtype == 2){
+            Make_True(action.left_button);
+        }
+        else{
+            Make_False(action.left_button);
+        }
+    }
+    else if (event->detail == 111){
+        if (evtype == 2){
+            Make_True(action.up_button);
+        }
+        else{
+            Make_False(action.up_button);
+        }
+    }
+    else if (event->detail == 116){
+        if (evtype == 2){
+            Make_True(action.down_button);
+        }
+        else{
+            Make_False(action.down_button);
+        }
+    }
+    else if (event->detail == 65){
+        if (evtype == 2){
+            Make_True(action.space_button);
+        }
+        else{
+            Make_False(action.space_button);
+        }
+    }
+    
+    //std::cout << "sss" << std::endl;
+    return ;
+    
+    
+    /*
+    if (event->detail == 114){
+        std::cout << event->evtype << std::endl;
+        switch(event->evtype) {
+            case XI_RawButtonPress:
+            case XI_RawButtonRelease:
+            case XI_RawMotion:
+            default:
+            if (evtype == 2){
+                //std::cout << "down" << std::endl;
+                Make_True(right_button);
+                return;
+            }
+            Make_False(right_button);
+            //std::cout << "up" << std::endl;
+            return;
+        }
+    }
+    else{
+        //Make_False(right_button);
+    }
+    
+    if (event->detail == 113){
+        std::cout << event->evtype << std::endl;
+        switch(event->evtype) {
+            case XI_RawButtonPress:
+            case XI_RawButtonRelease:
+            case XI_RawMotion:
+            default:
+            if (evtype == 2){
+                //std::cout << "down" << std::endl;
+                Make_True(left_button);
+                return;
+            }
+            Make_False(left_button);
+            //std::cout << "up" << std::endl;
+            return;
+        }
+    }
+    else{
+        //Make_False(left_button);
+    }
+    */
+❱

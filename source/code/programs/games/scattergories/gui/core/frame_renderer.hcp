@@ -1,0 +1,27 @@
+class
+❪string❫
+❪iostream❫
+❪vector❫
+❪SFML/Window.hpp❫
+❪SFML/Window/Joystick.hpp❫
+❪SFML/Graphics.hpp❫
+❪SFML/Graphics/Transformable.hpp❫
+❪"code/utilities/peripheral/keyboard/joycons/joycon_state_getter"❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/programs/games/scattergories/gui/state/game_state"❫
+❪"code/programs/games/scattergories/gui/assets/assets"❫
+⚯
+⚞⚟
+
+◀public: static▶ void ☀Run_Frame_Render(sf::RenderWindow & window, Game_State & state, Assets & assets) ❰
+    window.clear(sf::Color(state.bg_color.r, state.bg_color.g, state.bg_color.b));
+    
+    
+    window.draw(assets.categories);
+    window.draw(assets.letter);
+    window.draw(assets.time);
+    
+    
+    
+    window.display();
+❱

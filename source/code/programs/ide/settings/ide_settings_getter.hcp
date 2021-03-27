@@ -1,0 +1,25 @@
+class
+❪string❫
+❪unordered_map❫
+❪"code/programs/ide/settings/ide_settings"❫
+❪"code/programs/ide/settings/ide_default_settings_getter"❫
+❪"code/programs/ide/global_actions/save_state_serializer"❫
+⚯
+⚞⚟
+
+◀public: static▶ Ide_Settings ☀Get(std::string const& file_name)❰
+
+    Ide_Settings s;
+    
+    //main default settings
+    s = Ide_Default_Settings_Getter::Get();
+    
+    //perform initial file load if requested
+    if (!file_name.empty()){
+        s.desktop.save.file_name = file_name;
+        Save_State_Serializer::Load(s);
+    }
+    
+    return s;
+    
+❱

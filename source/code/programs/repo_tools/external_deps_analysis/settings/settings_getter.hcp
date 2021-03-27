@@ -1,0 +1,42 @@
+class
+❪iostream❫
+❪string❫
+❪utility❫
+❪"code/programs/repo_tools/external_deps_analysis/program_options/program_options"❫
+❪"code/programs/repo_tools/external_deps_analysis/settings/settings"❫
+⚯
+⚞⚟
+
+◀public: static▶ Settings ☀Get(Program_Options const& options) ❰
+
+    //settings
+    auto settings = Default_Settings();
+    
+    //set via program_options
+    if (!options.Dep().empty()){
+        settings.dep_name = options.Dep();
+    }
+    if (!options.Run_Dir().empty()){
+        settings.run_path = options.Run_Dir();
+    }
+    if (!options.Output_Dir().empty()){
+        settings.result_path = options.Output_Dir();
+    }
+    if (!options.Bazel().empty()){
+        settings.bazel_wrapper = options.Bazel();
+    }
+    
+    return settings;
+❱
+
+
+◀private: static▶ Settings ☀Default_Settings()❰
+    Settings settings;
+    settings.use_run_path = true;
+    settings.run_path = "/home/thickey/Desktop/na";
+    settings.result_path = "/home/thickey/Desktop/results";
+    settings.bazel_wrapper = "./bazel";
+    settings.dep_name = "cuda";
+    settings.verbose = true;
+    return settings;
+❱

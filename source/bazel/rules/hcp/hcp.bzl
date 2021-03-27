@@ -13,8 +13,8 @@ def hcp(name, deps = [], data = []):
         name = hcp_target_name,
         srcs = [explicit_hcp_file],
         outs = [explicit_cpp_file, explicit_hpp_file],
-        tools = ["//code/tools/transcompilers/hcp-compiler/official:hcp-compiler"],
-        cmd = "$(location //code/tools/transcompilers/hcp-compiler/official:hcp-compiler) $(SRCS) -o $(@D)",
+        tools = ["//code/programs/transcompilers/hcp-compiler/official:hcp-compiler"],
+        cmd = "$(location //code/programs/transcompilers/hcp-compiler/official:hcp-compiler) $(SRCS) -o $(@D)",
     )
 
     #compiling hpp/cpp

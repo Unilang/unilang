@@ -1,0 +1,84 @@
+class
+❪string❫
+❪vector❫
+❪"code/programs/games/crossword/settings/crossword_puzzle_settings"❫
+❪"code/utilities/colors/defaults/color_palettes"❫
+⚯
+❪"code/programs/games/crossword/crossword_words"❫
+❪"code/utilities/streams/filestreams/read_all/lib"❫
+❪"code/utilities/types/char/lib"❫
+⚞⚟
+
+
+◀public: static▶ Crossword_Puzzle_Settings ☀Get()❰
+    Crossword_Puzzle_Settings settings;
+    
+    settings.output.create_puzzle_artifact = true;
+    settings.output.puzzle_file_name = "/home/laptop/Desktop/crossword.html";
+    
+    settings.output.create_answer_artifact = false;
+    settings.output.answer_file_name = "/home/laptop/Desktop/crossword_answer.html";
+    
+    settings.dimensions = Standard_Crossword_Dimensions();
+    settings.empty_cell_symbol = "?";
+    
+    //main algorithm strategies
+    settings.random_place_strategy.show_word_being_fitted = true;
+    settings.random_place_strategy.primed_passthrough_attempts = Standard_Crossword_Passthrough_Attempts();
+    //todo: max overlap allowed
+    
+    
+    //display related
+    settings.title = "TT&T word search game.";
+    
+    //for word bank
+    //TODO: derive this based on a good divisible number on word.size()
+    settings.words_per_row = 5;
+    settings.letter_colors = Color_Palettes::All_Same_Black();
+    
+    settings.words = Crossword_Words::Math_Words();
+    settings.decoy_words.emplace_back("trevor");
+    settings.decoy_words.emplace_back("teresa");
+    settings.decoy_words.emplace_back("taffy");
+    
+    //TODO: replace with dependency
+    settings.dictionary_words = Read_Each_Line_Of_File_Into_Vector("/home/laptop/Desktop/scrabble_words_2019.txt");
+    
+    settings.starting_char_likelyhood.insert({"A",0});
+    settings.starting_char_likelyhood.insert({"E",0});
+    settings.starting_char_likelyhood.insert({"I",0});
+    settings.starting_char_likelyhood.insert({"O",0});
+    settings.starting_char_likelyhood.insert({"U",0});
+    settings.starting_char_likelyhood.insert({"Y",0});
+    settings.starting_char_likelyhood.insert({"T",0});
+    settings.starting_char_likelyhood.insert({"S",0});
+    
+    
+    settings.use_probability_select = true;
+    settings.choose_char_likelyhood = Standard_Char_Likelyhood_In_Words();
+    
+    settings.letter_case = Optional_Letter_Case::UPPER;
+    
+    return settings;
+❱
+
+◀private: static▶ Two_D_Dimensions ☀Standard_Crossword_Dimensions()❰
+    Two_D_Dimensions dim;
+    dim.x = 25;
+    dim.y = 30;
+    return dim;
+❱
+◀private: static▶ Two_D_Dimensions ☀Find_Any_Word_Standard_Crossword_Dimensions()❰
+    Two_D_Dimensions dim;
+    dim.x = 5;
+    dim.y = 5;
+    return dim;
+❱
+
+◀private: static▶ int ☀Standard_Crossword_Passthrough_Attempts()❰
+    return 20;
+❱
+◀private: static▶ int ☀Find_Any_Word_Prime_Passthrough_Attempts()❰
+    //doesn't matter because we aren't trying to fit words
+    return 0;
+❱

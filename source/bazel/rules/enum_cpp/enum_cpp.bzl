@@ -10,8 +10,8 @@ def enum_cpp(name, values = []):
         name = enum_target_name,
         srcs = [],
         outs = [explicit_cpp_file, explicit_hpp_file],
-        tools = ["//code/tools/transcompilers/enum_cpp:enum_cpp"],
-        cmd = "$(location //code/tools/transcompilers/enum_cpp:enum_cpp) --enum_name {} --enum_values {} -o $(@D)".format(name, " ".join(values)),
+        tools = ["//code/programs/transcompilers/enum_cpp:enum_cpp"],
+        cmd = "$(location //code/programs/transcompilers/enum_cpp:enum_cpp) --enum_name {} --enum_values {} -o $(@D)".format(name, " ".join(values)),
     )
 
     #compile object file

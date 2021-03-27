@@ -1,0 +1,29 @@
+class
+❪iostream❫
+❪thread❫
+❪string❫
+❪"code/programs/transcompilers/hcp-compiler/programatic/data/headers"❫
+⚯
+❪"code/programs/transcompilers/hcp-compiler/official/unicode_parser_symbols/lib"❫
+❪"code/utilities/types/converters/lib"❫
+⚞⚟
+
+◀public: static▶ std::wstring ☀Get(Headers const& headers)❰
+    std::wstring x;
+    x += Get(headers.public_headers);
+    x += HEADER_SEPERATOR;
+    x += L"\n";
+    x += Get(headers.private_headers);
+    return x;
+❱
+
+◀private: static▶ std::wstring ☀Get(std::vector<std::string> const& headers)❰
+    std::wstring x;
+    for (auto const& it: headers){
+        x += HEADER_INCLUDE_START;
+        x += as_wstring(it);
+        x += HEADER_INCLUDE_END;
+        x += L"\n";
+    }
+    return x;
+❱

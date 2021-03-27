@@ -1,0 +1,68 @@
+class
+❪vector❫
+❪string❫
+⚯
+❪"code/programs/puzzles/advent_of_code/advent_of_code_input_getter"❫
+❪"code/programs/puzzles/advent_of_code/2020/day_1"❫
+❪"code/programs/puzzles/advent_of_code/2020/day_2"❫
+❪"code/programs/puzzles/advent_of_code/2020/day_3"❫
+❪"code/programs/puzzles/advent_of_code/2020/day_4"❫
+❪"code/programs/puzzles/advent_of_code/2020/day_5"❫
+❪"code/programs/puzzles/advent_of_code/2020/day_6"❫
+❪"code/programs/puzzles/advent_of_code/2020/day_7"❫
+❪"code/programs/puzzles/advent_of_code/2020/day_8"❫
+❪"code/programs/puzzles/advent_of_code/2020/day_9"❫
+❪"code/programs/puzzles/advent_of_code/2020/day_10"❫
+⚞⚟
+
+◀public: static▶ void ☀Execute_Needed_Tasks() ❰
+    
+    std::vector<std::string> lines;
+    
+    // lines = Advent_Of_Code_Input_Getter::Get("2020","1");
+    // Day_1::Part_1(lines);
+    // Day_1::Part_2(lines);
+    
+    // lines = Advent_Of_Code_Input_Getter::Get("2020","2");
+    // Day_2::Part_1(lines);
+    // Day_2::Part_2(lines);
+    
+    // lines = Advent_Of_Code_Input_Getter::Get("2020","3");
+    // Day_3::Part_1(lines);
+    // Day_3::Part_2(lines);
+    
+    // lines = Advent_Of_Code_Input_Getter::Get("2020","4");
+    // Day_4::Part_1(lines);
+    // Day_4::Part_2(lines);
+    
+    // lines = Advent_Of_Code_Input_Getter::Get("2020","5");
+    // Day_5::Part_1(lines);
+    // Day_5::Part_2(lines);
+    
+    // lines = Advent_Of_Code_Input_Getter::Get("2020","6");
+    // Day_6::Part_1(lines);
+    // Day_6::Part_2(lines);
+    
+    // lines = Advent_Of_Code_Input_Getter::Get("2020","7");
+    // Day_7::Part_1(lines);
+    // Day_7::Part_2(lines);
+    
+    // lines = Advent_Of_Code_Input_Getter::Get("2020","8");
+    // Day_8::Part_1(lines);
+    // Day_8::Part_2(lines);
+    
+    // lines = Advent_Of_Code_Input_Getter::Get("2020","9");
+    // Day_9::Part_1(lines);
+    // Day_9::Part_2(lines);
+    
+    lines = Advent_Of_Code_Input_Getter::Get("2020","10");
+    Day_10::Part_1(lines);
+    Day_10::Part_2(lines);
+❱
+
+
+
+
+
+
+

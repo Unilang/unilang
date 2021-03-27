@@ -12,8 +12,8 @@ def string_tree_to_static_tree_parser(name):
         name = target_name,
         srcs = [in_file],
         outs = [outfile],
-        tools = ["//code/tools/transcompilers/tree_hcp/string_tree_to_static_tree_parser:string_tree_to_static_tree_parser"],
-        cmd = "$(location //code/tools/transcompilers/tree_hcp/string_tree_to_static_tree_parser:string_tree_to_static_tree_parser) -i $(SRCS) -o $@",
+        tools = ["//code/programs/transcompilers/tree_hcp/string_tree_to_static_tree_parser:string_tree_to_static_tree_parser"],
+        cmd = "$(location //code/programs/transcompilers/tree_hcp/string_tree_to_static_tree_parser:string_tree_to_static_tree_parser) -i $(SRCS) -o $@",
     )
 
     #compile hcp file

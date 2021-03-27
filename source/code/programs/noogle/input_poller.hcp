@@ -1,0 +1,41 @@
+class
+❪"code/programs/noogle/state/noogle_running_stats"❫
+⚯
+❪iostream❫
+❪"getch/include/ch.hpp"❫
+⚞⚟
+
+
+//is there a better way to poll for user input?
+//a separate thread + inf loop seems to work fine.
+◀public: static▶ void ☀Poll_User_Input(Noogle_Running_Stats & stats)❰
+    
+    //arrow keys are multi-character
+    //gotta define them in a map for ch_get
+    t_key keys[] = {
+      {(char *)"[A", K_UP},
+      {(char *)"[B", K_DOWN},
+      {(char *)"[D", K_LEFT},
+      {(char *)"[C", K_RIGHT},
+      {NULL, K_UNK},
+    };
+    
+    while (true){
+        auto key = ch_get(keys);
+        switch(key){
+            case K_UP:
+            break;
+            
+            case K_DOWN:
+            break;
+            
+            case K_LEFT:
+            stats.style = previous_wrap(stats.style);
+            break;
+            
+            case K_RIGHT:
+            stats.style = next_wrap(stats.style);
+            break;
+        }
+    }
+❱

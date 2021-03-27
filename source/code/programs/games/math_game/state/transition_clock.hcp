@@ -1,0 +1,18 @@
+class
+❪string❫
+❪"code/utilities/peripheral/keyboard/joycons/joycons"❫
+❪"code/programs/games/math_game/state/current_screen"❫
+❪SFML/Window.hpp❫
+⚯
+
+⚞⚟
+
+
+◀
+public:
+    
+    bool is_transitioning=false;
+    sf::Clock clock;
+    int transition_duration_ms = 1000;
+    
+▶

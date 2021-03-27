@@ -1,0 +1,88 @@
+class
+❪string❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/programs/reflexivity/settings/reflexive_refresh_settings"❫
+❪"code/programs/reflexivity/publish/all_essay_publisher"❫
+⚯
+❪"code/programs/reflexivity/docker/dockerfile_refresher"❫
+❪"code/programs/reflexivity/bazelrc/bazelrc_refresher"❫
+❪"code/programs/reflexivity/bazel_wrapper/bazel_wrapper_refresher"❫
+❪"code/programs/reflexivity/deps_define/refresh/deps_definition_refresher"❫
+❪"code/programs/reflexivity/settings/reflexive_refresh_settings_getter"❫
+❪"code/utilities/program/common_actions/locale/lib"❫
+❪"code/utilities/program/name/program_name_getter"❫
+❪"code/utilities/output/publisher/essay/essay_publisher"❫
+❪"code/utilities/code/concept_tree_to_image"❫
+❪"code/programs/reflexivity/deps_define/scan/deps_repo_scanner"❫
+❪"code/utilities/build/self_builder"❫
+❪"code/programs/reflexivity/target_build_file_refresher"❫
+❪"code/utilities/logo/unilang_logo_creator"❫
+⚞⚟
+
+
+// Parts of the repository (this repository, right here) need generated programatically.  
+// The reason we need to generate parts programatically, is so we can try to automatically upgrade portions of the repo infrastructure.
+// Like most things, more possibilities open up, when the repo infrastructure is expressed in a data model.
+// So this refresh includes all things generated inside the repository,
+// as well as some things that are exported from the repo.
+    
+
+//other bazel reflectivity tools:
+//https://github.com/bazelbuild/buildtools
+//https://github.com/spotify/bazel-tools
+
+◀public: static▶ void ☀Refresh(Reflexive_Refresh_Settings const& settings)❰
+
+    //utf please
+    Set_English_UTF8_Locale();
+    
+    //things to do
+    Target_Build_File_Refresher::Refresh(settings);
+    Generate_Documentation_Artifacts(settings);
+    Generate_Essays(settings);
+    
+    //Other responsibilities for maintaining a mono-repo:
+    //Outside resources can be fetched reliably (additional mirrors; solutions without Internet)
+    //Ensure 3rd party libraries are up-to-date. Update them as necessary.
+    //Ensure CI is always passing (debug, optimized, sanitizers) (worker bot)
+    //Ensure CI is as fast as possible
+    //Ensure Build is as fast as possible
+    //Flaky Tests / Flaky Builds
+    
+    //dependencies should auto sync with upstream:
+    // we build everything from source via a mirror.
+    // We want code that can automatically compare the mirror to the original source and
+    // let us know how far behind it is. Additionally it could try to update to
+    // the latest and see if everything still builds / passes tests.
+❱
+
+
+◀private: static▶ void ☀Generate_Documentation_Artifacts(Reflexive_Refresh_Settings const& settings)❰
+
+    //generate unilang documentation
+    if (settings.refresh_unilang_documentation){
+        std::cout << "Generating Unilang Documentation..." << std::endl;
+        //Unilang_Documentation_Generator::Generate();
+    }
+    
+    if (settings.refresh_unilang_logo){
+        std::cout << "Generating Unilang Logo..." << std::endl;
+        Unilang_Logo_Creator::Create();
+    }
+    
+    //generate unilang documentation
+    if (settings.refresh_unilang_concept_tree_image){
+        std::cout << "Generating Unilang Concept Tree Image..." << std::endl;
+        Concept_Tree_To_Image::Create();
+    }
+❱
+
+◀private: static▶ void ☀Generate_Essays(Reflexive_Refresh_Settings const& settings)❰
+    if (settings.refresh_essays){
+        std::cout << "Generating Essays..." << std::endl;
+        All_Essay_Publisher::Generate_And_Publish();
+    }
+❱
+

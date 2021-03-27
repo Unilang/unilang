@@ -13,9 +13,9 @@ def bootstrap_hcp(name, deps = []):
         name = hcp_target_name,
         srcs = [explicit_hcp_file],
         outs = [explicit_cpp_file, explicit_hpp_file],
-        tools = ["//code/tools/transcompilers/hcp-compiler/bootstrap:hcp-compiler"],
+        tools = ["//code/programs/transcompilers/hcp-compiler/bootstrap:hcp-compiler"],
         cmd = """
-    $(location //code/tools/transcompilers/hcp-compiler/bootstrap:hcp-compiler) $(SRCS) -o $(@D) --no-utility-functions
+    $(location //code/programs/transcompilers/hcp-compiler/bootstrap:hcp-compiler) $(SRCS) -o $(@D) --no-utility-functions
                  """,
     )
 

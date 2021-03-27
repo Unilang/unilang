@@ -1,0 +1,28 @@
+class
+❪"code/utilities/peripheral/pc/pc_input_state"❫
+❪"code/programs/ide/global_actions/global_action"❫
+⚯
+⚞⚟
+
+◀public: static▶ Global_Action ☀Decide(Pc_Input_State const& state)❰
+
+    if (state.keyboard.f5 == Key_State::PRESSED){
+       return Global_Action::FULLSCREEN;
+    }
+
+    if (state.keyboard.esc == Key_State::PRESSED){
+        return Global_Action::QUIT;
+    }
+    
+    if ((state.keyboard.ctrl == Key_State::DOWN || state.keyboard.ctrl == Key_State::PRESSED) && state.keyboard.s == Key_State::PRESSED){
+        return Global_Action::SAVE;
+    }
+    if ((state.keyboard.ctrl == Key_State::DOWN || state.keyboard.ctrl == Key_State::PRESSED)  && state.keyboard.l == Key_State::PRESSED){
+        return Global_Action::LOAD;
+    }
+    if ((state.keyboard.ctrl == Key_State::DOWN || state.keyboard.ctrl == Key_State::PRESSED) && state.keyboard.b == Key_State::PRESSED){
+        return Global_Action::BUILD;
+    }
+    
+    return Global_Action::NONE;
+❱

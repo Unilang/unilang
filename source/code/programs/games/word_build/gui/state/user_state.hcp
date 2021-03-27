@@ -1,0 +1,39 @@
+class
+❪string❫
+❪vector❫
+❪SFML/Graphics.hpp❫
+❪"code/utilities/data_structures/position/position"❫
+❪"code/programs/games/word_build/gui/core/regular_actions/regular_action"❫
+⚯
+
+⚞⚟
+
+
+◀
+public:
+    
+    //the user's color
+    sf::Color color;
+    Position color_position;
+    
+    //current selection
+    size_t current_letter_selection=0;
+    std::vector<size_t> selected_letters;
+    std::vector<size_t> last_selected_letters_before_clear;
+    
+    //the user's current combo
+    int current_combo=0;
+    int start_combo_timeout_ms=6000;
+    int current_combo_timeout_ms=6000;
+    sf::Clock combo_countdown;
+    
+    
+    std::vector<std::string> found_words;
+    
+    //user's overall stats
+    int total_wins = 0;
+    
+    //historic actions
+    std::vector<Regular_Action> moves;
+    
+▶

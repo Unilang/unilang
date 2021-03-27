@@ -1,0 +1,56 @@
+class
+❪"code/utilities/data_structures/dimensions/two_d_dimensions"❫
+❪"code/programs/games/crossword/settings/crossword_random_place_settings"❫
+❪"code/utilities/colors/defaults/color_palettes"❫
+❪"code/utilities/types/char/optional_letter_case"❫
+❪"code/programs/games/crossword/settings/crossword_output_settings"❫
+❪vector❫
+❪string❫
+❪map❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    //random letter start spread
+    //good if you want to sprinkle some vowels in
+    std::map<std::string,int> starting_char_likelyhood;
+    
+    bool use_probability_select;
+    std::map<std::string,double> choose_char_likelyhood;
+
+    //WORDS
+    //the main words to be searched for in the puzzle
+    std::vector<std::string> words;
+    
+    //decoy words that we want to add to the puzzle but
+    //don't need to be found.  These can be fun easter eggs.
+    //or almost-correct words to throw people off.
+    std::vector<std::string> decoy_words;
+    
+    //words from the oxford dictionary
+    std::vector<std::string> dictionary_words;
+    
+    //the case that the words are in
+    Optional_Letter_Case letter_case;
+    
+    //PUZZLE BOARD
+    //the size of the puzzle
+    Two_D_Dimensions dimensions;
+    
+    //the symbol to use on undecided cells
+    std::string empty_cell_symbol;
+    
+    //FILL STRATEGY
+    //core placing algorithm
+    Crossword_Random_Place_Settings random_place_strategy;
+    
+    //visualization
+    std::string title;
+    int words_per_row;
+    std::vector<Rgb_Color> letter_colors;
+    
+    //output files
+    Crossword_Output_Settings output;
+▶

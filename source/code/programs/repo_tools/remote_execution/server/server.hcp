@@ -1,0 +1,115 @@
+class
+❪iostream❫
+❪string❫
+❪set❫
+❪utility❫
+❪memory❫
+❪grpcpp/grpcpp.h❫
+❪grpcpp/health_check_service_interface.h❫
+❪grpcpp/ext/proto_server_reflection_plugin.h❫
+❪"build/bazel/remote/execution/v2/remote_execution.grpc.pb.h"❫
+❪"code/utilities/formats/serialization/protobuf"❫
+❪"code/programs/repo_tools/remote_execution/server/settings/server_settings"❫
+❪"code/utilities/remote_execution/services/grpc_glue"❫
+❪"code/utilities/output/logging/debug_spdlog"❫
+❪"code/programs/repo_tools/remote_execution/server/capabilities/capabilities_endpoint"❫
+❪"code/programs/repo_tools/remote_execution/server/action_cache/action_cache_endpoint"❫
+❪"code/programs/repo_tools/remote_execution/server/cas/cas_endpoint"❫
+❪"code/programs/repo_tools/remote_execution/server/execution/execution_endpoint"❫
+❪"code/programs/repo_tools/remote_execution/server/bytestream/bytestream_endpoint"❫
+⚯
+⚞⚟
+
+◀public: static▶ void ☀BuildAndRun(Server_Settings const& settings)❰
+
+  spdlog::set_pattern(settings.log_pattern);
+  
+  //setup grpc
+  grpc::EnableDefaultHealthCheckService(settings.enable_default_health_check_service);
+  grpc::reflection::InitProtoReflectionServerBuilderPlugin();
+  
+  
+  grpc::ServerBuilder builder;
+  //auto channel_creds = grpc::SslCredentials(grpc::SslCredentialsOptions());
+  
+  
+ // grpc::SslServerCredentialsOptions sslServerOptions;
+ // grpc::SslServerCredentialsOptions::PemKeyCertPair pkcp;
+ // pkcp.private_key = "";
+ // pkcp.cert_chain  = "";
+ // sslServerOptions.pem_key_cert_pairs.push_back( pkcp );
+ // sslServerOptions.pem_root_certs = "";
+ // grpc::SslServerCredentials( sslServerOptions );
+ 
+  builder.AddListeningPort(settings.address, grpc::InsecureServerCredentials());
+  
+  
+  //add all of the individual services from the proto definitions
+  ExecutionService execution_service(
+  [&](grpc::ServerContext* context, const build::bazel::remote::execution::v2::ExecuteRequest* request, grpc::ServerWriter<google::longrunning::Operation>* writer){
+    return Execution_Endpoint::Execute(settings,context,request,writer);
+  },
+  [&](grpc::ServerContext* context, const build::bazel::remote::execution::v2::WaitExecutionRequest* request, grpc::ServerWriter<google::longrunning::Operation>* writer){
+    return Execution_Endpoint::WaitExecution(settings,context,request,writer);
+  }
+  );
+  
+  ActionCacheService action_cache_service(
+  [&](grpc::ServerContext* context, const build::bazel::remote::execution::v2::GetActionResultRequest* request, build::bazel::remote::execution::v2::ActionResult* response){
+    return Action_Cache_Endpoint::GetActionResult(settings,context,request,response);
+  },
+  [&](grpc::ServerContext* context, const build::bazel::remote::execution::v2::UpdateActionResultRequest* request, build::bazel::remote::execution::v2::ActionResult* response){
+    return Action_Cache_Endpoint::UpdateActionResult(settings,context,request,response);
+  }
+  );
+  
+  ContentAddressableStorageService content_addressable_storage_service(
+  [&](grpc::ServerContext* context, const build::bazel::remote::execution::v2::FindMissingBlobsRequest* request, build::bazel::remote::execution::v2::FindMissingBlobsResponse* response){
+    return Cas_Endpoint::Find_Missing_Blobs(settings,context,request,response);
+  },
+  [&](grpc::ServerContext* context, const build::bazel::remote::execution::v2::BatchUpdateBlobsRequest* request, build::bazel::remote::execution::v2::BatchUpdateBlobsResponse* response){
+    return Cas_Endpoint::Batch_Update_Blobs(settings,context,request,response);
+  },
+  [&](grpc::ServerContext* context, const build::bazel::remote::execution::v2::BatchReadBlobsRequest* request, build::bazel::remote::execution::v2::BatchReadBlobsResponse* response){
+    return Cas_Endpoint::Batch_Read_Blobs(settings,context,request,response);
+  },
+  [&](grpc::ServerContext* context, const build::bazel::remote::execution::v2::GetTreeRequest* request, grpc::ServerWriter< build::bazel::remote::execution::v2::GetTreeResponse>* writer){
+    return Cas_Endpoint::Get_Tree(settings,context,request,writer);
+  }
+  );
+  
+  CapabilitiesService capabilities_service(
+  [&](grpc::ServerContext* context, const build::bazel::remote::execution::v2::GetCapabilitiesRequest* request, build::bazel::remote::execution::v2::ServerCapabilities* response){
+    return Capabilities_Endpoint::GetCapabilities(settings,context,request,response);
+  });
+  
+  BytestreamService bytestream_service(
+  [&](grpc::ServerContext* context, const google::bytestream::ReadRequest* request, grpc::ServerWriter< google::bytestream::ReadResponse>* writer){
+    return Bytestream_Endpoint::Read(context,request,writer);
+  },
+  [&](grpc::ServerContext* context, grpc::ServerReader< google::bytestream::WriteRequest>* reader, google::bytestream::WriteResponse* response){
+    return Bytestream_Endpoint::Write(context,reader,response);
+  },
+  [&](grpc::ServerContext* context, const google::bytestream::QueryWriteStatusRequest* request, google::bytestream::QueryWriteStatusResponse* response){
+    return Bytestream_Endpoint::QueryWriteStatus(context,request,response);
+  });
+  
+  builder.RegisterService(&execution_service);
+  builder.RegisterService(&action_cache_service);
+  builder.RegisterService(&content_addressable_storage_service);
+  builder.RegisterService(&capabilities_service);
+  builder.RegisterService(&bytestream_service);
+  
+  
+  // Finally assemble the server.
+  std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
+  
+  std::cout << "Server listening on " << settings.address << std::endl;
+
+  // Wait for the server to shutdown. Note that some other thread must be
+  // responsible for shutting down the server for this call to ever return.
+  server->Wait();
+  
+  return;
+❱
+

@@ -1,0 +1,196 @@
+class
+❪"code/programs/deskstock/settings/deskstock_settings"❫
+⚯
+❪"code/utilities/web/endpoints/stock/stock_getter"❫
+❪"code/utilities/web/lib"❫
+❪iostream❫
+⚞⚟
+
+
+// the default settings are to change the terminal color based on uber's stock price
+◀public: static▶ Deskstock_Settings ☀Get() ❰
+    Deskstock_Settings settings;
+    
+    //START UP SETTINGS
+    settings.startup.needed_programs.check = true;
+    settings.startup.needed_programs.programs.emplace_back("redshift");
+    settings.startup.needed_programs.programs.emplace_back("dconf");
+    settings.startup.locale.set = true;
+    settings.startup.locale.global = "en_US.UTF-8";
+    settings.startup.locale.cout = "en_US.UTF-8";
+    
+    //SCREEN TINTING
+    settings.system_effects.effect_screen_tint = Clasic_Good_Bad_Screen();
+    
+    //TERMINAL TINTING
+    settings.system_effects.effect_terminal = Clasic_Good_Bad_Terminal();
+    settings.system_effects.mouse_effect_terminal = Clasic_Mouse_Terminal();
+    
+    
+    //CUSTOM ACTION
+    settings.system_effects.effect_custom.enable= false;
+    settings.system_effects.effect_custom.user_commands.emplace_back("echo the current value is {{value}}");
+    
+    
+    
+    settings.monitor.ms_to_fetch_changing_data = 1000;
+    settings.monitor.only_on_change = true;
+    
+    //WEB FETCHING
+    settings.how_to_get_value.through_web = Fetching_Uber_Stock_Price_Change();
+    
+    //SIMULATE FETCHING
+    settings.how_to_get_value.through_simulation.simulate = false;
+    settings.how_to_get_value.through_simulation.cycled_values.emplace_back(0);
+    settings.how_to_get_value.through_simulation.cycled_values.emplace_back(1);
+    settings.how_to_get_value.through_simulation.cycled_values.emplace_back(2);
+    settings.how_to_get_value.through_simulation.cycled_values.emplace_back(3);
+    settings.how_to_get_value.through_simulation.cycled_values.emplace_back(4);
+    settings.how_to_get_value.through_simulation.cycled_values.emplace_back(-1);
+    settings.how_to_get_value.through_simulation.cycled_values.emplace_back(-2);
+    settings.how_to_get_value.through_simulation.cycled_values.emplace_back(-3);
+    settings.how_to_get_value.through_simulation.cycled_values.emplace_back(-4);
+    
+    //custom commands
+    settings.how_to_get_value.through_custom.enable = false;
+    settings.how_to_get_value.through_custom.user_commands.emplace_back("expr `date +%S` % 5");
+    
+    settings.how_to_get_value.through_mouse.enable = false;
+    
+    return settings;
+❱
+
+◀private: static▶ Gama_Slider ☀No_Op_Gama_Slider() ❰
+    Gama_Slider slider;
+    slider.expected_max_difference = 0;
+    slider.low_rgb_value = 0;
+    slider.high_rgb_value = 0;
+    slider.difference_until_change = 0;
+    return slider;
+❱
+
+◀private: static▶ Web_Json_Extraction_Settings ☀Fetching_Uber_Stock_Price_Change() ❰
+    Web_Json_Extraction_Settings settings;
+    settings.fetch.strategy = Html_Fetch_Strategy::CURL_LIB;
+    settings.fetch.url = Stock_Getter::Yahoo_Finance_Url("UBER");
+    settings.extract.desired_key = "regularMarketChangePercent";
+    
+    {
+        Json_Extraction_Step step;
+        step.key = "quoteResponse";
+        step.index = false;
+        settings.extract.steps.emplace_back(step);
+    }
+    {
+        Json_Extraction_Step step;
+        step.key = "result";
+        step.index = false;
+        settings.extract.steps.emplace_back(step);
+    }
+    {
+        Json_Extraction_Step step;
+        step.key = "0";
+        step.index = true;
+        settings.extract.steps.emplace_back(step);
+    }
+    return settings;
+❱
+
+◀private: static▶ Good_Bad_Terminal_Settings ☀Clasic_Good_Bad_Terminal() ❰
+    Good_Bad_Terminal_Settings settings;
+
+    //changing value to analyze
+    settings.standard_value = 0;
+    settings.current_value = 0;
+    
+    //above mood (good)
+    settings.good.red = No_Op_Gama_Slider();
+    settings.good.green.expected_max_difference = 5.0;
+    settings.good.green.low_rgb_value = 50;
+    settings.good.green.high_rgb_value = 255;
+    settings.good.green.difference_until_change = 0;
+    settings.good.blue = No_Op_Gama_Slider();
+    
+    //below mood (bad)
+    settings.bad.red.expected_max_difference = 5.0;
+    settings.bad.red.low_rgb_value = 50;
+    settings.bad.red.high_rgb_value = 255;
+    settings.bad.red.difference_until_change = 0;
+    settings.bad.green = No_Op_Gama_Slider();
+    settings.bad.blue = No_Op_Gama_Slider();
+    
+    settings.debug_data = false;
+    settings.change_background = true;
+    
+    return settings;
+❱
+
+◀private: static▶ Mouse_Terminal_Settings ☀Clasic_Mouse_Terminal() ❰
+    Mouse_Terminal_Settings settings;
+
+    //changing value to analyze
+    settings.standard_value = 0;
+    settings.current_x = 0;
+    settings.current_y = 0;
+    
+
+    settings.red.slider.expected_max_difference = 0;
+    settings.red.slider.low_rgb_value = 0;
+    settings.red.slider.high_rgb_value = 0;
+    settings.red.slider.difference_until_change = 0;
+    settings.red.binded = Optional_Two_D_Coordinate_Dimension::NONE;
+    
+    settings.green.slider.expected_max_difference = 1920;
+    settings.green.slider.low_rgb_value = 0;
+    settings.green.slider.high_rgb_value = 255;
+    settings.green.slider.difference_until_change = 0;
+    settings.green.binded = Optional_Two_D_Coordinate_Dimension::X;
+    
+    settings.blue.slider.expected_max_difference = 1080;
+    settings.blue.slider.low_rgb_value = 0;
+    settings.blue.slider.high_rgb_value = 255;
+    settings.blue.slider.difference_until_change = 0;
+    settings.blue.binded = Optional_Two_D_Coordinate_Dimension::Y;
+    
+    
+    settings.debug_data = false;
+    settings.change_background = true;
+    
+    return settings;
+❱
+
+◀private: static▶ Good_Bad_Screen_Tint_Settings ☀Clasic_Good_Bad_Screen() ❰
+    Good_Bad_Screen_Tint_Settings settings;
+    
+    //changing value to analyze
+    settings.standard_value = 0;
+    settings.current_value = 0;
+    
+    //above mood (good)
+    settings.good.green = No_Op_Gama_Slider();
+    settings.good.red.expected_max_difference = 5.0;
+    settings.good.red.low_rgb_value = 0;
+    settings.good.red.high_rgb_value = 1;
+    settings.good.red.difference_until_change = 0;
+    settings.good.blue.expected_max_difference = 5.0;
+    settings.good.blue.low_rgb_value = 0;
+    settings.good.blue.high_rgb_value = 1;
+    settings.good.blue.difference_until_change = 0;
+    
+    //below mood (bad)
+    settings.bad.red = No_Op_Gama_Slider();
+    settings.bad.green.expected_max_difference = 5.0;
+    settings.bad.green.low_rgb_value = 0;
+    settings.bad.green.high_rgb_value = 1;
+    settings.bad.green.difference_until_change = 0;
+    settings.bad.blue.expected_max_difference = 5.0;
+    settings.bad.blue.low_rgb_value = 0;
+    settings.bad.blue.high_rgb_value = 1;
+    settings.bad.blue.difference_until_change = 0;
+    
+    settings.debug_data = false;
+    settings.show_screen_tint = false;
+    settings.should_reset_when_off = true;
+    
+    return settings;
+❱

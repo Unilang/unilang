@@ -9,9 +9,9 @@ class
 ❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
 ❪"code/utilities/peripheral/mouse/state/mouse_state"❫
 ❪"code/utilities/peripheral/pc/pc_input_state"❫
-❪"code/tools/ide/settings/ide_settings"❫
-❪"code/tools/ide/frame/everything_draw_settings"❫
-❪"code/tools/ide/frame/everything_drawer"❫
+❪"code/programs/ide/settings/ide_settings"❫
+❪"code/programs/ide/frame/everything_draw_settings"❫
+❪"code/programs/ide/frame/everything_drawer"❫
 ❪"code/utilities/filesystem/files/temp/incrementing_tmp_images"❫
 ❪"src/tree.hh"❫
 ⚯
@@ -25,7 +25,7 @@ class
 ❪"code/utilities/filesystem/paths/lib"❫
 ❪"code/utilities/types/tree/converters/tree_full_paths_getter"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/string_tree_to_buttoned_face_tree"❫
-❪"code/tools/ide/settings/ide_settings_getter"❫
+❪"code/programs/ide/settings/ide_settings_getter"❫
 ❪"code/utilities/filesystem/files/temp/temp_dir"❫
 ❪"code/utilities/peripheral/keyboard/state/key_codes"❫
 ❪"code/utilities/program/wrappers/convert/settings/image_animated_settings"❫

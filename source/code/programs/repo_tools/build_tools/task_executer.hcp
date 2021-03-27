@@ -1,0 +1,58 @@
+class
+❪"code/programs/repo_tools/build_tools/settings/settings_getter"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/program/wrappers/git/repo_establisher/repo_establisher"❫
+❪"code/utilities/program/wrappers/bazel/setup/wrapper/bazel_wrapper_deriver"❫
+❪"code/utilities/program/wrappers/bazel/setup/config/bazel_config_deriver"❫
+❪"code/utilities/program/wrappers/bazel/bazel_runner"❫
+❪"code/utilities/data_structures/counters/unique_counter/unique_counter"❫
+❪"code/utilities/types/strings/observers/path/lib"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
+❪"code/utilities/types/strings/observers/path/lib"❫
+⚯
+⚞⚟
+
+
+◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
+
+    //get the default settings modified by user's program options.
+    auto settings = Settings_Getter::Get(options);
+    
+    //before starting the analysis, we either clone or move into an existing repo.
+    //This is chosen by the user and regardless of their choice, we will end up at the root of a repository.
+    //NOTE: we want to avoid cloning the repo more than once from a branch as the branch may change.
+    //for example, master would be changing frequently and me affect results.
+    //so instead we use the same repository for the whole analysis.
+    Maybe_Output_And_Flush_With_Newline(settings.verbose,"setting up repo...");
+    auto e_repo = Repo_Establisher::Establish_And_Get_Path(settings.repo);
+    
+    //try to derive the correct bazel program if its not known.
+    Bazel_Wrapper_Deriver::Possibly_Derive_Bazel_Runner(settings.setup.bazel_wrapper,e_repo.path);
+    
+    //try to derive the correct bazel configs to use for the environments
+    Bazel_Config_Deriver::Possibly_Derive_Bazel_Config_Settings(settings.setup.config_settings,e_repo.path);
+    
+    Maybe_Output_And_Flush_With_Newline(settings.verbose,"building target...");
+    auto bazel = Prepend_Cd_Path(settings.setup.bazel_wrapper.program_name,e_repo.path);
+    auto spawns = Bazel_Runner::Get_Spawn_Information(bazel,settings.build,settings.setup.config_settings,settings.target_name);
+    
+    //calculate build tools used
+    Maybe_Output_And_Flush_With_Newline(settings.verbose,"calculate build tool usage...");
+    Unique_Counter<std::string> build_tools;
+    for (auto const& it: spawns){
+        build_tools.Add(Get_Synthesized_Program_Name(it));
+    }
+    std::cout << build_tools.hash_table << std::endl;
+❱
+
+
+◀private: static▶ std::string ☀Get_Synthesized_Program_Name(tools::protos::SpawnExec const& s)❰
+        std::string program_name = "";
+        auto command_args = s.command_args();
+        if (!command_args.empty()){
+            program_name = command_args[0];
+        }
+        program_name = Get_Path_Basename(program_name);
+        return program_name;
+❱

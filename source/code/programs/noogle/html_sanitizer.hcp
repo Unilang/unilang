@@ -1,0 +1,76 @@
+class
+❪"code/programs/noogle/settings/noogle_settings"❫
+❪"code/utilities/data_structures/queue/finishable_safe_queue.h"❫
+❪"code/programs/noogle/state/noogle_running_stats"❫
+❪unordered_set❫
+⚯
+❪iostream❫
+❪thread❫
+❪"code/utilities/types/strings/observers/other/lib"❫
+❪"code/utilities/web/lib"❫
+❪"code/utilities/web/url/url_parser"❫
+❪"code/utilities/types/sets/lib"❫
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/utilities/types/strings/transformers/html/html_raw_text_getter"❫
+⚞⚟
+
+◀public: static▶ void ☀Extract_Raw_Text(Noogle_Settings const& settings, Noogle_Running_Stats & stats, FinishableSafeQueue<std::string> & html_results, FinishableSafeQueue<std::string> & sanitized_text)❰
+    
+    int i = 0;
+    
+    while(!html_results.is_finished() || !html_results.is_empty()){
+        
+        //try to sanitize the html
+        auto str = html_results.get();
+        auto parsed = parse_out_text_from_html(str);
+        
+        //sanitize failed
+        if (parsed.empty()){
+            
+            //possibly store
+            if (settings.html_sanitize.store_failed_parsed_pages){
+                Add_Results(sanitized_text,stats,str);
+            }
+            
+            //possibly save
+           if (settings.html_sanitize.write_failed_html_files){
+                Write_To_File(settings.html_sanitize.dump_failed_html_location + std::to_string(i),str);
+                ++i;
+            }
+        }
+        
+        //sanitize success
+        else{
+            
+            //possibly store
+            if (settings.html_sanitize.store_sucessful_parsed_pages){
+                Add_Results(sanitized_text,stats,parsed);
+            }
+            
+            //possibly save
+           if (settings.html_sanitize.write_successful_html_files){
+                Write_To_File(settings.html_sanitize.dump_successful_html_location + std::to_string(i),parsed);
+                ++i;
+            }
+        }
+    }
+    sanitized_text.mark_finished();
+    stats.sanitized.finished = true;
+❱
+
+◀private: static▶ void ☀Add_Results(FinishableSafeQueue<std::string> & sanitized_text, Noogle_Running_Stats & stats, std::string const& parsed)❰
+    ++stats.sanitized.total;
+    sanitized_text.add(parsed);
+    ++stats.sanitized.current;
+❱
+
+◀private: static▶ std::string ☀parse_out_text_from_html(std::string str)❰
+    try{
+        auto result = Html_Raw_Text_Getter::parse_away_html_tags(str);
+        return result;
+    }
+    catch(...){
+        //we couldn't sanitize the page
+    }
+    return "";
+❱

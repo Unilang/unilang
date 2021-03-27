@@ -1,0 +1,52 @@
+class
+❪"code/programs/ide/settings/ide_settings"❫
+❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
+❪"code/utilities/peripheral/mouse/state/mouse_state"❫
+❪"code/utilities/peripheral/pc/pc_input_state"❫
+❪"SDL.h"❫
+⚯
+❪"code/utilities/data_structures/graphics/objects/mouse/draw/mouse_selection_drawer"❫
+❪"code/utilities/peripheral/mouse/state/mouse_position_getter"❫
+❪"code/utilities/data_structures/graphics/objects/mouse/events/mouse_events_checker"❫
+❪"code/utilities/graphics/imgui/window/window_position_finder"❫
+❪"code/utilities/data_structures/graphics/objects/label/label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/cursor/label_cursor_action_doer"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/peripheral/keyboard/key_detector"❫
+❪"code/utilities/data_structures/graphics/objects/mouse/draw/mouse_frame_getter"❫
+❪"code/programs/ide/frame/ide_element_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/mouse/draw/view_anchor_adjuster"❫
+❪"code/utilities/peripheral/keyboard/state/imgui_keyboard_state_getter"❫
+❪"code/utilities/peripheral/pc/pc_input_state_getter"❫
+❪"code/utilities/graphics/sdl/sdl_fullscreener"❫
+❪"code/programs/ide/global_actions/global_action_handler"❫
+❪"code/programs/ide/frame/everything_drawer"❫
+⚞⚟
+
+
+
+◀public: static▶ Frame_Elements ☀each_frame(Ide_Settings & settings, SDL_Window* window)❰
+    
+    //lets make sure the exact same mouse state is used for the entire frame of logic.
+    //this will avoid any issues with a fast moving mouse whose position may change faster than the frame rate.
+    //Let's do the same situation with the keyboard.
+    //Basically all of the user's input keyboard/mouse remains immutable from this point forward.
+    //It just makes testing and automation of the IDE code easier as well.
+    settings.desktop.previous_input = settings.desktop.input;
+    settings.desktop.input = Pc_Input_State_Getter::Get();
+    
+    //before deciding all the frame elements to draw, adjust the global viewing anchor.
+    //This is the (possibly infinite) surface spread of frame elements. We intend it to be an infinite plane larger than anyone's screen.
+    //a user will find ways to view sub portions of this space (likely represented by the size of their monitor).
+    //the view anchor represents the (0,0) of their adjustable sub-viewing window location.
+    View_Anchor_Adjuster::Adjust(settings.desktop.mouse,settings.desktop.input.mouse);
+    
+    //this decides everything needed by the frame drawer
+    //the data structure returned here is a representation that could be drawn anywhere
+    //to your screen, to an image, or dumped as json.
+    Everything_Draw_Settings draw_settings;
+    auto frames = Everything_Drawer::Draw(settings,draw_settings,settings.desktop.input);
+    
+    return frames;
+❱

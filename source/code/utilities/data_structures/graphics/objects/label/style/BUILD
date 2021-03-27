@@ -38,7 +38,7 @@ hcp(
 hcp(
     name = "default_label_styles",
     deps = [
-        "//code/tools/ide/settings:ide_settings",
+        "//code/programs/ide/settings:ide_settings",
         "//code/utilities/colors/defaults:color_defaults",
         "//code/utilities/colors/defaults:rectangle_shades",
         "//code/utilities/colors/transformers:color_shader",

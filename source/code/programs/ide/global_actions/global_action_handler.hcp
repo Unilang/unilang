@@ -1,0 +1,80 @@
+class
+❪"code/programs/ide/settings/ide_settings"❫
+❪"code/programs/ide/global_actions/global_action"❫
+❪"SDL.h"❫
+⚯
+❪"code/utilities/graphics/sdl/sdl_fullscreener"❫
+❪"code/programs/ide/global_actions/global_action_decider"❫
+❪"code/utilities/program/wrappers/zenity/file_selector/file_selector"❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/utilities/code/concept_string_tree_parser"❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/buildable_schema_faced_tree_tokenizer"❫
+❪"code/utilities/formats/json/converters/json_file_io"❫
+❪"code/programs/ide/global_actions/save_state_serializer"❫
+❪"code/utilities/code/save/state_to_code_converter"❫
+⚞⚟
+
+
+◀public: static▶ void ☀Handle(Ide_Settings & settings, SDL_Window* window)❰
+
+    //from hotkey
+    auto action = Global_Action_Decider::Decide(settings.desktop.input);
+    
+    //from menu
+    //todo
+    
+    Perform_Global_Action(settings,window,action);
+    
+❱
+
+◀private: static▶ void ☀Perform_Global_Action(Ide_Settings & settings, SDL_Window* window, Global_Action action)❰
+
+    if (action == Global_Action::FULLSCREEN){
+       Toggle_Fullscreen(settings,window);
+    }
+    else if (action == Global_Action::SAVE){
+        Save_State(settings,window);
+    }
+    else if (action == Global_Action::LOAD){
+        Load_State(settings,window);
+    }
+    else if (action == Global_Action::BUILD){
+        Build(settings,window);
+    }
+    else if (action == Global_Action::QUIT){
+        Exit(settings,window);
+    }
+❱
+
+◀private: static▶ void ☀Toggle_Fullscreen(Ide_Settings & settings, SDL_Window* window)❰
+    Sdl_Fullscreener::Toggle_Fullscreen(settings.desktop.init.main_window,window);
+❱
+
+◀private: static▶ void ☀Save_State(Ide_Settings & settings, SDL_Window* window)❰
+    if (settings.desktop.save.file_name.empty()){
+        settings.desktop.save.file_name = File_Selector::Typical_Save_As();
+    }
+    
+    Save_Unilang_File(settings,window);
+❱
+◀private: static▶ void ☀Load_State(Ide_Settings & settings, SDL_Window* window)❰
+    auto load_file = File_Selector::Typical_Load();
+    if (!load_file.empty()){
+        settings.desktop.save.file_name = load_file;
+        Load_Unilang_File(settings,window);
+    }
+❱
+◀private: static▶ void ☀Exit(Ide_Settings & settings, SDL_Window* window)❰
+    exit(0);
+❱
+◀private: static▶ void ☀Build(Ide_Settings & settings, SDL_Window* window)❰
+    auto code = State_To_Code_Converter::Convert(settings.elements);
+❱
+
+◀private: static▶ void ☀Load_Unilang_File(Ide_Settings & settings, SDL_Window* window)❰
+    Save_State_Serializer::Load(settings);
+❱
+◀private: static▶ void ☀Save_Unilang_File(Ide_Settings & settings, SDL_Window* window)❰
+    Save_State_Serializer::Save(settings);
+❱

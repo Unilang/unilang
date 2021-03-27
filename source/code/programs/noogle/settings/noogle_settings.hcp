@@ -1,0 +1,41 @@
+class
+❪vector❫
+❪"code/utilities/web/automate/browser/browser_settings"❫
+❪"code/utilities/web/search_engines/search_engine_url_devise_settings"❫
+❪"code/programs/noogle/settings/query_expand_settings"❫
+❪"code/programs/noogle/settings/url_filter_settings"❫
+❪"code/programs/noogle/settings/word_filter_settings"❫
+❪"code/programs/noogle/settings/token_identifier_settings"❫
+❪"code/programs/noogle/settings/search_engine_credentials"❫
+❪"code/programs/noogle/settings/result_to_html_settings"❫
+❪"code/programs/noogle/settings/html_sanitize_settings"❫
+❪"code/programs/noogle/settings/show_results_settings"❫
+⚯
+
+⚞⚟
+
+◀
+public:
+    
+    Browser_Settings ፠browser፠;
+    
+    //settings for building queries to search engines
+    Query_Expand_Settings ፠query_expand፠;
+    Search_Engine_Url_Devise_Settings ፠devise፠;
+    Search_Engine_Credentials ፠credentials፠;
+    
+    //settings for turning search engine results into html
+    Url_Filter_Settings ፠url_filter፠;
+    Result_To_Html_Settings ፠result_to_html፠;
+    Html_Sanitize_Settings ፠html_sanitize፠;
+    bool ፠stop_at_max_sites፠ = false;
+    int ፠max_sites_count፠ = 200;
+    
+    
+    //settings on extracting noogle results
+    Token_Identifier_Settings ፠token_identifier፠;
+    Word_Filter_Settings ፠word_filter፠;
+    
+    Show_Results_Settings ፠show፠;
+    
+▶

@@ -1,0 +1,16 @@
+class
+❪vector❫
+❪string❫
+❪utility❫
+❪"code/programs/repo_tools/build_determinism/data/determinism_problem_type"❫
+⚯
+
+⚞⚟
+
+◀
+public:
+    
+    Determinism_Problem_Type type;
+    std::string file_path; //might be empty if problem type does not apply
+    std::string message;
+▶

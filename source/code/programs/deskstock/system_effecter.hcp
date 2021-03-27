@@ -1,0 +1,52 @@
+class
+❪vector❫
+❪"code/programs/deskstock/settings/deskstock_state"❫
+⚯
+❪"code/utilities/peripheral/screen/screen_tint_setter"❫
+❪"code/utilities/types/strings/transformers/search_replace/lib"❫
+❪"code/utilities/program/call/lib"❫
+❪"code/utilities/terminal/good_bad/good_bad_terminal_changer"❫
+❪"code/utilities/terminal/mouse/mouse_terminal_changer"❫
+⚞⚟
+
+
+◀public: static▶ void ☀Effect_The_System(Deskstock_State & state, std::vector<float> const& currents)❰
+
+
+    
+    if (currents.size() == 0){
+    }
+    
+    // single value effectors
+    else if (currents.size() == 1){
+        auto current = currents[0];
+        
+        //effect 1
+        state.current_settings.system_effects.effect_screen_tint.current_value = current;
+        Screen_Tint_Setter::Adjust_Screen_On_Good_Bad_Evaluation(state.current_settings.system_effects.effect_screen_tint);
+        
+        //effect 2
+        if (state.current_settings.system_effects.effect_custom.enable){
+            for (auto const& it: state.current_settings.system_effects.effect_custom.user_commands){
+                auto real_command = string_replace_all(it,"{{value}}",std::to_string(current));
+                system(real_command);
+            }
+        }
+        
+        //effect 3
+        state.current_settings.system_effects.effect_terminal.current_value = current;
+        Good_Bad_Terminal_Changer::Change_Terminal(state.current_settings.system_effects.effect_terminal);
+    }
+    
+    //dual value effectors
+    else if (currents.size() == 2){
+        //std::cout << currents[0] << " " << currents[1] << std::endl;
+        
+        state.current_settings.system_effects.mouse_effect_terminal.current_x = currents[0];
+        state.current_settings.system_effects.mouse_effect_terminal.current_y = currents[1];
+        Mouse_Terminal_Changer::Change_Terminal(state.current_settings.system_effects.mouse_effect_terminal);
+    }
+    
+    //effect n
+    //TODO(anyone):  Add additional system effects to perform on a changing value
+❱

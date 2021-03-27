@@ -1,0 +1,17 @@
+class
+❪string❫
+❪"code/utilities/web/endpoints/gcal/gcal_credentials"❫
+❪"code/programs/gcalviz/settings/export_settings"❫
+⚯
+
+⚞⚟
+
+◀
+public:
+
+    Gcal_Credentials ፠credentials፠;
+    Export_Settings ፠exports፠;
+    
+    
+
+▶

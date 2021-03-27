@@ -10,10 +10,10 @@ load("//bazel/rules/enum_cpp:enum_cpp.bzl", "enum_cpp")
 hcp(
     name = "unilang_hello_world_gif",
     deps = [
-        "//code/tools/ide/frame:everything_draw_settings",
-        "//code/tools/ide/frame:everything_drawer",
-        "//code/tools/ide/settings:ide_settings",
-        "//code/tools/ide/settings:ide_settings_getter",
+        "//code/programs/ide/frame:everything_draw_settings",
+        "//code/programs/ide/frame:everything_drawer",
+        "//code/programs/ide/settings:ide_settings",
+        "//code/programs/ide/settings:ide_settings_getter",
         "//code/utilities/code:concept_string_tree_getter",
         "//code/utilities/data_structures/graphics/bitmap/premade:tree_button",
         "//code/utilities/data_structures/graphics/objects:frame_elements",

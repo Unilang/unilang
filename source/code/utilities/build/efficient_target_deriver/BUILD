@@ -7,8 +7,8 @@ load("//bazel/rules/cpp:main.bzl", "cpp_main")
 hcp(
     name = "efficient_target_deriver",
     deps = [
-        "//code/tools/repo_tools/bazel_profile_slow_cc_files:results_filter",
-        "//code/tools/repo_tools/bazel_profile_slow_cc_files:results_publisher",
+        "//code/programs/repo_tools/bazel_profile_slow_cc_files:results_filter",
+        "//code/programs/repo_tools/bazel_profile_slow_cc_files:results_publisher",
         "//code/utilities/build/build_repo_establisher:build_repo_settings",
         "//code/utilities/build/efficient_target_deriver:target_augment_settings",
         "//code/utilities/filesystem/files/creating:lib",

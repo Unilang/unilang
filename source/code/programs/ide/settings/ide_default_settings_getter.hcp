@@ -1,0 +1,193 @@
+class
+❪string❫
+❪unordered_map❫
+❪"code/utilities/data_structures/graphics/bitmap/full_color_bitmap/full_color_bitmap"❫
+❪"code/utilities/fonts/bdf/settings/character_segment"❫
+❪"code/programs/ide/settings/ide_settings"❫
+❪"code/utilities/data_structures/graphics/objects/label/data/label_settings"❫
+❪"code/utilities/data_structures/graphics/objects/mouse/events/mouse_events_checker"❫
+❪"code/utilities/graphics/imgui/render/elements/rectangle_drawer"❫
+❪"code/utilities/graphics/imgui/render/elements/full_color_bitmap_drawer"❫
+❪"code/utilities/data_structures/graphics/text/text_to_bitmap"❫
+❪"code/utilities/graphics/imgui/ui_renders"❫
+❪"code/utilities/data_structures/graphics/bitmap/pixel/pixel_slider"❫
+❪"code/utilities/colors/defaults/rectangle_shades"❫
+⚯
+❪"code/utilities/data_structures/graphics/objects/label/style/default_label_styles"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_converter"❫
+❪"code/utilities/data_structures/graphics/objects/mouse/premade/standard_mouse"❫
+❪"code/utilities/fonts/bdf/complete/unilang/unilang_segments"❫
+❪"code/utilities/fonts/bdf/character_maps/character_maps"❫
+❪"code/utilities/fonts/bdf/character_maps/character_maps_getter"❫
+❪"code/utilities/graphics/imgui/background/background_settings_getter"❫
+❪"code/utilities/execution/thread_pool_getter"❫
+❪"code/utilities/data_structures/graphics/objects/slider/default_sliders"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/tree_expand_symbol"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/tree_button"❫
+❪"code/utilities/fonts/bdf/complete/unilang/unilang_character_maps"❫
+❪"code/utilities/data_structures/graphics/objects/cursor/premade/blue_cursor"❫
+❪"code/utilities/graphics/sdl/standard_sdl_init_settings"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/premade/faced_label_premades"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/premade/buttoned_faced_label_premades"❫
+❪"code/utilities/code/concept_string_tree_getter"❫
+❪"code/utilities/data_structures/tree/generic/string_tree_to_child_lookup_map"❫
+❪"code/utilities/data_structures/graphics/gui_desktop/gui_desktop_getter"❫
+❪"code/utilities/code/style_theme/style_lookup_map_getter"❫
+❪"code/utilities/data_structures/graphics/image/positioned_image_data"❫
+❪"code/utilities/image/stb_image_setter"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/buildable_schema_faced_tree_default_schema"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/style_theme_applier"❫
+⚞⚟
+
+◀public: static▶ Ide_Settings ☀Get()❰
+
+    //SDL and Imgui related init settings
+    Ide_Settings x;
+    x.desktop = Gui_Desktop_Getter::Get();
+    
+    // {
+    //   Positioned_Image_Data img;
+    //   img.orign_filepath = "/home/luxe/Desktop/face2.gif";
+      
+    //   //add
+    //   Ide_Element e;
+    //   e.element = img;
+    //   x.elements.types.emplace_back(e);
+    // }
+    
+    // {
+    //   Positioned_Animated_Image_Data img;
+    //   img.orign_filepath = "/home/luxe/Desktop/face2.gif";
+      
+    //   //add
+    //   Ide_Element e;
+    //   e.element = img;
+    //   x.elements.types.emplace_back(e);
+    // }
+    
+    Add_Generic_Test_Tree(x); //good for experiments
+    Add_Starting_Code_Tree(x);
+  
+    
+    
+    return x;
+❱
+
+
+◀private: static▶ void  ☀Add_Starting_Code_Tree(Ide_Settings & x)❰
+
+      //build
+      Positioned_Buildable_Schema_Faced_Tree btree;
+      btree.state.tree.state.structure = Faced_Tree_Example();
+      btree.state.schema = Buildable_Schema_Faced_Tree_Default_Schema::Get();
+      btree.state.schema_styles = Style_Lookup_Map_Getter::Get_Default_Theme();
+      btree.pos.x = 20;
+      btree.pos.y = 0;
+      
+      //apply initial theme
+      Style_Theme_Applier::Apply_Theme(btree.state);
+      
+      //add
+      Ide_Element e;
+      e.element = btree;
+      x.elements.types.emplace_back(e);
+❱
+
+◀private: static▶ void  ☀Add_Generic_Test_Tree(Ide_Settings & x)❰
+
+      //build
+      Positioned_Buildable_Face_Tree gtree;
+      gtree.state.structure = Faced_Tree_Example2();
+      gtree.pos.x = 400;
+      gtree.pos.y = 100;
+      
+      //add
+      Ide_Element e;
+      e.element = gtree;
+      x.elements.types.emplace_back(e);
+❱
+
+◀private: static▶ Button_Face_Tree ☀Faced_Tree_Example()❰
+    Button_Face_Tree tr;
+    
+    auto x = Buttoned_Faced_Label_Premades::Opened_Unilang_Root_Node();
+    
+   auto top = tr.nodes.begin();
+   auto root=tr.nodes.insert(top,x);
+   //auto n1=tr.nodes.append_child(root,x);
+   //auto n2=tr.nodes.append_child(root,x);
+   //auto n3=tr.nodes.append_child(root,x);
+   //auto n4=tr.nodes.append_child(root,x);
+   //auto n5=tr.nodes.append_child(root,x);
+   //auto n6=tr.nodes.append_child(n3,x);
+   //auto n7=tr.nodes.append_child(n3,x);
+   //auto n8=tr.nodes.append_child(n3,x);
+   //auto n9=tr.nodes.append_child(n7,x);
+   //auto n10=tr.nodes.append_child(n9,x);
+   //auto n11=tr.nodes.append_child(n10,x);
+    
+    return tr;
+❱
+
+◀private: static▶ Button_Face_Tree ☀Faced_Tree_Example2()❰
+    Button_Face_Tree tr;
+    
+    auto x = Buttoned_Faced_Label_Premades::Opened_Unilang_Node("<example>");
+    
+   auto top = tr.nodes.begin();
+   auto root=tr.nodes.insert(top,x);
+   auto n1=tr.nodes.append_child(root,x);
+   auto n2=tr.nodes.append_child(root,x);
+   auto n3=tr.nodes.append_child(root,x);
+   auto n4=tr.nodes.append_child(root,x);
+   auto n5=tr.nodes.append_child(root,x);
+   auto n6=tr.nodes.append_child(n3,x);
+   auto n7=tr.nodes.append_child(n3,x);
+   auto n8=tr.nodes.append_child(n3,x);
+   auto n9=tr.nodes.append_child(n7,x);
+   auto n10=tr.nodes.append_child(n9,x);
+   auto n11=tr.nodes.append_child(n10,x);
+   
+   auto root_name = Buttoned_Faced_Label_Premades::Opened_Unilang_Node("<root>");
+   auto child_name = Buttoned_Faced_Label_Premades::Opened_Unilang_Node("<child>");
+   
+   auto n12=tr.nodes.append_child(n11,root_name);
+   auto n13=tr.nodes.append_child(n12,child_name);
+   auto n14=tr.nodes.append_child(n12,child_name);
+   auto n15=tr.nodes.append_child(n12,child_name);
+    
+    return tr;
+❱
+
+◀private: static▶ Positioned_Select_Menu ☀Global_Select_Menu()❰
+    Positioned_Select_Menu x;
+    
+    auto face_label = Faced_Label_Converter::Remove_Pos(Single_Menu_Face());
+    face_label.state.faces[0].label.message = "Fullscreen";
+    
+    auto top = x.menu.nodes.begin();
+    x.menu.nodes.insert(top,face_label);
+    
+    face_label.state.faces[0].label.message = "Submit Issue";
+    x.menu.nodes.insert(top,face_label);
+    
+    face_label.state.faces[0].label.message = "Exit";
+    x.menu.nodes.insert(top,face_label);
+    
+    return x;
+❱
+
+◀private: static▶ Positioned_Faced_Label ☀Single_Menu_Face()❰
+    Positioned_Faced_Label x;
+    Label_Face face;
+    
+    //single face
+    face.name = "fill this in";
+    face.label.message = "fill this in";
+    face.label.styles = Default_Label_Styles::Label_Style_Menu();
+    x.state.faces.emplace_back(face);
+    
+    return x;
+❱
+
+

@@ -1,0 +1,57 @@
+class
+❪iostream❫
+❪string❫
+❪set❫
+❪"code/programs/gcalviz/exporters/data/node_edge_data"❫
+❪"code/utilities/time/date/rfc333_datetime_to_epoch_converter"❫
+❪"code/utilities/time/date/rfc333_datetime_within_range_checker"❫
+❪"code/utilities/web/endpoints/gcal/data/gcal_sorted_events"❫
+⚯
+❪"code/utilities/types/strings/transformers/search_replace/lib"❫
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/utilities/data_structures/counters/unique_counter/unique_counter"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/types/strings/observers/comparing/lib"❫
+❪"code/utilities/types/strings/observers/other/lib"❫
+⚞⚟
+
+◀public: static▶ std::string ☀Format(Node_Edge_Data const& node_edge_data)❰
+    std::string file_results = Start();
+    
+    //TODO: this implementation is not valid or tested for graphml.
+    //I switched to gexf format because it worked better with gephi.
+    
+    
+    //for (auto const& edge: node_edge_data.edges.hash_table){
+    //    Append(file_results,edge.first);
+    //}
+        
+    for (auto const& node: node_edge_data.nodes){
+        Append(file_results,"<node id=\"");
+        Append(file_results,node);
+        Append_With_Newline(file_results,"\"/>");
+    }
+    
+    Append(file_results,End());
+    return file_results;
+❱
+
+◀private: static▶ std::string ☀Start()❰
+        std::string str;
+        Append_With_Newline(str,"<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        Append_With_Newline(str,"<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\""); 
+        Append_With_Newline(str,"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+        Append_With_Newline(str,"xsi:schemaLocation=\"http://graphml.graphdrawing.org/xmlns");
+        Append_With_Newline(str,"http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\">");
+        Append_With_Newline(str,"<graph id=\"G\" edgedefault=\"undirected\">");
+        return str;
+❱
+
+◀private: static▶ std::string ☀End()❰
+    std::string str;
+    Append_With_Newline(str,"</graph>");
+    Append_With_Newline(str,"</graphml>");
+    return str;
+❱

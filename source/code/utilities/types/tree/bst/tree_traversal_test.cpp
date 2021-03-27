@@ -4,7 +4,7 @@
 #include "code/utilities/types/tree/bst/annotated_bst_state.hpp"
 #include "code/utilities/data_structures/tree/bst/binary_nodes.hpp"
 #include "code/utilities/types/tree/bst/prebuilt_bst_trees.hpp"
-#include "code/tools/puzzles/hackerrank/bst_swap_solution_geeks_five_ptrs.hpp"
+#include "code/programs/puzzles/hackerrank/bst_swap_solution_geeks_five_ptrs.hpp"
 #include "gtest/gtest.h"
 #include <algorithm>
 #include <iostream>

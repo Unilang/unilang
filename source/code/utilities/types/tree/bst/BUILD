@@ -67,7 +67,7 @@ hcp(
 gtest(
     name = "tree_traversal_test",
     deps = [
-        "//code/tools/puzzles/hackerrank:bst_swap_solution_geeks_five_ptrs",
+        "//code/programs/puzzles/hackerrank:bst_swap_solution_geeks_five_ptrs",
         "//code/utilities/data_structures/tree/bst:binary_node",
         "//code/utilities/data_structures/tree/bst:binary_nodes",
         "//code/utilities/types/tree/bst:annotated_bst_fix",

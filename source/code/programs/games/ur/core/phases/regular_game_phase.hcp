@@ -1,0 +1,140 @@
+class
+❪string❫
+❪iostream❫
+❪vector❫
+❪thread❫
+❪algorithm❫
+❪"code/programs/games/ur/assets/assets"❫
+❪"code/programs/games/ur/state/game_state"❫
+❪SFML/Window.hpp❫
+❪SFML/Window/Joystick.hpp❫
+❪SFML/Graphics.hpp❫
+❪SFML/Graphics/Transformable.hpp❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/utilities/math/math"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/peripheral/keyboard/F310_gamepad/data/f310_events"❫
+⚯
+❪"code/utilities/peripheral/keyboard/joycons/joystick_rotating_checker"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/strings/observers/converting/lib"❫
+❪"code/utilities/types/map/lib"❫
+❪"code/utilities/types/vectors/observers/size_frequency_counter"❫
+❪"code/utilities/linguistics/speak/word_speaker"❫
+❪"code/utilities/colors/converters/converters"❫
+❪"code/utilities/colors/transformers/color_transitioner"❫
+❪"code/utilities/peripheral/keyboard/F310_gamepad/functions/f310_event_synthesizer"❫
+❪"code/utilities/games/ur/ur_logic"❫
+❪"code/programs/games/ur/core/phases/roll_phase"❫
+❪"code/programs/games/ur/core/phases/choose_phase"❫
+❪"code/programs/games/ur/core/phases/player_change"❫
+❪"code/utilities/types/sets/lib"❫
+⚞⚟
+
+◀public: static▶ void ☀Run_Phase(F310_Events const& events, Game_State & state, Assets & assets) ❰
+    
+    
+    //handle player turns
+    auto index = state.ur_state.player_turn;
+    assets.game_state.setString("Player " + std::to_string(index  + 1) + " Turn");
+    Handle_Player_Turn_Event(state,state.ur_state.players[index],Pick_Events_By_Player_Index(events,index),assets);
+    
+    //update graphics
+    Update_Graphics(state,assets);
+❱
+
+◀private: static▶ std::vector<F310_Event> ☀Pick_Events_By_Player_Index(F310_Events const& events, size_t index) ❰
+    if (index == 0){
+        return events.left;
+    }
+    return events.right;
+❱
+
+◀private: static▶ void ☀Update_Graphics(Game_State & state, Assets & assets) ❰
+
+    //update graphics
+    for (size_t i = 0 ; i < state.ur_state.players[0].pieces.size(); ++i){
+        auto spot_name = state.ur_state.players[0].pieces[i].current_spot;
+        auto pos = Spot_Name_Position(assets.spots,spot_name);
+        assets.p1_pieces[i].setPosition(pos);
+    }
+    for (size_t i = 0 ; i < state.ur_state.players[1].pieces.size(); ++i){
+        auto spot_name = state.ur_state.players[1].pieces[i].current_spot;
+        auto pos = Spot_Name_Position(assets.spots,spot_name);
+        assets.p2_pieces[i].setPosition(pos);
+    }
+❱
+
+◀private: static▶ sf::Vector2f ☀Spot_Name_Position(Named_Rectangles const& spots, std::string const& spot_name) ❰
+    sf::Vector2f results;
+    
+    for (auto const& it: spots.shapes){
+        if (it.name == spot_name){
+            return it.shape.getPosition();
+        }
+    }
+    
+    return results;
+❱
+
+
+◀private: static▶ void ☀Handle_Player_Turn_Event(Game_State & state, Ur_Player_State & pstate, std::vector<F310_Event> const& events, Assets & assets) ❰
+
+    //roll phase
+    if (pstate.phase == Player_Phase::ROLL){
+        assets.game_state.setString(assets.game_state.getString() + " roll");
+        Roll_Phase::Run(state,pstate,events);
+    }
+    
+    //choose phase
+    else if (pstate.phase == Player_Phase::CHOOSE){
+        assets.game_state.setString(assets.game_state.getString() + " choose ");
+        assets.game_state.setString(assets.game_state.getString() + std::to_string(pstate.roll));
+        Choose_Phase::Run(state,pstate,events,assets);
+    }
+    
+    //move phase
+    else if (pstate.phase == Player_Phase::MOVE){
+        Move_Phase(state,pstate,events,assets);
+    }
+
+❱
+
+◀private: static▶ void ☀Move_Phase(Game_State & state, Ur_Player_State & pstate, std::vector<F310_Event> const& events, Assets & assets) ❰
+
+    //get new spot
+    auto current_spot = pstate.pieces[pstate.possible_selections[pstate.piece_chosen]].current_spot;
+    auto new_spot = Follow_Path_Or(pstate.path,current_spot,pstate.roll,std::string(""));
+    
+    //move piece
+    pstate.pieces[pstate.possible_selections[pstate.piece_chosen]].current_spot = new_spot;
+    
+    //reset other player's pieces
+    Hit_Opponents_On_Spot(state,new_spot);
+    
+    //evaluate whose turn it is
+    if (Exists_In_Set(state.ur_state.safe_spots,new_spot)){
+        Player_Change::Give_Player_Another_Turn(state,assets);
+    }
+    else{
+        Player_Change::Move_To_Next_Player(state,assets);
+    }
+    
+❱
+
+
+◀private: static▶ void ☀Hit_Opponents_On_Spot(Game_State & state, std::string const& spot) ❰
+    for (size_t i = 0; i < state.ur_state.players.size(); ++i){
+        if (i != state.ur_state.player_turn){
+            for (auto & peice: state.ur_state.players[i].pieces){
+                if (peice.current_spot == spot){
+                    peice.current_spot = peice.hit_reset_spot;
+                }
+            }
+        }
+    }
+❱
+
+
+
+

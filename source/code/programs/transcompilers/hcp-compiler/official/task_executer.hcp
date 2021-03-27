@@ -1,0 +1,40 @@
+class
+❪iostream❫
+❪string❫
+❪cstdlib❫
+❪iostream❫
+❪string❫
+❪vector❫
+❪set❫
+❪"code/programs/transcompilers/hcp-compiler/official/program_options/program_options"❫
+❪"code/utilities/program/common_actions/exits/lib"❫
+❪"code/utilities/types/strings/observers/path/lib"❫
+❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
+❪"code/programs/transcompilers/hcp-compiler/official/class_structure"❫
+❪"code/utilities/types/wstrings/transformers/other/lib"❫
+⚯
+❪"code/programs/transcompilers/hcp-compiler/official/hcp_parser"❫
+❪"code/programs/transcompilers/hcp-compiler/official/hcp_compiler"❫
+❪"code/utilities/types/converters/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/programs/transcompilers/hcp-compiler/official/file_name_checker"❫
+❪"code/programs/transcompilers/hcp-compiler/official/bazel_deps_printer"❫
+⚞⚟
+
+◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& program_options)❰
+
+     //process each file at a time
+     for (auto const& hcp_file: program_options.Input_Files()){
+      
+        //exit if anything is initially wrong with the file name sent to the compiler
+        File_Name_Checker::Immediate_Checks_On_Filename(hcp_file);
+
+        //parse the hcp file and get back a class that represents it
+        auto structure = Hcp_Parser::Parse(hcp_file);
+
+        Bazel_Deps_Printer::Possibly_Give_Bazel_Deps(structure,program_options);
+    
+        //compile that structure into the appropriate files (hcp -> hpp and cpp)
+        Hcp_Compiler::Compile(structure,program_options.Output_Directory(),program_options.Utility_Functions());
+  }
+❱

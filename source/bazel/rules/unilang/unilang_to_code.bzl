@@ -14,8 +14,8 @@ def unilang_to_code(name):
         name = target_name,
         srcs = [input_name],
         outs = [output_name],
-        tools = ["//code/tools/transcompilers/unilang/unilang_to_code:unilang_to_code"],
-        cmd = "$(location //code/tools/transcompilers/unilang/unilang_to_code:unilang_to_code) -i $(SRCS) -o $@",
+        tools = ["//code/programs/transcompilers/unilang/unilang_to_code:unilang_to_code"],
+        cmd = "$(location //code/programs/transcompilers/unilang/unilang_to_code:unilang_to_code) -i $(SRCS) -o $@",
     )
 
     #group json file

@@ -1,0 +1,80 @@
+class
+❪"code/programs/ide/settings/ide_settings"❫
+❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
+❪"code/utilities/peripheral/mouse/state/mouse_state"❫
+❪"code/utilities/peripheral/pc/pc_input_state"❫
+❪"code/utilities/graphics/imgui/loop/mechanics"❫
+⚯
+❪"code/utilities/data_structures/graphics/objects/mouse/draw/mouse_selection_drawer"❫
+❪"code/utilities/peripheral/mouse/state/mouse_position_getter"❫
+❪"code/utilities/data_structures/graphics/objects/mouse/events/mouse_events_checker"❫
+❪"code/utilities/graphics/imgui/window/window_position_finder"❫
+❪"code/utilities/data_structures/graphics/objects/label/label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/cursor/label_cursor_action_doer"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/data_structures/graphics/objects/mouse/draw/mouse_frame_getter"❫
+❪"code/utilities/data_structures/graphics/objects/faced_grid/grid_label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/faced_tree/tree_label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_tree_label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/buildable_face_tree_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/buildable_face_tree_is_mouse_over"❫
+❪"code/utilities/data_structures/graphics/objects/cursor/cursor_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/slider/slider_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/buildable_schema_face_tree_drawer"❫
+❪"code/utilities/types/variant/lib"❫
+❪"code/programs/ide/frame/move_all_ide_elements"❫
+❪"code/programs/ide/frame/convert_all_ide_elements"❫
+❪"code/programs/ide/frame/find_mouse_over_index"❫
+❪"code/programs/ide/frame/move_ide_element"❫
+⚞⚟
+
+◀public: static▶ Frame_Elements ☀Get(Ide_Settings & settings, Pc_Input_State const& pc_input)❰
+    Frame_Elements elements;
+    
+    
+    //move from mouse wheel
+    if (pc_input.mouse.wheel.movement != 0){
+        Position pos;
+        pos.x = 0;
+        pos.y = pc_input.mouse.wheel.movement;
+        Move_All_Ide_Elements::Move(settings,pos);
+    }
+    
+    bool was_performed = Adjust_First_Mouse_Over_Element_Via_View_Anchor(settings,pc_input);
+    
+    if (!was_performed){
+        Update_All_Positions_Via_View_Anchor(settings);
+    }
+    
+    elements.types = Convert_All_Ide_Elements::Convert(settings.elements,settings,pc_input).types;
+    return elements;
+❱
+
+◀private: static▶ bool ☀Adjust_First_Mouse_Over_Element_Via_View_Anchor(Ide_Settings & settings, Pc_Input_State const& pc_input)❰
+
+    Position pos = settings.desktop.mouse.change;
+    
+    //if mouse is over something, we are going to allow moving it,
+    // and adjust the z index appropriately.
+    auto index = Find_Mouse_Over_Index::Find(settings,pc_input);
+    if (index != -1){
+        
+        Move_Ide_Element::Move(settings.elements.types[index],pos);
+        Possibly_Adjust_Z_Index_Of_Objects(settings,pc_input,index);
+        return true;
+    
+    }
+    return false;
+    
+❱
+
+◀private: static▶ void ☀Update_All_Positions_Via_View_Anchor(Ide_Settings & settings)❰
+    Move_All_Ide_Elements::Move(settings,settings.desktop.mouse.change);
+❱
+
+◀private: static▶ void ☀Possibly_Adjust_Z_Index_Of_Objects(Ide_Settings & settings, Pc_Input_State const& pc_input, size_t index)❰
+    if (pc_input.mouse.right.down){
+        Move_Indexed_Item_To_Back(settings.elements.types,index);
+    }
+❱

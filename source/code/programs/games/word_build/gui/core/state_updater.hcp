@@ -1,0 +1,85 @@
+class
+❪string❫
+❪iostream❫
+❪vector❫
+❪thread❫
+❪algorithm❫
+❪"code/programs/games/word_build/gui/assets/assets"❫
+❪SFML/Window.hpp❫
+❪SFML/Window/Joystick.hpp❫
+❪SFML/Graphics.hpp❫
+❪SFML/Graphics/Transformable.hpp❫
+❪"code/utilities/peripheral/keyboard/joycons/joycon_state_getter"❫
+❪"code/utilities/peripheral/keyboard/F310_gamepad/functions/f310_gamepads_state_getter"❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/programs/games/word_build/gui/assets/assets_loader"❫
+❪"code/programs/games/word_build/gui/state/game_state"❫
+❪"code/utilities/math/math"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+⚯
+❪"code/utilities/peripheral/keyboard/joycons/joystick_rotating_checker"❫
+❪"code/utilities/linguistics/build_word/game/puzzle_builder"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/strings/observers/converting/lib"❫
+❪"code/utilities/types/map/lib"❫
+❪"code/utilities/types/vectors/observers/size_frequency_counter"❫
+❪"code/utilities/linguistics/speak/word_speaker"❫
+❪"code/programs/games/word_build/gui/core/start_game_phase"❫
+❪"code/programs/games/word_build/gui/core/game_over_phase"❫
+❪"code/programs/games/word_build/gui/core/title_game_phase"❫
+❪"code/programs/games/word_build/gui/core/regular_game_phase"❫
+❪"code/utilities/colors/converters/converters"❫
+❪"code/utilities/colors/transformers/color_transitioner"❫
+❪"code/utilities/peripheral/keyboard/F310_gamepad/functions/f310_event_synthesizer"❫
+⚞⚟
+
+
+
+//ideas:
+// - show when the user has guessed the same thing as their competitor
+// - show graphs of various progress
+// - stat for how many moves were made (convert to events)
+// - end game music
+// - show a picture of the words that are selected
+// - other character sfx (winning / taunts)
+
+◀public: static▶ void ☀Run_Frame_Logic(sf::RenderWindow & window, sf::Time const& TimePerFrame, Game_State & state, Assets & assets) ❰
+    
+
+    Set_Current_Controller_State(state);
+    auto events = F310_Event_Synthesizer::Synthesize_Events(state.controller);
+    
+    if (state.phase == Game_Phase::MAIN_MENU){
+        Title_Game_Phase::Run_Phase(events,TimePerFrame,state,assets);
+    }
+    else if (state.phase == Game_Phase::STARTING_GAME){
+        Start_Game_Phase::Run_Phase(events,state,assets);
+        state.phase = Game_Phase::PLAYING_GAME;
+    }
+    else if(state.phase == Game_Phase::PLAYING_GAME){
+        Regular_Game_Phase::Run_Phase(events,state,assets);
+    }
+    else if(state.phase == Game_Phase::END_GAME){
+        Game_Over_Phase::Run_Phase(events,state,assets);
+    }
+    
+    Set_Previous_Controller_State(state);
+❱
+
+◀private: static▶ void ☀Set_Current_Controller_State(Game_State & state)❰
+
+    auto controller_state = F310_Gamepads_State_Getter::Get();
+    state.controller.left.current = controller_state.left;
+    state.controller.right.current = controller_state.right;
+❱
+
+◀private: static▶ void ☀Set_Previous_Controller_State(Game_State & state)❰
+
+    state.controller.left.previous = state.controller.left.current;
+    state.controller.right.previous = state.controller.right.current;
+❱
+
+
+
+

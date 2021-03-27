@@ -1,0 +1,87 @@
+class
+❪iostream❫
+❪fstream❫
+❪string❫
+❪"code/utilities/documentation/common_documentation_getter"❫
+⚯
+❪sstream❫
+❪"code/utilities/types/converters/lib"❫
+❪"code/utilities/formats/json/converters/lib"❫
+❪"code/programs/repo_tools/build_determinism/program_options/program_options"❫
+⚞⚟
+
+◀public: static▶ Structure ☀Get() ❰
+    Structure s;
+    s.name = "build_determinism";
+    s.literature.paragraphs.emplace_back(Title());
+    s.literature.paragraphs.emplace_back(Introduction());
+    s.literature.paragraphs.emplace_back(Common_Documentation_Getter::Common_Installation_Instructions("build_determinism"));
+    s.literature.paragraphs.emplace_back(Command_Line());
+    return s;
+❱
+
+
+◀private: static▶ Paragraph ☀Title() ❰
+    Paragraph p;
+    p.depth.value = as_wstring("0");
+    p.title.value = as_wstring("Build determinism analysis for targets");
+    
+    Sentence s;
+    Sentence_Image img;
+    img.alternative_text.value = as_wstring("build_determinism");
+    s.images.emplace_back(img);
+    p.sentences.emplace_back(s);
+    return p;
+❱
+
+◀private: static▶ Paragraph ☀Introduction() ❰
+    Paragraph p;
+    p.depth.value = as_wstring("0");
+    p.title.value = as_wstring("Introduction");
+    
+    Add_Sentence(p,"When evaluating the determinism of building certain targets use this tool.");
+    Add_Sentence(p,"It runs various bazel query commands to construct spawn information for all of the subcommands");
+    Add_Sentence(p,"These subcommands are analyzed for nondeterminism");
+    return p;
+❱
+
+◀private: static▶ Paragraph ☀Command_Line() ❰
+    Paragraph p;
+    p.depth.value = as_wstring("0");
+    p.title.value = as_wstring("Command Line");
+    
+    std::stringstream ss;
+    char *args[] = {
+        (char*)"--help",
+        NULL
+    };
+    Program_Options po(1,args);
+    Add_Sentence_With_Code(p,"The tool can be used from the command line",po.Get_Help_Message());
+    return p;
+❱
+
+
+◀private: static▶ void ☀Add_Sentence(Paragraph & p, std::string const& str) ❰
+    Sentence s;
+    s.text.value = as_wstring(str);
+    p.sentences.emplace_back(s);
+❱
+◀private: static▶ void ☀Add_Sentence_With_Code(Paragraph & p, std::string const& str, std::string const& code) ❰
+    Sentence s;
+    s.text.value = as_wstring(str);
+    
+    Code_Line line;
+    line.line.value = as_wstring(code);
+    s.codes.emplace_back(line);
+    p.sentences.emplace_back(s);
+❱
+
+◀private: static▶ void ☀Add_Sentence_With_Image(Paragraph & p, std::string const& str, std::string const& image_path) ❰
+    Sentence s;
+    s.text.value = as_wstring(str);
+    
+    Sentence_Image img;
+    img.image_path.value = as_wstring(image_path);
+    s.images.emplace_back(img);
+    p.sentences.emplace_back(s);
+❱

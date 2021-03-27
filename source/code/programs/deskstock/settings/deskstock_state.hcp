@@ -1,0 +1,15 @@
+class
+❪vector❫
+❪"code/utilities/program/inputs/config/config_monitor_settings"❫
+❪"code/programs/deskstock/settings/deskstock_settings"❫
+⚯
+
+⚞⚟
+
+◀
+public:
+    
+    Deskstock_Settings default_settings;
+    Deskstock_Settings current_settings;
+    Config_Monitor_Settings ms;
+▶

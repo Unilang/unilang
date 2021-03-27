@@ -1,0 +1,51 @@
+class
+❪iostream❫
+❪fstream❫
+❪"code/programs/repo_tools/shared_objects/find_shared_object/program_options/program_options"❫
+❪"code/utilities/build/build_repo_establisher/build_repo_establisher"❫
+⚯
+❪"code/utilities/program/wrappers/bazel/query/bazel_aquery_runner"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
+❪"code/utilities/filesystem/files/getting/lib"❫
+❪"code/utilities/program/wrappers/bazel/bazel_runner"❫
+❪"code/utilities/filesystem/files/observers/other/recursive_ldd_results_getter"❫
+❪"code/utilities/filesystem/files/observers/other/recursive_ldd_scan_printer"❫
+❪"code/utilities/types/strings/observers/other/lib"❫
+⚞⚟
+
+
+◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
+
+    //We establish a repo and a context for building artifacts in it.
+    //This setup tries to be agnostic to any expectations about the repo's hosting, layout, and build system.
+    //It tries to derive things like:
+    //where/how the repository is cloned from, what branch it should be on or whether the repo already exists on the system.
+    //Analyze the repository to learn how to build it
+    auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
+    
+    //first build the target so that all it's external dependencies exist
+    std::cout << "building " << options.Target() << std::endl;
+    Bazel_Runner::Build_Target(repo_context.program_to_run_build,
+                               repo_context.build_settings,
+                               repo_context.bazel_setup_settings.config_settings,
+                               options.Target()
+                               );
+    
+    Scan_Existing_External_Deps_For_Shared_Object(repo_context,options);
+❱
+
+◀private: static▶ void ☀Scan_Existing_External_Deps_For_Shared_Object(Build_Repo_Settings const& repo_context, Program_Options const& options) ❰
+
+    auto path_to_external_folder = repo_context.repo.path + "/external";
+    std::cout << path_to_external_folder << std::endl;
+    auto external_dirs = Get_Dirs_Of_Path(path_to_external_folder);
+    for (size_t i = 0; i < external_dirs.size(); ++i){
+        
+        //current step
+        std::cout << "[" << i+1 << "/" << external_dirs.size() << "] " << external_dirs[i] << std::endl;
+        
+        //scan and print
+        Recursive_Ldd_Scan_Printer::Report_Shared_Object_References_From_Dir(external_dirs[i],options.Shared_Object());
+    }
+❱
