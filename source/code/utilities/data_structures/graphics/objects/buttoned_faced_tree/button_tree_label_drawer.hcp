@@ -34,6 +34,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/buttoned_faced_label_drawer"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/for_each_noncollapsed"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_full_path_name"❫
+❪"code/utilities/math/math"❫
 ⚞⚟
 
 ◀public: static▶ Frame_Elements ☀Draw(Character_Maps const& font_chars, Positioned_Button_Face_Tree & tree, Pc_Input_State const& pc_input, Reference_Lookup_Map const& ref_map)❰
@@ -90,7 +91,41 @@ class
     //this way we can draw the references by looking up the path instead of re-traversing the tree
     auto path_positions = Get_Path_Positions(font_chars,pc_input,pos,tr,range);
     
+    //use the reference map and path positions to get the pos-to-pos positioning
+    auto connections = Get_Position_Connections(path_positions,ref_map);
     
+    //draw references
+    Frame_Elements x;
+    
+    for (auto const& it: connections){
+        
+        //calculate how much the connection bar should stick out to the right of the tree
+        auto depth_out = 20;
+        
+        //calculate the two horizontal bars of the connection
+        auto from_horizontal = Horizontal_Line::Create_Positioned(it.first,depth_out);
+        auto to_horizontal = Horizontal_Line::Create_Positioned(it.second,depth_out);
+        
+        //calculate vertical line
+        auto vertical_pos = it.first;
+        vertical_pos.x += depth_out;
+        
+        auto vertical_height = Math::difference(it.first.y,it.second.y);
+        
+        auto vertical = Vertical_Line::Create_Positioned(vertical_pos,vertical_height);
+        
+        x.types.emplace_back(from_horizontal);
+        x.types.emplace_back(to_horizontal);
+        x.types.emplace_back(vertical);
+    }
+    
+    
+    return x;
+❱
+
+◀private: static▶ std::vector<std::pair<Position,Position>> ☀Get_Position_Connections(std::unordered_map<std::string,Position> const& path_positions, Reference_Lookup_Map const& ref_map)❰
+
+    std::vector<std::pair<Position,Position>> result;
     for (auto const& it: path_positions){
         auto found = ref_map.map.find(it.first);
         
@@ -102,18 +137,17 @@ class
             if (fk_found != ref_map.map.end()){
                 
                 auto found_to_pos = path_positions.find(fk_found->first);
-                auto to_pos = found_to_pos->first;
+                auto to_pos = found_to_pos->second;
+                
+                result.emplace_back(from_pos,to_pos);
             }
             
         }
     }
     
+    return result;
     
-    //draw references
-    Frame_Elements x;
-    return x;
 ❱
-
 ◀private: static▶ std::unordered_map<std::string,Position> ☀Get_Path_Positions(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
     
 

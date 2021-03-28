@@ -2,6 +2,7 @@ class
 ❪string❫
 ❪unordered_map❫
 ❪"code/utilities/data_structures/graphics/bitmap/multi_color_bitmap/multi_color_bitmap"❫
+❪"code/utilities/data_structures/graphics/bitmap/multi_color_bitmap/positioned_multi_color_bitmap"❫
 ⚯
 ⚞⚟
 
@@ -23,4 +24,15 @@ class
     }
     
     return b;
+❱
+
+◀public: static▶ Positioned_Multi_Color_Bitmap ☀Create_Positioned(Position const& pos, int height)❰
+    Multi_Color_Bitmap b = Create(height);
+    
+    //convert
+    Positioned_Multi_Color_Bitmap result;
+    result.pos = pos;
+    result.bitmap = b;
+    
+    return result;
 ❱

@@ -38,6 +38,7 @@ hcp(
     name = "vertical_line",
     deps = [
         "//code/utilities/data_structures/graphics/bitmap/multi_color_bitmap",
+        "//code/utilities/data_structures/graphics/bitmap/multi_color_bitmap:positioned_multi_color_bitmap",
     ],
 )
 
@@ -45,6 +46,7 @@ hcp(
     name = "horizontal_line",
     deps = [
         "//code/utilities/data_structures/graphics/bitmap/multi_color_bitmap",
+        "//code/utilities/data_structures/graphics/bitmap/multi_color_bitmap:positioned_multi_color_bitmap",
     ],
 )
 

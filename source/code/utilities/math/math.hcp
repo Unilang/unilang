@@ -34,6 +34,13 @@ class
     return a-b;
 ❱
 
+◀public: static▶ int ☀difference(int a, int b)❰
+    if (a < b){
+        return b-a;
+    }
+    return a-b;
+❱
+
 //value, existing range of value, new range
 ◀public: static▶ float ☀map_value_across_range(float s, float a1, float a2, float b1, float b2)❰
     

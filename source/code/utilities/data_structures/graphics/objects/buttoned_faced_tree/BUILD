@@ -53,6 +53,7 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_full_path_name",
         "//code/utilities/code/references:reference_lookup_map",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_range",
+        "//code/utilities/math:math",
     ],
 )
 
