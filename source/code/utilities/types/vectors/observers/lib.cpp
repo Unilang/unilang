@@ -33,6 +33,14 @@ std::string Get_As_Space_Seperated_String(std::vector<std::string> strs){
   
   return list;
 }
+std::string Get_As_Newline_Seperated_String(std::vector<std::string> strs){
+  std::string list;
+  
+  Call_Function_On_All_Elements_Except_Last_Element_Then_Call_Function_On_Last_Element(strs,
+  [&](std::string str){list += str + "\n";},[&](std::string str){list += str;});
+  
+  return list;
+}
 size_t Longest_Element_Size(std::vector<std::string> strs)
 {
     size_t max_size = 0;

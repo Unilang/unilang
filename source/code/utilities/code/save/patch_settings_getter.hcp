@@ -24,6 +24,7 @@ class
     patches.emplace_back(Patch_2);
     patches.emplace_back(Patch_3);
     patches.emplace_back(Patch_4);
+    patches.emplace_back(Patch_5);
     
     //add more
     return patches;
@@ -70,10 +71,33 @@ class
 ◀private: static▶ void ☀Patch_4(nlohmann::json & j)❰
     for (auto & element: j["elements"]["types"]){
         
-        //if its the variant structure we care about
+        //find schema tree
         if (element["element"]["index"] == 1){
             element["element"]["value"]["state"]["references"].clear();
             element["element"]["value"]["state"]["references"]["map"] = nlohmann::json::object();
+        }
+    }
+❱
+
+◀private: static▶ void ☀Patch_5(nlohmann::json & j)❰
+    for (auto & element: j["elements"]["types"]){
+        
+        //find schema tree
+        if (element["element"]["index"] == 1){
+            
+            //new object added
+            element["element"]["value"]["state"]["settings"].clear();
+            
+            //old elements moved into it
+            element["element"]["value"]["state"]["settings"]["schema"] = element["element"]["value"]["state"]["schema"];
+            element["element"]["value"]["state"]["settings"]["styles"] = element["element"]["value"]["state"]["schema_styles"]; //renamed
+            element["element"]["value"]["state"]["settings"]["references"] = element["element"]["value"]["state"]["references"];
+            
+            //remove old elements
+            element["element"]["value"]["state"].erase("schema");
+            element["element"]["value"]["state"].erase("schema_styles");
+            element["element"]["value"]["state"].erase("references");
+            
         }
     }
 ❱

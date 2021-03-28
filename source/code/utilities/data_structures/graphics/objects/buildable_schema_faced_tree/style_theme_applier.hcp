@@ -23,5 +23,5 @@ class
 
 
 ◀public: static▶ void ☀Apply_Theme(Buildable_Schema_Faced_Tree_State & state)❰
-    Buildable_Face_Tree_Style_Applier::Apply_Theme(state.tree,state.schema,state.schema_styles);
+    Buildable_Face_Tree_Style_Applier::Apply_Theme(state.tree,state.settings.schema,state.settings.styles);
 ❱

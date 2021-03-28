@@ -22,6 +22,7 @@ class
 ❪"code/utilities/types/tree/converters/tree_full_paths_getter"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/string_tree_to_buttoned_face_tree"❫
 ❪"code/utilities/program/wrappers/convert/image_transparent"❫
+❪"code/utilities/types/vectors/observers/lib"❫
 ⚞⚟
 
 
@@ -36,6 +37,11 @@ class
     Frame_Elements elements = Render_As_Button_Tree(str_tree);
     
     Convert_To_Image(elements);
+    
+    
+    //print the full paths for convenience
+    auto full_paths = Tree_Full_Paths_Getter::Get_All_Paths_Ordered(str_tree);
+    std::cout << Get_As_Newline_Seperated_String(full_paths) << std::endl;
     
 ❱
 

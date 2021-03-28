@@ -34,6 +34,7 @@ hcp(
         "//code/utilities/program/wrappers/convert:image_transparent",
         "//code/utilities/types/strings/transformers/appending:lib",
         "//code/utilities/types/tree/converters:tree_full_paths_getter",
+        "//code/utilities/types/vectors/observers:lib",
         "@tree",
     ],
 )

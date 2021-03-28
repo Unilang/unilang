@@ -12,7 +12,7 @@ class
     Reference_Lookup_Map x;
     
     //Foreign Key -> Primary Key
-    x.map.insert({"code/","code/"});
+    x.map.insert({"code/module/literature/paragraph/sentence/citations/id/","code/module/citation/id/"});
     
     return x;
 ❱

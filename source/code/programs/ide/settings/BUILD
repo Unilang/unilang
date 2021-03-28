@@ -78,6 +78,7 @@ hcp(
         "//code/utilities/graphics/imgui/render/elements:rectangle_drawer",
         "//code/utilities/graphics/sdl:standard_sdl_init_settings",
         "//code/utilities/image:stb_image_setter",
+        "//code/utilities/code/references:reference_lookup_map_getter",
     ],
 )
 

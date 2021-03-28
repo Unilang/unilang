@@ -12,6 +12,17 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree/data:buildable_face_tree",
         "//code/utilities/data_structures/tree/generic:child_lookup_map",
         "//code/utilities/code/references:reference_lookup_map",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:schema_path_settings",
+    ],
+)
+
+hcp(
+    name = "schema_path_settings",
+    deps = [
+        "//code/utilities/code/style_theme:style_lookup_map",
+        "//code/utilities/data_structures/graphics/objects/buildable_faced_tree/data:buildable_face_tree",
+        "//code/utilities/data_structures/tree/generic:child_lookup_map",
+        "//code/utilities/code/references:reference_lookup_map",
     ],
 )
 

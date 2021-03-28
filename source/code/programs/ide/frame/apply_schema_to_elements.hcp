@@ -32,7 +32,7 @@ class
                 //NOT NEEDED
             },
             [&](Positioned_Buildable_Schema_Faced_Tree & x) {
-                x.state.schema = Buildable_Schema_Faced_Tree_Default_Schema::Get();
+                x.state.settings.schema = Buildable_Schema_Faced_Tree_Default_Schema::Get();
             },
             [&](Positioned_Image_Data & x) {
                 //NOT NEEDED
