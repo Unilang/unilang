@@ -12,11 +12,12 @@ class
 
 ◀public: static▶ std::vector<std::function<void(nlohmann::json&)>> ☀Get()❰
 
-    // The version of the unilang IDE is determined by the number of patches needed to upgrade any unilang file.
+    // The save/load version of the unilang IDE is determined by the number of patches needed to upgrade any unilang file.
     // Based on the saved file's recorded version number, we know how many patches are needed to open it.
-    // Additionally, the unilang IDE know what version itself is on by counting the number of patches it has available.
-    // So how do you upgrade the unilang IDE version?  Add a patch.  Simple as that. A patch is only needed if a version change is needed.
+    // Additionally, the unilang IDE knows what version itself is on by counting the number of patches it has available.
+    // So how do you upgrade the save/load version when the data model changes?  Add a patch.  Simple as that. A patch is only needed if a version change is needed.
     // The IDE gets its version number by the number of patches.
+    // The unilang IDE will know to apply the appropriate patches when loading a file. Once the file is re-saved it will then be at the latest version again.
     using PatchFunctionT = std::function<void(nlohmann::json&)>;
     std::vector<PatchFunctionT> patches;
     patches.emplace_back(Patch_0);
@@ -30,6 +31,22 @@ class
     return patches;
 ❱
 
+
+//I wish writing patches could be easier and more automatic.
+//The dilemma boils down to this:
+//A c++ object (the model of the IDE) can change in future versions of the IDE.
+//that's why we need to update the json appropriately so that old unilang files can be loaded and dematerialized correctly.
+//The patches are mechanism to ensure forwards compatibility.
+//It's the same kind of problem that IDLs like protobuf and thrift attempt to solve in regards to a forward compatible wire format.
+//But I'm not going to have dead values in my object descriptions and arbitrary numbering and "reserved" and stuff- that's equally dumb.
+
+//So basically, this is what happens:
+//You change the IDE model in some kind of way that's not compatible with current saved formats.
+//It obvious when this happens because the Unilang IDE can't load them.
+//And more importantly all unilang files are checked at "build time" in the repo because build actions perform a transcompilation of the files- so they crash too.
+//Add the right patch here, and the repo will start building again.  Not full proof if you make a mistake in the patch and don't have a unilang file that would show the problem.
+//But that's just a case of needing more example unilang files for testing.  
+//The very first unilang file ever written should be capable of getting every patch applied to so it can be opened/re-saved with the newest version of the IDE.
 ◀private: static▶ void ☀Patch_0(nlohmann::json & j)❰
 ❱
 ◀private: static▶ void ☀Patch_1(nlohmann::json & j)❰

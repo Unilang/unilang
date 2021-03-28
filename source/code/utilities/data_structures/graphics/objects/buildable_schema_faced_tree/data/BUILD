@@ -32,3 +32,13 @@ hcp_and_hcp_pos(
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:buildable_schema_faced_tree_state",
     ],
 )
+
+hcp(
+    name = "default_schema_path_settings",
+    deps = [
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:buildable_schema_faced_tree_default_schema",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:schema_path_settings",
+        "//code/utilities/code/style_theme:style_lookup_map_getter",
+        "//code/utilities/code/references:reference_lookup_map_getter",
+    ],
+)

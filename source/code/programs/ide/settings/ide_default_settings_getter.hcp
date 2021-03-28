@@ -32,12 +32,13 @@ class
 ❪"code/utilities/code/concept_string_tree_getter"❫
 ❪"code/utilities/data_structures/tree/generic/string_tree_to_child_lookup_map"❫
 ❪"code/utilities/data_structures/graphics/gui_desktop/gui_desktop_getter"❫
-❪"code/utilities/code/style_theme/style_lookup_map_getter"❫
-❪"code/utilities/code/references/reference_lookup_map_getter"❫
 ❪"code/utilities/data_structures/graphics/image/positioned_image_data"❫
 ❪"code/utilities/image/stb_image_setter"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/buildable_schema_faced_tree_default_schema"❫
+❪"code/utilities/code/style_theme/style_lookup_map_getter"❫
+❪"code/utilities/code/references/reference_lookup_map_getter"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/style_theme_applier"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data/default_schema_path_settings"❫
 ⚞⚟
 
 ◀public: static▶ Ide_Settings ☀Get()❰
@@ -80,9 +81,7 @@ class
       //build
       Positioned_Buildable_Schema_Faced_Tree btree;
       btree.state.tree.state.structure = Faced_Tree_Example();
-      btree.state.settings.schema = Buildable_Schema_Faced_Tree_Default_Schema::Get();
-      btree.state.settings.styles = Style_Lookup_Map_Getter::Get_Default_Theme();
-      btree.state.settings.references = Reference_Lookup_Map_Getter::Get_Default_References();
+      btree.state.settings = Default_Schema_Path_Settings::Get();
       btree.pos.x = 20;
       btree.pos.y = 0;
       

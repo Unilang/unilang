@@ -79,6 +79,7 @@ hcp(
         "//code/utilities/graphics/sdl:standard_sdl_init_settings",
         "//code/utilities/image:stb_image_setter",
         "//code/utilities/code/references:reference_lookup_map_getter",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:default_schema_path_settings",
     ],
 )
 
