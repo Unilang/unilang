@@ -41,12 +41,10 @@ class
     Frame_Elements elements;
     
     //create traversal range
-    Button_Face_Tree_Range range;
-    range.begin = tree.nodes.begin();
-    range.end = tree.nodes.end();
+    Button_Face_Tree_Range range = Full_Range(tree);
     
     Button_Tree_Global_Navigation::Handle_User_Events     (font_chars,elements,pc_input,tree.pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
-    Draw_Tree(font_chars,elements,pc_input,tree.pos,tree.nodes,range);
+    Draw_Tree(font_chars,elements,pc_input,tree.pos,tree.nodes,range,ref_map);
     return elements;
 ❱
 ◀public: static▶ Frame_Elements ☀Draw(Character_Maps const& font_chars, Button_Face_Tree & tree, Position const& pos, Pc_Input_State const& pc_input, Reference_Lookup_Map const& ref_map)❰
@@ -54,34 +52,61 @@ class
     Frame_Elements elements;
     
     //create traversal range
-    Button_Face_Tree_Range range;
-    range.begin = tree.nodes.begin();
-    range.end = tree.nodes.end();
+    Button_Face_Tree_Range range = Full_Range(tree);
     
     Button_Tree_Global_Navigation::Handle_User_Events     (font_chars,elements,pc_input,pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
-    Draw_Tree(font_chars,elements,pc_input,pos,tree.nodes,range);
+    Draw_Tree(font_chars,elements,pc_input,pos,tree.nodes,range,ref_map);
     return elements;
 ❱
 
 
 
+//get full ranges
+◀private: static▶ Button_Face_Tree_Range ☀Full_Range(Button_Face_Tree & tree)❰
+    Button_Face_Tree_Range range;
+    range.begin = tree.nodes.begin();
+    range.end = tree.nodes.end();
+    return range;
+❱
+◀private: static▶ Button_Face_Tree_Range ☀Full_Range(Positioned_Button_Face_Tree & tree)❰
+    Button_Face_Tree_Range range;
+    range.begin = tree.nodes.begin();
+    range.end = tree.nodes.end();
+    return range;
+❱
 
-◀private: static▶ void ☀Draw_Tree(Character_Maps const& font_chars, Frame_Elements & elements, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
+
+◀private: static▶ void ☀Draw_Tree(Character_Maps const& font_chars, Frame_Elements & elements, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range, Reference_Lookup_Map const& ref_map)❰
     
     
     elements.types += Build_Branches_And_Button_Labels(font_chars,pc_input,pos,tr,range).types;
-    elements.types += Build_Generic_Schema_References(font_chars,pc_input,pos,tr,range).types;
+    elements.types += Build_Generic_Schema_References(font_chars,pc_input,pos,tr,range,ref_map).types;
     
 ❱
 
-◀private: static▶ Frame_Elements  ☀Build_Generic_Schema_References(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
+◀private: static▶ Frame_Elements  ☀Build_Generic_Schema_References(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range, Reference_Lookup_Map const& ref_map)❰
     
     //iterate the tree to get all path locations.
     //this way we can draw the references by looking up the path instead of re-traversing the tree
     auto path_positions = Get_Path_Positions(font_chars,pc_input,pos,tr,range);
     
     
-    //for (auto const& it: 
+    for (auto const& it: path_positions){
+        auto found = ref_map.map.find(it.first);
+        
+        //we need to create a reference
+        if (found != ref_map.map.end()){
+            
+            auto from_pos = it.second;
+            auto fk_found = ref_map.map.find(found->first);
+            if (fk_found != ref_map.map.end()){
+                
+                auto found_to_pos = path_positions.find(fk_found->first);
+                auto to_pos = found_to_pos->first;
+            }
+            
+        }
+    }
     
     
     //draw references
@@ -89,10 +114,10 @@ class
     return x;
 ❱
 
-◀private: static▶ std::vector<std::pair<std::string,Position>> ☀Get_Path_Positions(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
+◀private: static▶ std::unordered_map<std::string,Position> ☀Get_Path_Positions(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
     
 
-    std::vector<std::pair<std::string,Position>> path_positions;
+    std::unordered_map<std::string,Position> path_positions;
     
     
     auto start_pos = pos;
@@ -104,7 +129,7 @@ class
         std::pair<std::string,Position> result;
         result.first = Button_Face_Tree_Full_Path_Name::Get(tr,it);
         result.second = current_pos;
-        path_positions.emplace_back(result);
+        path_positions.insert(result);
         
         //adjust position
         Adjust_Positions_For_Next_Cell(it->label,start_pos,current_pos,depth);
