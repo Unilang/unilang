@@ -1,0 +1,28 @@
+class
+❪string❫
+❪iostream❫
+❪cmath❫
+❪"code/utilities/data_structures/tree/generic/string_tree"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data/positioned_buildable_schema_faced_tree"❫
+⚯
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data/default_schema_path_settings"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/string_tree_to_buttoned_face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/style_theme_applier"❫
+⚞⚟
+
+◀public: static▶ Positioned_Buildable_Schema_Faced_Tree ☀Convert(String_Tree const& str_tree)❰
+
+    //new tree
+    Positioned_Buildable_Schema_Faced_Tree label_tree;
+    label_tree.pos.x = 0;
+    label_tree.pos.y = 0;
+    
+    //build from button tree
+    auto b_tree = String_Tree_To_Buttoned_Face_Tree::Convert(str_tree);
+    label_tree.state.tree.state.structure.nodes = b_tree.nodes;
+    label_tree.state.settings = Default_Schema_Path_Settings::Get();
+    
+    Style_Theme_Applier::Apply_Theme(label_tree);
+    
+    return label_tree;
+❱

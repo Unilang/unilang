@@ -23,6 +23,8 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/string_tree_to_buttoned_face_tree"❫
 ❪"code/utilities/program/wrappers/convert/image_transparent"❫
 ❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/string_tree_to_buildable_schema_faced_tree"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/buildable_schema_face_tree_drawer"❫
 ⚞⚟
 
 
@@ -34,7 +36,9 @@ class
     auto str_tree = Concept_String_Tree_Getter::Get();
     
     //convert the label tree to drawable frame elements
-    Frame_Elements elements = Render_As_Button_Tree(str_tree);
+    //different design choices:
+    //Frame_Elements elements = Render_As_Button_Tree(str_tree);
+    Frame_Elements elements = Render_As_Schema_Tree(str_tree);
     
     Convert_To_Image(elements);
     
@@ -62,13 +66,13 @@ class
 ◀private: static▶ Frame_Elements ☀Render_As_Schema_Tree(String_Tree const& str_tree)❰
 
     //and convert it into a label tree
-    auto label_tree = String_Tree_To_Buttoned_Face_Tree::Convert(str_tree);
+    auto label_tree = String_Tree_To_Buildable_Schema_Faced_Tree::Convert(str_tree);
     
     //convert the label tree to drawable frame elements
     Frame_Elements elements;
     Pc_Input_State pc_input;
     auto unilang_font_lookup = Unilang_Character_Maps::Get();
-    elements.types += Button_Tree_Label_Drawer::Draw(unilang_font_lookup,label_tree,pc_input).types;
+    elements.types += Buildable_Schema_Face_Tree_Drawer::Draw(unilang_font_lookup,label_tree,pc_input).types;
     
     return elements;
 ❱

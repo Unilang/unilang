@@ -73,7 +73,6 @@ hcp(
     deps = [
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_tokenizer",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:buildable_schema_faced_tree",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:positioned_buildable_schema_faced_tree",
         "//code/utilities/data_structures/tree/generic/tokens:tree_token",
     ],
 )
@@ -94,5 +93,18 @@ hcp(
         "//code/utilities/data_structures/tree/generic:child_lookup_map_find",
         "//code/utilities/types/strings/transformers/removing:lib",
         "//code/utilities/types/vectors/observers:lib",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:positioned_buildable_schema_faced_tree",
     ],
 )
+
+hcp(
+    name = "string_tree_to_buildable_schema_faced_tree",
+    deps = [
+        "//code/utilities/data_structures/tree/generic:string_tree",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:positioned_buildable_schema_faced_tree",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:default_schema_path_settings",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:string_tree_to_buttoned_face_tree",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:style_theme_applier",
+    ],
+)
+

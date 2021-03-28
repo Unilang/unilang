@@ -35,6 +35,8 @@ hcp(
         "//code/utilities/types/strings/transformers/appending:lib",
         "//code/utilities/types/tree/converters:tree_full_paths_getter",
         "//code/utilities/types/vectors/observers:lib",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:string_tree_to_buildable_schema_faced_tree",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:buildable_schema_face_tree_drawer",
         "@tree",
     ],
 )

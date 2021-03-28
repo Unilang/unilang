@@ -22,7 +22,11 @@ class
 ❱
 ◀public: static▶ void ☀Load(Ide_Settings & settings)❰
     settings.elements = Save_State_Loader::Load(settings.desktop.save.file_name);
-    
+    Apply_Load_Adjustments(settings);
+❱
+
+◀private: static▶ void ☀Apply_Load_Adjustments(Ide_Settings & settings)❰
+
     //fix the schema in case it changed
     for (auto & it: settings.elements.types){
         Apply_Schema_To_Elements::Apply(it);
