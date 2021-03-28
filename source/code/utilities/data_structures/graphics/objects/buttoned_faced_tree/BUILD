@@ -43,6 +43,8 @@ hcp(
         "//code/utilities/peripheral/pc:pc_input_state",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_full_path_name",
+        "//code/utilities/code/references:reference_lookup_map"
     ],
 )
 

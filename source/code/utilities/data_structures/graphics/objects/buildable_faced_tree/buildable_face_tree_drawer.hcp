@@ -33,6 +33,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/premade/buttoned_faced_label_premades"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/buildable_face_tree_action_doer"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/generic_menu_handler"❫
+❪"code/utilities/code/references/reference_lookup_map"❫
 ⚞⚟
 
 ◀public: static▶ Frame_Elements ☀Draw(Character_Maps const& font_chars, Buildable_Face_Tree_State & state, Position const& pos, Pc_Input_State const& pc_input)❰
@@ -50,7 +51,8 @@ class
     Frame_Elements elements;
     
     //draw the tree
-    elements.types += Button_Tree_Label_Drawer::Draw(font_chars,state.structure,pos,pc_input).types;
+    Reference_Lookup_Map ref_map;
+    elements.types += Button_Tree_Label_Drawer::Draw(font_chars,state.structure,pos,pc_input,ref_map).types;
     
     //find the element that has been right-clicked
     //TODO: Drawing the tree should return this information.

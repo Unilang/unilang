@@ -64,6 +64,7 @@ hcp(
         "//code/utilities/peripheral/pc:pc_input_state",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/code/references:reference_lookup_map",
     ],
 )
 

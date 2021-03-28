@@ -56,7 +56,7 @@ class
     Frame_Elements elements;
     
     //draw the tree
-    elements.types += Button_Tree_Label_Drawer::Draw(font_chars,state.tree.state.structure,pos,pc_input).types;
+    elements.types += Button_Tree_Label_Drawer::Draw(font_chars,state.tree.state.structure,pos,pc_input,state.settings.references).types;
     
 
     Schema_Menu_Open_Strategy how_to_open = Schema_Menu_Should_Open::Check(state,pc_input);

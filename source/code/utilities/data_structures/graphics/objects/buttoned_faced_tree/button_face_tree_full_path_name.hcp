@@ -10,12 +10,17 @@ class
 ⚞⚟
 
 ◀public: static▶ std::string ☀Get(Button_Face_Tree const& structure, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
+    
+    return Get(structure.nodes,it);
+❱
+
+◀public: static▶ std::string ☀Get(tree<Buttoned_Faced_Label> const& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it)❰
     std::string full_name;
     
-    while (!structure.nodes.is_head(it)){
+    while (!tr.is_head(it)){
         
         full_name = it->label.state.faces[0].name + "/" + full_name;
-        it = structure.nodes.parent(it);
+        it = tr.parent(it);
     }
     full_name = it->label.state.faces[0].name + "/" + full_name;
     
