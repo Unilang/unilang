@@ -36,26 +36,40 @@ class
     
     Frame_Elements elements;
     Button_Tree_Global_Navigation::Handle_User_Events     (font_chars,elements,pc_input,tree.pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
-    Draw_Tree_Through_Iteration(font_chars,elements,pc_input,tree.pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
+    Draw_Tree(font_chars,elements,pc_input,tree.pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
     return elements;
 ❱
 ◀public: static▶ Frame_Elements ☀Draw(Character_Maps const& font_chars, Button_Face_Tree & tree, Position const& pos, Pc_Input_State const& pc_input)❰
     
     Frame_Elements elements;
     Button_Tree_Global_Navigation::Handle_User_Events     (font_chars,elements,pc_input,pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
-    Draw_Tree_Through_Iteration(font_chars,elements,pc_input,pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
+    Draw_Tree(font_chars,elements,pc_input,pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
     return elements;
 ❱
 
 
 
 
-◀private: static▶ void ☀Draw_Tree_Through_Iteration(Character_Maps const& font_chars, Frame_Elements & elements, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, tree<Buttoned_Faced_Label>::pre_order_iterator end)❰
+◀private: static▶ void ☀Draw_Tree(Character_Maps const& font_chars, Frame_Elements & elements, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, tree<Buttoned_Faced_Label>::pre_order_iterator end)❰
     
     
     elements.types += Build_Branches_And_Button_Labels(font_chars,pc_input,pos,tr,it,end).types;
+    elements.types += Build_Generic_Schema_References(font_chars,pc_input,pos,tr,it,end).types;
+    
+❱
+
+◀private: static▶ Frame_Elements  ☀Build_Branches_And_Button_Labels(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, tree<Buttoned_Faced_Label>::pre_order_iterator end)❰
+    
+    //iterate the tree to get all path locations.
+    //this way we can draw the references by looking up the path instead of re-traversing the tree
+    std::vector<std::pair<std::string,Position>> path_positions;
     
     
+    
+    
+    //draw references
+    Frame_Elements x;
+    return x;
 ❱
 
 ◀private: static▶ Frame_Elements  ☀Build_Branches_And_Button_Labels(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, tree<Buttoned_Faced_Label>::pre_order_iterator end)❰
