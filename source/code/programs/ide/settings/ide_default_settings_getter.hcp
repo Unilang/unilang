@@ -39,6 +39,9 @@ class
 ❪"code/utilities/code/references/reference_lookup_map_getter"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/style_theme_applier"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data/default_schema_path_settings"❫
+❪"code/utilities/code/concept_string_tree_getter"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/string_tree_to_buildable_schema_faced_tree"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/string_tree_to_buttoned_face_tree"❫
 ⚞⚟
 
 ◀public: static▶ Ide_Settings ☀Get()❰
@@ -67,14 +70,26 @@ class
     //   x.elements.types.emplace_back(e);
     // }
     
-    Add_Generic_Test_Tree(x); //good for experiments
-    Add_Starting_Code_Tree(x);
+    //Add_Generic_Test_Tree(x); //good for experiments
+    Add_Full_Schema_Tree(x); //good for seeing the entire schema as a tree
+    //Add_Starting_Code_Tree(x);
   
     
     
     return x;
 ❱
 
+◀private: static▶ void  ☀Add_Full_Schema_Tree(Ide_Settings & x)❰
+
+  //build
+  auto str_tree = Concept_String_Tree_Getter::Get();
+  auto label_tree = String_Tree_To_Buildable_Schema_Faced_Tree::Convert(str_tree);
+  
+  //add
+  Ide_Element e;
+  e.element = label_tree;
+  x.elements.types.emplace_back(e);
+❱
 
 ◀private: static▶ void  ☀Add_Starting_Code_Tree(Ide_Settings & x)❰
 

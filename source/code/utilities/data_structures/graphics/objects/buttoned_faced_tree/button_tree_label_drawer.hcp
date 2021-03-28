@@ -100,17 +100,22 @@ class
     for (auto const& it: connections){
         
         //calculate how much the connection bar should stick out to the right of the tree
-        auto depth_out = 20;
+        auto depth_out = 500;
         
         //calculate the two horizontal bars of the connection
         auto from_horizontal = Horizontal_Line::Create_Positioned(it.first,depth_out);
         auto to_horizontal = Horizontal_Line::Create_Positioned(it.second,depth_out);
         
+        //adjust to middle of label
+        from_horizontal.pos.y += 7;
+        to_horizontal.pos.y += 7;
+        
         //calculate vertical line
         auto vertical_pos = it.first;
         vertical_pos.x += depth_out;
+        vertical_pos.y = std::min(from_horizontal.pos.y,to_horizontal.pos.y);
         
-        auto vertical_height = Math::difference(it.first.y,it.second.y);
+        auto vertical_height = Math::difference(from_horizontal.pos.y,to_horizontal.pos.y);
         
         auto vertical = Vertical_Line::Create_Positioned(vertical_pos,vertical_height);
         
@@ -118,7 +123,6 @@ class
         x.types.emplace_back(to_horizontal);
         x.types.emplace_back(vertical);
     }
-    
     
     return x;
 ❱
@@ -132,11 +136,12 @@ class
         //we need to create a reference
         if (found != ref_map.map.end()){
             
+            
             auto from_pos = it.second;
             auto fk_found = ref_map.map.find(found->first);
             if (fk_found != ref_map.map.end()){
                 
-                auto found_to_pos = path_positions.find(fk_found->first);
+                auto found_to_pos = path_positions.find(fk_found->second);
                 auto to_pos = found_to_pos->second;
                 
                 result.emplace_back(from_pos,to_pos);
@@ -159,14 +164,14 @@ class
     
     For_Each_Noncollapsed::Iterate(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
         
+        //adjust position
+        Adjust_Positions_For_Next_Cell(it->label,start_pos,current_pos,depth);
+        
         //add position for label path
         std::pair<std::string,Position> result;
         result.first = Button_Face_Tree_Full_Path_Name::Get(tr,it);
         result.second = current_pos;
         path_positions.insert(result);
-        
-        //adjust position
-        Adjust_Positions_For_Next_Cell(it->label,start_pos,current_pos,depth);
         
         return Should_Break::NO;
     });

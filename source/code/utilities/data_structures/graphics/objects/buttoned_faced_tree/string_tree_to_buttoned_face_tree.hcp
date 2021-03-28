@@ -86,7 +86,7 @@ class
     label.button.current_face = 1; //open
     
     Label_Face face;
-    face.name = "test";
+    face.name = str;
     face.label.styles = Default_Label_Styles::Plain_Text();
     face.label.message = str;
     label.label.state.faces.emplace_back(face);
