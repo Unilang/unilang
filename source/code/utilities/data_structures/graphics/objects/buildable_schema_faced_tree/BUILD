@@ -73,6 +73,7 @@ hcp(
     deps = [
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_tokenizer",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:buildable_schema_faced_tree",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:positioned_buildable_schema_faced_tree",
         "//code/utilities/data_structures/tree/generic/tokens:tree_token",
     ],
 )

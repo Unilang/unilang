@@ -52,10 +52,18 @@ class
 
 ◀private: static▶ void ☀Draw_Tree_Through_Iteration(Character_Maps const& font_chars, Frame_Elements & elements, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, tree<Buttoned_Faced_Label>::pre_order_iterator end)❰
     
+    
+    elements.types += Build_Branches_And_Button_Labels(font_chars,pc_input,pos,tr,it,end).types;
+    
+    
+❱
+
+◀private: static▶ Frame_Elements  ☀Build_Branches_And_Button_Labels(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, tree<Buttoned_Faced_Label>::pre_order_iterator end)❰
+    
     auto start_pos = pos;
     auto current_pos = pos;
     
-    
+    Frame_Elements all;
     Frame_Elements branches;
     Frame_Elements labels;
     
@@ -77,10 +85,9 @@ class
         return Should_Break::NO;
     });
     
-    elements.types += branches.types;
-    elements.types += labels.types;
-    
-    
+    all.types += branches.types;
+    all.types += labels.types;
+    return all;
 ❱
 
 ◀private: static▶ Frame_Elements  ☀Possibly_Add_Branches(tree<Buttoned_Faced_Label> const& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, Faced_Label const& label, Position const& start_pos, Position const& current_pos, int const& depth)❰
