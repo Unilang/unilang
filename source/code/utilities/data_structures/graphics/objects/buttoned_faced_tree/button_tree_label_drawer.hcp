@@ -18,6 +18,7 @@ class
 ❪"code/utilities/fonts/bdf/character_maps/character_maps"❫
 ❪"code/utilities/data_structures/counters/unique_max_counter/unique_max_counter"❫
 ❪"code/utilities/code/references/reference_lookup_map"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_range"❫
 ⚯
 ❪"code/utilities/data_structures/graphics/objects/mouse/events/mouse_events_checker"❫
 ❪"code/utilities/types/vectors/operators/lib"❫
@@ -38,34 +39,46 @@ class
 ◀public: static▶ Frame_Elements ☀Draw(Character_Maps const& font_chars, Positioned_Button_Face_Tree & tree, Pc_Input_State const& pc_input, Reference_Lookup_Map const& ref_map)❰
     
     Frame_Elements elements;
+    
+    //create traversal range
+    Button_Face_Tree_Range range;
+    range.begin = tree.nodes.begin();
+    range.end = tree.nodes.end();
+    
     Button_Tree_Global_Navigation::Handle_User_Events     (font_chars,elements,pc_input,tree.pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
-    Draw_Tree(font_chars,elements,pc_input,tree.pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
+    Draw_Tree(font_chars,elements,pc_input,tree.pos,tree.nodes,range);
     return elements;
 ❱
 ◀public: static▶ Frame_Elements ☀Draw(Character_Maps const& font_chars, Button_Face_Tree & tree, Position const& pos, Pc_Input_State const& pc_input, Reference_Lookup_Map const& ref_map)❰
     
     Frame_Elements elements;
+    
+    //create traversal range
+    Button_Face_Tree_Range range;
+    range.begin = tree.nodes.begin();
+    range.end = tree.nodes.end();
+    
     Button_Tree_Global_Navigation::Handle_User_Events     (font_chars,elements,pc_input,pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
-    Draw_Tree(font_chars,elements,pc_input,pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
+    Draw_Tree(font_chars,elements,pc_input,pos,tree.nodes,range);
     return elements;
 ❱
 
 
 
 
-◀private: static▶ void ☀Draw_Tree(Character_Maps const& font_chars, Frame_Elements & elements, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, tree<Buttoned_Faced_Label>::pre_order_iterator end)❰
+◀private: static▶ void ☀Draw_Tree(Character_Maps const& font_chars, Frame_Elements & elements, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
     
     
-    elements.types += Build_Branches_And_Button_Labels(font_chars,pc_input,pos,tr,it,end).types;
-    elements.types += Build_Generic_Schema_References(font_chars,pc_input,pos,tr,it,end).types;
+    elements.types += Build_Branches_And_Button_Labels(font_chars,pc_input,pos,tr,range).types;
+    elements.types += Build_Generic_Schema_References(font_chars,pc_input,pos,tr,range).types;
     
 ❱
 
-◀private: static▶ Frame_Elements  ☀Build_Generic_Schema_References(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, tree<Buttoned_Faced_Label>::pre_order_iterator end)❰
+◀private: static▶ Frame_Elements  ☀Build_Generic_Schema_References(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
     
     //iterate the tree to get all path locations.
     //this way we can draw the references by looking up the path instead of re-traversing the tree
-    auto path_positions = Get_Path_Positions(font_chars,pc_input,pos,tr,it,end);
+    auto path_positions = Get_Path_Positions(font_chars,pc_input,pos,tr,range);
     
     
     //for (auto const& it: 
@@ -76,7 +89,7 @@ class
     return x;
 ❱
 
-◀private: static▶ std::vector<std::pair<std::string,Position>> ☀Get_Path_Positions(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, tree<Buttoned_Faced_Label>::pre_order_iterator end)❰
+◀private: static▶ std::vector<std::pair<std::string,Position>> ☀Get_Path_Positions(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
     
 
     std::vector<std::pair<std::string,Position>> path_positions;
@@ -85,7 +98,7 @@ class
     auto start_pos = pos;
     auto current_pos = pos;
     
-    For_Each_Noncollapsed::Iterate(tr,it,end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
+    For_Each_Noncollapsed::Iterate(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
         
         //add position for label path
         std::pair<std::string,Position> result;
@@ -104,7 +117,7 @@ class
 ❱
 
 
-◀private: static▶ Frame_Elements  ☀Build_Branches_And_Button_Labels(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, tree<Buttoned_Faced_Label>::pre_order_iterator end)❰
+◀private: static▶ Frame_Elements  ☀Build_Branches_And_Button_Labels(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
     
     auto start_pos = pos;
     auto current_pos = pos;
@@ -113,7 +126,7 @@ class
     Frame_Elements branches;
     Frame_Elements labels;
     
-    For_Each_Noncollapsed::Iterate(tr,it,end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
+    For_Each_Noncollapsed::Iterate(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
         
         //branches
         Append(branches.types,Possibly_Add_Branches(tr,it,it->label,start_pos,current_pos,depth).types);

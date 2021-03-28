@@ -1,0 +1,13 @@
+class
+❪vector❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree"❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    tree<Buttoned_Faced_Label>::pre_order_iterator begin;
+    tree<Buttoned_Faced_Label>::pre_order_iterator end;
+▶
+

@@ -15,6 +15,13 @@ hcp_and_hcp_pos(
 )
 
 hcp(
+    name = "button_face_tree_range",
+    deps = [
+       "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree",
+    ],
+)
+
+hcp(
     name = "button_tree_label_drawer",
     deps = [
         "//code/utilities/data_structures/counters/unique_max_counter",
@@ -44,7 +51,8 @@ hcp(
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_full_path_name",
-        "//code/utilities/code/references:reference_lookup_map"
+        "//code/utilities/code/references:reference_lookup_map",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_range",
     ],
 )
 
