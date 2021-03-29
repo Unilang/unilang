@@ -101,19 +101,27 @@ class
     for (auto const& it: connections){
         
         //calculate how much the connection bar should stick out to the right of the tree
-        auto depth_out = 500;
+        auto depth_out = Calculate_Out_Depth(tr,it);
         
-        //calculate the two horizontal bars of the connection
-        auto from_horizontal = Horizontal_Line::Create_Positioned(it.first.pos,depth_out);
-        auto to_horizontal = Horizontal_Line::Create_Positioned(it.second.pos,depth_out);
+        auto from_horiz_start = it.first.pos;
+        auto to_horiz_start = it.second.pos;
         
         //adjust to middle of label
-        from_horizontal.pos.y += 7;
-        to_horizontal.pos.y += 7;
+        from_horiz_start.y += 7;
+        to_horiz_start.y += 7;
+        
+        //adjust to end of label
+        from_horiz_start.x += Faced_Label_Drawer::Get_Dimensions(it.first.it->label).x;
+        to_horiz_start.x += Faced_Label_Drawer::Get_Dimensions(it.second.it->label).x;
+        
+        //calculate the two horizontal bars of the connection
+        auto from_horizontal = Horizontal_Line::Create_Positioned(from_horiz_start,Math::difference(from_horiz_start.x,depth_out));
+        auto to_horizontal = Horizontal_Line::Create_Positioned(to_horiz_start,Math::difference(to_horiz_start.x,depth_out));
+        
         
         //calculate vertical line
-        auto vertical_pos = it.first;
-        vertical_pos.x += depth_out;
+        auto vertical_pos = from_horiz_start;
+        vertical_pos.x += Math::difference(vertical_pos.x,depth_out);
         vertical_pos.y = std::min(from_horizontal.pos.y,to_horizontal.pos.y);
         
         auto vertical_height = Math::difference(from_horizontal.pos.y,to_horizontal.pos.y);
@@ -127,6 +135,56 @@ class
     
     return x;
 ❱
+
+◀private: static▶ int ☀Calculate_Out_Depth(tree<Buttoned_Faced_Label> const& tr, std::pair<Positioned_Button_Tree_Iterator,Positioned_Button_Tree_Iterator> const& connection)❰
+
+    //decide the correct way to loop through a subset of the tree
+    auto begin = connection.first;
+    auto end = connection.second;
+    Swap_If_Needed(tr,begin,end);
+    
+    
+    auto start_pos = begin.pos;
+    auto current_pos = begin.pos;
+    
+    auto out_depth = begin.pos.x;
+    For_Each_Noncollapsed::Iterate(tr,begin.it,end.it,[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
+        
+        //adjust position
+        Adjust_Positions_For_Next_Cell(it->label,start_pos,current_pos,depth);
+        
+        out_depth = std::max(out_depth,Faced_Label_Drawer::Get_Dimensions(it->label).x + current_pos.x);
+        
+        return Should_Break::NO;
+    });
+    
+    //buffer space
+    out_depth += 5;
+    return out_depth;
+❱
+
+◀private: static▶ void ☀Swap_If_Needed(tree<Buttoned_Faced_Label> const& tr, Positioned_Button_Tree_Iterator & a, Positioned_Button_Tree_Iterator & b)❰
+
+    //damn, I can't compare the iterators directly.  How do I know which one comes first?
+    //i'll inefficiently iterate the tree and see which one is first.
+    //then swap if necessary
+
+    For_Each_Noncollapsed::Iterate(tr,tr.begin(),tr.end(),[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
+        //correct order
+        if (a.it == it){
+            return Should_Break::YES;
+        }
+        
+        //backwards. needs fixed
+        if (b.it == it){
+            std::swap(a,b);
+            return Should_Break::YES;
+        }
+        
+        return Should_Break::NO;
+    });
+❱
+
 
 ◀private: static▶ std::vector<std::pair<Positioned_Button_Tree_Iterator,Positioned_Button_Tree_Iterator>> ☀Get_Position_Connections(std::unordered_map<std::string,Positioned_Button_Tree_Iterator> const& path_positions, Reference_Lookup_Map const& ref_map)❰
 
