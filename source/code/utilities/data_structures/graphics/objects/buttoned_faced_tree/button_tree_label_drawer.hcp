@@ -207,9 +207,10 @@ class
             if (fk_found != ref_map.map.end()){
                 
                 auto found_to_pos = path_positions.find(fk_found->second);
-                auto TO = found_to_pos->second;
-                
-                result.emplace_back(FROM,TO);
+                if (found_to_pos != path_positions.end()){
+                    auto TO = found_to_pos->second;
+                    result.emplace_back(FROM,TO);
+                }
             }
             
         }
