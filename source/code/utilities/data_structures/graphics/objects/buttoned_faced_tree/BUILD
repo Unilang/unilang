@@ -22,6 +22,15 @@ hcp(
 )
 
 hcp(
+    name = "positioned_button_tree_iterator",
+    deps = [
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/data:buttoned_faced_label",
+        "//code/utilities/data_structures/line_break:should_line_break",
+        "@tree",
+    ],
+)
+
+hcp(
     name = "button_tree_label_drawer",
     deps = [
         "//code/utilities/data_structures/counters/unique_max_counter",
@@ -54,6 +63,7 @@ hcp(
         "//code/utilities/code/references:reference_lookup_map",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_range",
         "//code/utilities/math:math",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:positioned_button_tree_iterator",
     ],
 )
 

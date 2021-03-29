@@ -19,6 +19,7 @@ class
 ❪"code/utilities/data_structures/counters/unique_max_counter/unique_max_counter"❫
 ❪"code/utilities/code/references/reference_lookup_map"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_range"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/positioned_button_tree_iterator"❫
 ⚯
 ❪"code/utilities/data_structures/graphics/objects/mouse/events/mouse_events_checker"❫
 ❪"code/utilities/types/vectors/operators/lib"❫
@@ -127,7 +128,7 @@ class
     return x;
 ❱
 
-◀private: static▶ std::vector<std::pair<Position,Position>> ☀Get_Position_Connections(std::unordered_map<std::string,Position> const& path_positions, Reference_Lookup_Map const& ref_map)❰
+◀private: static▶ std::vector<std::pair<Position,Position>> ☀Get_Position_Connections(std::unordered_map<std::string,Positioned_Button_Tree_Iterator> const& path_positions, Reference_Lookup_Map const& ref_map)❰
 
     std::vector<std::pair<Position,Position>> result;
     for (auto const& it: path_positions){
@@ -137,12 +138,12 @@ class
         if (found != ref_map.map.end()){
             
             
-            auto from_pos = it.second;
+            Position from_pos = it.second.pos;
             auto fk_found = ref_map.map.find(found->first);
             if (fk_found != ref_map.map.end()){
                 
                 auto found_to_pos = path_positions.find(fk_found->second);
-                auto to_pos = found_to_pos->second;
+                Position to_pos = (found_to_pos->second).pos;
                 
                 result.emplace_back(from_pos,to_pos);
             }
@@ -153,10 +154,10 @@ class
     return result;
     
 ❱
-◀private: static▶ std::unordered_map<std::string,Position> ☀Get_Path_Positions(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
+◀private: static▶ std::unordered_map<std::string,Positioned_Button_Tree_Iterator> ☀Get_Path_Positions(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
     
 
-    std::unordered_map<std::string,Position> path_positions;
+    std::unordered_map<std::string,Positioned_Button_Tree_Iterator> path_positions;
     
     
     auto start_pos = pos;
@@ -168,9 +169,10 @@ class
         Adjust_Positions_For_Next_Cell(it->label,start_pos,current_pos,depth);
         
         //add position for label path
-        std::pair<std::string,Position> result;
+        std::pair<std::string,Positioned_Button_Tree_Iterator> result;
         result.first = Button_Face_Tree_Full_Path_Name::Get(tr,it);
-        result.second = current_pos;
+        result.second.it = it;
+        result.second.pos = current_pos;
         path_positions.insert(result);
         
         return Should_Break::NO;
