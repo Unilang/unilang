@@ -104,8 +104,8 @@ class
         auto depth_out = 500;
         
         //calculate the two horizontal bars of the connection
-        auto from_horizontal = Horizontal_Line::Create_Positioned(it.first,depth_out);
-        auto to_horizontal = Horizontal_Line::Create_Positioned(it.second,depth_out);
+        auto from_horizontal = Horizontal_Line::Create_Positioned(it.first.pos,depth_out);
+        auto to_horizontal = Horizontal_Line::Create_Positioned(it.second.pos,depth_out);
         
         //adjust to middle of label
         from_horizontal.pos.y += 7;
@@ -128,9 +128,9 @@ class
     return x;
 ❱
 
-◀private: static▶ std::vector<std::pair<Position,Position>> ☀Get_Position_Connections(std::unordered_map<std::string,Positioned_Button_Tree_Iterator> const& path_positions, Reference_Lookup_Map const& ref_map)❰
+◀private: static▶ std::vector<std::pair<Positioned_Button_Tree_Iterator,Positioned_Button_Tree_Iterator>> ☀Get_Position_Connections(std::unordered_map<std::string,Positioned_Button_Tree_Iterator> const& path_positions, Reference_Lookup_Map const& ref_map)❰
 
-    std::vector<std::pair<Position,Position>> result;
+    std::vector<std::pair<Positioned_Button_Tree_Iterator,Positioned_Button_Tree_Iterator>> result;
     for (auto const& it: path_positions){
         auto found = ref_map.map.find(it.first);
         
@@ -138,14 +138,14 @@ class
         if (found != ref_map.map.end()){
             
             
-            Position from_pos = it.second.pos;
+            auto FROM = it.second;
             auto fk_found = ref_map.map.find(found->first);
             if (fk_found != ref_map.map.end()){
                 
                 auto found_to_pos = path_positions.find(fk_found->second);
-                Position to_pos = (found_to_pos->second).pos;
+                auto TO = found_to_pos->second;
                 
-                result.emplace_back(from_pos,to_pos);
+                result.emplace_back(FROM,TO);
             }
             
         }
