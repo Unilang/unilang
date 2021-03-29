@@ -17,21 +17,31 @@ class
     p.color_fill.g = 0;
     p.color_fill.b = 0;
     
-    int dwn_offset = 0;
-    int right_offset = 0;
-    while(height > 0){
-        for (size_t i = dwn_offset; i < height; ++i){
-            p.pos.x = right_offset;
-            p.pos.y = i;
-            b.pixels.emplace_back(p);
-        }
-        
-        dwn_offset += 1;
-        right_offset += 1;
-        height -= 1;
+    Position pos;
+    pos.y += height/2;
+    int multiple = 1;
+    
+    
+    for (size_t i = 0; i < height; ++i){
+            
+            
+        Add_Vertical_Line(b,pos,multiple);
+        multiple+=2;
+        pos.x+=1;
+        pos.y-=1;
     }
     
     return b;
+❱
+
+◀private: static▶ void ☀Add_Vertical_Line(Multi_Color_Bitmap & b, Position pos, int height)❰
+    for (size_t i = 0; i < height; ++i){
+            
+            Pixel_Settings p;
+            p.pos.x = pos.x;
+            p.pos.y = pos.y + i;
+            b.pixels.emplace_back(p);
+    }
 ❱
 
 ◀public: static▶ Positioned_Multi_Color_Bitmap ☀Create_Positioned(Position const& pos, int height)❰

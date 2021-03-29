@@ -28,6 +28,7 @@ class
 ❪"code/utilities/data_structures/graphics/bitmap/premade/horizontal_line"❫
 ❪"code/utilities/data_structures/graphics/bitmap/premade/l_line"❫
 ❪"code/utilities/data_structures/graphics/bitmap/premade/right_arrow"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/left_arrow"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/buttoned_faced_label_is_active"❫
 ❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_is_active"❫
 ❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_set_active"❫
@@ -128,9 +129,14 @@ class
         
         auto vertical = Vertical_Line::Create_Positioned(vertical_pos,vertical_height);
         
+        auto arrow = Left_Arrow::Create_Positioned(to_horiz_start,4);
+        arrow.pos.y -=2;
+        
         x.types.emplace_back(from_horizontal);
         x.types.emplace_back(to_horizontal);
         x.types.emplace_back(vertical);
+        
+        x.types.emplace_back(arrow);
     }
     
     return x;

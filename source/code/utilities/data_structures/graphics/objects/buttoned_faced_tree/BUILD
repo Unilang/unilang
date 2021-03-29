@@ -64,6 +64,7 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_range",
         "//code/utilities/math:math",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:positioned_button_tree_iterator",
+        "//code/utilities/data_structures/graphics/bitmap/premade:left_arrow",
     ],
 )
 
