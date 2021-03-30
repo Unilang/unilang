@@ -10,16 +10,23 @@ class
 ❪"code/utilities/types/strings/observers/splitting/lib"❫
 ⚯
 ❪iostream❫
+❪"code/utilities/types/strings/transformers/search_replace/lib"❫
+❪"code/utilities/types/general/lib"❫
 ⚞⚟
 
 //get the shortest path suffix possible without conflicting with other path suffixes
 //this can help create the shortest yet still unique name for the path.
 //I wanted to use this to generate the shortest but most unique type name to represent the tree node if it were a struct.
+//The reason we do this at all is to avoid type name conflicts for all the generated struct names.
 ◀public: static▶ std::string ☀Get(String_Tree const& str_tree, std::string const& path) ❰
 
     //get all the paths except the one passed in
     auto paths = Tree_Full_Paths_Getter::Get_All_Paths_Ordered(str_tree);
     Remove_Element(paths,path);
+    
+    // for (auto & it: paths){
+    //     replace_space_with_fwd_slash(it);
+    // }
     
     auto parts = Split_Into_Parts_From_Fwd_Slash(path);
     
@@ -39,6 +46,14 @@ class
         result = "/" + parts[i] + result;
     }
     
+    
     result.erase(0,1);
+    
+    if (Contains(paths,result)){
+        std::cout << path << std::endl;
+        std::cout << "still match: " << result << std::endl;
+        exit(-1);
+    }
+    
     return result;
 ❱

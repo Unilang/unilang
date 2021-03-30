@@ -60,6 +60,9 @@ std::string& replace_spaces_with_underscore( std::string & str){
 std::string& replace_fwd_slash_with_space(std::string & str){
     return replace_all(str,'/',' ');
 }
+std::string& replace_space_with_fwd_slash(std::string & str){
+    return replace_all(str,' ','/');
+}
 
 std::string& replace_all( std::string & src, char const& c1, char const& c2) {
     for (auto & it: src) {

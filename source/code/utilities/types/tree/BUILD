@@ -38,6 +38,8 @@ hcp(
         "//code/utilities/types/tree/converters:tree_full_paths_getter",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/transformers:lib",
+        "//code/utilities/types/strings/transformers/search_replace:lib",
+        "//code/utilities/types/general:lib",
     ],
 )
 
