@@ -35,6 +35,7 @@ enum_cpp(
 hcp(
     name = "buildable_face_tree_drawer",
     deps = [
+        "//code/utilities/code/references:reference_lookup_map",
         "//code/utilities/data_structures/counters/unique_max_counter",
         "//code/utilities/data_structures/graphics/bitmap/premade:horizontal_line",
         "//code/utilities/data_structures/graphics/bitmap/premade:l_line",
@@ -64,7 +65,6 @@ hcp(
         "//code/utilities/peripheral/pc:pc_input_state",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
-        "//code/utilities/code/references:reference_lookup_map",
     ],
 )
 

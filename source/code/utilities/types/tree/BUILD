@@ -32,14 +32,14 @@ hcp(
     name = "shortest_unique_name",
     deps = [
         "//code/utilities/data_structures/tree/generic:string_tree",
+        "//code/utilities/types/general:lib",
         "//code/utilities/types/strings/observers/splitting:lib",
+        "//code/utilities/types/strings/transformers/search_replace:lib",
         "//code/utilities/types/tree:full_path_name",
         "//code/utilities/types/tree/converters:path_to_iterator",
         "//code/utilities/types/tree/converters:tree_full_paths_getter",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/transformers:lib",
-        "//code/utilities/types/strings/transformers/search_replace:lib",
-        "//code/utilities/types/general:lib",
     ],
 )
 

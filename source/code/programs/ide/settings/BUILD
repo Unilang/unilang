@@ -44,6 +44,7 @@ hcp(
     deps = [
         "//code/programs/ide/settings:ide_settings",
         "//code/utilities/code:concept_string_tree_getter",
+        "//code/utilities/code/references:reference_lookup_map_getter",
         "//code/utilities/code/style_theme:style_lookup_map_getter",
         "//code/utilities/colors/defaults:rectangle_shades",
         "//code/utilities/data_structures/graphics/bitmap/full_color_bitmap",
@@ -54,8 +55,11 @@ hcp(
         "//code/utilities/data_structures/graphics/gui_desktop:gui_desktop_getter",
         "//code/utilities/data_structures/graphics/image:positioned_image_data",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:buildable_schema_faced_tree_default_schema",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:string_tree_to_buildable_schema_faced_tree",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:style_theme_applier",
+        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:default_schema_path_settings",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/premade:buttoned_faced_label_premades",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:string_tree_to_buttoned_face_tree",
         "//code/utilities/data_structures/graphics/objects/cursor/premade:blue_cursor",
         "//code/utilities/data_structures/graphics/objects/faced_label:faced_label_converter",
         "//code/utilities/data_structures/graphics/objects/faced_label/premade:faced_label_premades",
@@ -78,10 +82,6 @@ hcp(
         "//code/utilities/graphics/imgui/render/elements:rectangle_drawer",
         "//code/utilities/graphics/sdl:standard_sdl_init_settings",
         "//code/utilities/image:stb_image_setter",
-        "//code/utilities/code/references:reference_lookup_map_getter",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:default_schema_path_settings",
-        "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:string_tree_to_buildable_schema_faced_tree",
-        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:string_tree_to_buttoned_face_tree",
     ],
 )
 

@@ -25,4 +25,3 @@ hcp(
         "//code/utilities/types/strings/observers/other:lib",
     ],
 )
-
