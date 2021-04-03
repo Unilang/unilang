@@ -318,6 +318,8 @@ class
     x.specs.emplace_back(libglvnd());
     x.specs.emplace_back(glproto());
     
+    x.specs.emplace_back(QR_Code_generator());
+    
     
     
     //3d models
@@ -1480,6 +1482,48 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "xorg_glproto";
     Add_Unilang_Github_Mirror(spec,"xorg-glproto","500b137bbdba1cd8ae943849fef6e79fdd4eca40","62e7d3b692a5bd4b429cbb64d9a6b41bb475599df0ab6b747fa3eb54294a2fb3");
+    return spec;
+❱
+◀private: static▶ Dependency_Specification ☀QR_Code_generator()❰
+
+    Dependency_Specification spec;
+    spec.lib_name = "QR_Code_generator";
+    Add_Unilang_Github_Mirror(spec,"QR-Code-generator","8518684c0f33d004fa93971be2c6a8eca3167d1e","1c281781d834e703ec40750ee0e0924567d8edc469d6f43083600e0195a74044");
+
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"])
+
+#build headers
+hdrs = glob(
+    include = [
+        "cpp/**/*.h",
+        "cpp/**/*.hpp",
+    ],
+    exclude = [
+    ],
+)
+
+cc_library(
+    name = "hdrs",
+    hdrs = hdrs,
+    includes = [
+        "cpp",
+    ],
+)
+
+cc_library(
+    name = "lib",
+    srcs = ["cpp/QrCode.cpp"],
+    copts = [
+    ],
+    includes = [
+    ],
+    deps = [
+        ":hdrs",
+    ],
+)
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀tinyobjloader()❰
