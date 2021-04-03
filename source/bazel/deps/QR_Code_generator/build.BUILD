@@ -32,3 +32,9 @@ cc_library(
         ":hdrs",
     ],
 )
+
+cc_binary(
+    name = "demo",
+    srcs = ["cpp/QrCodeGeneratorDemo.cpp"],
+    deps = [":lib"],
+)
