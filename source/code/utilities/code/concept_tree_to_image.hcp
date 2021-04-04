@@ -45,7 +45,7 @@ class
     
     //print the full paths for convenience
     auto full_paths = Tree_Full_Paths_Getter::Get_All_Paths_Ordered(str_tree);
-    std::cout << Get_As_Newline_Seperated_String(full_paths) << std::endl;
+    //std::cout << Get_As_Newline_Seperated_String(full_paths) << std::endl;
     
 ❱
 

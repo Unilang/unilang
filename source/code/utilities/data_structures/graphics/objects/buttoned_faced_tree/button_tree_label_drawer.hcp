@@ -103,6 +103,7 @@ class
         
         //calculate how much the connection bar should stick out to the right of the tree
         auto depth_out = Calculate_Out_Depth(tr,it);
+        std::cout << depth_out << std::endl;
         
         auto from_horiz_start = it.first.pos;
         auto to_horiz_start = it.second.pos;
@@ -116,8 +117,13 @@ class
         to_horiz_start.x += Faced_Label_Drawer::Get_Dimensions(it.second.it->label).x;
         
         //calculate the two horizontal bars of the connection
-        auto from_horizontal = Horizontal_Line::Create_Positioned(from_horiz_start,Math::difference(from_horiz_start.x,depth_out));
-        auto to_horizontal = Horizontal_Line::Create_Positioned(to_horiz_start,Math::difference(to_horiz_start.x,depth_out));
+        auto from_horizontal_length = Math::difference(from_horiz_start.x,depth_out);
+        auto to_horizontal_length = Math::difference(to_horiz_start.x,depth_out);
+        auto from_horizontal = Horizontal_Line::Create_Positioned(from_horiz_start,from_horizontal_length);
+        auto to_horizontal = Horizontal_Line::Create_Positioned(to_horiz_start,to_horizontal_length);
+        
+        std::cout << from_horiz_start.x << "," << from_horiz_start.y << ": " << from_horizontal_length << std::endl;
+        std::cout << to_horiz_start.x << "," << to_horiz_start.y << ": " << to_horizontal_length << std::endl;
         
         
         //calculate vertical line
@@ -127,6 +133,7 @@ class
         
         auto vertical_height = Math::difference(from_horizontal.pos.y,to_horizontal.pos.y);
         
+        //std::cout << vertical_pos.x << " " << vertical_pos.y << " " << vertical_height << std::endl;
         auto vertical = Vertical_Line::Create_Positioned(vertical_pos,vertical_height);
         
         auto arrow = Left_Arrow::Create_Positioned(to_horiz_start,4);
@@ -135,7 +142,6 @@ class
         x.types.emplace_back(from_horizontal);
         x.types.emplace_back(to_horizontal);
         x.types.emplace_back(vertical);
-        
         x.types.emplace_back(arrow);
     }
     
@@ -163,6 +169,10 @@ class
         
         return Should_Break::NO;
     });
+    
+    //BUG: I have to check the last element as well, but I'm not sure it's depth
+    //Adjust_Positions_For_Next_Cell(end.it->label,start_pos,current_pos,depth);
+    out_depth = std::max(out_depth,Faced_Label_Drawer::Get_Dimensions(end.it->label).x + current_pos.x);
     
     //buffer space
     out_depth += 5;
