@@ -29,9 +29,12 @@ class
     return struct_name;
 ❱
 ◀public: static▶ std::string ☀Get_Struct_Identifier(String_Tree const& str_tree, std::string const& full_path)❰
-    auto short_path = Shortest_Unique_Name::Get(str_tree,full_path);
-    auto name = replace_fwd_slash_with_space(short_path);
-    auto identifier = Case_Modifier::As_Modified_Casing(Case_Format_Style::SNAKE_CASE,name);
+
+    //we don't need to make the identifier unique in the same way that we did the typename
+
+    auto parts = Split_Into_Parts_From_Fwd_Slash(full_path);
+    auto last_part = parts[parts.size()-1];
+    auto identifier = Case_Modifier::As_Modified_Casing(Case_Format_Style::SNAKE_CASE,last_part);
     Adjust_To_Avoid_Cpp_Keyword_Conflict(identifier);
     return identifier;
 ❱

@@ -101,36 +101,36 @@ class
     
     
     //extracted from structure
-    auto brief_desc_vec = First_Element_Or_Default(structure.module_brief);
-    auto detail_desc_vec = First_Element_Or_Default(structure.module_detail);
+    auto brief_desc_vec = First_Element_Or_Default(structure.brief);
+    auto detail_desc_vec = First_Element_Or_Default(structure.detail);
     std::string brief_desc;
     std::string detail_desc;
-    for (auto const& it: brief_desc_vec.brief_sentence){
+    for (auto const& it: brief_desc_vec.sentence){
         brief_desc += it.value + "\n";
     }
-    for (auto const& it: detail_desc_vec.detail_sentence){
+    for (auto const& it: detail_desc_vec.sentence){
         detail_desc += it.value + "\n";
     }
     
     
     auto groups = First_Element_Or_Default(structure.group);
     std::vector<std::string> group_names;
-    for (auto const& it : groups.group_name){
+    for (auto const& it : groups.name){
         group_names.emplace_back(it.value);
     }
-    auto authors = First_Element_Or_Default(structure.module_author);
+    auto authors = First_Element_Or_Default(structure.author);
     std::vector<std::string> author_names;
-    for (auto const& it : authors.module_author_name){
+    for (auto const& it : authors.name){
         author_names.emplace_back(it.value);
     }
     auto bugs = First_Element_Or_Default(structure.bug);
     std::vector<std::string> bug_names;
-    for (auto const& it : bugs.bug_name){
+    for (auto const& it : bugs.name){
         bug_names.emplace_back(it.value);
     }
     auto warnings = First_Element_Or_Default(structure.warning);
     std::vector<std::string> warning_names;
-    for (auto const& it : warnings.warning_name){
+    for (auto const& it : warnings.name){
         warning_names.emplace_back(it.value);
     }
     

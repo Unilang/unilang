@@ -37,7 +37,7 @@ class
     for (auto const& it: i.alternative_text){Append(text,it.value);}
     Append(text,settings.image.alternative_text_end_marker);
     Append(text,settings.image.image_path_start_marker);
-    for (auto const& it: i.image_path){Append(text,it.value);}
+    for (auto const& it: i.path){Append(text,it.value);}
     Append_A_Space(text);
     Append(text,settings.image.hover_text_start_marker);
     for (auto const& it: i.hover_text){Append(text,it.value);}

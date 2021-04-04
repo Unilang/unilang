@@ -36,8 +36,8 @@ class
     
     std::string derived_brief = "";
     
-    auto comment = First_Element_Or_Default(it.data_member_brief).value;
-    auto name = First_Element_Or_Default(it.data_member_identifier).value;
+    auto comment = First_Element_Or_Default(it.brief).value;
+    auto name = First_Element_Or_Default(it.identifier).value;
     
     if (comment.empty() && options.portion.data_member_options.derive_brief_comment){
       derived_brief = name;
@@ -50,7 +50,7 @@ class
 ❱
 
 ◀private: static▶ std::string ☀Derive_Data_Detail(model::DataMember const& item, Module_Settings const& options)❰
-    auto comment = First_Element_Or_Default(item.data_member_detail).value;
+    auto comment = First_Element_Or_Default(item.detail).value;
     std::string str = comment;
     
     //add value meanings as part of the detail section

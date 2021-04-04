@@ -21,15 +21,15 @@ class
 
 
 ◀public: static▶ void ☀Add(Doxygen_Data & data, model::Function const& method, Module_Settings const& options)❰
-  Add_Template_Arguments(data,method.function_template_argument,options);
-  Add_Function_Arguments(data,method.function_argument,options);
+  Add_Template_Arguments(data,method.template_argument,options);
+  Add_Function_Arguments(data,method.argument,options);
 ❱
 ◀private: static▶ void ☀Add_Template_Arguments(Doxygen_Data & data, std::vector<model::FunctionTemplateArgument> const& template_arguments, Module_Settings const& options)❰
 
     for (auto it: template_arguments){
-        auto description = First_Element_Or_Default(it.function_template_argument_comment).value;
+        auto description = First_Element_Or_Default(it.comment).value;
         
-        auto units = First_Element_Or_Default(it.function_template_argument_units).value;
+        auto units = First_Element_Or_Default(it.units).value;
         Units_Description_Adder::Add(units,description,options.portion.method_options.parameters.template_parameter_units);
         Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,"tparam",description,options.portion.method_options.comment.grammar);
     }
@@ -39,11 +39,11 @@ class
     for (auto it: function_arguments){
         auto new_identifier = Function_Argument_To_Identifier::Derive_Name(it,options.portion);
         
-        auto comment = First_Element_Or_Default(it.function_argument_comment).value;
+        auto comment = First_Element_Or_Default(it.comment).value;
         auto grammar_fixed_comment = Grammar_Adjuster::Get_Adjusted(comment,options.portion.method_options.comment.grammar);
         
         auto new_description = new_identifier + " " + grammar_fixed_comment;
-        auto units = First_Element_Or_Default(it.argument_units).value;
+        auto units = First_Element_Or_Default(it.units).value;
         Units_Description_Adder::Add(units,new_description,options.portion.method_options.parameters.regular_parameter_units);
         auto dir = Decide_In_Out_Pass_String(it,options);
         

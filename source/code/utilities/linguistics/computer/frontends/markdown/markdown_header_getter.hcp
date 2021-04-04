@@ -16,11 +16,11 @@ class
 
 ◀public: static▶ std::string ☀Get(model::Paragraph const& p, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
     std::string title;
-    if (!p.paragraph_title.empty()){
+    if (!p.title.empty()){
         
         //add the title marker
         Append_A_Newline(title);
-        for (auto const& it: p.paragraph_depth){
+        for (auto const& it: p.depth){
             const auto depth = as_signed(it.value);
             
             //decide what kind of header we want to build
@@ -39,7 +39,7 @@ class
 ◀private: static▶ std::string ☀Regular_Header(model::Paragraph const& p, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
         std::string title;
         
-        for (auto const& it: p.paragraph_depth){
+        for (auto const& it: p.depth){
             const auto depth = as_signed(it.value);
             Append(title,Depth_To_Header_Marker(depth,settings));
         }
@@ -53,7 +53,7 @@ class
         //}
         
         //add the actual title
-        for (auto const& it: p.paragraph_title){
+        for (auto const& it: p.title){
             Append_With_Newline(title,it.value);
         }
         return title;
@@ -71,7 +71,7 @@ class
     //}
     
     //add the actual title
-    for (auto const& it: p.paragraph_title){
+    for (auto const& it: p.title){
     Append(title,it.value);
     }
     Append_With_Newline(title,settings.headers.summary_end_tag);

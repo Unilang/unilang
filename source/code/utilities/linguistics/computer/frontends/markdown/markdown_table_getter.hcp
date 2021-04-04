@@ -45,7 +45,7 @@ class
     for (auto const& table: s.table){
         for (auto const& it: table.row){
             Append(text," - ");
-            for (auto const& row_value: it.row_value){
+            for (auto const& row_value: it.value){
                 Append_With_Newline(text, row_value.value);
             }
         }
@@ -65,7 +65,7 @@ class
         Append(text,Bar_Space(settings));
         
         for (auto const& it: table.header){
-            for (auto const& header_value: it.header_value){
+            for (auto const& header_value: it.value){
                 Append(text, header_value.value);
                 Append(text,Space_Bar_Space(settings));
             }
@@ -86,7 +86,7 @@ class
         int count = 0;
         Append(text,Bar_Space(settings));
         for (auto const& it: table.row){
-            for (auto const& row_value: it.row_value){
+            for (auto const& row_value: it.value){
                 Append(text, row_value.value);
                 Append(text,Space_Bar_Space(settings));
                 ++count;

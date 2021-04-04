@@ -30,7 +30,7 @@ class
   //     //auto extra_type_casing = How_To_Case_Extra_Type_Info(data_member,settings,is_global);
       
       
-  new_identifier = First_Element_Or_Default(item.data_member_identifier).value;
+  new_identifier = First_Element_Or_Default(item.identifier).value;
   //     new_identifier = Adjust_Based_On_Type_Info(new_identifier,data_member,settings);
 
 

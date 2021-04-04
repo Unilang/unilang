@@ -27,8 +27,8 @@ class
 ❱
 
 ◀private: static▶ std::string ☀Module_Name(model::Module const& structure)❰
-  if (structure.module_name.empty()){
+  if (structure.name.empty()){
     return "output";
   }
-  return structure.module_name[0].value;
+  return structure.name[0].value;
 ❱

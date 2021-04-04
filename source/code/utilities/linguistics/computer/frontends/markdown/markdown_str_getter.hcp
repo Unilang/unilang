@@ -48,7 +48,7 @@ class
     //there are citation sources, and at least 1 sentence has a citation
     for (auto const& l: structure.literature){
         for (auto const& p: l.paragraph){
-            for (auto const& s: p.paragraph_sentence){
+            for (auto const& s: p.sentence){
                 if (!s.citations.empty()){
                     return true;
                 }
@@ -102,10 +102,10 @@ class
 
 
 ◀private: static▶ int ☀Get_Depth(model::Paragraph const& p)❰
-    if (p.paragraph_depth.empty()){
+    if (p.depth.empty()){
         return 0;
     }
-    return as_signed(p.paragraph_depth[0].value);
+    return as_signed(p.depth[0].value);
 ❱
 
 ◀private: static▶ std::string ☀Possibly_Get_Outline(model::Paragraph const& it, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
@@ -126,7 +126,7 @@ class
     std::string text;
     
     //if there are no sentences don't print them or any of the supplementary data
-    if (p.paragraph_sentence.empty()){
+    if (p.sentence.empty()){
         return text;
     }
     if(!settings.sentences.print){
@@ -136,7 +136,7 @@ class
     
         
     //print each sentence
-    for (auto const& it: p.paragraph_sentence){
+    for (auto const& it: p.sentence){
         auto txt = Possibly_Get_Sentence(it,contributors,settings);
         if (!txt.empty()){
             Append(text,Possibly_Get_Sentence(it,contributors,settings));
@@ -149,8 +149,8 @@ class
 ❱
 ◀private: static▶ std::string ☀Possibly_Get_Sentence(model::ParagraphSentence const& s, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
     std::string text;
-    if (!s.sentence_text.empty()){
-        Append(text,Grammar_Adjuster::Get_Adjusted(as_string(s.sentence_text[0].value),settings.grammar));
+    if (!s.text.empty()){
+        Append(text,Grammar_Adjuster::Get_Adjusted(as_string(s.text[0].value),settings.grammar));
         Append_N_Spaces(text,2);
     }
     if (!s.image.empty() || !s.table.empty() || !s.code_line.empty()){

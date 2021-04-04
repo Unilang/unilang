@@ -41,22 +41,22 @@ class
 
 ◀private: static▶ std::string ☀Get_Import_Line(model::ImportInterface const& it)❰
 
-    auto specifiers = First_Element_Or_Default(it.import_interface_specifiers).value;
-    auto name = First_Element_Or_Default(it.import_interface_name).value;
+    auto specifiers = First_Element_Or_Default(it.specifiers).value;
+    auto name = First_Element_Or_Default(it.name).value;
     return Get_Import_Line(name,Contains_Substring(specifiers,"i"));
 ❱
 
 ◀private: static▶ std::string ☀Get_Import_Line(model::ImportImplementation const& it)❰
 
-    auto specifiers = First_Element_Or_Default(it.import_implementation_specifiers).value;
-    auto name = First_Element_Or_Default(it.import_implementation_name).value;
+    auto specifiers = First_Element_Or_Default(it.specifiers).value;
+    auto name = First_Element_Or_Default(it.name).value;
     return Get_Import_Line(name,Contains_Substring(specifiers,"i"));
 ❱
 
 ◀private: static▶ std::string ☀Get_Import_Line(model::ImportTest const& it)❰
 
-    auto specifiers = First_Element_Or_Default(it.import_test_specifiers).value;
-    auto name = First_Element_Or_Default(it.import_test_name).value;
+    auto specifiers = First_Element_Or_Default(it.specifiers).value;
+    auto name = First_Element_Or_Default(it.name).value;
     return Get_Import_Line(name,Contains_Substring(specifiers,"i"));
 ❱
 

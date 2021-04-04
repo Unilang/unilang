@@ -36,9 +36,9 @@ class
     
     Append(str,"@");
     
-    for (auto const& it: citation.citation_type){Append(str,it.value);}
+    for (auto const& it: citation.type){Append(str,it.value);}
     Append(str,"{");
-    for (auto const& it: citation.citation_id){Append(str,it.value);}
+    for (auto const& it: citation.id){Append(str,it.value);}
     
     for (auto const& kv: citation.citation_attribute){
         Append_With_Newline(str,",");
@@ -55,11 +55,11 @@ class
 
 ◀private: static▶ std::string ☀Get_Key(model::CitationAttribute attribute)❰
     std::string x;
-    for (auto const& it: attribute.citation_attribute_key){Append(x,it.value);}
+    for (auto const& it: attribute.key){Append(x,it.value);}
     return x;
 ❱
 ◀private: static▶ std::string ☀Get_Value(model::CitationAttribute attribute)❰
     std::string x;
-    for (auto const& it: attribute.citation_attribute_value){Append(x,it.value);}
+    for (auto const& it: attribute.value){Append(x,it.value);}
     return x;
 ❱

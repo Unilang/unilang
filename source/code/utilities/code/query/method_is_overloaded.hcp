@@ -10,8 +10,8 @@ class
   int times_found = 0;
   for (auto const& it: methods){
     
-    auto name1 = First_Element_Or_Default(method.function_name).value;
-    auto name2 = First_Element_Or_Default(it.function_name).value;
+    auto name1 = First_Element_Or_Default(method.name).value;
+    auto name2 = First_Element_Or_Default(it.name).value;
     
     //update count on methods found with the same name
     if (name1 == name2){

@@ -79,7 +79,7 @@ class
             
             //possibly add title
             std::string title;
-            for (auto const& it: p.paragraph_title){Append(title,it.value);}
+            for (auto const& it: p.title){Append(title,it.value);}
             if (!title.empty()){
                 x += "<h3>";
                 x += title;
@@ -87,9 +87,9 @@ class
             }
             
             x += "<p>";
-            for (auto const& s: p.paragraph_sentence){
+            for (auto const& s: p.sentence){
                 
-                if (!s.sentence_text.empty()){
+                if (!s.text.empty()){
                     Comment_Grammar_Settings grammar;
                     Append(x,Grammar_Adjuster::Get_Adjusted(Get_Sentence(s),grammar));
                     x += "  ";
@@ -106,6 +106,6 @@ class
 
 ◀private: static▶ std::string ☀Get_Sentence(model::ParagraphSentence sentence)❰
     std::string x;
-    for (auto const& it: sentence.sentence_text){Append(x,it.value);}
+    for (auto const& it: sentence.text){Append(x,it.value);}
     return x;
 ❱

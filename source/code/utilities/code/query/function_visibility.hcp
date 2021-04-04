@@ -13,7 +13,7 @@ class
 
 ◀public: static▶ Class_Access ☀Get(model::Function const& mem)❰
 
-    auto str = First_Element_Or_Default(mem.function_specifiers).value;
+    auto str = First_Element_Or_Default(mem.specifiers).value;
     
     Class_Access access = Class_Access::PRIVATE;
     

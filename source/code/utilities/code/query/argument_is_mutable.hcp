@@ -12,6 +12,6 @@ class
 
 ◀public: static▶ bool ☀Check(model::FunctionArgument const& argument)❰
     Token_Attribute_Settings symbols;
-    return Contains_Substring(First_Element_Or_Default(argument.argument_qualifiers).value,symbols.method.argument._mutable);
+    return Contains_Substring(First_Element_Or_Default(argument.qualifiers).value,symbols.method.argument._mutable);
     
 ❱

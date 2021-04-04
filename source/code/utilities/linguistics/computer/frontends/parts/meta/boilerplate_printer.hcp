@@ -14,7 +14,7 @@ class
     //top comment
     auto contains_data = !structure.data_member.empty();
     auto contains_methods = !structure.function.empty();
-    auto name = First_Element_Or_Default(structure.module_name).value;
+    auto name = First_Element_Or_Default(structure.name).value;
     auto top_comment = Meta_Block_Printer::Get(name,file_settings,structure,meta,contains_data,contains_methods,final_file_name);
     return top_comment;
 ❱

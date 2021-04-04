@@ -54,14 +54,14 @@ class
 ❱
 
 ◀private: static▶ std::string ☀Add_Posible_Templates(model::Module const& structure, Java_Settings const& settings)❰
-    if (structure.module_template_argument.empty()){
+    if (structure.template_argument.empty()){
         return "";
     }
     
     std::string x;
     x += "<";
-    for (auto const& it: structure.module_template_argument){
-        x += First_Element_Or_Default(it.module_template_argument_type).value;
+    for (auto const& it: structure.template_argument){
+        x += First_Element_Or_Default(it.type).value;
         x += ",";
     }
     x.pop_back();

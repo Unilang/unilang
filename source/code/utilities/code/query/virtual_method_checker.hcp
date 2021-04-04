@@ -16,7 +16,7 @@ class
 ❱
 
 ◀private: static▶ bool ☀Is_Virtual(model::Function const& func)❰
-    auto specifiers = First_Element_Or_Default(func.function_specifiers).value;
+    auto specifiers = First_Element_Or_Default(func.specifiers).value;
     
     Token_Attribute_Settings symbols;
     if (Contains_Substring(specifiers,symbols.method.inheritance._virtual) || Contains_Substring(specifiers,symbols.method.inheritance.pure_virtual)){

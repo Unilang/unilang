@@ -18,7 +18,7 @@ class
 
 
 ◀private: static▶ bool ☀Has_C_Like_Pointer_Things(model::FunctionArgument const& argument)❰
-  auto type       = First_Element_Or_Default(argument.argument_type).value;
+  auto type       = First_Element_Or_Default(argument.type).value;
   auto array_part = Strip_Out_Data_Between_First_Set_Of_Square_Brackets(type);
   return Begins_Or_Ends_With(type,"&") || Ends_With(type,"*const") || Ends_With(type,"*") || !array_part.empty();
 ❱

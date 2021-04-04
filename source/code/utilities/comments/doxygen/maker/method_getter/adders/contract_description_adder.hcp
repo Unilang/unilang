@@ -21,7 +21,7 @@ class
 ◀private: static▶ void ☀Add_PreConditions(Doxygen_Data & data, std::vector<model::Precondition> const& conditions, Meta_Tag_Existence_Option const& settings, Comment_Grammar_Settings grammar_settings)❰
   if (settings.print){
     for (auto it: conditions){
-      auto comment = First_Element_Or_Default(it.precondition_comment).value;
+      auto comment = First_Element_Or_Default(it.comment).value;
       if (comment.empty()){
         if (settings.print_when_empty){
           //print empty:
@@ -38,7 +38,7 @@ class
 ◀private: static▶ void ☀Add_PostConditions(Doxygen_Data & data, std::vector<model::Postcondition> const& conditions, Meta_Tag_Existence_Option const& settings, Comment_Grammar_Settings grammar_settings)❰
   if (settings.print){
     for (auto it: conditions){
-      auto comment = First_Element_Or_Default(it.postcondition_comment).value;
+      auto comment = First_Element_Or_Default(it.comment).value;
       if (comment.empty()){
         if (settings.print_when_empty){
           //print empty:

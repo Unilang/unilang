@@ -25,7 +25,7 @@ class
 
 ◀private: static▶ std::string ☀Potentially_Derive_Brief_Statement(model::Function const& method, Module_Settings const& options)❰
     
-    auto comment = First_Element_Or_Default(method.function_brief).value;
+    auto comment = First_Element_Or_Default(method.brief).value;
     
     //use the provided one
     if (!comment.empty()){
@@ -34,7 +34,7 @@ class
     
     
     //user didn't provide one.  lets make it up instead
-    auto function_name = First_Element_Or_Default(method.function_name).value;
+    auto function_name = First_Element_Or_Default(method.name).value;
     if (options.portion.method_options.derive_brief_comment){
       return function_name;
     }
@@ -45,7 +45,7 @@ class
 
 ◀private: static▶ std::string ☀Potentially_Derive_Details_Statement(model::Function const& method, Module_Settings const& options)❰
     
-    auto comment = First_Element_Or_Default(method.function_detail).value;
+    auto comment = First_Element_Or_Default(method.detail).value;
     
     //use the provided one
     if (!comment.empty()){
@@ -54,7 +54,7 @@ class
     
     
     //user didn't provide one.  lets make it up instead
-    auto function_name = First_Element_Or_Default(method.function_name).value;
+    auto function_name = First_Element_Or_Default(method.name).value;
     if (options.portion.method_options.derive_details_comment){
       return function_name;
     }

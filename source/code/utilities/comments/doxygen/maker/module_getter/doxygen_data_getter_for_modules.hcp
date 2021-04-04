@@ -30,8 +30,8 @@ class
 ◀private: static▶ void ☀Add_Description_Tags(Doxygen_Data & data, model::Module const& m, Module_Settings const& options)❰
 
     //get module sentences
-    auto brief_sentences = Get_Sentences(m.module_brief);
-    auto detail_sentences = Get_Sentences(m.module_detail);
+    auto brief_sentences = Get_Sentences(m.brief);
+    auto detail_sentences = Get_Sentences(m.detail);
     
     //adjust sentences so they look pretty
     auto final_brief = Fix_Up_Sentences(brief_sentences,options);
@@ -66,7 +66,7 @@ class
     
     std::vector<std::string> result;
     for (auto const& a: x){
-        for (auto const& b: a.brief_sentence){
+        for (auto const& b: a.sentence){
             result.emplace_back(b.value);
         }
     }
@@ -77,7 +77,7 @@ class
     
     std::vector<std::string> result;
     for (auto const& a: x){
-        for (auto const& b: a.detail_sentence){
+        for (auto const& b: a.sentence){
             result.emplace_back(b.value);
         }
     }

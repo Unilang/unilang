@@ -16,8 +16,8 @@ class
 ◀public: static▶ void ☀Add(Doxygen_Data & data, std::vector<model::FunctionResult> const& return_results, Module_Settings const& options)❰
     
     for (auto it: return_results){
-        auto description = First_Element_Or_Default(it.function_result_comment).value;
-        auto units = First_Element_Or_Default(it.result_units).value;
+        auto description = First_Element_Or_Default(it.comment).value;
+        auto units = First_Element_Or_Default(it.units).value;
         Units_Description_Adder::Add(units,description,options.portion.method_options.parameters.return_result_units);
         Doxygen_Data_Shared::Add_If_There_Is_A_Value(data,"return",description,options.portion.method_options.comment.grammar);
     }

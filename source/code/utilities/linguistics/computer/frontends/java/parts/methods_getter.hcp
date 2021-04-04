@@ -24,7 +24,7 @@ class
     for (auto it: structure.function){
          x += Doxygen_Block_Printer::Get_Indented_Block(it,structure.function,settings.module,4);
          x += "\n";
-         x += Get_Signature(First_Element_Or_Default(structure.module_name).value,it,settings);
+         x += Get_Signature(First_Element_Or_Default(structure.name).value,it,settings);
          x += "\n";
          x += Get_Possible_Body(it,settings);
     }
@@ -79,7 +79,7 @@ class
 
 ◀private: static▶ std::string ☀Function_Template_Getter(model::Function const& method)❰
     std::string x;
-    x += Get_Template_Syntax(method.function_template_argument);
+    x += Get_Template_Syntax(method.template_argument);
     return x;
 ❱
 

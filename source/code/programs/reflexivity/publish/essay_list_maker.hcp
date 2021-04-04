@@ -58,7 +58,7 @@ class
     // It should be the title of the first paragraph.
     for (auto const& l: structure.literature){
         if (!l.paragraph.empty()){
-            auto title = l.paragraph[0].paragraph_title[0].value;
+            auto title = l.paragraph[0].title[0].value;
             if (!title.empty()){
                 return title;
             }

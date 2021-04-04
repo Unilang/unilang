@@ -22,9 +22,9 @@ class
   Main_Description_Adder::Add(data,method,options);
   Contract_Description_Adder::Add(data,method,options);
   Argument_Description_Adder::Add(data,method,options);
-  Return_Results_Description_Adder::Add(data,method.function_result,options);
+  Return_Results_Description_Adder::Add(data,method.result,options);
   Overload_Note_Adder::Add(data,method,methods,options);
-  Suggested_Return_Identifier_Adder::Add(data,method.function_result,options);
+  Suggested_Return_Identifier_Adder::Add(data,method.result,options);
   
   return data;
 ❱
