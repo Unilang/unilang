@@ -2,6 +2,14 @@ code
 .module
 ..name
 ..code type
+
+..description
+...pk
+...brief
+....sentence
+...detail
+....sentence
+
 ..brief
 ...sentence
 ..detail
