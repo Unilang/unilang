@@ -3,12 +3,21 @@ code
 ..name
 ..code type
 
+..foreseeable change
+...pk
+...change
+...reason
+...percentage
+
 ..description
 ...pk
 ...brief
 ....sentence
 ...detail
 ....sentence
+..foreseeable change fk
+
+..description fk
 
 ..brief
 ...sentence
@@ -34,11 +43,6 @@ code
 ..specification document
 ...path
 ...description
-    
-..foreseeable change
-...change
-...reason
-...percentage
     
 ..linkopts
 ...name
