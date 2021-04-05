@@ -10,7 +10,7 @@ hcp(
         "//code/programs/ide/frame:everything_drawer",
         "//code/programs/ide/frame:ide_element_drawer",
         "//code/programs/ide/global_actions:global_action_handler",
-        "//code/programs/ide/settings:ide_settings",
+        "//code/programs/ide/settings/data:ide_settings",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/data_structures/graphics/objects/cursor:label_cursor_action_doer",
         "//code/utilities/data_structures/graphics/objects/label:label_drawer",
@@ -35,7 +35,7 @@ hcp(
 hcp(
     name = "apply_schema_to_elements",
     deps = [
-        "//code/programs/ide/settings:ide_settings",
+        "//code/programs/ide/settings/data:ide_settings",
         "//code/utilities/data_structures/graphics/image:positioned_texture",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_drawer",
@@ -73,7 +73,7 @@ hcp(
     deps = [
         "//code/programs/ide/frame:everything_draw_settings",
         "//code/programs/ide/frame:ide_element_drawer",
-        "//code/programs/ide/settings:ide_settings",
+        "//code/programs/ide/settings/data:ide_settings",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/data_structures/graphics/objects/mouse/draw:mouse_frame_getter",
         "//code/utilities/peripheral/pc:pc_input_state",
@@ -88,7 +88,7 @@ hcp(
         "//code/programs/ide/frame:find_mouse_over_index",
         "//code/programs/ide/frame:move_all_ide_elements",
         "//code/programs/ide/frame:move_ide_element",
-        "//code/programs/ide/settings:ide_settings",
+        "//code/programs/ide/settings/data:ide_settings",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_drawer",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_is_mouse_over",
@@ -118,7 +118,7 @@ hcp(
     name = "move_all_ide_elements",
     deps = [
         "//code/programs/ide/frame:move_ide_element",
-        "//code/programs/ide/settings:ide_settings",
+        "//code/programs/ide/settings/data:ide_settings",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_drawer",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_is_mouse_over",
@@ -146,7 +146,7 @@ hcp(
 hcp(
     name = "convert_all_ide_elements",
     deps = [
-        "//code/programs/ide/settings:ide_settings",
+        "//code/programs/ide/settings/data:ide_settings",
         "//code/utilities/data_structures/graphics/image:positioned_texture",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_drawer",
@@ -175,7 +175,7 @@ hcp(
 hcp(
     name = "find_mouse_over_index",
     deps = [
-        "//code/programs/ide/settings:ide_settings",
+        "//code/programs/ide/settings/data:ide_settings",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_drawer",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_is_mouse_over",
@@ -205,7 +205,7 @@ hcp(
 hcp(
     name = "move_ide_element",
     deps = [
-        "//code/programs/ide/settings:ide_settings",
+        "//code/programs/ide/settings/data:ide_settings",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_drawer",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_is_mouse_over",

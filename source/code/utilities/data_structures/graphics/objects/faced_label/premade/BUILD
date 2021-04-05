@@ -7,7 +7,7 @@ load("//bazel/rules/hcp:hcp_and_hcp_pos.bzl", "hcp_and_hcp_pos")
 hcp(
     name = "faced_label_premades",
     deps = [
-        "//code/programs/ide/settings:ide_settings",
+        "//code/programs/ide/settings/data:ide_settings",
         "//code/utilities/colors/defaults:color_defaults",
         "//code/utilities/colors/defaults:rectangle_shades",
         "//code/utilities/data_structures/graphics/bitmap/full_color_bitmap",

@@ -1,0 +1,16 @@
+class
+❪string❫
+❪vector❫
+⚯
+
+⚞⚟
+
+◀
+public:
+    
+    bool ፠add_spinning_bust፠ = false;
+    bool ፠add_generic_test_tree፠ = false;
+    bool ፠add_full_schema_tree፠ = false;
+    bool ፠add_starting_code_tree፠ = false;
+
+▶

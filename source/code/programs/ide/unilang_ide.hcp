@@ -3,7 +3,7 @@ class
 ❪iostream❫
 ❪"code/programs/ide/program_options/program_options"❫
 ⚯
-❪"code/programs/ide/settings/ide_settings"❫
+❪"code/programs/ide/settings/data/ide_settings"❫
 ❪"code/programs/ide/settings/ide_default_settings_getter"❫
 ❪"code/programs/ide/settings/ide_settings_getter"❫
 ❪"code/utilities/data_structures/graphics/objects/frame_elements"❫

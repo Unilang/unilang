@@ -1,5 +1,5 @@
 class
-❪"code/programs/ide/settings/ide_settings"❫
+❪"code/programs/ide/settings/data/ide_settings"❫
 ❪"code/utilities/graphics/imgui/loop/mechanics"❫
 ❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
 ❪"code/utilities/peripheral/mouse/state/mouse_state_getter"❫

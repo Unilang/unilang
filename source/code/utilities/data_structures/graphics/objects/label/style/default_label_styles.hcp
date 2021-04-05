@@ -3,7 +3,7 @@ class
 ❪unordered_map❫
 ❪"code/utilities/data_structures/graphics/bitmap/full_color_bitmap/full_color_bitmap"❫
 ❪"code/utilities/fonts/bdf/settings/character_segment"❫
-❪"code/programs/ide/settings/ide_settings"❫
+❪"code/programs/ide/settings/data/ide_settings"❫
 ❪"code/utilities/data_structures/graphics/objects/label/data/label_settings"❫
 ❪"code/utilities/data_structures/graphics/objects/mouse/events/mouse_events_checker"❫
 ❪"code/utilities/graphics/imgui/render/elements/rectangle_drawer"❫

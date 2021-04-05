@@ -7,7 +7,7 @@ class
 ❪"code/utilities/data_structures/graphics/bitmap/full_color_bitmap/positioned_full_color_bitmap"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/data/positioned_buildable_face_tree"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data/positioned_buildable_schema_faced_tree"❫
-❪"code/programs/ide/settings/ide_element"❫
+❪"code/programs/ide/settings/data/ide_element"❫
 ⚯
 
 ⚞⚟

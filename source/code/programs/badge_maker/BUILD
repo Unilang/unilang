@@ -6,7 +6,7 @@ load("//bazel/rules/cpp:object.bzl", "cpp_object")
 # hcp(
 #     name = "badge_maker",
 #     deps = [
-#         "//code/programs/ide/settings:ide_settings",
+#         "//code/programs/ide/settings/data:ide_settings",
 #         "//code/utilities/colors/defaults:rectangle_shades",
 #         "//code/utilities/data_structures/graphics/bitmap/full_color_bitmap",
 #         "//code/utilities/data_structures/graphics/bitmap/pixel:pixel_slider",
