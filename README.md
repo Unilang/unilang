@@ -58,7 +58,7 @@ Semaphore | [![Build Status](https://semaphoreci.com/api/v1/luxe/everything/bran
 Shippable | [![Run Status](https://api.shippable.com/projects/5c3163fd4e246e0700cea316/badge?branch=master)](https://app.shippable.com/accounts/5c3163cad1578b0700302159/dashboard) | Bootstraps Build | 
 Travis | [![Build status](https://travis-ci.com/luxe/unilang.svg?branch=master)](https://travis-ci.com/luxe/unilang) | Bootstraps Build | 
 
-The unilang schema is used to encode the concept tree and can be enforceable during projectional editing.  
+The unilang schema is used to encode the concept tree and can be enforceable during projectional editing.  the abbreviations "pk" and "fk" correspond to primary and foreign keys to allow association between subtrees.  This is a similar concept found in ERDs and databases.
 <img width="" height="" src=".readme/unilang_concept_tree.png">
 
 
