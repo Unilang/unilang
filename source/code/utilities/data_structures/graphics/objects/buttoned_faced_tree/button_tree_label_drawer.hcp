@@ -103,7 +103,7 @@ class
         
         //calculate how much the connection bar should stick out to the right of the tree
         auto depth_out = Calculate_Out_Depth(tr,it);
-        std::cout << depth_out << std::endl;
+        //std::cout << depth_out << std::endl;
         
         auto from_horiz_start = it.first.pos;
         auto to_horiz_start = it.second.pos;
