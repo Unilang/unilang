@@ -19,6 +19,7 @@ class
 ❪"code/utilities/build/self_builder"❫
 ❪"code/programs/reflexivity/target_build_file_refresher"❫
 ❪"code/utilities/logo/unilang_logo_creator"❫
+❪"code/utilities/code/animate/unilang_hello_world_gif"❫
 ⚞⚟
 
 
@@ -70,6 +71,11 @@ class
     if (settings.refresh_unilang_logo){
         std::cout << "Generating Unilang Logo..." << std::endl;
         Unilang_Logo_Creator::Create();
+    }
+    
+    if (settings.refresh_unilang_hello_world_gif){
+        std::cout << "Hello World Gif..." << std::endl;
+        Unilang_Hello_World_Gif::Create();
     }
     
     //generate unilang documentation

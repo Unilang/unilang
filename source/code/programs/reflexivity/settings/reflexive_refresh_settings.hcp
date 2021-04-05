@@ -15,6 +15,7 @@ class
     bool reformat_build_files;
     bool refresh_unilang_documentation;
     bool refresh_unilang_logo;
+    bool refresh_unilang_hello_world_gif;
     bool refresh_unilang_concept_tree_image;
     bool refresh_essays;
 ▶

@@ -38,6 +38,7 @@ hcp(
         "//code/programs/reflexivity/settings:reflexive_refresh_settings",
         "//code/programs/reflexivity/settings:reflexive_refresh_settings_getter",
         "//code/utilities/build:self_builder",
+        "//code/utilities/code/animate:unilang_hello_world_gif",
     ],
 )
 

@@ -122,8 +122,8 @@ class
         auto from_horizontal = Horizontal_Line::Create_Positioned(from_horiz_start,from_horizontal_length);
         auto to_horizontal = Horizontal_Line::Create_Positioned(to_horiz_start,to_horizontal_length);
         
-        std::cout << from_horiz_start.x << "," << from_horiz_start.y << ": " << from_horizontal_length << std::endl;
-        std::cout << to_horiz_start.x << "," << to_horiz_start.y << ": " << to_horizontal_length << std::endl;
+        //std::cout << from_horiz_start.x << "," << from_horiz_start.y << ": " << from_horizontal_length << std::endl;
+        //std::cout << to_horiz_start.x << "," << to_horiz_start.y << ": " << to_horizontal_length << std::endl;
         
         
         //calculate vertical line
