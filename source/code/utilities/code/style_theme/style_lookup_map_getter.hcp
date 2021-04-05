@@ -17,6 +17,11 @@ class
     x.map.insert({"code/module/",Code_Module()});
     x.map.insert({"code/module/name/",Code_Module_Name()});
     x.map.insert({"code/module/code_type/",Code_Module_Code_Type()});
+    x.map.insert({"code/module/foreseeable change/",Code_Module_Foreseeable_Change()});
+    x.map.insert({"code/module/foreseeable change/pk/",Code_Module_Foreseeable_Change_Pk()});
+    x.map.insert({"code/module/foreseeable change/change/",Code_Module_Foreseeable_Change_Change()});
+    x.map.insert({"code/module/foreseeable change/reason/",Code_Module_Foreseeable_Change_Reason()});
+    x.map.insert({"code/module/foreseeable change/percentage/",Code_Module_Foreseeable_Change_Percentage()});
     
     //default styling if missing
     x.default_styles.label_styles.emplace_back(Default_Label_Styles::Gray());
@@ -34,13 +39,13 @@ class
 ❱
 ◀private: static▶ Style_Theme ☀Code_Module()❰
     Style_Theme theme;
-    theme.label_styles.emplace_back(Default_Label_Styles::Gray());
-    theme.label_styles.emplace_back(Default_Label_Styles::Gray());
+    theme.label_styles.emplace_back(Default_Label_Styles::Light_Purple());
+    theme.label_styles.emplace_back(Default_Label_Styles::Light_Purple());
     return theme;
 ❱
 ◀private: static▶ Style_Theme ☀Code_Module_Name()❰
     Style_Theme theme;
-    theme.label_styles.emplace_back(Default_Label_Styles::Gray());
+    theme.label_styles.emplace_back(Default_Label_Styles::Blue());
     theme.label_styles.emplace_back(Default_Label_Styles::Blue());
     return theme;
 ❱
@@ -48,5 +53,37 @@ class
     Style_Theme theme;
     theme.label_styles.emplace_back(Default_Label_Styles::Gray());
     theme.label_styles.emplace_back(Default_Label_Styles::Blue());
+    return theme;
+❱
+
+
+◀private: static▶ Style_Theme ☀Code_Module_Foreseeable_Change()❰
+    Style_Theme theme;
+    theme.label_styles.emplace_back(Default_Label_Styles::Light_Orange());
+    theme.label_styles.emplace_back(Default_Label_Styles::Light_Orange());
+    return theme;
+❱
+◀private: static▶ Style_Theme ☀Code_Module_Foreseeable_Change_Pk()❰
+    Style_Theme theme;
+    theme.label_styles.emplace_back(Default_Label_Styles::Light_Orange());
+    theme.label_styles.emplace_back(Default_Label_Styles::Light_Orange());
+    return theme;
+❱
+◀private: static▶ Style_Theme ☀Code_Module_Foreseeable_Change_Change()❰
+    Style_Theme theme;
+    theme.label_styles.emplace_back(Default_Label_Styles::Light_Orange());
+    theme.label_styles.emplace_back(Default_Label_Styles::Light_Orange());
+    return theme;
+❱
+◀private: static▶ Style_Theme ☀Code_Module_Foreseeable_Change_Reason()❰
+    Style_Theme theme;
+    theme.label_styles.emplace_back(Default_Label_Styles::Light_Orange());
+    theme.label_styles.emplace_back(Default_Label_Styles::Light_Orange());
+    return theme;
+❱
+◀private: static▶ Style_Theme ☀Code_Module_Foreseeable_Change_Percentage()❰
+    Style_Theme theme;
+    theme.label_styles.emplace_back(Default_Label_Styles::Light_Orange());
+    theme.label_styles.emplace_back(Default_Label_Styles::Light_Orange());
     return theme;
 ❱

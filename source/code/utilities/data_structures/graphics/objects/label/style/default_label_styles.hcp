@@ -27,6 +27,12 @@ class
 ◀public: static▶ Label_Styles ☀Gray()❰
     return Fade_Label(Color_Defaults::Light_Gray());
 ❱
+◀public: static▶ Label_Styles ☀Light_Purple()❰
+    return Fade_Label(Color_Defaults::Light_Purple());
+❱
+◀public: static▶ Label_Styles ☀Light_Orange()❰
+    return Fade_Label(Color_Defaults::Light_Orange());
+❱
 
 ◀private: static▶ Label_Styles ☀Fade_Label(Transparent_Rgb_Color const& color)❰
 

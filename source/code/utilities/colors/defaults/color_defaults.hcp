@@ -53,6 +53,14 @@ class
     c.b = 211;
     return c;
 ❱
+◀public: static▶ Transparent_Rgb_Color ☀Light_Purple()
+❰
+    Transparent_Rgb_Color c;
+    c.r = 179;
+    c.g = 179;
+    c.b = 255;
+    return c;
+❱
 ◀public: static▶ Transparent_Rgb_Color ☀Monaki_Backdrop()
 ❰
     Transparent_Rgb_Color c;
@@ -117,6 +125,15 @@ class
     c.b = 0;
     return c;
 ❱
+◀public: static▶ Transparent_Rgb_Color ☀Light_Orange()
+❰
+    Transparent_Rgb_Color c;
+    c.r = 255;
+    c.g = 217;
+    c.b = 179;
+    return c;
+❱
+
 
 ◀public: static▶ Transparent_Rgb_Color ☀Very_Light_Green()
 ❰
