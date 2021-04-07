@@ -1,0 +1,30 @@
+class
+❪string❫
+❪iostream❫
+❪cmath❫
+❪algorithm❫
+❪"code/utilities/data_structures/color/rgb_color"❫
+❪"code/utilities/data_structures/color/transparent_rgb_color"❫
+❪"code/utilities/math/math"❫
+⚯
+⚞⚟
+
+//clamp the color values as needed to present a valid rgb
+◀public: static▶ void ☀Ensure_Valid_By_Clampping(Rgb_Color & rgb)❰
+    Math::clamp_if_over(rgb.r,255);
+    Math::clamp_if_over(rgb.g,255);
+    Math::clamp_if_over(rgb.b,255);
+    
+    Math::clamp_if_under(rgb.r,0);
+    Math::clamp_if_under(rgb.g,0);
+    Math::clamp_if_under(rgb.b,0);
+❱
+◀public: static▶ void ☀Ensure_Valid_By_Clampping(Transparent_Rgb_Color & rgb)❰
+    Math::clamp_if_over(rgb.r,255);
+    Math::clamp_if_over(rgb.g,255);
+    Math::clamp_if_over(rgb.b,255);
+    
+    Math::clamp_if_under(rgb.r,0);
+    Math::clamp_if_under(rgb.g,0);
+    Math::clamp_if_under(rgb.b,0);
+❱

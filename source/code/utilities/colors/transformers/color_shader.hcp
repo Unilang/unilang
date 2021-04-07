@@ -5,6 +5,7 @@ class
 ❪algorithm❫
 ❪"code/utilities/data_structures/color/rgb_color"❫
 ❪"code/utilities/data_structures/color/transparent_rgb_color"❫
+❪"code/utilities/colors/transformers/color_clamp"❫
 ⚯
 ⚞⚟
 
@@ -12,9 +13,16 @@ class
     rgb.r = rgb.r * (1 - shade_factor);
     rgb.g = rgb.g * (1 - shade_factor);
     rgb.b = rgb.b * (1 - shade_factor);
+    
+    Color_Clamp::Ensure_Valid_By_Clampping(rgb);
+    
+    std::cout << rgb.r << " " << rgb.g << " " << rgb.b << " " << std::endl;
+    
 ❱
 ◀public: static▶ void ☀Shade(Transparent_Rgb_Color & rgb, float shade_factor)❰
     rgb.r = rgb.r * (1 - shade_factor);
     rgb.g = rgb.g * (1 - shade_factor);
     rgb.b = rgb.b * (1 - shade_factor);
+    
+    Color_Clamp::Ensure_Valid_By_Clampping(rgb);
 ❱

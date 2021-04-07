@@ -26,6 +26,21 @@ class
         val = roof;
     }
 ❱
+◀public: static▶ void ☀clamp_if_under(float & val, float const& floor)❰
+    if (val < floor){
+        val = floor;
+    }
+❱
+◀public: static▶ void ☀clamp_if_over(int & val, int const& roof)❰
+    if (val > roof){
+        val = roof;
+    }
+❱
+◀public: static▶ void ☀clamp_if_under(int & val, int const& floor)❰
+    if (val < floor){
+        val = floor;
+    }
+❱
 
 ◀public: static▶ float ☀difference(float a, float b)❰
     if (a < b){
