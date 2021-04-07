@@ -14,6 +14,7 @@ class
 ❪"code/programs/ide/global_actions/global_action_handler"❫
 ❪"code/utilities/data_structures/graphics/image/positioned_image_data"❫
 ❪"code/programs/ide/gl_context_element_load"❫
+❪"code/programs/ide/settings/data/ide_creation_settings"❫
 ⚞⚟
 
 
@@ -21,7 +22,10 @@ class
 
 
 
-    auto s = Ide_Settings_Getter::Get(po.File());
+    Ide_Creation_Settings create;
+    create.add_starting_code_tree = true;
+    
+    auto s = Ide_Settings_Getter::Get(create,po.File());
     
     Frame_Elements elements;
     auto before = [&]()                  {

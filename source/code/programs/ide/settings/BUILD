@@ -6,6 +6,7 @@ load("//bazel/rules/cpp:object.bzl", "cpp_object")
 hcp(
     name = "ide_default_settings_getter",
     deps = [
+        "//code/programs/ide/settings/data:ide_creation_settings",
         "//code/programs/ide/settings/data:ide_settings",
         "//code/utilities/code:concept_string_tree_getter",
         "//code/utilities/code/references:reference_lookup_map_getter",
@@ -54,6 +55,7 @@ hcp(
     deps = [
         "//code/programs/ide/global_actions:save_state_serializer",
         "//code/programs/ide/settings:ide_default_settings_getter",
+        "//code/programs/ide/settings/data:ide_creation_settings",
         "//code/programs/ide/settings/data:ide_settings",
         "//code/utilities/code:concept_string_tree_getter",
         "//code/utilities/code/style_theme:style_lookup_map_getter",

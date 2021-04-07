@@ -12,8 +12,9 @@ hcp(
     deps = [
         "//code/programs/ide/frame:everything_draw_settings",
         "//code/programs/ide/frame:everything_drawer",
-        "//code/programs/ide/settings/data:ide_settings",
         "//code/programs/ide/settings:ide_settings_getter",
+        "//code/programs/ide/settings/data:ide_creation_settings",
+        "//code/programs/ide/settings/data:ide_settings",
         "//code/utilities/code:concept_string_tree_getter",
         "//code/utilities/data_structures/graphics/bitmap/premade:tree_button",
         "//code/utilities/data_structures/graphics/objects:frame_elements",

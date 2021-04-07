@@ -4,15 +4,16 @@ class
 ❪"code/programs/ide/settings/data/ide_settings"❫
 ❪"code/programs/ide/settings/ide_default_settings_getter"❫
 ❪"code/programs/ide/global_actions/save_state_serializer"❫
+❪"code/programs/ide/settings/data/ide_creation_settings"❫
 ⚯
 ⚞⚟
 
-◀public: static▶ Ide_Settings ☀Get(std::string const& file_name)❰
+◀public: static▶ Ide_Settings ☀Get(Ide_Creation_Settings const& settings, std::string const& file_name)❰
 
     Ide_Settings s;
     
     //main default settings
-    s = Ide_Default_Settings_Getter::Get();
+    s = Ide_Default_Settings_Getter::Get(settings);
     
     //perform initial file load if requested
     if (!file_name.empty()){

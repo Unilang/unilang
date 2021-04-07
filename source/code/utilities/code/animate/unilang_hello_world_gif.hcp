@@ -32,11 +32,16 @@ class
 ❪"code/utilities/program/wrappers/convert/convert_image_animator"❫
 ❪"code/utilities/program/wrappers/convert/image_transparent"❫
 ❪"code/utilities/program/wrappers/gifsicle/image_overlap_layer_remover"❫
+❪"code/programs/ide/settings/data/ide_creation_settings"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Create()❰
 
-    auto s = Ide_Settings_Getter::Get("");
+
+    Ide_Creation_Settings create;
+    create.add_starting_code_tree = true;
+    
+    auto s = Ide_Settings_Getter::Get(create,"");
     
     //what parts of the experience to draw.
     //only the ide elements please.
