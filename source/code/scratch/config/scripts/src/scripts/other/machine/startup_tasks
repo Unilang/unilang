@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+sudo openrgb --device 0 --color 000000
