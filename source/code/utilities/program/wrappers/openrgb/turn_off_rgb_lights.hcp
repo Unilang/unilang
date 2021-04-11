@@ -1,0 +1,22 @@
+class
+❪string❫
+❪iostream❫
+❪cstdlib❫
+❪fstream❫
+❪"code/utilities/program/call/lib"❫
+❪filesystem❫
+⚯
+
+⚞⚟
+
+◀public: static▶ void ☀Perform(int device_id) ❰
+
+    std::string command;
+    command += "sudo openrgb ";
+    command += "--device ";
+    command += std::to_string(device_id);
+    command += " ";
+    command += "--color 000000";
+    
+    execute_quietly(command);
+❱
