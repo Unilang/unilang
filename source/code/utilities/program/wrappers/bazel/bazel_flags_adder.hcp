@@ -26,6 +26,7 @@ class
             Flag_Util::Add_Flag(flags,"config",it);
         }
         Flag_Util::Add_Flag(flags,"noremote_accept_cached");
+        Flag_Util::Add_Flag(flags,"nocache_test_results");
     }
     
     //local specific flags

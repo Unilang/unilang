@@ -21,6 +21,13 @@ class
 ⚯
 ⚞⚟
 
+◀public: static▶ std::vector<std::string> ☀Get_All_Test_Targets_Tagged_No_Remote(std::string const& bazel_wrapper)❰
+    auto command = Get_No_Remote_Test_Target_Query_Command(bazel_wrapper);
+    auto results = Get_Each_Line_Of_Shell_Command(command);
+    
+    Sort_And_Remove_Duplicates(results);
+    return results;
+❱
 
 //this function can help answer the question: "if I upgrade this library, what other libraries might break and need upgraded as well?"
 ◀public: static▶ std::vector<std::string> ☀Get_All_Third_Party_Libs_That_Rely_On_Third_Party_Lib(std::string const& bazel_wrapper, std::string const& dep_name)❰
@@ -120,6 +127,21 @@ class
     
     std::string command = bazel_wrapper;
     command += " query " + Third_Party_Lib_RDeps_Query(dep_name);
+    command += " ";
+    command += Flag_Util::In_Cli_Form(flags);
+    return command;
+❱
+
+◀private: static▶ std::string ☀Get_No_Remote_Test_Target_Query_Command(std::string const& bazel_wrapper) ❰
+
+    //decide flags
+    Flags flags;
+    Query_Deps_Flags dep_settings;
+    Add_Dep_Query_Flags(flags,dep_settings);
+    Add_Miscellaneous_Flags(flags);
+    
+    std::string command = bazel_wrapper;
+    command += " query 'attr(tags, no-remote, tests(//...))'";
     command += " ";
     command += Flag_Util::In_Cli_Form(flags);
     return command;
