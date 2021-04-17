@@ -2,6 +2,8 @@
 # Relevant for security and resource sharing of processes.
 # Relevant or remote build systems
 
+#sandbox(8) 
+#https://man7.org/linux/man-pages/man8/sandbox.8.html
 
 #https://blog.cloudflare.com/sandboxing-in-linux-with-zero-lines-of-code/
 #cloudflare sandboxify
