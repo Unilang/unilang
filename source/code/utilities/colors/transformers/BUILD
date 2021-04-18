@@ -14,10 +14,10 @@ hcp(
 hcp(
     name = "color_shader",
     deps = [
+        "//code/utilities/colors/transformers:color_clamp",
         "//code/utilities/data_structures/color:rgb_color_transition",
         "//code/utilities/data_structures/color:rgba_color_transition",
         "//code/utilities/data_structures/color:transparent_rgb_color",
-        "//code/utilities/colors/transformers:color_clamp",
     ],
 )
 
@@ -46,8 +46,8 @@ hcp(
         "//code/utilities/colors/converters:hsv_to_rgb_converter",
         "//code/utilities/data_structures/color:hsv_color",
         "//code/utilities/data_structures/color:rgb_color",
+        "//code/utilities/data_structures/color:transparent_rgb_color",
         "//code/utilities/data_structures/position",
         "//code/utilities/math",
-        "//code/utilities/data_structures/color:transparent_rgb_color",
     ],
 )

@@ -2,13 +2,12 @@
 # Relevant for security and resource sharing of processes.
 # Relevant or remote build systems
 
-#sandbox(8) 
+#sandbox(8)
 #https://man7.org/linux/man-pages/man8/sandbox.8.html
 
 #https://blog.cloudflare.com/sandboxing-in-linux-with-zero-lines-of-code/
 #cloudflare sandboxify
 #https://github.com/cloudflare/sandbox
-
 
 #https://ubuntu.com/core/docs/security-and-sandboxing
 #snap package manager uses a sandbox
@@ -49,12 +48,8 @@
 
 #https://www.man7.org/linux/man-pages/man7/mount_namespaces.7.html
 
-
-
 #https://unix.stackexchange.com/questions/237636/is-it-possible-to-fake-a-specific-path-for-a-process
 #man unshare and man namespaces and man nsenter
-
-
 
 #FAKE TEMP
 #https://blog.famzah.net/2014/06/04/private-tmp-mount-per-process-in-linux/
@@ -63,24 +58,13 @@
 # TARGET_USER='www-data'
 # TARGET_CMD='/bin/bash' # but it can be any command
 # NEWTMP="$(mktemp -d)" # securely create a new empty tmp folder
- 
+
 # chown "root:$TARGET_USER" "$NEWTMP"
 # chmod 770 "$NEWTMP"
- 
+
 # unshare --mount -- /bin/bash -c "mount -o bind,noexec,nosuid,nodev '$NEWTMP' /tmp && sudo -u '$TARGET_USER' $TARGET_CMD"
 
 #https://github.com/containers/bubblewrap
-
-
-
-
-
-
-
-
-
-
-
 
 #seen:
 #https://unix.stackexchange.com/questions/153665/per-process-private-file-system-mount-points
