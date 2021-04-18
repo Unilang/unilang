@@ -13,6 +13,7 @@ class
 ❪"code/utilities/code/query/data_member_visibility"❫
 ❪"code/utilities/code/query/function_return_type_getter"❫
 ❪"code/utilities/code/query/virtual_method_checker"❫
+❪"code/utilities/code/query/function_storage_specifier"❫
 ❪"code/utilities/types/vectors/observers/lib"❫
 ❪"code/utilities/types/vectors/operators/lib"❫
 ❪"code/utilities/types/vectors/converters/lib"❫
@@ -20,6 +21,7 @@ class
 ❪"code/utilities/linguistics/computer/frontends/parts/identifier/function_name_getter"❫
 ❪"code/utilities/linguistics/computer/frontends/parts/identifier/function_argument_to_identifier"❫
 ❪"code/utilities/linguistics/computer/types/generic/type_name_deriver"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
 ⚞⚟
 
 ◀public: static▶ std::string ☀Get(model::Module const& structure, std::vector<Contributor> const& contributors, Java_Settings const& settings)❰
@@ -150,15 +152,15 @@ class
       
       std::string x;
       
-    // //TODO: MOVE OUT
-    // std::string static_keyword = "static";
-    // std::string static_keyword_spacer = " ";
+    //TODO: MOVE OUT
+    std::string static_keyword = "static";
+    std::string static_keyword_spacer = " ";
      
-    //  //static qualifier
-    //  if (method.storage == Storage_Specifier::STATIC){
-    //     Append(x,static_keyword);
-    //     Append(x,static_keyword_spacer);
-    //  }
+     //static qualifier
+     if (Function_Storage_Specifier::Get(method) == Storage_Specifier::STATIC){
+        Append(x,static_keyword);
+        Append(x,static_keyword_spacer);
+     }
      return x;
 ❱
 ◀private: static▶ std::string ☀Possibly_Get_Abstract_Keyword(model::Function const& method, Java_Settings const& settings)❰
