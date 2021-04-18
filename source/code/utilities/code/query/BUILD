@@ -183,3 +183,16 @@ hcp(
         "//code/utilities/types/vectors/operators:lib",
     ],
 )
+
+hcp(
+    name = "function_is_constructor",
+    deps = [
+        "//code/utilities/code:concept_static_tree_structs",
+        "//code/utilities/contributor",
+        "//code/utilities/linguistics/computer:source_language",
+        "//code/utilities/linguistics/computer/types/generic:unilang_type_to_language_type_converter",
+        "//code/utilities/types/vectors/converters:lib",
+        "//code/utilities/types/vectors/observers:lib",
+        "//code/utilities/types/vectors/operators:lib",
+    ],
+)

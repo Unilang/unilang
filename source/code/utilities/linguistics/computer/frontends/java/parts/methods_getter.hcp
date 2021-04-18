@@ -14,6 +14,7 @@ class
 ❪"code/utilities/code/query/function_return_type_getter"❫
 ❪"code/utilities/code/query/virtual_method_checker"❫
 ❪"code/utilities/code/query/function_storage_specifier"❫
+❪"code/utilities/code/query/function_is_constructor"❫
 ❪"code/utilities/types/vectors/observers/lib"❫
 ❪"code/utilities/types/vectors/operators/lib"❫
 ❪"code/utilities/types/vectors/converters/lib"❫
@@ -31,7 +32,7 @@ class
     for (auto it: structure.function){
          x += Doxygen_Block_Printer::Get_Indented_Block(it,structure.function,settings.module,4);
          x += "\n";
-         x += Get_Signature(First_Element_Or_Default(structure.name).value,it,settings);
+         x += Get_Signature(structure,it,settings);
          x += "\n";
          x += Get_Possible_Body(it,settings);
     }
@@ -57,7 +58,7 @@ class
     return x;
 ❱
 
-◀private: static▶ std::string ☀Get_Signature(std::string const& name, model::Function const& method, Java_Settings const& settings)❰
+◀private: static▶ std::string ☀Get_Signature(model::Module const& structure, model::Function const& method, Java_Settings const& settings)❰
 
     
     std::string x;
@@ -69,9 +70,12 @@ class
      x += " ";
      x += Function_Template_Getter(method);
      x += " ";
-     x += Function_Return_Type_Getter::Get_Real_Type(method,Source_Language::JAVA);
+     
+     if (!Function_Is_Constructor::Check(method)){
+        x += Function_Return_Type_Getter::Get_Real_Type(method,Source_Language::JAVA);
+    }
      x += " ";
-     x += Function_Name_Getter::Derive_Function_Name(method,settings.module);
+     x += Function_Name_Getter::Derive_Function_Name(structure,method,settings.module);
      x += Get_Argument_List(method,settings);
      x += Possible_Thrown_Exceptions(method,settings);
     

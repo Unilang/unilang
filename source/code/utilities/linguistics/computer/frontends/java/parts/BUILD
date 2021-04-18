@@ -116,5 +116,6 @@ hcp(
         "//code/utilities/code/query:virtual_method_checker",
         "//code/utilities/code/query:function_storage_specifier",
         "//code/utilities/types/strings/transformers/appending:lib",
+        "//code/utilities/code/query:function_is_constructor",
     ],
 )

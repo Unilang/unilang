@@ -1,0 +1,21 @@
+class
+❪fstream❫
+❪iostream❫
+❪"code/utilities/contributor/contributor"❫
+❪"code/utilities/code/concept_static_tree_structs"❫
+❪"code/utilities/linguistics/computer/source_language"❫
+
+⚯
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/converters/lib"❫
+❪"code/utilities/linguistics/computer/types/generic/unilang_type_to_language_type_converter"❫
+⚞⚟
+
+◀public: static▶ bool ☀Check(model::Function const& mem)❰
+    auto name = First_Element_Or_Default(mem.name).value;
+    if (name == "constructor"){
+        return true;
+    }
+    return false;
+❱

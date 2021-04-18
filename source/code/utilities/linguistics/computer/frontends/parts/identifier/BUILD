@@ -50,5 +50,7 @@ hcp(
         "//code/utilities/types/vectors/converters:lib",
         "//code/utilities/types/general:lib",
         "//code/utilities/types/strings/transformers/casing:case_modifier",
+        "//code/utilities/code/query:function_is_constructor",
+        "//code/utilities/code/query:class_name_getter",
     ],
 )

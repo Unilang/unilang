@@ -17,26 +17,38 @@ class
 ❪"code/utilities/types/vectors/converters/lib"❫
 ❪"code/utilities/types/general/lib"❫
 ❪"code/utilities/types/strings/transformers/casing/case_modifier"❫
+❪"code/utilities/code/query/function_is_constructor"❫
+❪"code/utilities/code/query/class_name_getter"❫
 ⚞⚟
 
 
-◀public: static▶ std::string ☀Derive_Function_Name(model::Function const& method, Module_Settings const& settings)❰
+◀public: static▶ std::string ☀Derive_Function_Name(model::Module const& structure, model::Function const& method, Module_Settings const& settings)❰
 
-    //get base part
+    //handle special manager method
+    if (Function_Is_Constructor::Check(method)){
+        return Class_Name_Getter::Get(structure,settings);
+    }
+
+    //handle non-manager method
     auto base_function_name = First_Element_Or_Default(method.name).value;
-    
-    // //handle potential function prefix:
-    // if (code_type == Code_Type::PRODUCT_TYPE && Is_A_Plublic_Non_Manager_Method(file_name,method)){
-    //     if (options.portion.method_options.prefix_object_api_methods_with_object_name){
-    //         base_function_name = file_name + " " + base_function_name;
-    //     }
-    // }
-    
-    //handle special function
-    // if (Is_Copy_Constructor(file_name,method) || Is_Constructor(file_name,method)){
-    //  base_function_name = Case_Modifier::As_Modified_Casing(options.general.filesystem_naming.file_casing,As_Removed_Suffix(file_name));
-    //}
-    
     base_function_name = Case_Modifier::As_Modified_Casing(settings.portion.method_options.function_casing,base_function_name);
     return base_function_name;
 ❱
+
+
+
+
+//OLD IMPLEMENTATION:
+// //handle potential function prefix:
+// if (code_type == Code_Type::PRODUCT_TYPE && Is_A_Plublic_Non_Manager_Method(file_name,method)){
+//     if (options.portion.method_options.prefix_object_api_methods_with_object_name){
+//         base_function_name = file_name + " " + base_function_name;
+//     }
+// }
+
+//handle special function
+// if (Is_Copy_Constructor(file_name,method) || Is_Constructor(file_name,method)){
+//  base_function_name = Case_Modifier::As_Modified_Casing(options.general.filesystem_naming.file_casing,As_Removed_Suffix(file_name));
+//}
+
+
