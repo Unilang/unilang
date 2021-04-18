@@ -167,15 +167,15 @@ class
       
       std::string x;
       
-    // //TODO: MOVE OUT
-    // std::string keyword = "abstract";
-    // std::string keyword_spacer = " ";
+    //TODO: MOVE OUT
+    std::string keyword = "abstract";
+    std::string keyword_spacer = " ";
      
-    //  //static qualifier
-    //  if (Method_Is_Abstract(method)){
-    //     Append(x,keyword);
-    //     Append(x,keyword_spacer);
-    //  }
+     //decide if method is abstract
+     if (Virtual_Method_Checker::Is_Virtual(method)){
+        Append(x,keyword);
+        Append(x,keyword_spacer);
+     }
      return x;
 ❱
 
