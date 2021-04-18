@@ -27,8 +27,6 @@ class
 
 ◀public: static▶ std::string ☀Get(model::Module const& structure, std::vector<Contributor> const& contributors, Java_Settings const& settings)❰
     std::string x;
-    
-    
     for (auto it: structure.function){
          x += Doxygen_Block_Printer::Get_Indented_Block(it,structure.function,settings.module,4);
          x += "\n";
