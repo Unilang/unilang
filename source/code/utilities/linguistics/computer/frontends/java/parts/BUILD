@@ -111,5 +111,8 @@ hcp(
         "//code/utilities/types/vectors/operators:lib",
         "//code/utilities/types/general:lib",
         "//code/utilities/linguistics/computer/frontends/parts/identifier:function_name_getter",
+        "//code/utilities/linguistics/computer/types/generic:type_name_deriver",
+        "//code/utilities/linguistics/computer/frontends/parts/identifier:function_argument_to_identifier",
+        "//code/utilities/code/query:virtual_method_checker",
     ],
 )

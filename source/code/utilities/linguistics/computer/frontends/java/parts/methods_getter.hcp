@@ -12,11 +12,14 @@ class
 ❪"code/utilities/code/query/function_visibility"❫
 ❪"code/utilities/code/query/data_member_visibility"❫
 ❪"code/utilities/code/query/function_return_type_getter"❫
+❪"code/utilities/code/query/virtual_method_checker"❫
 ❪"code/utilities/types/vectors/observers/lib"❫
 ❪"code/utilities/types/vectors/operators/lib"❫
 ❪"code/utilities/types/vectors/converters/lib"❫
 ❪"code/utilities/types/general/lib"❫
 ❪"code/utilities/linguistics/computer/frontends/parts/identifier/function_name_getter"❫
+❪"code/utilities/linguistics/computer/frontends/parts/identifier/function_argument_to_identifier"❫
+❪"code/utilities/linguistics/computer/types/generic/type_name_deriver"❫
 ⚞⚟
 
 ◀public: static▶ std::string ☀Get(model::Module const& structure, std::vector<Contributor> const& contributors, Java_Settings const& settings)❰
@@ -37,8 +40,8 @@ class
 ◀private: static▶ std::string ☀Get_Possible_Body(model::Function const& method, Java_Settings const& settings)❰
     std::string x;
     
-    //regular methods have a body
-    if (!Method_Is_Abstract(method)){
+    //non-abstract methods have a body
+    if (!Virtual_Method_Checker::Is_Virtual(method)){
         x += "{\n";
         x += Get_Body(method,settings);
         x += "\n}\n";
@@ -136,11 +139,10 @@ class
     
     std::string x;
     
-   // auto type = as_string(arg.type.value);
-   // auto real_type = Type_Name_Deriver::Derive_Name(arg,Source_Language::JAVA);
-   //  x += real_type;
-   //  x += " ";
-   //  x += Identifier_Name_Deriver::Derive_Name(arg,bad_temp);
+   auto real_type = Type_Name_Deriver::Derive_Name(arg,Source_Language::JAVA);
+    x += real_type;
+    x += " ";
+    x += Function_Argument_To_Identifier::Derive_Name(arg,settings.module.portion);
     return x;
 ❱
 
@@ -173,13 +175,6 @@ class
     //     Append(x,keyword_spacer);
     //  }
      return x;
-❱
-
-◀private: static▶ bool ☀Method_Is_Abstract(model::Function const& method)❰
-    // if (method.inheritence.virtuality == Method_Virtuality::UNPURE_VIRTUAL || method.inheritence.virtuality == Method_Virtuality::PURE_VIRTUAL){
-    //     return true;
-    // }
-    return false;
 ❱
 
 
