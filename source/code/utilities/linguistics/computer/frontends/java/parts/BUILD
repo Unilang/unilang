@@ -109,5 +109,7 @@ hcp(
         "//code/utilities/types/vectors/converters:lib",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/types/general:lib",
+        "//code/utilities/linguistics/computer/frontends/parts/identifier:function_name_getter",
     ],
 )

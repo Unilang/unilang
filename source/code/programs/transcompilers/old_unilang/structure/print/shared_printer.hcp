@@ -206,31 +206,6 @@ class
 
 
 
-//other stuff that should eventually go away and be a part of the "settings"
-◀public: static▶ std::string ☀Derive_Function_Name(std::string const& file_name, Code_Type const& code_type, Method_Item const& method, C_Export_Settings const& options)❰
-
-
-    //here is the base name that we put inside our unilang token
-    auto base_function_name = as_string(method.names.function_name.value);
-    
-    //handle potential function prefix:
-    if (code_type == Code_Type::PRODUCT_TYPE && Is_A_Plublic_Non_Manager_Method(file_name,method)){
-        if (options.portion.method_options.prefix_object_api_methods_with_object_name){
-            base_function_name = file_name + " " + base_function_name;
-        }
-    }
-    
-    std::string print_function_name;
-    if (Is_Copy_Constructor(file_name,method) || Is_Constructor(file_name,method)){
-      print_function_name = Case_Modifier::As_Modified_Casing(options.general.filesystem_naming.file_casing,As_Removed_Suffix(file_name));
-    }
-    else{
-      print_function_name = Case_Modifier::As_Modified_Casing(options.portion.method_options.function_casing,base_function_name);
-    }
-
-    return print_function_name;
-❱
-
 
 
 ◀public: static▶ std::string ☀Derive_Data_Member_Name(std::string const& name)❰

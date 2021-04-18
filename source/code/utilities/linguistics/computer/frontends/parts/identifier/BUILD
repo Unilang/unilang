@@ -32,3 +32,23 @@ hcp(
         "//code/utilities/types/vectors/operators:lib",
     ],
 )
+
+
+hcp(
+    name = "function_name_getter",
+    deps = [
+        "//code/utilities/contributor:contributor",
+        "//code/utilities/code:concept_static_tree_structs",
+        "//code/utilities/linguistics/computer/frontends/java/settings:java_settings",
+        "//code/utilities/comments/doxygen/maker:doxygen_block_printer",
+        "//code/utilities/linguistics/computer/keywords/visibility:visibility_keyword_getter",
+        "//code/utilities/code/query:function_visibility",
+        "//code/utilities/code/query:data_member_visibility",
+        "//code/utilities/code/query:function_return_type_getter",
+        "//code/utilities/types/vectors/observers:lib",
+        "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/types/vectors/converters:lib",
+        "//code/utilities/types/general:lib",
+        "//code/utilities/types/strings/transformers/casing:case_modifier",
+    ],
+)
