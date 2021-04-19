@@ -32,19 +32,19 @@ class
          x += "\n";
          x += Get_Signature(structure,it,settings);
          x += "\n";
-         x += Get_Possible_Body(it,settings);
+         x += Get_Possible_Body(structure,it,settings);
     }
     
     return x;
 ❱
 
-◀private: static▶ std::string ☀Get_Possible_Body(model::Function const& method, Java_Settings const& settings)❰
+◀private: static▶ std::string ☀Get_Possible_Body(model::Module const& structure, model::Function const& method, Java_Settings const& settings)❰
     std::string x;
     
     //non-abstract methods have a body
     if (!Virtual_Method_Checker::Is_Virtual(method)){
         x += "{\n";
-        x += Get_Body(method,settings);
+        x += Get_Body(structure,method,settings);
         x += "\n}\n";
     }
     
@@ -183,10 +183,10 @@ class
 
 
 
-◀private: static▶ std::string ☀Get_Body(model::Function const& method, Java_Settings const& settings)❰
+◀private: static▶ std::string ☀Get_Body(model::Module const& structure, model::Function const& method, Java_Settings const& settings)❰
     std::string x;
-    // for (auto const& it: method.body){
+    for (auto const& it: First_Element_Or_Default(method.body).statement){
     //     x += as_string(it.value);
-    // }
+    }
     return x;
 ❱
