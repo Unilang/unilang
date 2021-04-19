@@ -13,6 +13,6 @@ int main(int argc, char** argv){
     auto po = Program_Options(argc,argv);
 
     //build it
-    Export_Default_References::Create(po.Output_Dir() + "/" + po.Name());
+    Export_Default_References::Create(po.Output_Dir());
 
 }

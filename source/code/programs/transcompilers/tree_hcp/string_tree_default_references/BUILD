@@ -25,6 +25,7 @@ hcp(
         "//code/utilities/types/tree/converters:tree_full_paths_getter",
         "//code/utilities/types/vectors/transformers:lib",
         "//code/utilities/formats/json/converters:json_file_io",
+        "//code/utilities/code/references:reference_lookup_map_getter",
     ],
 )
 

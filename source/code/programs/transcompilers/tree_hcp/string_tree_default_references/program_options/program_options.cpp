@@ -35,7 +35,6 @@ boost::program_options::options_description Program_Options::Get_Options_Descrip
 	//the code inserted,  are the flags added by the user through the
 	//program_options_maker flag interface
 	("output_dir,o",value<std::string>(),"output path")
-	("name",value<std::string>(),"base file name")
 
 	//+----------------------------------------------------------+
 	//| Obligatory                                               |
@@ -93,13 +92,6 @@ std::string Program_Options::Output_Dir() const{
 	std::string data;
 	if (vm.count("output_dir")){
 		data = vm["output_dir"].as<std::string>();
-	}
-	return data;
-}
-std::string Program_Options::Name() const{
-	std::string data;
-	if (vm.count("name")){
-		data = vm["name"].as<std::string>();
 	}
 	return data;
 }
