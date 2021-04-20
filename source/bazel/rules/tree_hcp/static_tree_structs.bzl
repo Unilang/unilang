@@ -8,7 +8,7 @@ def static_tree_structs(name):
     outfile1 = name + "_static_tree_structs.hpp"
     outfile2 = name + "_static_tree_structs.cpp"
 
-    #converting hcp to hpp/cpp
+    #create the tree struct source files
     native.genrule(
         name = target_name,
         srcs = [in_file],
