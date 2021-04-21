@@ -64,6 +64,6 @@ The unilang schema is used to encode the concept tree and can be enforceable dur
 
 
 ## Contribute
-There are no rules.  Make a ticket about anything.  We'll figure it out together.  
+There are no rules.  Make a ticket about anything. 
 
 
