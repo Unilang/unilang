@@ -28,11 +28,11 @@ class
     if (settings.surface.use_explicit){
         return settings.surface.explicit_size;
     }
-    return Most_Distant_Pixel_Pos(elements);
+    return Most_Distant_Pixel_Pos(elements,settings);
 ❱
 
 
-◀private: static▶ Position ☀Most_Distant_Pixel_Pos(Frame_Elements const& elements)❰
+◀private: static▶ Position ☀Most_Distant_Pixel_Pos(Frame_Elements const& elements, Cairo_Render_Settings const& settings)❰
     Position pos;
     
     for (auto const& it: elements.types){
@@ -65,6 +65,9 @@ class
             
         }, it);
     }
+    
+    pos.x += settings.surface.buffer_x;
+    pos.y += settings.surface.buffer_y;
     
     return pos;
 ❱

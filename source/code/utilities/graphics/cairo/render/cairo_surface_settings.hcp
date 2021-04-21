@@ -10,6 +10,12 @@ class
 
         //if you don't use an explicit size, we will derive the minimum size to fit all the rendered elements
         bool use_explicit = false;
+        
+        //after deriving the minimum size we will buffer the size by adding these values
+        int buffer_x=1;
+        int buffer_y=1;
+        
+        //if we are ysing an explicit size this one will be chosen
         Position explicit_size;
         
 ▶
