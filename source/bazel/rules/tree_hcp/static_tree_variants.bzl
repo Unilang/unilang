@@ -12,7 +12,7 @@ def static_tree_variants(tree, references):
     #create the tree struct source files
     native.genrule(
         name = target_name,
-        srcs = [in_file1,in_file2],
+        srcs = [in_file1, in_file2],
         outs = [outfile1, outfile2],
         tools = ["//code/programs/transcompilers/tree_hcp/static_tree_variants:static_tree_variants"],
         cmd = "$(location //code/programs/transcompilers/tree_hcp/static_tree_variants:static_tree_variants) -i $(SRCS) --name {}  -o $(@D)".format(tree + "_static_tree_variants"),

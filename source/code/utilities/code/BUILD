@@ -21,8 +21,10 @@ string_tree_to_static_tree_parser(name = "concept")
 # creates a json file of tree element relationships (PK/FK, suggests potential variant types)
 string_tree_default_references("concept_references")
 
-static_tree_variants(tree = "concept", references = "concept_references")
-
+static_tree_variants(
+    references = "concept_references",
+    tree = "concept",
+)
 
 hcp(
     name = "concept_tree_to_image",
