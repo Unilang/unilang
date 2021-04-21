@@ -1,0 +1,72 @@
+class
+❪iostream❫
+❪string❫
+❪utility❫
+❪vector❫
+❪queue❫
+❪"code/programs/repo_tools/build_plan_deps/program_options/program_options"❫
+❪"code/utilities/build/profiler/data/profile_settings"❫
+❪"code/utilities/build/profiler/data/profile_results"❫
+❪"code/utilities/build/build_repo_establisher/build_repo_settings"❫
+⚯
+❪"code/utilities/program/wrappers/git/branch_switcher"❫
+❪"code/utilities/types/vectors/converters/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/build/profiler/branch_profile_compilation_timer"❫
+❪"code/utilities/math/math"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/types/converters/lib"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/build/build_repo_establisher/build_repo_establisher"❫
+❪"code/utilities/program/wrappers/bazel/query/bazel_query_runner"❫
+❪"code/utilities/types/queue/lib"❫
+❪"code/utilities/data_structures/build_plan/build_plan.pb.h"❫
+❪"code/utilities/data_structures/graph/unique_str_vertex_graph/lib"❫
+❪"code/utilities/filesystem/paths/lib.hpp"❫
+❪"code/utilities/program/wrappers/graphviz/graphviz_image_maker"❫
+❪"code/utilities/types/general/lib"❫
+❪"code/utilities/types/strings/transformers/search_replace/lib"❫
+⚞⚟
+
+
+◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
+
+    //settings
+    std::string build_plan_file = options.Input();
+    std::vector<std::string> ignore_plans;
+    bool exlude_flag_plans = true;
+    std::string graphviz_name = "build_plans_no_flag_plans";
+
+
+    //load the config file
+    auto config =  Deserialize_Plain_Text_File<av::tools::bazel_tools::BuildPlans>(build_plan_file);
+    
+    //add "flag plans"
+    if (exlude_flag_plans){
+        for (auto const& plan: config.plan()){
+            if (Ends_With(plan.name(),"-flags")){
+                ignore_plans.emplace_back(plan.name());
+            }
+        }
+    }
+    
+    
+    //build the graph
+    Unique_Str_Vertex_Graph g;
+    for (auto const& plan: config.plan()){
+        
+        if (!Contains(ignore_plans,plan.name())){
+            for (auto const& depend: plan.depend()){
+                
+                if (!Contains(ignore_plans,depend)){
+                    g.Connect(depend,plan.name());
+                }
+            }
+        }
+    }
+    
+    //render image
+    auto graphviz_str = g.As_Graphviz();
+    graphviz_str = string_replace_all(graphviz_str,"digraph G {","digraph G {\nrankdir=LR\n");
+    Graphviz_Image_Maker::Make(graphviz_str,Full_Path_To_Desktop(),graphviz_name);
+❱

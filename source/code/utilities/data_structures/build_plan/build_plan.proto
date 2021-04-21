@@ -1,0 +1,36 @@
+package av.tools.bazel_tools;
+
+message BuildPlan {
+    // Name of build plan.
+    optional string name = 1;
+
+    // Flags to add to all bazel commands.
+    repeated string flag = 2;
+
+    // Flags to add to bazel test commands.
+    repeated string test_flag = 5;
+
+    // Whether to skip the tests of this build plan. This is interesting when cross-compiling. In
+    // that case the tests will not run properly on the host architecture.
+    optional bool skip_tests = 9;
+
+    // Names of build plans this depends on.  This is deprecated and "prepend"
+    // should be used instead.
+    repeated string depend = 3 [deprecated = true];
+
+    // Fully qualified Bazel target to build. This uses Bazel target syntax.
+    repeated string path = 4;
+
+    // Workspace bazelrc, for example .bazelrc or .bazelrc-qnx
+    optional string workspace_rc = 6;
+
+    // Names of build plans to recursively prepend to this plan
+    repeated string prepend = 7;
+
+    // Names of build plans to recursively append to this plan
+    repeated string append = 8;
+}
+
+message BuildPlans {
+    repeated BuildPlan plan = 1;
+}

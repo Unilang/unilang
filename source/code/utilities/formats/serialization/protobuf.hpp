@@ -11,6 +11,19 @@
 #include <google/protobuf/util/delimited_message_util.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 #include <google/protobuf/util/delimited_message_util.h>
+#include <google/protobuf/text_format.h>
+#include "code/utilities/streams/filestreams/read_all/lib.hpp"
+
+
+
+template <typename T>
+T Deserialize_Plain_Text_File(std::string const& path){
+    auto str = Read_Entire_File_Into_String(path);
+    
+    T t;
+    google::protobuf::TextFormat::ParseFromString(str,&t);
+    return t;
+}
 
 template <typename T>
 void Serialize(T const& t, std::string const& path){
@@ -54,6 +67,16 @@ std::string Protobuf_Message_To_Inline_Json(T const& t){
     std::string str;
     MessageToJsonString(t, &str, options);
     return str;
+}
+
+template <typename T>
+T Deserialize_From_Json_File(std::string const& path){
+    auto j_blob = Json_File_Io::Read_Json_From_File(path);
+    T x;
+    google::protobuf::util::JsonParseOptions options;
+    JsonStringToMessage(j_blob, &x, options);
+    
+    return x;
 }
 
 template <typename T>
