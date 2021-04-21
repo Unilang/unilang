@@ -2,12 +2,13 @@ class
 ❪vector❫
 ❪string❫
 ❪unordered_map❫
+❪map❫
 ⚯
 
 ⚞⚟
 
 ◀public:
 
-    std::unordered_map<std::string,std::string> ፠map፠;
+    std::multimap<std::string,std::string> ፠map፠;
 ▶
 
