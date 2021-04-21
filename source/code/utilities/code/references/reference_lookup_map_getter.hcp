@@ -15,9 +15,9 @@ class
     x.map.insert({"code/module/literature/paragraph/sentence/citations/id/","code/module/citation/id/"});
     x.map.insert({"code/module/description/foreseeable change fk/","code/module/foreseeable change/pk/"});
     x.map.insert({"code/module/description fk/","code/module/description/pk/"});
-    x.map.insert({"code/module/function/body/statement/name","code/module/raw statement/id/"});
-    x.map.insert({"code/module/function/body/statement/name","code/module/todo statement/id/"});
-    x.map.insert({"code/module/function/body/statement/name","code/module/comment/id/"});
+    x.map.insert({"code/module/function/body/statement/name/","code/module/raw statement/id/"});
+    x.map.insert({"code/module/function/body/statement/name/","code/module/todo statement/id/"});
+    x.map.insert({"code/module/function/body/statement/name/","code/module/comment/id/"});
     
     return x;
 ❱

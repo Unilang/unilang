@@ -220,6 +220,7 @@ class
                 if (found_to_pos != path_positions.end()){
                     auto TO = found_to_pos->second;
                     result.emplace_back(FROM,TO);
+                    std::cout << fk_found->second << std::endl;
                 }
             }
             
