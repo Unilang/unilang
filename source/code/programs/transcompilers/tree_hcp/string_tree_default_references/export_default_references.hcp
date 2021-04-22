@@ -24,10 +24,11 @@ class
 ❪"code/programs/transcompilers/shared/json_gen"❫
 ❪"code/utilities/formats/json/converters/json_file_io"❫
 ❪"code/utilities/code/references/reference_lookup_map_getter"❫
+❪"code/utilities/types/multimap/lib"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Create(std::string const& outfile)❰
 
     auto refs = Reference_Lookup_Map_Getter::Get_Default_References();
-    Json_File_Io::Write_Json_To_File(refs,outfile);
+    Json_File_Io::Write_Json_To_File(Convert_To_Map(refs.map),outfile);
 ❱

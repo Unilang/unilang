@@ -24,6 +24,8 @@ class
 ❪"code/utilities/types/strings/observers/characteristic/is_cpp_keyword_checker"❫
 ❪"code/programs/transcompilers/tree_hcp/shared/path_naming"❫
 ❪"code/programs/transcompilers/shared/json_gen"❫
+❪"code/utilities/types/multimap/lib"❫
+❪"code/utilities/output/printers/lib"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Create(std::string const& tree_file, std::string const& reference_file, std::string const& path_without_extension)❰
@@ -36,8 +38,10 @@ class
     auto str_tree = String_To_String_Tree::Convert(all_text);
     
     //create references
+    std::map<std::string,std::vector<std::string>> temp;
+    Json_File_Io::Read_Json_From_File(temp,reference_file);
     Reference_Lookup_Map references;
-    Json_File_Io::Read_Json_From_File(references,reference_file);
+    references.map = Convert_To_Mulimap(temp);
     
     //create source files
     Create_Header(str_tree,references,path_without_extension);
@@ -50,11 +54,20 @@ class
     outfile << Get_All_Header_Includes();
     outfile << std::endl;
     
-    outfile << "namespace model {\n";
+    
+    std::cout << references.map << std::endl;
+    auto m = Convert_To_Map(references.map);
+    
+    outfile << "namespace model_variants {\n";
+    
+    for (auto v_type: m){
+        std::cout << v_type.first << std::endl;
+        std::cout << v_type.second.size() << std::endl;
+    }
     
     
     
-    outfile << "} //namespace: model\n";
+    outfile << "} //namespace: model_variants\n";
 ❱
 
 ◀private: static▶ std::string ☀Get_All_Header_Includes()❰
