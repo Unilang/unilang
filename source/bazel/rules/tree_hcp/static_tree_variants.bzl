@@ -23,5 +23,6 @@ def static_tree_variants(tree, references):
     real_deps += ["@tree"]
     real_deps += ["@boost//:serialization"]
     real_deps += ["@nlohmann_json//:nlohmann_json"]
+    real_deps += ["//code/utilities/code:concept_static_tree_structs"]
     real_deps += ["//code/utilities/formats/json/overloads:tree_json_converters"]
     cpp_object(tree + "_static_tree_variants", real_deps)

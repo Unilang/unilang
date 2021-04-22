@@ -26,6 +26,8 @@ class
 ❪"code/programs/transcompilers/shared/json_gen"❫
 ❪"code/utilities/types/multimap/lib"❫
 ❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/types/general/lib"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Create(std::string const& tree_file, std::string const& reference_file, std::string const& path_without_extension)❰
@@ -61,8 +63,7 @@ class
     outfile << "namespace model_variants {\n";
     
     for (auto v_type: m){
-        std::cout << v_type.first << std::endl;
-        std::cout << v_type.second.size() << std::endl;
+        Create_Variant_Type(str_tree, v_type.first, v_type.second);
     }
     
     
@@ -70,17 +71,74 @@ class
     outfile << "} //namespace: model_variants\n";
 ❱
 
+◀private: static▶ std::string ☀Create_Variant_Type(String_Tree const& str_tree, std::string const& pk, std::vector<std::string> const& fks)❰
+    std::string str;
+    str += "using ";
+    str += Path_Naming::Get_Struct_Typename(str_tree,pk);
+    str += " = ";
+    str += "std::variant";
+    
+    str += "<";
+    
+        Call_Function_On_All_Elements_Except_Last_Element_Then_Call_Function_On_Last_Element(fks
+         ,[&](std::string fk){
+            
+           str += "model::" + Path_Naming::Get_Struct_Typename(str_tree,pk);
+           str += ",";
+         }
+         ,[&](std::string fk){
+           str += "model::" + Path_Naming::Get_Struct_Typename(str_tree,pk);
+         });
+        
+    str += ">";
+    
+    return str;
+❱
+
+
 ◀private: static▶ std::string ☀Get_All_Header_Includes()❰
     std::string x;
     x += "#pragma once\n";
-    x += "#include <vector>\n";
-    x += "#include <string>\n";
-    x += "#include <variant>\n";
-    x += "#include " + As_Wrapped_In_Double_Quotes("src/tree.hh") + "\n";
+    
+    //add system headers
+    std::vector<std::string> sys_headers;
+    sys_headers.emplace_back("vector");
+    sys_headers.emplace_back("string");
+    sys_headers.emplace_back("variant");
+    x += Include_Statments_For_System_Header_Names(sys_headers);
+    
+    //add local headers
+    std::vector<std::string> local_headers;
+    local_headers.emplace_back("code/utilities/code/concept_static_tree_structs.hpp");
+    local_headers.emplace_back("src/tree.hh");
+    x += Include_Statments_For_Local_Header_Names(local_headers);
+    
+    //add other headers
     x += Json_Gen::all_nlohmann_serialization_headers() + "\n";
+    
     return x;
 ❱
 
+◀private: static▶ std::string ☀Include_Statments_For_System_Header_Names(std::vector<std::string> const& names)❰
+    std::string str;
+    for (auto const& it: names){
+        str += "#include ";
+        str += "<";
+        str += it;
+        str += ">\n";
+    }
+    return str;
+❱
+
+◀private: static▶ std::string ☀Include_Statments_For_Local_Header_Names(std::vector<std::string> const& names)❰
+    std::string str;
+    for (auto const& it: names){
+        str += "#include ";
+        str += As_Wrapped_In_Double_Quotes(it);
+        str += "\n";
+    }
+    return str;
+❱
 
 ◀private: static▶ void ☀Create_Source(String_Tree const& str_tree, Reference_Lookup_Map const& references, std::string const& path_without_extension)❰
     std::ofstream outfile(path_without_extension + ".cpp");

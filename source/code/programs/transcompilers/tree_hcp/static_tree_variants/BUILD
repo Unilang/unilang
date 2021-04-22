@@ -28,6 +28,7 @@ hcp(
         "//code/utilities/types/vectors/transformers:lib",
         "//code/utilities/types/multimap:lib",
         "//code/utilities/output/printers:lib",
+        "//code/utilities/types/general:lib",
     ],
 )
 
