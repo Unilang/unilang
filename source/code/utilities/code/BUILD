@@ -8,6 +8,7 @@ load("//bazel/rules/tree_hcp:string_tree_to_static_tree_parser.bzl", "string_tre
 load("//bazel/rules/enum_cpp:enum_cpp.bzl", "enum_cpp")
 load("//bazel/rules/tree_hcp:string_tree_default_references.bzl", "string_tree_default_references")
 load("//bazel/rules/tree_hcp:static_tree_variants.bzl", "static_tree_variants")
+load("//bazel/rules/tree_hcp:static_tree_pk_resolver.bzl", "static_tree_pk_resolver")
 
 # a C++ function for getting the StringTree type
 string_tree_getter(name = "concept")
@@ -22,6 +23,10 @@ string_tree_to_static_tree_parser(name = "concept")
 string_tree_default_references("concept_references")
 
 static_tree_variants(
+    references = "concept_references",
+    tree = "concept",
+)
+static_tree_pk_resolver(
     references = "concept_references",
     tree = "concept",
 )

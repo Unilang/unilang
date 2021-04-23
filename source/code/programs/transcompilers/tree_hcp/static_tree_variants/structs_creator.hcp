@@ -63,7 +63,7 @@ class
     outfile << "namespace model_variants {\n";
     
     for (auto v_type: m){
-        Create_Variant_Type(str_tree, v_type.first, v_type.second);
+        outfile << Create_Variant_Type(str_tree, v_type.first, v_type.second);
     }
     
     
@@ -90,7 +90,7 @@ class
            str += "model::" + Path_Naming::Get_Struct_Typename(str_tree,pk);
          });
         
-    str += ">";
+    str += ">;\n";
     
     return str;
 ❱

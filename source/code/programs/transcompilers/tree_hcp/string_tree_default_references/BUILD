@@ -16,6 +16,7 @@ hcp(
         "//code/utilities/data_structures/tree/generic:string_tree",
         "//code/utilities/formats/json/converters:json_file_io",
         "//code/utilities/streams/filestreams/read_all:lib",
+        "//code/utilities/types/multimap:lib",
         "//code/utilities/types/strings/observers/characteristic:is_cpp_keyword_checker",
         "//code/utilities/types/strings/transformers/appending:lib",
         "//code/utilities/types/strings/transformers/casing:case_modifier",
@@ -26,7 +27,6 @@ hcp(
         "//code/utilities/types/tree:shortest_unique_name",
         "//code/utilities/types/tree/converters:tree_full_paths_getter",
         "//code/utilities/types/vectors/transformers:lib",
-        "//code/utilities/types/multimap:lib",
     ],
 )
 
