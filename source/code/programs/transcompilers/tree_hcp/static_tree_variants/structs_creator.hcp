@@ -80,11 +80,11 @@ class
         Call_Function_On_All_Elements_Except_Last_Element_Then_Call_Function_On_Last_Element(fks
          ,[&](std::string fk){
             
-           str += "model::" + Path_Naming::Get_Struct_Typename(str_tree,pk);
+           str += "model::" + Path_Naming::Get_Struct_Typename(str_tree,fk);
            str += ",";
          }
          ,[&](std::string fk){
-           str += "model::" + Path_Naming::Get_Struct_Typename(str_tree,pk);
+           str += "model::" + Path_Naming::Get_Struct_Typename(str_tree,fk);
          });
         
     str += ">;\n";

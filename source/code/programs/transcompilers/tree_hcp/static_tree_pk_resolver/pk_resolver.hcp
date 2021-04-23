@@ -131,12 +131,52 @@ class
     for (auto const& it: fks){
         str += Individual_Pk_Lookup_Implementation(str_tree,pk,it);
     }
+    
+    //add the "didn't find it" implementation
+    
     return str;
 ❱
 ◀private: static▶ std::string ☀Individual_Pk_Lookup_Implementation(String_Tree const& str_tree, std::string const& pk, std::string const& fk)❰
     std::string str;
     
-    std::cout << All_Paths::Get(fk) << std::endl;
+    int loop_counter = 0;
+    std::string current_loop_name = "structure";
+    
+    auto fk_breakdown = All_Paths::Get(fk);
+    
+    //don't need code/
+    fk_breakdown.erase(fk_breakdown.begin());
+    
+    //don't need code/module/
+    fk_breakdown.erase(fk_breakdown.begin());
+    
+    
+    for (auto const& it: fk_breakdown){
+        str += "for (auto const& a" + std::to_string(loop_counter) + " : " + current_loop_name + "." + Path_Naming::Get_Struct_Identifier(str_tree,it) + "){\n";
+        
+        
+        
+        //update for next time
+        current_loop_name = "a" + std::to_string(loop_counter);
+        loop_counter++;
+    }
+    
+    
+    //check if we found it
+    str += "\tif ( a" + std::to_string(loop_counter-1) + ".value == pk.value){\n";
+    str += "\t//it's a match\n";
+    str += "\tresult = a" + std::to_string(loop_counter-1) + ";\n";
+    str += "\treturn result";
+    str += ";\n";
+    str += "\t}\n;";
+    
+    
+    //end for loop
+    str += "\n";
+    for (auto const& it: fk_breakdown){
+        str += "}";
+    }
+    
     return str;
 ❱
 
