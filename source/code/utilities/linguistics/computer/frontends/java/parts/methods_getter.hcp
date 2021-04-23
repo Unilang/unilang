@@ -202,13 +202,16 @@ class
     
         std::visit(overloaded {
             [&](model::RawStatement const& statement) {
-                //todo
+                str += First_Element_Or_Default(statement.text).value;
+                str += "\n";
             },
             [&](model::TodoStatement const& statement) {
-                //todo
+                str += "// TODO(thickey): " + First_Element_Or_Default(statement.text).value;
+                str += "\n";
             },
             [&](model::ModuleComment const& statement) {
-                //todo
+                str += "// " + First_Element_Or_Default(statement.text).value;
+                str += "\n";
             },
         }, any_statement);
     
