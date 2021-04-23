@@ -5,7 +5,7 @@ class
 ❪"code/utilities/contributor/contributor"❫
 ❪"code/utilities/code/concept_static_tree_structs"❫
 ❪"code/utilities/linguistics/computer/frontends/java/settings/java_settings"❫
-
+❪"code/utilities/code/concept_static_tree_variants"❫
 ⚯
 ❪"code/utilities/comments/doxygen/maker/doxygen_block_printer"❫
 ❪"code/utilities/linguistics/computer/keywords/visibility/visibility_keyword_getter"❫
@@ -23,6 +23,8 @@ class
 ❪"code/utilities/linguistics/computer/frontends/parts/identifier/function_argument_to_identifier"❫
 ❪"code/utilities/linguistics/computer/types/generic/type_name_deriver"❫
 ❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/utilities/types/variant/lib"❫
+❪"code/utilities/code/concept_static_tree_pk_resolver"❫
 ⚞⚟
 
 ◀public: static▶ std::string ☀Get(model::Module const& structure, std::vector<Contributor> const& contributors, Java_Settings const& settings)❰
@@ -185,8 +187,33 @@ class
 
 ◀private: static▶ std::string ☀Get_Body(model::Module const& structure, model::Function const& method, Java_Settings const& settings)❰
     std::string x;
-    for (auto const& it: First_Element_Or_Default(method.body).statement){
-    //     x += as_string(it.value);
+    for (auto const& statement: First_Element_Or_Default(method.body).statement){
+            auto fk = First_Element_Or_Default(statement.name);
+            auto pk = Resolve(structure,fk);
+            x += Get_Body_Statement(structure,pk,settings);
     }
     return x;
 ❱
+
+
+
+◀private: static▶ std::string ☀Get_Body_Statement(model::Module const& structure, model_variants::StatementName const& any_statement, Java_Settings const& settings)❰
+    std::string str;
+    
+        std::visit(overloaded {
+            [&](model::RawStatement const& statement) {
+                //todo
+            },
+            [&](model::TodoStatement const& statement) {
+                //todo
+            },
+            [&](model::ModuleComment const& statement) {
+                //todo
+            },
+        }, any_statement);
+    
+    return str;
+❱
+
+
+
