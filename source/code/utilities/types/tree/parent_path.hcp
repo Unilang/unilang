@@ -1,0 +1,24 @@
+class
+❪string❫
+❪unordered_set❫
+❪"code/utilities/data_structures/tree/generic/string_tree"❫
+❪"code/utilities/types/tree/full_path_name"❫
+❪"code/utilities/types/tree/converters/path_to_iterator"❫
+❪"code/utilities/types/tree/converters/tree_full_paths_getter"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
+⚯
+❪iostream❫
+❪"code/utilities/types/strings/transformers/search_replace/lib"❫
+❪"code/utilities/types/general/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+⚞⚟
+
+//Get the parent path of the path.
+//for example:  a/b/c/d/
+//would yield:  a/b/c/
+◀public: static▶ std::string ☀Get(std::string const& path) ❰
+
+    return As_All_Chars_Removed_From_Back_Until_Char_Is_Seen(As_Last_Char_Removed(path),'/');
+❱

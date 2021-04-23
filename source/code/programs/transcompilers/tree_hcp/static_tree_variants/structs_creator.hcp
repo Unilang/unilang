@@ -18,6 +18,7 @@ class
 ❪"code/utilities/types/vectors/transformers/lib"❫
 ❪"code/utilities/types/strings/transformers/casing/case_modifier"❫
 ❪"code/utilities/types/tree/shortest_unique_name"❫
+❪"code/utilities/types/tree/parent_path"❫
 ❪"code/utilities/types/tree/converters/tree_full_paths_getter"❫
 ❪"code/utilities/types/tree/children_path_names"❫
 ❪"code/utilities/types/strings/transformers/search_replace/lib"❫
@@ -80,11 +81,11 @@ class
         Call_Function_On_All_Elements_Except_Last_Element_Then_Call_Function_On_Last_Element(fks
          ,[&](std::string fk){
             
-           str += "model::" + Path_Naming::Get_Struct_Typename(str_tree,fk);
+           str += "model::" + Path_Naming::Get_Struct_Typename(str_tree,Parent_Path::Get(fk));
            str += ",";
          }
          ,[&](std::string fk){
-           str += "model::" + Path_Naming::Get_Struct_Typename(str_tree,fk);
+           str += "model::" + Path_Naming::Get_Struct_Typename(str_tree,Parent_Path::Get(fk));
          });
         
     str += ">;\n";

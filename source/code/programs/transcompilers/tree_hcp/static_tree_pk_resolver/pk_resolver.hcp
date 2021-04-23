@@ -165,7 +165,7 @@ class
     //check if we found it
     str += "\tif ( a" + std::to_string(loop_counter-1) + ".value == pk.value){\n";
     str += "\t//it's a match\n";
-    str += "\tresult = a" + std::to_string(loop_counter-1) + ";\n";
+    str += "\tresult = a" + std::to_string(loop_counter-2) + ";\n";
     str += "\treturn result";
     str += ";\n";
     str += "\t}\n;";

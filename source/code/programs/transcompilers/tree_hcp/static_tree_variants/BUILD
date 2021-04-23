@@ -29,6 +29,7 @@ hcp(
         "//code/utilities/types/tree:shortest_unique_name",
         "//code/utilities/types/tree/converters:tree_full_paths_getter",
         "//code/utilities/types/vectors/transformers:lib",
+        "//code/utilities/types/tree:parent_path",
     ],
 )
 
