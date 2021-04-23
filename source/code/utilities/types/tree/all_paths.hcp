@@ -1,0 +1,35 @@
+class
+❪string❫
+❪unordered_set❫
+❪"code/utilities/data_structures/tree/generic/string_tree"❫
+❪"code/utilities/types/tree/full_path_name"❫
+❪"code/utilities/types/tree/converters/path_to_iterator"❫
+❪"code/utilities/types/tree/converters/tree_full_paths_getter"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
+⚯
+❪iostream❫
+❪"code/utilities/types/strings/transformers/search_replace/lib"❫
+❪"code/utilities/types/general/lib"❫
+⚞⚟
+
+//A path can be used to derive all the other paths up the tree.
+//for example:  a/b/c/d/
+//could yield:
+// a/
+// a/b/
+// a/b/c/
+// a/b/c/d/
+◀public: static▶ std::vector<std::string> ☀Get(std::string const& path) ❰
+    std::vector<std::string> results;
+    auto parts = Split_Into_Parts_From_Fwd_Slash(path);
+    
+    std::string temp;
+    for (auto const& it: parts){
+        temp += it + "/";
+        results.emplace_back(temp);
+    }
+    
+    return results;
+❱

@@ -26,6 +26,7 @@ static_tree_variants(
     references = "concept_references",
     tree = "concept",
 )
+
 static_tree_pk_resolver(
     references = "concept_references",
     tree = "concept",

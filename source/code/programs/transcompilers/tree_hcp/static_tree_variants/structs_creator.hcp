@@ -32,8 +32,6 @@ class
 
 ◀public: static▶ void ☀Create(std::string const& tree_file, std::string const& reference_file, std::string const& path_without_extension)❰
     
-    std::cout << tree_file << std::endl;
-    std::cout << reference_file << std::endl;
     
     //create string tree
     auto all_text = Read_Entire_File_Into_String(tree_file);
@@ -57,7 +55,6 @@ class
     outfile << std::endl;
     
     
-    std::cout << references.map << std::endl;
     auto m = Convert_To_Map(references.map);
     
     outfile << "namespace model_variants {\n";

@@ -28,12 +28,11 @@ class
 ❪"code/utilities/output/printers/lib"❫
 ❪"code/utilities/types/general/lib"❫
 ❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/tree/all_paths"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Create(std::string const& tree_file, std::string const& reference_file, std::string const& path_without_extension)❰
     
-    std::cout << tree_file << std::endl;
-    std::cout << reference_file << std::endl;
     
     //create string tree
     auto all_text = Read_Entire_File_Into_String(tree_file);
@@ -57,7 +56,6 @@ class
     outfile << std::endl;
     
     
-    std::cout << references.map << std::endl;
     auto m = Convert_To_Map(references.map);
     
     
@@ -74,14 +72,41 @@ class
     outfile << '"';
     outfile << std::endl;
     
+    auto m = Convert_To_Map(references.map);
+    for (auto v_type: m){
+        outfile << Create_Conversion_Function_Def(str_tree, v_type.first, v_type.second);
+    }
+    
     
     outfile.close();
 ❱
 
 
+◀private: static▶ std::string ☀Function_Interface(String_Tree const& str_tree, std::string const& pk, std::vector<std::string> const& fks)❰
+    std::string str;
+    
+    //return type
+    str += "model_variants::";
+    str += Path_Naming::Get_Struct_Typename(str_tree,pk);
+    
+    //function and argument list
+    str += " Resolve(";
+    str += "model::Module const& structure";
+    str += ",";
+    str += "model::";
+    str += Path_Naming::Get_Struct_Typename(str_tree,pk);
+    str += " const& pk";
+    str += ")";
+    
+    return str;
+❱
 
 ◀private: static▶ std::string ☀Create_Conversion_Function_Decl(String_Tree const& str_tree, std::string const& pk, std::vector<std::string> const& fks)❰
     std::string str;
+    
+    //return type
+    str += Function_Interface(str_tree,pk,fks);
+    str += ";\n";
     
     return str;
 ❱
@@ -89,6 +114,29 @@ class
 ◀private: static▶ std::string ☀Create_Conversion_Function_Def(String_Tree const& str_tree, std::string const& pk, std::vector<std::string> const& fks)❰
     std::string str;
     
+    str += Function_Interface(str_tree,pk,fks);
+    str += "{\n";
+        str += "model_variants::";
+        str += Path_Naming::Get_Struct_Typename(str_tree,pk);
+        str += " result;\n";
+        str += Pk_Lookup_Implementation(str_tree,pk,fks);
+        str += "return result;\n";
+    str += "}\n";
+    return str;
+❱
+
+◀private: static▶ std::string ☀Pk_Lookup_Implementation(String_Tree const& str_tree, std::string const& pk, std::vector<std::string> const& fks)❰
+    std::string str;
+    
+    for (auto const& it: fks){
+        str += Individual_Pk_Lookup_Implementation(str_tree,pk,it);
+    }
+    return str;
+❱
+◀private: static▶ std::string ☀Individual_Pk_Lookup_Implementation(String_Tree const& str_tree, std::string const& pk, std::string const& fk)❰
+    std::string str;
+    
+    std::cout << All_Paths::Get(fk) << std::endl;
     return str;
 ❱
 
@@ -107,6 +155,7 @@ class
     //add local headers
     std::vector<std::string> local_headers;
     local_headers.emplace_back("code/utilities/code/concept_static_tree_structs.hpp");
+    local_headers.emplace_back("code/utilities/code/concept_static_tree_variants.hpp");
     local_headers.emplace_back("src/tree.hh");
     x += Include_Statments_For_Local_Header_Names(local_headers);
     
