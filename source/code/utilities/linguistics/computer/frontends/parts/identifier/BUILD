@@ -8,6 +8,8 @@ hcp(
     deps = [
         "//code/utilities/code:concept_static_tree_structs",
         "//code/utilities/linguistics/computer/frontends/parts:portion_options",
+        "//code/utilities/types/strings/transformers/casing:case_modifier",
+        "//code/utilities/types/vectors/observers:lib",
     ],
 )
 
@@ -16,6 +18,8 @@ hcp(
     deps = [
         "//code/utilities/code:concept_static_tree_structs",
         "//code/utilities/linguistics/computer/frontends/parts:portion_options",
+        "//code/utilities/types/strings/transformers/casing:case_modifier",
+        "//code/utilities/types/vectors/observers:lib",
     ],
 )
 

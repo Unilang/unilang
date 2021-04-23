@@ -1,6 +1,8 @@
 class
 ❪"code/utilities/linguistics/computer/frontends/parts/portion_options"❫
 ❪"code/utilities/code/concept_static_tree_structs"❫
+❪"code/utilities/types/strings/transformers/casing/case_modifier"❫
+❪"code/utilities/types/vectors/observers/lib"❫
 ⚯
 ⚞⚟
 
@@ -12,13 +14,13 @@ class
         // auto suffix = Get_Raw_Unit_Suffix(arg);
         // suffix = Get_Properly_Cased_Suffix_For_Non_Constant(suffix);
         
-        // //create the identifier
-        // std::string new_identifier = Case_Modifier::As_Modified_Casing(settings.method_options.argument_casing,as_string(arg.identifier.value));
+        //create the identifier
+        auto raw_identifier = First_Element_Or_Default(arg.identifier).value;
+        std::string new_identifier = Case_Modifier::As_Modified_Casing(settings.method_options.argument_casing,raw_identifier);
         // Possibly_Add_Identifier_Prefixes_And_Suffixes(new_identifier,settings.method_options.parameters.notation,prefix,suffix);
         
-        // //return it
-        //return new_identifier;
-        return "arg_name";
+        //return it
+        return new_identifier;
 ❱
 
 ◀private: static▶ std::string ☀Get_Raw_Unit_Suffix(model::FunctionResult const& construct)❰
