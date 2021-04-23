@@ -133,6 +133,8 @@ class
     }
     
     //add the "didn't find it" implementation
+    str += "std::cerr << \"lookup failed: " + pk + "\" << std::endl;\n";
+    str += "exit(-1);\n";
     
     return str;
 ❱
@@ -168,7 +170,7 @@ class
     str += "\tresult = a" + std::to_string(loop_counter-2) + ";\n";
     str += "\treturn result";
     str += ";\n";
-    str += "\t}\n;";
+    str += "\t}\n";
     
     
     //end for loop
