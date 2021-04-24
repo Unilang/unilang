@@ -1,0 +1,25 @@
+class
+❪iostream❫
+❪fstream❫
+❪"code/programs/repo_tools/repo_stats/program_options/program_options"❫
+⚯
+❪"code/utilities/build/build_repo_establisher/build_repo_establisher"❫
+❪"code/utilities/program/wrappers/bazel/query/bazel_aquery_runner"❫
+❪"code/utilities/program/wrappers/bazel/query/bazel_query_runner"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
+⚞⚟
+
+
+◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
+
+    //We establish a repo and a context for building artifacts in it.
+    //This setup tries to be agnostic to any expectations about the repo's hosting, layout, and build system.
+    //It tries to derive things like:
+    //where/how the repository is cloned from, what branch it should be on or whether the repo already exists on the system.
+    //Analyze the repository to learn how to build it
+    auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
+    
+    // auto targets = Bazel_Query_Runner::Get_All_Test_Targets_Tagged_No_Remote(repo_context.program_to_run_build);
+    // std::cout << targets.size() << std::endl;
+❱
