@@ -8,6 +8,7 @@ class
 ❪"code/utilities/program/wrappers/bazel/query/bazel_query_runner"❫
 ❪"code/utilities/filesystem/paths/lib"❫
 ❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
+❪"code/utilities/output/printers/lib"❫
 ⚞⚟
 
 
@@ -20,6 +21,6 @@ class
     //Analyze the repository to learn how to build it
     auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
     
-    // auto targets = Bazel_Query_Runner::Get_All_Test_Targets_Tagged_No_Remote(repo_context.program_to_run_build);
-    // std::cout << targets.size() << std::endl;
+    auto targets = Bazel_Query_Runner::Get_All_Test_Targets(repo_context.program_to_run_build);
+    std::cout << targets << std::endl;
 ❱
