@@ -27,4 +27,8 @@ class
     
     auto cquery_result = Bazel_Cquery_Runner::Run(repo_context.program_to_run_build,"...");
     std::cout << cquery_result.results().size() << std::endl;
+    
+    auto aquery_result = Bazel_Aquery_Runner::Run_Aquery(repo_context.program_to_run_build,"...");
+    std::cout << aquery_result.targets().size() << std::endl;
+    std::cout << aquery_result.actions().size() << std::endl;
 ❱
