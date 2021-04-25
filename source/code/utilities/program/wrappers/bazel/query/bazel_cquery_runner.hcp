@@ -24,23 +24,24 @@ class
 ⚞⚟
 
 
-◀public: static▶ std::vector<analysis::ActionGraphContainer> ☀Run_Aquery(std::string const& bazel_wrapper, std::string const& dep_name)❰
+◀public: static▶ analysis::CqueryResult ☀Run(std::string const& bazel_wrapper, std::string const& dep_name)❰
 
     //build it first, so the artifacts exist
     //this should be optional,
-    Build_It(bazel_wrapper,dep_name);
+    //Build_It(bazel_wrapper,dep_name);
     
     
     std::string command = bazel_wrapper;
-    command += " aquery ";
-    command += "--output=jsonproto ";
+    command += " cquery ";
+    //command += "--output=proto ";
+    command += "--output=proto ";
     command += dep_name;
     
     std::string output_file = Random_Files::Random_Tmp_Filename();
     execute_to_file(command,output_file);
     std::cout << output_file << std::endl;
     
-    auto x = Deserialize_Multiple_From_Json_File<analysis::ActionGraphContainer>(output_file);
+    auto x = Deserialize<analysis::CqueryResult>(output_file);
     return x;
 ❱
 
