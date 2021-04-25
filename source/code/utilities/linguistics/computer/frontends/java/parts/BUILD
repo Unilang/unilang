@@ -98,8 +98,8 @@ hcp(
 hcp(
     name = "methods_getter",
     deps = [
-        "//code/utilities/code:concept_static_tree_structs",
         "//code/utilities/code:concept_static_tree_pk_resolver",
+        "//code/utilities/code:concept_static_tree_structs",
         "//code/utilities/code:concept_static_tree_variants",
         "//code/utilities/code/query:data_member_visibility",
         "//code/utilities/code/query:function_is_constructor",
@@ -116,9 +116,9 @@ hcp(
         "//code/utilities/linguistics/computer/types/generic:type_name_deriver",
         "//code/utilities/types/general:lib",
         "//code/utilities/types/strings/transformers/appending:lib",
+        "//code/utilities/types/variant:lib",
         "//code/utilities/types/vectors/converters:lib",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
-        "//code/utilities/types/variant:lib",
     ],
 )

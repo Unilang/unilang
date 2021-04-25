@@ -14,5 +14,6 @@ def bazel():
         ],
         patch_cmds = [
             "find . -name 'BUILD' -type f -delete",
+            "sed -i 's/repeated string direct_artifact_ids/repeated bytes direct_artifact_ids/' src/main/protobuf/analysis.proto",
         ],
     )
