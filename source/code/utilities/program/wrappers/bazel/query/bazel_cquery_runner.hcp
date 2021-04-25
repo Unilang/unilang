@@ -35,7 +35,7 @@ class
     command += " cquery ";
     //command += "--output=proto ";
     command += "--output=proto ";
-    command += dep_name;
+    command += "'" + dep_name + "'";
     
     std::string output_file = Random_Files::Random_Tmp_Filename();
     execute_to_file(command,output_file);

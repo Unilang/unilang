@@ -12,7 +12,9 @@ class
 ❪"code/utilities/types/strings/transformers/appending/lib"❫
 ❪"code/utilities/program/call/lib"❫
 ❪"code/utilities/random/lib"❫
+❪"code/utilities/random/files/random_files"❫
 ❪"src/main/protobuf/spawn.pb.h"❫
+❪"src/main/protobuf/build.pb.h"❫
 ❪"code/utilities/formats/serialization/protobuf"❫
 ❪"code/utilities/program/wrappers/bazel/run_environment"❫
 ❪"code/utilities/program/inputs/flags/data/flags"❫
@@ -21,6 +23,38 @@ class
 ⚯
 ⚞⚟
 
+
+
+◀public: static▶ blaze_query::QueryResult ☀Run(std::string const& bazel_wrapper, std::string const& dep_name)❰
+
+    //build it first, so the artifacts exist
+    //this should be optional,
+    //Build_It(bazel_wrapper,dep_name);
+    
+    
+    std::string command = bazel_wrapper;
+    command += " query ";
+    //command += "--output=proto ";
+    command += "--output=proto ";
+    command += "'" + dep_name + "'";
+    
+    std::string output_file = Random_Files::Random_Tmp_Filename();
+    execute_to_file(command,output_file);
+    std::cout << output_file << std::endl;
+    
+    auto x = Deserialize<blaze_query::QueryResult>(output_file);
+    return x;
+❱
+
+
+
+
+
+
+
+
+
+//more specific queries
 ◀public: static▶ std::vector<std::string> ☀Get_All_Test_Targets_Tagged_No_Remote(std::string const& bazel_wrapper)❰
     auto command = Get_No_Remote_Test_Target_Query_Command(bazel_wrapper);
     auto results = Get_Each_Line_Of_Shell_Command(command);

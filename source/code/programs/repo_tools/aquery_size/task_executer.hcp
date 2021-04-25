@@ -23,11 +23,9 @@ class
     
     //extract all files
     std::vector<std::string> all_files;
-    for (auto const& x: actions){
-        for (auto const& x2: x.artifacts()){
+        for (auto const& x2: actions.artifacts()){
             all_files.emplace_back(x2.exec_path());
         }
-    }
     
     
     //move to bazel-source

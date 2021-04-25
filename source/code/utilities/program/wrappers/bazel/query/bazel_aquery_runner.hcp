@@ -35,7 +35,19 @@ class
     command += " aquery ";
     command += "--output=proto ";
     //command += "--output=jsonproto ";
-    command += dep_name;
+    
+    //command += "--infer_universe_scope ";
+    //command += "--order_output=no ";
+    
+    
+    command += "--include_commandline "; //default: true
+    command += "--include_artifacts "; //default: true
+    command += "--include_aspects "; //default: true
+    command += "--include_param_files "; //default: false
+    //command += "--skyframe_state "; //default: false
+
+    
+    command += "'" + dep_name + "'";
     
     std::string output_file = Random_Files::Random_Tmp_Filename();
     execute_to_file(command,output_file);
