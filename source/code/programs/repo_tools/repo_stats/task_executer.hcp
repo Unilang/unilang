@@ -34,6 +34,7 @@ class
     auto aquery_result = Bazel_Aquery_Runner::Run_Aquery(repo_context.program_to_run_build,"deps(//...)");
     std::cout << aquery_result.targets().size() << std::endl;
     std::cout << aquery_result.actions().size() << std::endl;
+    std::cout << aquery_result.artifacts().size() << std::endl;
     
     // for (auto const& it: aquery_result.actions()){
     //     std::cout << "[" << it.action_key() << "]" << std::endl;

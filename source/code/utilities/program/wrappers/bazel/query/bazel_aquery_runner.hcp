@@ -36,7 +36,7 @@ class
     command += "--output=proto ";
     //command += "--output=jsonproto ";
     
-    //command += "--infer_universe_scope ";
+    command += "--infer_universe_scope ";
     //command += "--order_output=no ";
     
     
