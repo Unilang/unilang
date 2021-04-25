@@ -537,6 +537,7 @@ class
     spec.lib_name = "bazel";
     Add_Unilang_Github_Mirror(spec,"bazel","2895cd5ce6797a22279dc7482926371ae9ea78b5","e3138b869f19c480c1bb28e553cfd7d67ecaf8d86df66ba70dc7e156b40c0aab");
     spec.patch_cmds.emplace_back("find . -name 'BUILD' -type f -delete");
+    spec.patch_cmds.emplace_back("sed -i 's/repeated string direct_artifact_ids/repeated bytes direct_artifact_ids/' src/main/protobuf/analysis.proto");
     spec.build_defs.raw_starlark = 
 R"RAW_STRING(
 package(default_visibility = ["//visibility:public"])
