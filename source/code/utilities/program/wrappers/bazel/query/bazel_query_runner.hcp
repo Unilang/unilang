@@ -36,6 +36,13 @@ class
     command += " query ";
     //command += "--output=proto ";
     command += "--output=proto ";
+    
+    //quiet
+    command += "--noshow_progress ";
+    command += "--noshow_loading_progress ";
+    command += "--noshow_task_finish ";
+    //command += "--noshow_warnings ";
+    
     command += "'" + dep_name + "'";
     
     std::string output_file = Random_Files::Random_Tmp_Filename();

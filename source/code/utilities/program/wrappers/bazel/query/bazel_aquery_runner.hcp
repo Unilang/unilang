@@ -33,13 +33,22 @@ class
     
     std::string command = bazel_wrapper;
     command += " aquery ";
+    
+    //format
     command += "--output=proto ";
     //command += "--output=jsonproto ";
     
+    //quiet
+    command += "--noshow_progress ";
+    command += "--noshow_loading_progress ";
+    command += "--noshow_task_finish ";
+    //command += "--noshow_warnings ";
+    
+    //note sure about this
     command += "--infer_universe_scope ";
     //command += "--order_output=no ";
     
-    
+    //data to populate
     command += "--include_commandline "; //default: true
     command += "--include_artifacts "; //default: true
     command += "--include_aspects "; //default: true

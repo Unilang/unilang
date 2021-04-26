@@ -29,9 +29,11 @@ class
     std::cout << cquery_result.results().size() << std::endl;
     
     auto query_result = Bazel_Query_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
+    //auto query_result = Bazel_Query_Runner::Run(repo_context.program_to_run_build,"//...");
     std::cout << query_result.target().size() << std::endl;
     
     auto aquery_result = Bazel_Aquery_Runner::Run_Aquery(repo_context.program_to_run_build,"deps(//...)");
+    //auto aquery_result = Bazel_Aquery_Runner::Run_Aquery(repo_context.program_to_run_build,"//...");
     std::cout << aquery_result.targets().size() << std::endl;
     std::cout << aquery_result.actions().size() << std::endl;
     std::cout << aquery_result.artifacts().size() << std::endl;
