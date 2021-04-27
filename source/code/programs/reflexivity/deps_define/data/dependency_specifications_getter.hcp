@@ -1254,7 +1254,8 @@ cc_library(
 ◀private: static▶ Dependency_Specification ☀statsd_cpp()❰
     Dependency_Specification spec;
     spec.lib_name = "statsd_cpp";
-    Add_Unilang_Github_Mirror(spec,"statsd-cpp","abed359419ebd9ff8d8374c46e6d209c2619d8e0","5b936dfbbeea283c3fe56cac099b4c67444255e85db72464f970cb53b7ac2e15");
+    Add_Unilang_Github_Mirror(spec,"statsd-cpp","abed359419ebd9ff8d8374c46e6d209c2619d8e0","e758e633326ff96144226c8b1cee13f96ca23339caa338c652e53061bcf4457a");
+    spec.patch_cmds.emplace_back("mv include/version.hpp.in include/version.hpp");
     
     spec.build_defs.raw_starlark = 
 R"RAW_STRING(

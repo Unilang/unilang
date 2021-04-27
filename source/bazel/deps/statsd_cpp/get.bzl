@@ -7,9 +7,12 @@ def statsdCpp():
     http_archive(
         name = "statsd_cpp",
         build_file = "//bazel/deps/statsd_cpp:build.BUILD",
-        sha256 = "5b936dfbbeea283c3fe56cac099b4c67444255e85db72464f970cb53b7ac2e15",
+        sha256 = "e758e633326ff96144226c8b1cee13f96ca23339caa338c652e53061bcf4457a",
         strip_prefix = "statsd-cpp-abed359419ebd9ff8d8374c46e6d209c2619d8e0",
         urls = [
             "https://github.com/Unilang/statsd-cpp/archive/abed359419ebd9ff8d8374c46e6d209c2619d8e0.tar.gz",
+        ],
+        patch_cmds = [
+            "mv include/version.hpp.in include/version.hpp",
         ],
     )
