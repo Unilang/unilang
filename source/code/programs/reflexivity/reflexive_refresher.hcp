@@ -4,7 +4,7 @@ class
 ❪"code/utilities/filesystem/files/creating/lib"❫
 ❪"code/utilities/types/strings/transformers/appending/lib"❫
 ❪"code/programs/reflexivity/settings/reflexive_refresh_settings"❫
-❪"code/programs/reflexivity/publish/all_essay_publisher"❫
+❪"code/programs/reflexivity/publish/essays/all_essay_publisher"❫
 ⚯
 ❪"code/programs/reflexivity/docker/dockerfile_refresher"❫
 ❪"code/programs/reflexivity/bazelrc/bazelrc_refresher"❫

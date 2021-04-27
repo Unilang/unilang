@@ -1,0 +1,48 @@
+class
+❪vector❫
+❪string❫
+❪"code/utilities/web/html_fetch_settings"❫
+⚯
+❪"code/utilities/web/lib"❫
+❪"code/utilities/types/strings/transformers/wrap/lib"❫
+⚞⚟
+
+◀public: static▶ std::string ☀Post_Gauge(std::string const& host, std::string const& port, std::string const& bucket, std::string const& value, std::vector<std::pair<std::string,std::string>> const& tags)❰
+
+    auto metric = Build_Metric(bucket,value,tags);
+    
+    std::string full_command;
+    full_command += "echo ";
+    full_command += As_Wrapped_In_Double_Quotes(metric);
+    full_command += " | ";
+    full_command += "nc -w 1 ";
+    full_command += host;
+    full_command += " ";
+    full_command += port;
+❱
+
+
+◀private: static▶ std::string ☀Build_Metric(std::string const& bucket, std::string const& value, std::vector<std::pair<std::string,std::string>> const& tags)❰
+
+    std::string metric;
+    metric += bucket;
+    metric += ":";
+    metric += value;
+    metric += "|";
+    metric += "g";
+    if (!tags.empty()){
+        metric += "|";
+        for (auto const& tag: tags){
+            metric += "#";
+            metric += tag.first;
+            metric += ":";
+            metric += tag.second;
+            metric += ",";
+        }
+        
+        //remove last comma
+        metric.pop_back();
+    }
+    
+    return metric;
+❱

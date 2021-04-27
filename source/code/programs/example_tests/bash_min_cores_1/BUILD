@@ -5,5 +5,5 @@ package(
 sh_test(
     name = "main",
     srcs = ["main.sh"],
-    exec_properties = {"min-cores": "1"}
+    exec_properties = {"min-cores": "1"},
 )

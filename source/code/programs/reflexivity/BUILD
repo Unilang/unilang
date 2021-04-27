@@ -13,7 +13,7 @@ hcp(
         "//code/programs/reflexivity/deps_define/refresh:deps_definition_refresher",
         "//code/programs/reflexivity/deps_define/scan:deps_repo_scanner",
         "//code/programs/reflexivity/docker:dockerfile_refresher",
-        "//code/programs/reflexivity/publish:all_essay_publisher",
+        "//code/programs/reflexivity/publish/essays:all_essay_publisher",
         "//code/programs/reflexivity/settings:reflexive_refresh_settings",
         "//code/programs/reflexivity/settings:reflexive_refresh_settings_getter",
         "//code/utilities/build:self_builder",
@@ -100,6 +100,6 @@ cpp_main(
 cpp_main(
     name = "generate_essays",
     deps = [
-        "//code/programs/reflexivity/publish:all_essay_publisher",
+        "//code/programs/reflexivity/publish/essays:all_essay_publisher",
     ],
 )

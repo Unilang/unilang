@@ -29,7 +29,7 @@ class
 ❪"code/utilities/assets/literature/linguistics_json_data_getter"❫
 ❪"code/utilities/assets/literature/language_context_json_data_getter"❫
 ❪"code/utilities/assets/literature/a_box_full_of_pencils_json_data_getter"❫
-❪"code/programs/reflexivity/publish/essay_list_maker"❫
+❪"code/programs/reflexivity/publish/essays/essay_list_maker"❫
 ❪"code/utilities/output/publisher/essay/essay_publisher"❫
 ❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
 ⚞⚟

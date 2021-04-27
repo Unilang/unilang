@@ -243,6 +243,9 @@ class
     x.specs.emplace_back(bsa());
     x.specs.emplace_back(matplotplusplus());
     
+    //Metrics
+    x.specs.emplace_back(statsd_cpp());
+    
     
     //Games
     x.specs.emplace_back(Entt());
@@ -1246,6 +1249,58 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "matplotplusplus";
     Add_Unilang_Github_Mirror(spec,"matplotplusplus","a07240f3cdc2cf869d2a9e128946e12aa79fdba0","7cfcee9ef043514cb64e535191ae646e849cc6dff901e7f930bde5f59ab39365");
+    return spec;
+❱
+◀private: static▶ Dependency_Specification ☀statsd_cpp()❰
+    Dependency_Specification spec;
+    spec.lib_name = "statsd_cpp";
+    Add_Unilang_Github_Mirror(spec,"statsd-cpp","abed359419ebd9ff8d8374c46e6d209c2619d8e0","5b936dfbbeea283c3fe56cac099b4c67444255e85db72464f970cb53b7ac2e15");
+    
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"])
+
+#build headers
+hdrs = glob(
+    include = [
+        "include/**/*.h",
+        "include/**/*.hpp",
+    ],
+    exclude = [
+    ],
+)
+
+#build sources
+srcs = glob(
+    include = [
+        "src/**/*.cpp",
+    ],
+    exclude = [
+    ],
+)
+
+cc_library(
+    name = "hdrs",
+    hdrs = hdrs,
+    includes = [
+        "include",
+    ],
+)
+
+cc_library(
+    name = "lib",
+    srcs = srcs,
+    copts = [
+    ],
+    includes = [
+    ],
+    deps = [
+        ":hdrs",
+    ],
+)
+    
+)RAW_STRING";
+
     return spec;
 ❱
 

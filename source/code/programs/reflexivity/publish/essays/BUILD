@@ -7,7 +7,7 @@ load("//bazel/rules/cpp:main.bzl", "cpp_main")
 hcp(
     name = "all_essay_publisher",
     deps = [
-        "//code/programs/reflexivity/publish:essay_list_maker",
+        "//code/programs/reflexivity/publish/essays:essay_list_maker",
         "//code/utilities/assets/literature:a_box_full_of_pencils_json_data_getter",
         "//code/utilities/assets/literature:language_context_json_data_getter",
         "//code/utilities/assets/literature:linguistics_json_data_getter",
