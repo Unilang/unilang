@@ -9,6 +9,7 @@ class
 
 ◀
 public:
-        Process_Results results;
+        Process_Results ፠results፠;
         std::chrono::seconds time;
 ▶
+

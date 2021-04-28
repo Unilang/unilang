@@ -1,0 +1,30 @@
+class
+❪vector❫
+❪string❫
+❪"src/main/protobuf/spawn.pb.h"❫
+❪"src/main/protobuf/analysis.pb.h"❫
+❪"code/utilities/program/call/process_spawn/timed/timed_process_results"❫
+⚯
+⚞⚟
+
+◀
+public:
+    
+    
+    //the command used to get the cquery results
+    std::string ፠command፠;
+    
+    //results from spawning the command
+    Timed_Process_Results ፠spawn_results፠;
+    
+    //where the cquery results were first printed
+    std::string ፠output_file፠;
+    
+    //deserialization time
+    double ፠deserialization_time_ms፠;
+    
+    //the in-memory representation of the cquery results
+    analysis::CqueryResult cquery_result;
+    
+▶
+

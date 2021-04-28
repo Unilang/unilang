@@ -13,24 +13,39 @@ class
 ❪"code/utilities/program/call/lib"❫
 ❪"code/utilities/random/files/random_files"❫
 ❪"code/utilities/random/lib"❫
-❪"src/main/protobuf/spawn.pb.h"❫
-❪"src/main/protobuf/analysis.pb.h"❫
 ❪"code/utilities/formats/serialization/protobuf"❫
 ❪"code/utilities/program/wrappers/bazel/run_environment"❫
 ❪"code/utilities/program/inputs/flags/data/flags"❫
 ❪"code/utilities/program/inputs/flags/flag_util"❫
 ❪"code/utilities/program/wrappers/bazel/query/query_deps_flags"❫
+❪"code/utilities/program/wrappers/bazel/query/data/cquery_results"❫
 ⚯
+❪"code/utilities/program/call/process_spawn/timed/timed_process_spawner"❫
+❪"code/utilities/time/profile/function_profiler"❫
 ⚞⚟
 
 
-◀public: static▶ analysis::CqueryResult ☀Run(std::string const& bazel_wrapper, std::string const& dep_name)❰
+◀public: static▶ Cquery_Results ☀Run(std::string const& bazel_wrapper, std::string const& dep_name)❰
+    
+    
+    //build command
+    Cquery_Results x;
+    x.command = Build_Command(bazel_wrapper,dep_name);
+    
+    //execute command and write results to a file
+    x.output_file = Random_Files::Random_Tmp_Filename();
+    x.command += " > " + x.output_file;
+    x.spawn_results = Timed_Process_Spawner::Execute_And_Get_Back_Results(x.command);
+    
+    //deserialize into memory
+    x.deserialization_time_ms = Profile_Function_Ms([&](){
+        x.cquery_result = Deserialize<analysis::CqueryResult>(x.output_file);
+    });
+    
+    return x;
+❱
+◀private: static▶ std::string ☀Build_Command(std::string const& bazel_wrapper, std::string const& dep_name)❰
 
-    //build it first, so the artifacts exist
-    //this should be optional,
-    //Build_It(bazel_wrapper,dep_name);
-    
-    
     std::string command = bazel_wrapper;
     command += " cquery ";
     //command += "--output=proto ";
@@ -43,20 +58,5 @@ class
     //command += "--noshow_warnings ";
     
     command += "'" + dep_name + "'";
-    
-    std::string output_file = Random_Files::Random_Tmp_Filename();
-    execute_to_file(command,output_file);
-    std::cout << output_file << std::endl;
-    
-    auto x = Deserialize<analysis::CqueryResult>(output_file);
-    return x;
-❱
-
-◀private: static▶ void ☀Build_It(std::string const& bazel_wrapper, std::string const& dep_name)❰
-
-    std::string command = bazel_wrapper;
-    command += " build ";
-    command += dep_name;
-    
-    execute(command);
+    return command;
 ❱

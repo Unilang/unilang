@@ -7,8 +7,8 @@ class
 
 ◀
 public:
-        std::string stdout;
-        std::string stderr;
-        std::string mixed; //TODO
-        int return_code;
+        std::string ፠stdout፠;
+        std::string ፠stderr፠;
+        std::string ፠mixed፠; //TODO
+        int ፠return_code፠;
 ▶
