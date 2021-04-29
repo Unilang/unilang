@@ -26,4 +26,5 @@ def static_tree_pk_resolver(tree, references):
     real_deps += ["//code/utilities/code:concept_static_tree_structs"]
     real_deps += ["//code/utilities/code:concept_static_tree_variants"]
     real_deps += ["//code/utilities/formats/json/overloads:tree_json_converters"]
+    real_deps += ["//code/utilities/formats/json/overloads:chrono_json_converters"]
     cpp_object(tree + "_static_tree_pk_resolver", real_deps)

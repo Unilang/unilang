@@ -15,6 +15,7 @@ hcp(
         "//code/utilities/program/wrappers/bazel/query:bazel_aquery_runner",
         "//code/utilities/program/wrappers/bazel/query:bazel_cquery_runner",
         "//code/utilities/program/wrappers/bazel/query:bazel_query_runner",
+        "//code/utilities/formats/json/converters:type_to_json_string",
     ],
 )
 

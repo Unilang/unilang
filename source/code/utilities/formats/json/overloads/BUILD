@@ -19,3 +19,11 @@ cpp_object(
         "@nlohmann_json",
     ],
 )
+
+cpp_object(
+    name = "chrono_json_converters",
+    deps = [
+        "@nlohmann_json",
+    ],
+)
+

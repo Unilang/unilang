@@ -10,6 +10,7 @@ class
 ❪"code/utilities/filesystem/paths/lib"❫
 ❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
 ❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/formats/json/converters/type_to_json_string"❫
 ⚞⚟
 
 
@@ -27,6 +28,9 @@ class
     
     auto cquery_result = Bazel_Cquery_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
     std::cout << cquery_result.cquery_result.results().size() << std::endl;
+    
+    std::cout << Type_To_Json_String::As_JSON_String(cquery_result) << std::endl;
+    exit(1);
     
     auto query_result = Bazel_Query_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
     //auto query_result = Bazel_Query_Runner::Run(repo_context.program_to_run_build,"//...");

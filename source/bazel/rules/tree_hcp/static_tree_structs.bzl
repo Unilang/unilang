@@ -23,4 +23,5 @@ def static_tree_structs(name):
     real_deps += ["@boost//:serialization"]
     real_deps += ["@nlohmann_json//:nlohmann_json"]
     real_deps += ["//code/utilities/formats/json/overloads:tree_json_converters"]
+    real_deps += ["//code/utilities/formats/json/overloads:chrono_json_converters"]
     cpp_object(name + "_static_tree_structs", real_deps)
