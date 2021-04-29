@@ -64,11 +64,11 @@ namespace nlohmann {
         static void to_json(json& j, std::chrono::seconds const& time)
         {
             long count{ time.count() };
-            j["seconds"] = count;
+            j = count;
         }
         static void from_json(json const& j, std::chrono::seconds & time)
         {
-            auto const count = j.at("seconds").get<long>();
+            auto const count = j.get<long>();
             time = std::chrono::seconds(count);
         }
     };
