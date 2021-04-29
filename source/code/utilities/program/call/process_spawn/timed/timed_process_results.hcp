@@ -10,6 +10,6 @@ class
 ◀
 public:
         Process_Results ፠results፠;
-        std::chrono::seconds time;
+        std::chrono::seconds ፠time፠;
 ▶
 

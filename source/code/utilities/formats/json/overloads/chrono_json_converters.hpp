@@ -38,19 +38,37 @@
 
 
 
+// namespace nlohmann {
+//     template<typename Clock, typename Duration>
+//     struct adl_serializer<std::chrono::time_point<Clock, Duration>>
+//     {
+//         static void to_json(json& j, const std::chrono::seconds& time)
+//         {
+//             long count{ time.count() };
+//             j["time_s"] = count;
+//         }
+        
+//         static void from_json(json const& j, std::chrono::seconds& time)
+//         {
+//             auto const count = j.at("time_s").get<long>();
+//             time = std::chrono::seconds(count);
+//         }
+//     };
+// }
+
+
 namespace nlohmann {
-    template<typename Clock, typename Duration>
-    struct adl_serializer<std::chrono::time_point<Clock, Duration>>
+    template<>
+    struct adl_serializer<std::chrono::seconds>
     {
-        static void to_json(json& j, const std::chrono::seconds& time)
+        static void to_json(json& j, std::chrono::seconds const& time)
         {
             long count{ time.count() };
-            j["time_s"] = count;
+            j["seconds"] = count;
         }
-        
-        static void from_json(json const& j, std::chrono::seconds& time)
+        static void from_json(json const& j, std::chrono::seconds & time)
         {
-            auto const count = j.at("time_s").get<long>();
+            auto const count = j.at("seconds").get<long>();
             time = std::chrono::seconds(count);
         }
     };
