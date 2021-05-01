@@ -15,5 +15,6 @@ hcp(
     deps = [
         "//code/utilities/filesystem/files/getting:lib",
         "//code/utilities/program/wrappers/bazel/setup/wrapper:bazel_wrapper",
+        "//code/utilities/system:lib",
     ],
 )

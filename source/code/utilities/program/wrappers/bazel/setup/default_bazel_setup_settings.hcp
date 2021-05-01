@@ -9,8 +9,7 @@ class
     Bazel_Setup x;
     x.verbose = true;
     x.bazel_wrapper.derive = true;
-    x.bazel_wrapper.program_name = "./bazel";
-    x.bazel_wrapper.default_program_name = "./bazel"; //<- this will be changed based on a derivation of the repo environment
+    x.bazel_wrapper.program_name = "bazel"; //<- If you choose derie, this will be changed based on a derivation of the repo environment
     x.bazel_wrapper.search_derive_programs.emplace_back("bazel");
     x.bazel_wrapper.search_derive_programs.emplace_back("bazel_wrapper");
     return x;

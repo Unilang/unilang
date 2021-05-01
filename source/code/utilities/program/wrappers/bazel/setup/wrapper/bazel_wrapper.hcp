@@ -11,7 +11,6 @@ public:
     //used to derive program_name
     bool ፠derive፠;
     std::vector<std::string> ፠search_derive_programs፠;
-    std::string ፠default_program_name፠;
     
     
     //the result of deriving or directly specified runner

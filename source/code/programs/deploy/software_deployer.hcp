@@ -17,21 +17,6 @@ class
 
 
 
-◀private: static▶ void ☀Find_Debs_And_Copy_Over(std::vector<std::string> const& debs, std::string const& program_name)❰
-
-      //find program's debs and copy them over
-      auto specific_debs = Filter(debs,[&](std::string const& file){
-          auto deb_files_should_start_with = program_name + "_";
-          return File_Name_Starts_With(file,deb_files_should_start_with);
-      });
-      Copy_Files_To_Current_Directory(specific_debs);
-      
-      //copy over raw binary
-      std::string raw_binary_name = Replace_File_Name(specific_debs[0],program_name);
-      Copy_File_To_Dir(raw_binary_name,".");
-      execute("chmod 777 " + raw_binary_name);
-❱
-
 ◀private: static▶ void ☀Create_Program_Documentation(Structure const& doc_structure, std::string const& program_name)❰
 
     Create_Path_And_Temporarily_Move_To_It_To_Call_Function("docs",[&](){

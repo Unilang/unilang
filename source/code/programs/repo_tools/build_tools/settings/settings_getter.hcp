@@ -59,7 +59,6 @@ class
     //calling bazel
     settings.setup.bazel_wrapper.derive = false;
     settings.setup.bazel_wrapper.program_name = "./bazel";
-    settings.setup.bazel_wrapper.default_program_name = "./bazel";
     settings.setup.bazel_wrapper.search_derive_programs.emplace_back("bazel");
     settings.setup.bazel_wrapper.search_derive_programs.emplace_back("bazel_wrapper");
     
