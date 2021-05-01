@@ -57,6 +57,8 @@ class
     command += "--noshow_task_finish ";
     //command += "--noshow_warnings ";
     
+    command += "--keep_going ";
+    
     command += "'" + dep_name + "'";
     return command;
 ❱
