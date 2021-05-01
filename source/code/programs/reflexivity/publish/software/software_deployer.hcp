@@ -1,0 +1,134 @@
+class
+❪string❫
+❪iostream❫
+❪"code/utilities/linguistics/computer/frontends/markdown/settings/markdown_settings"❫
+❪"code/utilities/code/concept_static_tree_structs"❫
+⚯
+❪"code/utilities/filesystem/files/getting/lib"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/types/strings/observers/path/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/formats/pdf/pdf_settings"❫
+❪"code/utilities/formats/pdf/pdf_creator"❫
+❪"code/utilities/filesystem/files/moving/lib"❫
+❪"code/utilities/program/wrappers/git/update/git_updater"❫
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/utilities/personal/hosting/hosting_repo"❫
+⚞⚟
+
+//TODO: improve data dependencies of tool-related artifacts
+
+//OTHER INFORMATION ON DEPLOYING IN BAZEL:
+//https://www.guyrutenberg.com/2016/07/15/creating-a-personal-apt-repository-using-dpkg-scanpackages/
+//https://askubuntu.com/questions/71510/how-do-i-create-a-ppa/71516#71516
+//https://assafmo.github.io/2019/05/02/ppa-repo-hosted-on-github.html
+//https://github.com/assafmo/ppa/blob/master/update.sh
+
+//work into bazel:
+//https://github.com/graknlabs/bazel-distribution
+
+◀public: static▶ void ☀Deploy()❰
+
+    
+    // get all the debs that are data deps
+    std::string pwd = execute("pwd");
+    auto debs = Recursively_Get_All_Paths_To_Deb_Files_Of_Path(pwd);
+    
+    // get all the documentation for the tools we are going to deploy
+    auto docs = Get_Documentation_Structures();
+    
+    //go to repo we are adding things to
+    std::string repo_path = Hosting_Repo::Get();
+    Set_Path(repo_path);
+    
+    // deploy everything
+    for (auto const& doc: docs){
+        Deploy_Program(debs,doc);
+    }
+    
+    //deploy everything
+    Git_Update_Settings settings;
+    settings.message = "redeploy";
+    Git_Updater::Update_All_Changes(settings);
+❱
+
+
+
+◀private: static▶ void ☀Deploy_Program(std::vector<std::string> const& debs, model::Module const& doc_structure)❰
+
+    std::string program_name = doc_structure.name[0].value;
+    std::string folder_name = "releases/" + program_name;
+    Create_Path_And_Temporarily_Move_To_It_To_Call_Function(folder_name,[&](){
+    
+        Find_Debs_And_Copy_Over(debs,program_name);
+        
+        //Create_Program_Documentation(doc_structure,program_name);
+        
+        
+        
+        //transfer deb stuff
+        //Create_List_File(program_name);
+        //Create_Packages_File();
+    });
+❱
+
+◀private: static▶ void ☀Find_Debs_And_Copy_Over(std::vector<std::string> const& debs, std::string const& program_name)❰
+
+        //settings
+        bool copy_over_all_found_debs = true;
+        bool copy_over_raw_binary = true;
+        
+        
+        //find program's debs and copy them over
+        auto specific_debs = Filter(debs,[&](std::string const& file){
+          auto deb_files_should_start_with = program_name + "_";
+          return File_Name_Starts_With(file,deb_files_should_start_with);
+        });
+          
+        if (copy_over_all_found_debs){
+            Copy_Files_To_Current_Directory(specific_debs);
+        }
+      
+        //copy over raw binary
+        if (copy_over_raw_binary){
+          std::string raw_binary_name = Replace_File_Name(specific_debs[0],program_name);
+          Copy_Dereferenced_File_To_Dir(raw_binary_name,".");
+          execute("chmod 777 " + raw_binary_name);
+        }
+❱
+
+
+
+
+//documentation related:
+◀private: static▶ std::vector<model::Module> ☀Get_Documentation_Structures()❰
+  std::vector<model::Module> docs;
+  docs.emplace_back(Repo_Stats_Documentation());
+  
+  
+  
+  //docs.emplace_back(Deskstock_Documentation_Getter::Get());
+  //docs.emplace_back(Noogle_Documentation_Getter::Get());
+  //docs.emplace_back(Mario_Documentation_Getter::Get());
+  //docs.emplace_back(Gcalviz_Documentation_Getter::Get());
+  //docs.emplace_back(External_Deps_Analysis_Documentation_Getter::Get());
+  //docs.emplace_back(Shared_Object_Trace_Documentation_Getter::Get());
+  //docs.emplace_back(Build_Determinism_Documentation_Getter::Get());
+  //docs.emplace_back(Build_Tools_Documentation_Getter::Get());
+  //docs.emplace_back(Bazel_Profile_Slow_Cc_Files_Documentation_Getter::Get());
+  //docs.emplace_back(Bazel_Network_Sync_Documentation_Getter::Get());
+  return docs;
+❱
+
+
+//TODO
+//documentation move to specific tool
+◀private: static▶ model::Module ☀Repo_Stats_Documentation()❰
+    model::Module x;
+    
+    model::ModuleName name;
+    name.value = "repo_stats";
+    x.name.emplace_back(name);
+    
+    return x;
+❱

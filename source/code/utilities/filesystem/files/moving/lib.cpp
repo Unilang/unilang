@@ -18,6 +18,9 @@ void Copy_Folder_To_Path(std::string folder_name, std::string directory_to_copy_
 void Copy_File_To_Dir(std::string file, std::string dir){
     execute("cp -rf " + file + " " + dir);
 }
+void Copy_Dereferenced_File_To_Dir(std::string file, std::string dir){
+    execute("cp -rfL " + file + " " + dir);
+}
 
 void Copy_Folder_Contents_To_Path(std::string folder_name, std::string directory_to_copy_to){
     execute("cp -rf " + folder_name + "/* " + directory_to_copy_to);
