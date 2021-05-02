@@ -5,7 +5,13 @@ load("//bazel/rules/cpp:object.bzl", "cpp_object")
 
 hcp(
     name = "software_deployer",
+
+    # software to deploy
+    data = [
+        "//code/programs/repo_tools/repo_stats:repo_stats_debs",
+    ],
     deps = [
+        "//code/utilities/code:concept_static_tree_structs",
         "//code/utilities/filesystem/files/getting:lib",
         "//code/utilities/filesystem/files/moving:lib",
         "//code/utilities/filesystem/paths:lib",
@@ -16,12 +22,6 @@ hcp(
         "//code/utilities/program/wrappers/git/update:git_updater",
         "//code/utilities/types/strings/observers/path:lib",
         "//code/utilities/types/vectors/observers:lib",
-        "//code/utilities/code:concept_static_tree_structs",
-    ],
-    
-    # software to deploy
-    data = [
-        "//code/programs/repo_tools/repo_stats:repo_stats_debs"
     ],
 )
 

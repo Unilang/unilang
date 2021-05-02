@@ -26,6 +26,7 @@ class
     
     
     auto fetch_result = Bazel_Fetch_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
+    std::cout << Type_To_Json_String::As_JSON_String(fetch_result) << std::endl;
     exit(0);
     
     auto cquery_result = Bazel_Cquery_Runner::Run(repo_context.program_to_run_build,"deps(//...)");

@@ -26,4 +26,3 @@ cpp_object(
         "@nlohmann_json",
     ],
 )
-

@@ -44,10 +44,10 @@ def distributable_cpp_main(name, description, depends = [], deps = []):
         homepage = DEFAULT_HOMEPAGE,
         depends = depends,
     )
-    
+
     # create a file grouping of deb files so a program can access them for software deployment
     group_name = name + "_debs"
     native.filegroup(
         name = group_name,
-        srcs = [name,amd_name,all_name],
+        srcs = [name, amd_name, all_name],
     )

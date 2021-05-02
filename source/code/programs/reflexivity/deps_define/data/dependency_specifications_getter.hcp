@@ -589,6 +589,67 @@ cc_proto_library(
     name = "analysis_proto_cpp",
     deps = [":analysis_proto"],
 )
+
+proto_library(
+    name = "build_event_stream",
+    srcs = ["src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.proto"],
+    deps = [
+        "@com_google_protobuf//:any_proto",
+        "@com_google_protobuf//:duration_proto",
+        "@com_google_protobuf//:empty_proto",
+        #"@com_google_protobuf//:timestamp",
+        ":command_line",
+        ":invocation_policy",
+    ],
+)
+
+cc_proto_library(
+    name = "build_event_stream_cpp",
+    deps = [":build_event_stream"],
+)
+
+proto_library(
+    name = "option_filters",
+    srcs = ["src/main/protobuf/option_filters.proto"],
+)
+
+cc_proto_library(
+    name = "option_filters_cpp",
+    deps = [":option_filters"],
+)
+
+proto_library(
+    name = "command_line",
+    srcs = ["src/main/protobuf/command_line.proto"],
+    deps = [":option_filters"]
+)
+
+cc_proto_library(
+    name = "command_line_cpp",
+    deps = [":command_line"],
+)
+
+proto_library(
+    name = "invocation_policy",
+    srcs = ["src/main/protobuf/invocation_policy.proto"],
+)
+
+cc_proto_library(
+    name = "invocation_policy_cpp",
+    deps = [":invocation_policy"],
+)
+
+
+# proto_library(
+#     name = "failure_details",
+#     srcs = ["src/main/protobuf/failure_details.proto"],
+#     deps = ["@com_google_protobuf//:descriptor_proto"]
+# )
+
+# cc_proto_library(
+#     name = "failure_details_cpp",
+#     deps = [":failure_details"],
+# )
 )RAW_STRING";
     return spec;
 ❱

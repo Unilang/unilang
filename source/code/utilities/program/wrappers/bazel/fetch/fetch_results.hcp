@@ -4,6 +4,7 @@ class
 ❪"src/main/protobuf/spawn.pb.h"❫
 ❪"src/main/protobuf/analysis.pb.h"❫
 ❪"code/utilities/program/call/process_spawn/timed/timed_process_results"❫
+❪"src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.pb.h"❫
 ⚯
 ⚞⚟
 
@@ -17,5 +18,6 @@ public:
     //results from spawning the command
     Timed_Process_Results ፠spawn_results፠;
     
+     std::vector<build_event_stream::BuildEvent> build_events;
 ▶
 
