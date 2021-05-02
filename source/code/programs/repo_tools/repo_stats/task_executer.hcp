@@ -12,6 +12,7 @@ class
 ❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
 ❪"code/utilities/output/printers/lib"❫
 ❪"code/utilities/formats/json/converters/type_to_json_string"❫
+❪"code/utilities/web/statsd/statsd_nc_poster"❫
 ⚞⚟
 
 
@@ -26,24 +27,40 @@ class
     
     
     auto fetch_result = Bazel_Fetch_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
-    std::cout << Type_To_Json_String::As_JSON_String(fetch_result) << std::endl;
-    exit(0);
     
-    auto cquery_result = Bazel_Cquery_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
-    std::cout << cquery_result.cquery_result.results().size() << std::endl;
     
-    std::cout << Type_To_Json_String::As_JSON_String(cquery_result) << std::endl;
-    exit(0);
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_bes_deserialization_time_ms",std::to_string(fetch_result.bes_deserialization_time_ms));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_bes_file_size",std::to_string(fetch_result.bes_file_size));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_workspace_deserialization_time_ms",std::to_string(fetch_result.workspace_deserialization_time_ms));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_workspace_file_size",std::to_string(fetch_result.workspace_file_size));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_resolved_repos_deserialization_time_ms",std::to_string(fetch_result.resolved_repos_deserialization_time_ms));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_resolved_repos_file_size",std::to_string(fetch_result.resolved_repos_file_size));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_profile_deserialization_time_ms",std::to_string(fetch_result.profile_deserialization_time_ms));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_profile_file_size",std::to_string(fetch_result.profile_file_size));
     
-    auto query_result = Bazel_Query_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
-    //auto query_result = Bazel_Query_Runner::Run(repo_context.program_to_run_build,"//...");
-    std::cout << query_result.target().size() << std::endl;
     
-    auto aquery_result = Bazel_Aquery_Runner::Run_Aquery(repo_context.program_to_run_build,"deps(//...)");
-    //auto aquery_result = Bazel_Aquery_Runner::Run_Aquery(repo_context.program_to_run_build,"//...");
-    std::cout << aquery_result.targets().size() << std::endl;
-    std::cout << aquery_result.actions().size() << std::endl;
-    std::cout << aquery_result.artifacts().size() << std::endl;
+    
+    
+    
+    
+    // std::cout << Type_To_Json_String::As_JSON_String(fetch_result) << std::endl;
+    // exit(0);
+    
+    // auto cquery_result = Bazel_Cquery_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
+    // std::cout << cquery_result.cquery_result.results().size() << std::endl;
+    
+    // std::cout << Type_To_Json_String::As_JSON_String(cquery_result) << std::endl;
+    // exit(0);
+    
+    // auto query_result = Bazel_Query_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
+    // //auto query_result = Bazel_Query_Runner::Run(repo_context.program_to_run_build,"//...");
+    // std::cout << query_result.target().size() << std::endl;
+    
+    // auto aquery_result = Bazel_Aquery_Runner::Run_Aquery(repo_context.program_to_run_build,"deps(//...)");
+    // //auto aquery_result = Bazel_Aquery_Runner::Run_Aquery(repo_context.program_to_run_build,"//...");
+    // std::cout << aquery_result.targets().size() << std::endl;
+    // std::cout << aquery_result.actions().size() << std::endl;
+    // std::cout << aquery_result.artifacts().size() << std::endl;
     
     // for (auto const& it: aquery_result.actions()){
     //     std::cout << "[" << it.action_key() << "]" << std::endl;

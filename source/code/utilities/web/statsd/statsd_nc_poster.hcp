@@ -5,9 +5,16 @@ class
 ⚯
 ❪"code/utilities/web/lib"❫
 ❪"code/utilities/types/strings/transformers/wrap/lib"❫
+❪"code/utilities/program/call/lib"❫
 ⚞⚟
 
-◀public: static▶ std::string ☀Post_Gauge(std::string const& host, std::string const& port, std::string const& bucket, std::string const& value, std::vector<std::pair<std::string,std::string>> const& tags)❰
+◀public: static▶ void ☀Post_Gauge(std::string const& host, std::string const& port, std::string const& bucket, std::string const& value)❰
+
+    std::vector<std::pair<std::string,std::string>> tags;
+    Post_Gauge(host,port,bucket,value,tags);
+❱
+
+◀public: static▶ void ☀Post_Gauge(std::string const& host, std::string const& port, std::string const& bucket, std::string const& value, std::vector<std::pair<std::string,std::string>> const& tags)❰
 
     auto metric = Build_Metric(bucket,value,tags);
     
@@ -19,6 +26,7 @@ class
     full_command += host;
     full_command += " ";
     full_command += port;
+    execute(full_command);
 ❱
 
 

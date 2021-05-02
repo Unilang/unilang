@@ -22,6 +22,10 @@ class Program_Options {
 		std::string Url() const;
 		std::string Branch() const;
 		std::string Run_Dir() const;
+		
+		//how to publish metrics
+		std::string Host() const;
+		std::string Port() const;
 
         
         std::string Get_Help_Message();

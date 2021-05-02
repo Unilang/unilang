@@ -10,5 +10,6 @@ hcp(
         "//code/utilities/types/strings/transformers/wrap:lib",
         "//code/utilities/web:html_fetch_settings",
         "//code/utilities/web:lib",
+        "//code/utilities/program/call:lib",
     ],
 )
