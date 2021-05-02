@@ -25,6 +25,7 @@ hcp(
         "@bazel//:build_proto_cpp",
         "@bazel//:spawn_proto_cpp",
         "@bazel//:build_event_stream_cpp",
+        "@bazel//:workspace_log_proto_cpp",
     ],
 )
 

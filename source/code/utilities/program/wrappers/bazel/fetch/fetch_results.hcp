@@ -5,6 +5,7 @@ class
 ❪"src/main/protobuf/analysis.pb.h"❫
 ❪"code/utilities/program/call/process_spawn/timed/timed_process_results"❫
 ❪"src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.pb.h"❫
+❪"src/main/java/com/google/devtools/build/lib/bazel/debug/workspace_log.pb.h"❫
 ⚯
 ⚞⚟
 
@@ -12,12 +13,29 @@ class
 public:
     
     
-    //the command used to get the cquery results
+    //the command used to get the cquery results and the results of running the command
     std::string ፠command፠;
-    
-    //results from spawning the command
     Timed_Process_Results ፠spawn_results፠;
     
-     std::vector<build_event_stream::BuildEvent> build_events;
+    //bes output file information
+    double ፠bes_deserialization_time_ms፠;
+    long ፠bes_file_size፠;
+    std::vector<build_event_stream::BuildEvent> build_events;
+    
+    //workspace log information
+    double ፠workspace_deserialization_time_ms፠;
+    long ፠workspace_file_size፠;
+    std::vector<workspace_log::WorkspaceEvent> workspace_events;
+    
+    //resolved repos information (you'll need to parse skylark)
+    double ፠resolved_repos_deserialization_time_ms፠;
+    long ፠resolved_repos_file_size፠;
+    std::string resolved_repos_bzl;
+    
+    //profile information (we could have compressed it, but didn't)
+    //this data can also be written to a file and used with bazel analyze-profile
+    double ፠profile_deserialization_time_ms፠;
+    long ፠profile_file_size፠;
+    std::string profile;
 ▶
 
