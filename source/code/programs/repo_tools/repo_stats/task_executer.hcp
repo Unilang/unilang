@@ -7,6 +7,7 @@ class
 ❪"code/utilities/program/wrappers/bazel/query/bazel_aquery_runner"❫
 ❪"code/utilities/program/wrappers/bazel/query/bazel_cquery_runner"❫
 ❪"code/utilities/program/wrappers/bazel/query/bazel_query_runner"❫
+❪"code/utilities/program/wrappers/bazel/fetch/bazel_fetch_runner"❫
 ❪"code/utilities/filesystem/paths/lib"❫
 ❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
 ❪"code/utilities/output/printers/lib"❫
@@ -23,8 +24,9 @@ class
     //Analyze the repository to learn how to build it
     auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
     
-    //auto targets = Bazel_Query_Runner::Get_All_Test_Targets(repo_context.program_to_run_build);
-    //std::cout << targets << std::endl;
+    
+    auto fetch_result = Bazel_Fetch_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
+    exit(0);
     
     auto cquery_result = Bazel_Cquery_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
     std::cout << cquery_result.cquery_result.results().size() << std::endl;

@@ -1,0 +1,14 @@
+class
+❪vector❫
+❪string❫
+⚯
+⚞⚟
+
+◀
+public:
+    
+    std::string build_event_binary_file;
+    std::string workspace_rules_log_file;
+    std::string repository_resolved_file;
+    std::string profile_file;
+▶

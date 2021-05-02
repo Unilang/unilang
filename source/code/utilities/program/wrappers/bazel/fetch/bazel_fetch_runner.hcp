@@ -1,0 +1,74 @@
+class
+❪vector❫
+❪string❫
+❪iostream❫
+❪sstream❫
+❪iomanip❫
+❪unordered_map❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/strings/observers/other/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/utilities/program/call/lib"❫
+❪"code/utilities/random/files/random_files"❫
+❪"code/utilities/random/lib"❫
+❪"code/utilities/formats/serialization/protobuf"❫
+❪"code/utilities/program/wrappers/bazel/run_environment"❫
+❪"code/utilities/program/inputs/flags/data/flags"❫
+❪"code/utilities/program/inputs/flags/flag_util"❫
+❪"code/utilities/program/wrappers/bazel/query/query_deps_flags"❫
+❪"code/utilities/program/wrappers/bazel/query/data/cquery_results"❫
+❪"code/utilities/program/wrappers/bazel/fetch/bazel_fetch_output_files"❫
+❪"code/utilities/program/wrappers/bazel/fetch/fetch_results"❫
+⚯
+❪"code/utilities/program/call/process_spawn/timed/timed_process_spawner"❫
+❪"code/utilities/time/profile/function_profiler"❫
+⚞⚟
+
+
+◀public: static▶ Fetch_Results ☀Run(std::string const& bazel_wrapper, std::string const& dep_name)❰
+    
+    
+    //build command
+    Fetch_Results x;
+    Bazel_Fetch_Output_Files output_files;
+    output_files.build_event_binary_file = Random_Files::Random_Tmp_Filename();
+    output_files.workspace_rules_log_file = Random_Files::Random_Tmp_Filename();
+    output_files.repository_resolved_file = Random_Files::Random_Tmp_Filename();
+    output_files.profile_file = Random_Files::Random_Tmp_Filename();
+    x.command = Build_Command(bazel_wrapper,output_files,dep_name);
+    
+    //run command
+    x.spawn_results = Timed_Process_Spawner::Execute_And_Get_Back_Results(x.command);
+    
+    //deserialize files into memory
+    //x.deserialization_time_ms = Profile_Function_Ms([&](){
+        //x.cquery_result = Deserialize<analysis::CqueryResult>(x.output_file);
+    //});
+    
+    return x;
+❱
+◀private: static▶ std::string ☀Build_Command(std::string const& bazel_wrapper, Bazel_Fetch_Output_Files const& output_files, std::string const& dep_name)❰
+
+    std::string command = bazel_wrapper;
+    command += " fetch ";
+    
+    //quiet
+    command += "--noshow_progress ";
+    command += "--noshow_loading_progress ";
+    command += "--noshow_task_finish ";
+    //command += "--noshow_warnings ";
+    
+    //avoid crashes
+    command += "--keep_going ";
+    
+    //output files
+    command += "--build_event_binary_file=" + output_files.build_event_binary_file + " ";
+    command += "--experimental_workspace_rules_log_file=" + output_files.workspace_rules_log_file + " ";
+    command += "--experimental_repository_resolved_file=" + output_files.repository_resolved_file + " ";
+    command += "--profile=" + output_files.profile_file + " ";
+    
+    command += "'" + dep_name + "'";
+    return command;
+❱
