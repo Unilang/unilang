@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
+
+#turn off rgb fan
 sudo openrgb --device 0 --color 000000

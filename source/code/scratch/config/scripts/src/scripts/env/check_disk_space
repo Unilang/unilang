@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+# find where disk space is being used
+sudo ncdu -x /
