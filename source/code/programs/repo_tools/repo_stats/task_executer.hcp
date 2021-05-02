@@ -29,14 +29,15 @@ class
     auto fetch_result = Bazel_Fetch_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
     
     
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_bes_deserialization_time_ms",std::to_string(fetch_result.bes_deserialization_time_ms));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_bes_file_size",std::to_string(fetch_result.bes_file_size));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_workspace_deserialization_time_ms",std::to_string(fetch_result.workspace_deserialization_time_ms));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_workspace_file_size",std::to_string(fetch_result.workspace_file_size));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_resolved_repos_deserialization_time_ms",std::to_string(fetch_result.resolved_repos_deserialization_time_ms));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_resolved_repos_file_size",std::to_string(fetch_result.resolved_repos_file_size));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_profile_deserialization_time_ms",std::to_string(fetch_result.profile_deserialization_time_ms));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),"fetch_phase_profile_file_size",std::to_string(fetch_result.profile_file_size));
+    std::string phase_prefix = "fetch_phase_";
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_deserialization_time_ms",std::to_string(fetch_result.bes_deserialization_time_ms));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_file_size",std::to_string(fetch_result.bes_file_size));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_deserialization_time_ms",std::to_string(fetch_result.workspace_deserialization_time_ms));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_file_size",std::to_string(fetch_result.workspace_file_size));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "resolved_repos_deserialization_time_ms",std::to_string(fetch_result.resolved_repos_deserialization_time_ms));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "resolved_repos_file_size",std::to_string(fetch_result.resolved_repos_file_size));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "profile_deserialization_time_ms",std::to_string(fetch_result.profile_deserialization_time_ms));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "profile_file_size",std::to_string(fetch_result.profile_file_size));
     
     
     
