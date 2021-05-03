@@ -6,6 +6,7 @@
 #include "code/utilities/random/lib.hpp"
 #include "code/utilities/random/files/random_files.hpp"
 #include "code/utilities/types/strings/observers/converting/lib.hpp"
+#include "code/utilities/program/call/process_spawn/timed/timed_process_spawner.hpp"
 
 
 std::string Download_Repo_To_Random_Name_In_Temp_Folder(std::string ssh_url)
@@ -16,7 +17,12 @@ std::string Download_Repo_To_Random_Name_In_Temp_Folder(std::string ssh_url)
 	command += " ";
 	command += dir;
 	std::cout << command << std::endl;
-	execute_quietly(command);
+	auto spawn = Timed_Process_Spawner::Execute_And_Get_Back_Results(command);
+	if (spawn.results.return_code != 0){
+		std::cerr << spawn.results.stderr << std::endl;
+		exit(-1);
+	}
+	
 	return dir;
 }
 std::string Download_Repo_To_Random_Name_In_Temp_Folder(std::string ssh_url, std::string branch)
@@ -29,7 +35,11 @@ std::string Download_Repo_To_Random_Name_In_Temp_Folder(std::string ssh_url, std
 	command += ssh_url;
 	command += " ";
 	command += dir;
-	execute_quietly(command);
+	auto spawn = Timed_Process_Spawner::Execute_And_Get_Back_Results(command);
+	if (spawn.results.return_code != 0){
+		std::cerr << spawn.results.stderr << std::endl;
+		exit(-1);
+	}
 	return dir;
 }
 

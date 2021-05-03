@@ -13,6 +13,7 @@ cc_library(
         "//code/utilities/random:lib",
         "//code/utilities/random/files:random_files",
         "//code/utilities/types/strings/observers/converting:lib",
+        "//code/utilities/program/call/process_spawn/timed:timed_process_spawner",
     ],
 )
 

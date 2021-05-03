@@ -18,6 +18,10 @@ class
 
 ◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
 
+    //https://serverfault.com/questions/447028/non-interactive-git-clone-ssh-fingerprint-prompt
+    //https://serverfault.com/questions/132970/can-i-automatically-add-a-new-host-to-known-hosts
+    std::cout << execute("ssh-keyscan -H vault.phacility.com >> ~/.ssh/known_hosts") << std::endl;
+
     //clone phase
     //We establish a repo and a context for building artifacts in it.
     //This setup tries to be agnostic to any expectations about the repo's hosting, layout, and build system.
