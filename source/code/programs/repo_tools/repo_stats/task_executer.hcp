@@ -62,6 +62,7 @@ class
     
     std::cout << "publishing fetch metrics..." << std::endl;
     std::string phase_prefix = "fetch_phase_";
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time",std::to_string(fetch_result.spawn_results.time_s.count()));
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_deserialization_time_ms",std::to_string(fetch_result.bes_deserialization_time_ms));
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_file_size",std::to_string(fetch_result.bes_file_size));
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_deserialization_time_ms",std::to_string(fetch_result.workspace_deserialization_time_ms));
