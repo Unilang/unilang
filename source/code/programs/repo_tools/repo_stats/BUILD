@@ -17,6 +17,7 @@ hcp(
         "//code/utilities/program/wrappers/bazel/query:bazel_aquery_runner",
         "//code/utilities/program/wrappers/bazel/query:bazel_cquery_runner",
         "//code/utilities/program/wrappers/bazel/query:bazel_query_runner",
+        "//code/utilities/program/wrappers/bazel/clean:bazel_clean_runner",
         "//code/utilities/web/statsd:statsd_nc_poster",
     ],
 )
@@ -29,5 +30,6 @@ distributable_cpp_main(
     deps = [
         "//code/programs/repo_tools/repo_stats:task_executer",
         "//code/programs/repo_tools/repo_stats/program_options:lib",
+        "//code/utilities/program/common_actions/main:catching_main",
     ],
 )

@@ -44,18 +44,22 @@ class
     x.spawn_results = Timed_Process_Spawner::Execute_And_Get_Back_Results(x.command);
     
     //deserialize files into memory
+    std::cout << "bes..." << std::endl;
     x.bes_deserialization_time_ms = Profile_Function_Ms([&](){
         x.build_events = Deserialize_Multiple_Protos_From_Bin_File<build_event_stream::BuildEvent>(output_files.build_event_binary_file);
         x.bes_file_size = std::filesystem::file_size(output_files.build_event_binary_file);
     });
+    std::cout << "workspace..." << std::endl;
     x.workspace_deserialization_time_ms = Profile_Function_Ms([&](){
         x.workspace_events = Deserialize_Multiple_Protos_From_Bin_File<workspace_log::WorkspaceEvent>(output_files.workspace_rules_log_file);
         x.workspace_file_size = std::filesystem::file_size(output_files.workspace_rules_log_file);
     });
+    std::cout << "resolved repo..." << std::endl;
     x.resolved_repos_deserialization_time_ms = Profile_Function_Ms([&](){
         x.resolved_repos_bzl = Read_Entire_File_Into_String(output_files.repository_resolved_file);
         x.resolved_repos_file_size = std::filesystem::file_size(output_files.repository_resolved_file);
     });
+    std::cout << "profile..." << std::endl;
     x.profile_deserialization_time_ms = Profile_Function_Ms([&](){
         x.profile = Read_Entire_File_Into_String(output_files.profile_file);
         x.profile_file_size = std::filesystem::file_size(output_files.profile_file);

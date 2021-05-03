@@ -2,12 +2,13 @@ class
 ❪iostream❫
 ❪fstream❫
 ❪"code/programs/repo_tools/repo_stats/program_options/program_options"❫
-⚯
 ❪"code/utilities/build/build_repo_establisher/build_repo_establisher"❫
+⚯
 ❪"code/utilities/program/wrappers/bazel/query/bazel_aquery_runner"❫
 ❪"code/utilities/program/wrappers/bazel/query/bazel_cquery_runner"❫
 ❪"code/utilities/program/wrappers/bazel/query/bazel_query_runner"❫
 ❪"code/utilities/program/wrappers/bazel/fetch/bazel_fetch_runner"❫
+❪"code/utilities/program/wrappers/bazel/clean/bazel_clean_runner"❫
 ❪"code/utilities/filesystem/paths/lib"❫
 ❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
 ❪"code/utilities/output/printers/lib"❫
@@ -18,9 +19,11 @@ class
 
 ◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
 
+    //make sure we can ssh clone the repo.
     //https://serverfault.com/questions/447028/non-interactive-git-clone-ssh-fingerprint-prompt
     //https://serverfault.com/questions/132970/can-i-automatically-add-a-new-host-to-known-hosts
-    std::cout << execute("ssh-keyscan -H vault.phacility.com >> ~/.ssh/known_hosts") << std::endl;
+    //std::cout << execute("ssh-keyscan -H vault.phacility.com >> ~/.ssh/known_hosts") << std::endl;
+    
 
     //clone phase
     //We establish a repo and a context for building artifacts in it.
@@ -30,49 +33,9 @@ class
     //Analyze the repository to learn how to build it
     auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
     
-    //get git stats
-    Temporarily_Move_To_Path_To_Call_Function(repo_context.repo.path,[&](){
-        
-        std::cout << "getting git stats..." << std::endl;
-        auto master_commit_count = execute("git rev-list --count master");
-        auto all_commits_count = execute("git rev-list --all --count");
-        auto number_of_branches = execute("git branch --all | wc -l");
-        
-        std::cout << "publishing git  metrics..." << std::endl;
-        std::string phase_prefix = "clone_phase_";
-        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "clone_time",std::to_string(repo_context.repo.clone_time_ms));
-        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "master_commit_count",master_commit_count);
-        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "all_commits_count",all_commits_count);
-        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "number_of_branches",number_of_branches);
-    });
+    Perform_Clone_Phase(repo_context,options);
     
-
-
-
-
-
-
-
-    std::cout << "getting fetch results..." << std::endl;
-    auto fetch_result = Bazel_Fetch_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
-    if (fetch_result.spawn_results.results.return_code != 0){
-        std::cerr << fetch_result.spawn_results.results.stdout << std::endl;
-        //exit(-1);
-    }
-    
-    std::cout << "publishing fetch metrics..." << std::endl;
-    std::string phase_prefix = "fetch_phase_";
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time",std::to_string(fetch_result.spawn_results.time_s.count()));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_deserialization_time_ms",std::to_string(fetch_result.bes_deserialization_time_ms));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_file_size",std::to_string(fetch_result.bes_file_size));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_deserialization_time_ms",std::to_string(fetch_result.workspace_deserialization_time_ms));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_file_size",std::to_string(fetch_result.workspace_file_size));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "resolved_repos_deserialization_time_ms",std::to_string(fetch_result.resolved_repos_deserialization_time_ms));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "resolved_repos_file_size",std::to_string(fetch_result.resolved_repos_file_size));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "profile_deserialization_time_ms",std::to_string(fetch_result.profile_deserialization_time_ms));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "profile_file_size",std::to_string(fetch_result.profile_file_size));
-    
-    //analyzing fetch metrics
+    Perform_Fetch_Phase(repo_context,options);
     
     
     
@@ -107,3 +70,63 @@ class
     //     std::cout << "[" << it.target().rule().name() << "]" << std::endl;
     // }
 ❱
+
+
+
+
+◀private: static▶ void ☀Perform_Clone_Phase(Build_Repo_Settings const& repo_context, Program_Options const& options) ❰
+
+    //get git stats
+    Temporarily_Move_To_Path_To_Call_Function(repo_context.repo.path,[&](){
+        
+        std::cout << "getting git stats..." << std::endl;
+        auto master_commit_count = execute("git rev-list --count master");
+        auto all_commits_count = execute("git rev-list --all --count");
+        auto number_of_branches = execute("git branch --all | wc -l");
+        auto number_of_tags = execute("git tag | wc -l");
+        auto number_of_remote_tags = execute("git ls-remote --tags | wc -l");
+        
+        //git count-objects -v --human-readable
+        
+        //git shortlog -sn --no-merges
+        
+        
+        std::cout << "publishing git  metrics..." << std::endl;
+        std::string phase_prefix = "clone_phase_";
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "clone_time",std::to_string(repo_context.repo.clone_time_ms));
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "master_commit_count",master_commit_count);
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "all_commits_count",all_commits_count);
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "number_of_branches",number_of_branches);
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "number_of_tags",number_of_tags);
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "number_of_remote_tags",number_of_remote_tags);
+    });
+    
+❱
+
+◀private: static▶ void ☀Perform_Fetch_Phase(Build_Repo_Settings const& repo_context, Program_Options const& options) ❰
+
+    //let's make sure the repo is completely empty
+    std::cout << "cleaning..." << std::endl;
+    Bazel_Clean_Runner::Clean_Everything(repo_context.program_to_run_build);
+
+
+    std::cout << "getting fetch results..." << std::endl;
+    auto fetch_result = Bazel_Fetch_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
+    if (fetch_result.spawn_results.results.return_code != 0){
+        std::cerr << fetch_result.spawn_results.results.stdout << std::endl;
+        exit(-1);
+    }
+    
+    std::cout << "publishing fetch metrics..." << std::endl;
+    std::string phase_prefix = "fetch_phase_";
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time",std::to_string(fetch_result.spawn_results.time_s.count()));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_deserialization_time_ms",std::to_string(fetch_result.bes_deserialization_time_ms));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_file_size",std::to_string(fetch_result.bes_file_size));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_deserialization_time_ms",std::to_string(fetch_result.workspace_deserialization_time_ms));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_file_size",std::to_string(fetch_result.workspace_file_size));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "resolved_repos_deserialization_time_ms",std::to_string(fetch_result.resolved_repos_deserialization_time_ms));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "resolved_repos_file_size",std::to_string(fetch_result.resolved_repos_file_size));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "profile_deserialization_time_ms",std::to_string(fetch_result.profile_deserialization_time_ms));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "profile_file_size",std::to_string(fetch_result.profile_file_size));
+❱
+
