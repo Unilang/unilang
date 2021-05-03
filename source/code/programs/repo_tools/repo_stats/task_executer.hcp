@@ -27,7 +27,8 @@ class
     auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
     
     //get git stats
-    {
+    Temporarily_Move_To_Path_To_Call_Function(repo_context.repo.path,[&](){
+        
         std::cout << "getting git stats..." << std::endl;
         auto master_commit_count = execute("git rev-list --count master");
         auto all_commits_count = execute("git rev-list --all --count");
@@ -35,10 +36,11 @@ class
         
         std::cout << "publishing git  metrics..." << std::endl;
         std::string phase_prefix = "clone_phase_";
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "clone_time",std::to_string(repo_context.repo.clone_time_ms));
         Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "master_commit_count",master_commit_count);
         Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "all_commits_count",all_commits_count);
         Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "number_of_branches",number_of_branches);
-    }
+    });
     
 
 
@@ -50,8 +52,8 @@ class
     std::cout << "getting fetch results..." << std::endl;
     auto fetch_result = Bazel_Fetch_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
     if (fetch_result.spawn_results.results.return_code != 0){
-        std::cerr << fetch_result.spawn_results.results.stderr << std::endl;
-        exit(-1);
+        std::cerr << fetch_result.spawn_results.results.stdout << std::endl;
+        //exit(-1);
     }
     
     std::cout << "publishing fetch metrics..." << std::endl;
