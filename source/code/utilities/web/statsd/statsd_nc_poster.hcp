@@ -14,6 +14,15 @@ class
     Post_Gauge(host,port,bucket,value,tags);
 ❱
 
+◀public: static▶ void ☀Post_Gauge(std::string const& host, std::string const& port, std::string const& bucket, std::map<std::string,int> values)❰
+
+    for (auto const& it: values){
+        std::vector<std::pair<std::string,std::string>> tags;
+        tags.emplace_back("event_type",it.first);
+        Post_Gauge(host,port,bucket,std::to_string(it.second),tags);
+    }
+❱
+
 ◀public: static▶ void ☀Post_Gauge(std::string const& host, std::string const& port, std::string const& bucket, std::string const& value, std::vector<std::pair<std::string,std::string>> const& tags)❰
 
     auto metric = Build_Metric(bucket,value,tags);

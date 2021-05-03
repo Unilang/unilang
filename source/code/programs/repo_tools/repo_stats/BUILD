@@ -19,6 +19,7 @@ hcp(
         "//code/utilities/program/wrappers/bazel/query:bazel_query_runner",
         "//code/utilities/program/wrappers/bazel/clean:bazel_clean_runner",
         "//code/utilities/web/statsd:statsd_nc_poster",
+        "//code/utilities/data_structures/counters/unique_counter:unique_counter",
     ],
 )
 
