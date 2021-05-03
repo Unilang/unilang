@@ -112,10 +112,10 @@ class
 
     std::cout << "getting fetch results..." << std::endl;
     auto fetch_result = Bazel_Fetch_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
-    if (fetch_result.spawn_results.results.return_code != 0){
-        std::cerr << fetch_result.spawn_results.results.stdout << std::endl;
-        exit(-1);
-    }
+    // if (fetch_result.spawn_results.results.return_code != 0){
+    //     std::cerr << fetch_result.spawn_results.results.stdout << std::endl;
+    //     exit(-1);
+    // }
     
     std::cout << "publishing fetch metrics..." << std::endl;
     std::string phase_prefix = "fetch_phase_";
@@ -128,5 +128,82 @@ class
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "resolved_repos_file_size",std::to_string(fetch_result.resolved_repos_file_size));
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "profile_deserialization_time_ms",std::to_string(fetch_result.profile_deserialization_time_ms));
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "profile_file_size",std::to_string(fetch_result.profile_file_size));
+    
+    
+    //analyze bes
+    auto bes_events_count = fetch_result.build_events.size();
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_events_count",std::to_string(bes_events_count));
+    
+    for (auto const& it: fetch_result.build_events){
+        switch (it.payload_case()){
+            case build_event_stream::BuildEvent::PayloadCase::kProgress:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kAborted:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kStarted:
+            break;
+            case build_event_stream::BuildEvent::PayloadCase::kUnstructuredCommandLine:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kStructuredCommandLine:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kOptionsParsed:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kWorkspaceStatus:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kFetch:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kConfiguration:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kExpanded:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kConfigured:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kAction:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kNamedSetOfFiles:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kCompleted:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kTestResult:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kTestSummary:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kFinished:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kBuildToolLogs:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kBuildMetrics:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kWorkspaceInfo:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::kBuildMetadata:
+            break;
+            
+            case build_event_stream::BuildEvent::PayloadCase::PAYLOAD_NOT_SET:
+            break;
+            
+        }
+    }
+    
+    
 ❱
 

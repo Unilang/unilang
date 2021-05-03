@@ -65,8 +65,6 @@ class
         x.profile_file_size = std::filesystem::file_size(output_files.profile_file);
     });
     
-    
-    
     return x;
 ❱
 ◀private: static▶ std::string ☀Build_Command(std::string const& bazel_wrapper, Bazel_Fetch_Output_Files const& output_files, std::string const& dep_name)❰
