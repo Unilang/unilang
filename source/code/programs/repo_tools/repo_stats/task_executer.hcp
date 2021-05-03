@@ -38,7 +38,7 @@ class
     
     Perform_Fetch_Phase(repo_context,options);
     
-    
+    Perform_Query_Phase(repo_context,options);
     
     
     
@@ -234,3 +234,5 @@ class
     
 ❱
 
+◀private: static▶ void ☀Perform_Query_Phase(Build_Repo_Settings const& repo_context, Program_Options const& options) ❰
+❱
