@@ -18,6 +18,7 @@ class
 
 ◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
 
+    //clone phase
     //We establish a repo and a context for building artifacts in it.
     //This setup tries to be agnostic to any expectations about the repo's hosting, layout, and build system.
     //It tries to derive things like:
@@ -25,10 +26,35 @@ class
     //Analyze the repository to learn how to build it
     auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
     
+    //get git stats
+    {
+        std::cout << "getting git stats..." << std::endl;
+        auto master_commit_count = execute("git rev-list --count master");
+        auto all_commits_count = execute("git rev-list --all --count");
+        auto number_of_branches = execute("git branch --all | wc -l");
+        
+        std::cout << "publishing git  metrics..." << std::endl;
+        std::string phase_prefix = "clone_phase_";
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "master_commit_count",master_commit_count);
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "all_commits_count",all_commits_count);
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "number_of_branches",number_of_branches);
+    }
     
+
+
+
+
+
+
+
+    std::cout << "getting fetch results..." << std::endl;
     auto fetch_result = Bazel_Fetch_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
+    if (fetch_result.spawn_results.results.return_code != 0){
+        std::cerr << fetch_result.spawn_results.results.stderr << std::endl;
+        exit(-1);
+    }
     
-    
+    std::cout << "publishing fetch metrics..." << std::endl;
     std::string phase_prefix = "fetch_phase_";
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_deserialization_time_ms",std::to_string(fetch_result.bes_deserialization_time_ms));
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_file_size",std::to_string(fetch_result.bes_file_size));
