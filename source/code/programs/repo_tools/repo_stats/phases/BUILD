@@ -40,5 +40,6 @@ hcp(
         "//code/utilities/web/statsd:statsd_nc_poster",
         "//code/utilities/data_structures/counters/unique_counter:unique_counter",
         "//code/utilities/types/strings/observers/counters:lib",
+        "//code/utilities/program/wrappers/bazel/fetch:fetch_results",
     ],
 )

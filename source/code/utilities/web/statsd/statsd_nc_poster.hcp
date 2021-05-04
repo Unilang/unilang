@@ -8,25 +8,54 @@ class
 ❪"code/utilities/program/call/lib"❫
 ⚞⚟
 
+
+//guage related
+◀public: static▶ void ☀Post_Gauge(std::string const& host, std::string const& port, std::string const& bucket, std::string const& tag_name, std::map<std::string,int> values)❰
+
+    for (auto const& it: values){
+        std::vector<std::pair<std::string,std::string>> tags;
+        tags.emplace_back(tag_name,it.first);
+        Post_Gauge(host,port,bucket,std::to_string(it.second),tags);
+    }
+❱
 ◀public: static▶ void ☀Post_Gauge(std::string const& host, std::string const& port, std::string const& bucket, std::string const& value)❰
 
     std::vector<std::pair<std::string,std::string>> tags;
     Post_Gauge(host,port,bucket,value,tags);
 ❱
 
-◀public: static▶ void ☀Post_Gauge(std::string const& host, std::string const& port, std::string const& bucket, std::map<std::string,int> values)❰
+◀public: static▶ void ☀Post_Gauge(std::string const& host, std::string const& port, std::string const& bucket, std::string const& value, std::vector<std::pair<std::string,std::string>> const& tags)❰
+
+    auto metric = Build_Gauge_Metric(bucket,value,tags);
+    Publish_Metric(host,port,metric);
+❱
+
+
+//counter related
+◀public: static▶ void ☀Post_Counter(std::string const& host, std::string const& port, std::string const& bucket, std::string const& tag_name, std::vector<std::string> values)❰
 
     for (auto const& it: values){
         std::vector<std::pair<std::string,std::string>> tags;
-        tags.emplace_back("event_type",it.first);
-        Post_Gauge(host,port,bucket,std::to_string(it.second),tags);
+        tags.emplace_back(tag_name,it);
+        Post_Counter(host,port,bucket,"1",tags);
     }
 ❱
+◀public: static▶ void ☀Post_Counter(std::string const& host, std::string const& port, std::string const& bucket, std::string const& value)❰
 
-◀public: static▶ void ☀Post_Gauge(std::string const& host, std::string const& port, std::string const& bucket, std::string const& value, std::vector<std::pair<std::string,std::string>> const& tags)❰
+    std::vector<std::pair<std::string,std::string>> tags;
+    Post_Counter(host,port,bucket,value,tags);
+❱
+◀public: static▶ void ☀Post_Counter(std::string const& host, std::string const& port, std::string const& bucket, std::string const& value, std::vector<std::pair<std::string,std::string>> const& tags)❰
 
-    auto metric = Build_Metric(bucket,value,tags);
-    
+    auto metric = Build_Counter_Metric(bucket,value,tags);
+    Publish_Metric(host,port,metric);
+❱
+
+
+
+
+
+◀private: static▶ void ☀Publish_Metric(std::string const& host, std::string const& port, std::string const& metric)❰
     std::string full_command;
     full_command += "echo ";
     full_command += As_Wrapped_In_Double_Quotes(metric);
@@ -40,7 +69,34 @@ class
 ❱
 
 
-◀private: static▶ std::string ☀Build_Metric(std::string const& bucket, std::string const& value, std::vector<std::pair<std::string,std::string>> const& tags)❰
+
+
+◀private: static▶ std::string ☀Build_Gauge_Metric(std::string const& bucket, std::string const& value, std::vector<std::pair<std::string,std::string>> const& tags)❰
+
+    std::string metric;
+    metric += bucket;
+    metric += ":";
+    metric += value;
+    metric += "|";
+    metric += "g";
+    if (!tags.empty()){
+        metric += "|";
+        for (auto const& tag: tags){
+            metric += "#";
+            metric += tag.first;
+            metric += ":";
+            metric += tag.second;
+            metric += ",";
+        }
+        
+        //remove last comma
+        metric.pop_back();
+    }
+    
+    return metric;
+❱
+
+◀private: static▶ std::string ☀Build_Counter_Metric(std::string const& bucket, std::string const& value, std::vector<std::pair<std::string,std::string>> const& tags)❰
 
     std::string metric;
     metric += bucket;

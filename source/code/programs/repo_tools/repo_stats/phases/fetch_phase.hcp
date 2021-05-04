@@ -3,6 +3,7 @@ class
 ❪fstream❫
 ❪"code/programs/repo_tools/repo_stats/program_options/program_options"❫
 ❪"code/utilities/build/build_repo_establisher/build_repo_establisher"❫
+❪"code/utilities/program/wrappers/bazel/fetch/fetch_results"❫
 ⚯
 ❪"code/utilities/program/wrappers/bazel/query/bazel_aquery_runner"❫
 ❪"code/utilities/program/wrappers/bazel/query/bazel_cquery_runner"❫
@@ -39,7 +40,10 @@ class
     std::string phase_prefix = "fetch_phase_";
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_return_code",std::to_string(fetch_result.spawn_results.results.return_code));
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_stdout_line_count",std::to_string(Count_Newlines(fetch_result.spawn_results.results.stdout)));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_stderr_line_count",std::to_string(Count_Newlines(fetch_result.spawn_results.results.stdout)));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_stderr_line_count",std::to_string(Count_Newlines(fetch_result.spawn_results.results.stderr)));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_stdout_line_size",std::to_string(fetch_result.spawn_results.results.stdout.size()));
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_stderr_line_size",std::to_string(fetch_result.spawn_results.results.stderr.size()));
+    std::cout << fetch_result.spawn_results.results.stderr << std::endl;
     
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time",std::to_string(fetch_result.spawn_results.time_s.count()));
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_deserialization_time_ms",std::to_string(fetch_result.bes_deserialization_time_ms));
@@ -52,6 +56,65 @@ class
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "profile_file_size",std::to_string(fetch_result.profile_file_size));
     
     
+    Analyze_Bes_Counts(options,fetch_result,phase_prefix);
+    Analyze_Workspace_Counts(options,fetch_result,phase_prefix);
+    
+    
+    
+    //analyze each event specifically
+    for (auto const& it: fetch_result.workspace_events){
+        switch (it.event_case()){
+            case workspace_log::WorkspaceEvent::kDeleteEvent:
+                auto delete_event = it.delete_event();
+                std::cout << "delete event path: " << delete_event.path() << std::endl;
+            break;
+        }
+    }
+    
+    
+    Analyze_Download_And_Extract_Event(options,fetch_result,phase_prefix);
+    Analyze_Download_Event(options,fetch_result,phase_prefix);
+    
+    
+    
+    
+
+❱
+
+◀private: static▶ void ☀Analyze_Download_And_Extract_Event(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+    std::vector<std::string> urls;
+    for (auto const& it: fetch_result.workspace_events){
+        switch (it.event_case()){
+            case workspace_log::WorkspaceEvent::kDownloadAndExtractEvent:
+                auto event = it.download_and_extract_event();
+                for (auto url: event.url()){
+                    urls.emplace_back(url);
+                }
+            break;
+        }
+    }
+    Statsd_Nc_Poster::Post_Counter(options.Host(),options.Port(),phase_prefix + "download_and_extract_url","url",urls);
+❱
+
+◀private: static▶ void ☀Analyze_Download_Event(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+    std::vector<std::string> urls;
+    for (auto const& it: fetch_result.workspace_events){
+        switch (it.event_case()){
+            case workspace_log::WorkspaceEvent::kDownloadEvent:
+                auto event = it.download_event();
+                for (auto url: event.url()){
+                    urls.emplace_back(url);
+                }
+            break;
+        }
+    }
+    Statsd_Nc_Poster::Post_Counter(options.Host(),options.Port(),phase_prefix + "download_url","url",urls);
+❱
+
+
+
+◀private: static▶ void ☀Analyze_Bes_Counts(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+
     //analyze bes
     auto bes_events_count = fetch_result.build_events.size();
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_events_count",std::to_string(bes_events_count));
@@ -81,6 +144,7 @@ class
     bes_event_counts.Add_Empty("Unset");
     
     
+    //https://github.com/bazelbuild/bazel/blob/master/src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.proto
     for (auto const& it: fetch_result.build_events){
         switch (it.payload_case()){
             case build_event_stream::BuildEvent::PayloadCase::kProgress:
@@ -173,11 +237,13 @@ class
             
         }
     }
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_event_count",bes_event_counts.hash_table);
-    
-    
-    
-    
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_event_count","event_type",bes_event_counts.hash_table);
+❱
+
+
+
+◀private: static▶ void ☀Analyze_Workspace_Counts(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+
     //analyze workspace
     auto workspace_events_count = fetch_result.workspace_events.size();
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_events_count",std::to_string(workspace_events_count));
@@ -198,6 +264,7 @@ class
     ws_event_counts.Add_Empty("PatchEvent");
     ws_event_counts.Add_Empty("Unset");
     
+    //https://github.com/bazelbuild/bazel/blob/master/src/main/java/com/google/devtools/build/lib/bazel/debug/workspace_log.proto
     for (auto const& it: fetch_result.workspace_events){
         switch (it.event_case()){
             
@@ -243,6 +310,5 @@ class
         }
     }
     
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_event_count",ws_event_counts.hash_table);
-    
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_event_count","event_type",ws_event_counts.hash_table);
 ❱
