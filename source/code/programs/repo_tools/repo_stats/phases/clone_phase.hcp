@@ -15,6 +15,8 @@ class
 ❪"code/utilities/formats/json/converters/type_to_json_string"❫
 ❪"code/utilities/web/statsd/statsd_nc_poster"❫
 ❪"code/utilities/data_structures/counters/unique_counter/unique_counter"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
+❪"code/utilities/types/strings/transformers/trimming/lib"❫
 ⚞⚟
 
 
@@ -24,6 +26,9 @@ class
     //get git stats
     Temporarily_Move_To_Path_To_Call_Function(repo_context.repo.path,[&](){
         
+        std::cout << "publishing git  metrics..." << std::endl;
+        std::string phase_prefix = "clone_phase_";
+        
         std::cout << "getting git stats..." << std::endl;
         auto master_commit_count = execute("git rev-list --count master");
         auto all_commits_count = execute("git rev-list --all --count");
@@ -31,13 +36,23 @@ class
         auto number_of_tags = execute("git tag | wc -l");
         auto number_of_remote_tags = execute("git ls-remote --tags | wc -l");
         
-        //git count-objects -v --human-readable
+        auto count_objects_str = execute("git count-objects -v");
+        auto labels = Split_Into_Parts_From_Newline(count_objects_str);
+        for (auto const& it: labels){
+            auto split = Split_Into_Parts_From_Colon(it);
+            if (split.size() >= 2){
+                auto key = trim(split[0]);
+                auto val = trim(split[1]);
+                Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "count_objects",val,"key",key);
+            }
+        }
         
-        //git shortlog -sn --no-merges
+        
+        auto contributers_str = execute("git --no-pager shortlog -sn --no-merges");
+        auto contributer_lines = Split_Into_Parts_From_Newline(contributers_str);
+        //TODO
         
         
-        std::cout << "publishing git  metrics..." << std::endl;
-        std::string phase_prefix = "clone_phase_";
         Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "clone_time",std::to_string(repo_context.repo.clone_time_ms));
         Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "master_commit_count",master_commit_count);
         Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "all_commits_count",all_commits_count);

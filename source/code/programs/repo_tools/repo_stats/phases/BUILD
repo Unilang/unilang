@@ -20,6 +20,8 @@ hcp(
         "//code/utilities/program/wrappers/bazel/clean:bazel_clean_runner",
         "//code/utilities/web/statsd:statsd_nc_poster",
         "//code/utilities/data_structures/counters/unique_counter:unique_counter",
+        "//code/utilities/types/strings/observers/splitting:lib",
+        "//code/utilities/types/strings/transformers/trimming:lib",
     ],
 )
 
@@ -41,5 +43,7 @@ hcp(
         "//code/utilities/data_structures/counters/unique_counter:unique_counter",
         "//code/utilities/types/strings/observers/counters:lib",
         "//code/utilities/program/wrappers/bazel/fetch:fetch_results",
+        "//code/utilities/types/strings/transformers/removing:lib",
+        "//code/utilities/types/strings/observers/path:lib",
     ],
 )

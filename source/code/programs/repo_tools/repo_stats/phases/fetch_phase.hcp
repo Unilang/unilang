@@ -17,6 +17,8 @@ class
 ❪"code/utilities/web/statsd/statsd_nc_poster"❫
 ❪"code/utilities/data_structures/counters/unique_counter/unique_counter"❫
 ❪"code/utilities/types/strings/observers/counters/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/utilities/types/strings/observers/path/lib"❫
 ⚞⚟
 
 
@@ -76,7 +78,7 @@ class
     Analyze_Download_And_Extract_Event(options,fetch_result,phase_prefix);
     Analyze_Download_Event(options,fetch_result,phase_prefix);
     Analyze_Execute_Event(options,fetch_result,phase_prefix);
-    
+    Analyze_Which_Event(options,fetch_result,phase_prefix);
     
     
 
@@ -119,12 +121,52 @@ class
                 auto event = it.execute_event();
                 auto arguments = event.arguments();
                 if (!arguments.empty()){
-                    programs.Add(arguments[0]);
+                    auto adjusted_program = Transform_Program_Path_As_Needed(arguments[0]);
+                    programs.Add(adjusted_program);
                 }
             break;
         }
     }
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "executed_program","program",programs.hash_table);
+❱
+
+◀private: static▶ std::string ☀Transform_Program_Path_As_Needed(std::string program_path)❰
+    
+    if (Begins_With(program_path,"/tmp/")){
+        std::string modified_tmp_path;
+        modified_tmp_path += "/tmp/.../";
+        modified_tmp_path += Get_File_Name(program_path);
+        return modified_tmp_path;
+        
+    }
+    
+    if (Begins_With(program_path,"/var/lib/") && Contains_Substring(program_path,"external/")){
+        return Remove_Everything_Before_Found_Instance(program_path,"external/");
+    }
+    
+    return program_path;
+❱
+
+
+
+
+
+
+
+
+◀private: static▶ void ☀Analyze_Which_Event(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+
+    Unique_Counter<std::string> programs;
+    for (auto const& it: fetch_result.workspace_events){
+        switch (it.event_case()){
+            case workspace_log::WorkspaceEvent::kWhichEvent:
+                auto event = it.which_event();
+                auto program = event.program();
+                programs.Add(program);
+            break;
+        }
+    }
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "which_program","program",programs.hash_table);
 ❱
 
 
