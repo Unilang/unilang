@@ -1,0 +1,49 @@
+class
+❪iostream❫
+❪fstream❫
+❪"code/programs/repo_tools/repo_stats/program_options/program_options"❫
+❪"code/utilities/build/build_repo_establisher/build_repo_establisher"❫
+⚯
+❪"code/utilities/program/wrappers/bazel/query/bazel_aquery_runner"❫
+❪"code/utilities/program/wrappers/bazel/query/bazel_cquery_runner"❫
+❪"code/utilities/program/wrappers/bazel/query/bazel_query_runner"❫
+❪"code/utilities/program/wrappers/bazel/fetch/bazel_fetch_runner"❫
+❪"code/utilities/program/wrappers/bazel/clean/bazel_clean_runner"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/formats/json/converters/type_to_json_string"❫
+❪"code/utilities/web/statsd/statsd_nc_poster"❫
+❪"code/utilities/data_structures/counters/unique_counter/unique_counter"❫
+⚞⚟
+
+
+
+◀public: static▶ void ☀Perform(Build_Repo_Settings const& repo_context, Program_Options const& options) ❰
+
+    //get git stats
+    Temporarily_Move_To_Path_To_Call_Function(repo_context.repo.path,[&](){
+        
+        std::cout << "getting git stats..." << std::endl;
+        auto master_commit_count = execute("git rev-list --count master");
+        auto all_commits_count = execute("git rev-list --all --count");
+        auto number_of_branches = execute("git branch --all | wc -l");
+        auto number_of_tags = execute("git tag | wc -l");
+        auto number_of_remote_tags = execute("git ls-remote --tags | wc -l");
+        
+        //git count-objects -v --human-readable
+        
+        //git shortlog -sn --no-merges
+        
+        
+        std::cout << "publishing git  metrics..." << std::endl;
+        std::string phase_prefix = "clone_phase_";
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "clone_time",std::to_string(repo_context.repo.clone_time_ms));
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "master_commit_count",master_commit_count);
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "all_commits_count",all_commits_count);
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "number_of_branches",number_of_branches);
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "number_of_tags",number_of_tags);
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "number_of_remote_tags",number_of_remote_tags);
+    });
+    
+❱

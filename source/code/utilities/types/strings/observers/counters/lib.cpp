@@ -33,6 +33,10 @@ unsigned int Count_Instances_Of_Character(std::string const& s, char const& c) {
     return count;
 }
 
+unsigned int Count_Newlines(std::string const& s){
+    return Count_Instances_Of_Character(s,'\n');
+}
+
 
 unsigned int Count_Instances_Of_Character(std::vector<std::string> const& vec, char const& c){
     unsigned int total = 0;
