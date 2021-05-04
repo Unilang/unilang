@@ -64,7 +64,7 @@ class
     full_command += host;
     full_command += " ";
     full_command += port;
-    std::cout << full_command << std::endl;
+    //std::cout << full_command << std::endl;
     execute(full_command);
 ❱
 

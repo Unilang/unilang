@@ -81,6 +81,9 @@ class
     //avoid crashes
     command += "--keep_going ";
     
+    command += "--http_timeout_scaling=4 ",
+    command += "--experimental_scale_timeouts=4 ",
+    
     //output files
     command += "--build_event_binary_file=" + output_files.build_event_binary_file + " ";
     command += "--experimental_workspace_rules_log_file=" + output_files.workspace_rules_log_file + " ";

@@ -43,7 +43,8 @@ class
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_stderr_line_count",std::to_string(Count_Newlines(fetch_result.spawn_results.results.stderr)));
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_stdout_line_size",std::to_string(fetch_result.spawn_results.results.stdout.size()));
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_stderr_line_size",std::to_string(fetch_result.spawn_results.results.stderr.size()));
-    std::cout << fetch_result.spawn_results.results.stderr << std::endl;
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_stderr_errors",std::to_string(countSubstring(fetch_result.spawn_results.results.stderr,"ERROR:")));
+    
     
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time",std::to_string(fetch_result.spawn_results.time_s.count()));
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_deserialization_time_ms",std::to_string(fetch_result.bes_deserialization_time_ms));
@@ -74,7 +75,7 @@ class
     
     Analyze_Download_And_Extract_Event(options,fetch_result,phase_prefix);
     Analyze_Download_Event(options,fetch_result,phase_prefix);
-    
+    Analyze_Execute_Event(options,fetch_result,phase_prefix);
     
     
     
@@ -109,6 +110,21 @@ class
         }
     }
     Statsd_Nc_Poster::Post_Counter(options.Host(),options.Port(),phase_prefix + "download_url","url",urls);
+❱
+◀private: static▶ void ☀Analyze_Execute_Event(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+    Unique_Counter<std::string> programs;
+    for (auto const& it: fetch_result.workspace_events){
+        switch (it.event_case()){
+            case workspace_log::WorkspaceEvent::kExecuteEvent:
+                auto event = it.execute_event();
+                auto arguments = event.arguments();
+                if (!arguments.empty()){
+                    programs.Add(arguments[0]);
+                }
+            break;
+        }
+    }
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "executed_program","program",programs.hash_table);
 ❱
 
 

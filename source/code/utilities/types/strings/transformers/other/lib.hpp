@@ -30,6 +30,8 @@ std::string& Move_First_Word_Of_String_To_The_End(std::string & str);
 
 
 
+
+
 //other
     std::string& Add_File_Extension(std::string &s, std::string const& extension);
     std::string As_Added_File_Extension(std::string s, std::string const& extension);
