@@ -106,13 +106,23 @@ class
             case workspace_log::WorkspaceEvent::kDownloadEvent:
                 auto event = it.download_event();
                 for (auto url: event.url()){
-                    urls.emplace_back(url);
+                    urls.emplace_back(Transform_Url_As_Needed(url));
                 }
             break;
         }
     }
     Statsd_Nc_Poster::Post_Counter(options.Host(),options.Port(),phase_prefix + "download_url","url",urls);
 ❱
+
+◀private: static▶ std::string ☀Transform_Url_As_Needed(std::string url)❰
+    
+    if (Begins_With(url,"file:/var/lib/") && Contains_Substring(url,"external/")){
+        return Remove_Everything_Before_Found_Instance(url,"external/");
+    }
+    
+    return url;
+❱
+
 ◀private: static▶ void ☀Analyze_Execute_Event(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
     Unique_Counter<std::string> programs;
     for (auto const& it: fetch_result.workspace_events){
