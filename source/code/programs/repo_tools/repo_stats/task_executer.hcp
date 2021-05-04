@@ -135,102 +135,194 @@ class
     auto bes_events_count = fetch_result.build_events.size();
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_events_count",std::to_string(bes_events_count));
     
-    Unique_Counter<std::string> event_counts;
+    Unique_Counter<std::string> bes_event_counts;
+    bes_event_counts.Add_Empty("Progress");
+    bes_event_counts.Add_Empty("Aborted");
+    bes_event_counts.Add_Empty("Started");
+    bes_event_counts.Add_Empty("UnstructuredCommandLine");
+    bes_event_counts.Add_Empty("StructuredCommandLine");
+    bes_event_counts.Add_Empty("OptionsParsed");
+    bes_event_counts.Add_Empty("WorkspaceStatus");
+    bes_event_counts.Add_Empty("Fetch");
+    bes_event_counts.Add_Empty("Configuration");
+    bes_event_counts.Add_Empty("Expanded");
+    bes_event_counts.Add_Empty("Configured");
+    bes_event_counts.Add_Empty("Action");
+    bes_event_counts.Add_Empty("NamedSetOfFiles");
+    bes_event_counts.Add_Empty("Completed");
+    bes_event_counts.Add_Empty("TestResult");
+    bes_event_counts.Add_Empty("TestSummary");
+    bes_event_counts.Add_Empty("Finished");
+    bes_event_counts.Add_Empty("BuildToolLogs");
+    bes_event_counts.Add_Empty("BuildMetrics");
+    bes_event_counts.Add_Empty("WorkspaceInfo");
+    bes_event_counts.Add_Empty("BuildMetadata");
+    bes_event_counts.Add_Empty("Unset");
+    
+    
     for (auto const& it: fetch_result.build_events){
         switch (it.payload_case()){
             case build_event_stream::BuildEvent::PayloadCase::kProgress:
-            event_counts.Add("Progress");
+            bes_event_counts.Add("Progress");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kAborted:
-            event_counts.Add("Aborted");
+            bes_event_counts.Add("Aborted");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kStarted:
-            event_counts.Add("Started");
+            bes_event_counts.Add("Started");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kUnstructuredCommandLine:
-            event_counts.Add("UnstructuredCommandLine");
+            bes_event_counts.Add("UnstructuredCommandLine");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kStructuredCommandLine:
-            event_counts.Add("StructuredCommandLine");
+            bes_event_counts.Add("StructuredCommandLine");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kOptionsParsed:
-            event_counts.Add("OptionsParsed");
+            bes_event_counts.Add("OptionsParsed");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kWorkspaceStatus:
-            event_counts.Add("WorkspaceStatus");
+            bes_event_counts.Add("WorkspaceStatus");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kFetch:
-            event_counts.Add("Fetch");
+            bes_event_counts.Add("Fetch");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kConfiguration:
-            event_counts.Add("Configuration");
+            bes_event_counts.Add("Configuration");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kExpanded:
-            event_counts.Add("Expanded");
+            bes_event_counts.Add("Expanded");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kConfigured:
-            event_counts.Add("Configured");
+            bes_event_counts.Add("Configured");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kAction:
-            event_counts.Add("Action");
+            bes_event_counts.Add("Action");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kNamedSetOfFiles:
-            event_counts.Add("NamedSetOfFiles");
+            bes_event_counts.Add("NamedSetOfFiles");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kCompleted:
-            event_counts.Add("Completed");
+            bes_event_counts.Add("Completed");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kTestResult:
-            event_counts.Add("TestResult");
+            bes_event_counts.Add("TestResult");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kTestSummary:
-            event_counts.Add("TestSummary");
+            bes_event_counts.Add("TestSummary");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kFinished:
-            event_counts.Add("Finished");
+            bes_event_counts.Add("Finished");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kBuildToolLogs:
-            event_counts.Add("BuildToolLogs");
+            bes_event_counts.Add("BuildToolLogs");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kBuildMetrics:
-            event_counts.Add("BuildMetrics");
+            bes_event_counts.Add("BuildMetrics");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kWorkspaceInfo:
-            event_counts.Add("WorkspaceInfo");
+            bes_event_counts.Add("WorkspaceInfo");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::kBuildMetadata:
-            event_counts.Add("BuildMetadata");
+            bes_event_counts.Add("BuildMetadata");
             break;
             
             case build_event_stream::BuildEvent::PayloadCase::PAYLOAD_NOT_SET:
-            event_counts.Add("Unset");
+            bes_event_counts.Add("Unset");
             break;
             
         }
     }
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_event_count",bes_event_counts.hash_table);
     
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_event_count",event_counts.hash_table);
     
+    
+    
+    //analyze workspace
+    auto workspace_events_count = fetch_result.workspace_events.size();
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_events_count",std::to_string(workspace_events_count));
+    
+    Unique_Counter<std::string> ws_event_counts;
+    
+    ws_event_counts.Add_Empty("ExecuteEvent");
+    ws_event_counts.Add_Empty("DownloadEvent");
+    ws_event_counts.Add_Empty("DownloadAndExtractEvent");
+    ws_event_counts.Add_Empty("FileEvent");
+    ws_event_counts.Add_Empty("OsEvent");
+    ws_event_counts.Add_Empty("SymlinkEvent");
+    ws_event_counts.Add_Empty("TemplateEvent");
+    ws_event_counts.Add_Empty("WhichEvent");
+    ws_event_counts.Add_Empty("ExtractEvent");
+    ws_event_counts.Add_Empty("ReadEvent");
+    ws_event_counts.Add_Empty("DeleteEvent");
+    ws_event_counts.Add_Empty("PatchEvent");
+    ws_event_counts.Add_Empty("Unset");
+    
+    for (auto const& it: fetch_result.workspace_events){
+        switch (it.event_case()){
+            
+            case workspace_log::WorkspaceEvent::kExecuteEvent:
+            ws_event_counts.Add("ExecuteEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kDownloadEvent:
+            ws_event_counts.Add("DownloadEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kDownloadAndExtractEvent:
+            ws_event_counts.Add("DownloadAndExtractEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kFileEvent:
+            ws_event_counts.Add("FileEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kOsEvent:
+            ws_event_counts.Add("OsEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kSymlinkEvent:
+            ws_event_counts.Add("SymlinkEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kTemplateEvent:
+            ws_event_counts.Add("TemplateEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kWhichEvent:
+            ws_event_counts.Add("WhichEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kExtractEvent:
+            ws_event_counts.Add("ExtractEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kReadEvent:
+            ws_event_counts.Add("ReadEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kDeleteEvent:
+            ws_event_counts.Add("DeleteEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kPatchEvent:
+            ws_event_counts.Add("PatchEvent");
+            break;
+            case workspace_log::WorkspaceEvent::EVENT_NOT_SET:
+            ws_event_counts.Add("Unset");
+            break;
+        }
+    }
+    
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_event_count",ws_event_counts.hash_table);
     
 ❱
 

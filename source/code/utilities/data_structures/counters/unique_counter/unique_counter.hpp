@@ -25,6 +25,10 @@ class Unique_Counter{
     }
   }
   
+  void Add_Empty(T const& t){
+    hash_table.emplace(t,0);
+  }
+  
   size_t Number_Of_Unique_Entries() const{
     return hash_table.size();
   }
