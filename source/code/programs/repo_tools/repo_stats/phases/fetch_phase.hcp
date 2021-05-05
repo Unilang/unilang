@@ -162,6 +162,10 @@ class
     
     int bad_urls = 0;
     int good_urls = 0;
+    // for (auto const& it: urls){
+    //     if (){
+    //     }
+    // }
     //TODO
 
 ❱
