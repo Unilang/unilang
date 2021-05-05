@@ -9,3 +9,9 @@ hcp(
     deps = [
     ],
 )
+
+hcp(
+    name = "workspace_metrics",
+    deps = [
+    ],
+)

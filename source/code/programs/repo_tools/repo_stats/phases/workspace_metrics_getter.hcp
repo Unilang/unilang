@@ -1,0 +1,260 @@
+class
+❪iostream❫
+❪fstream❫
+❪"code/programs/repo_tools/repo_stats/program_options/program_options"❫
+❪"code/utilities/build/build_repo_establisher/build_repo_establisher"❫
+❪"code/utilities/program/wrappers/bazel/fetch/fetch_results"❫
+❪"code/utilities/data_structures/endpoint/endpoint"❫
+❪"code/programs/repo_tools/repo_stats/phases/data/bes_metrics"❫
+❪"code/programs/repo_tools/repo_stats/phases/data/workspace_metrics"❫
+⚯
+❪"code/utilities/program/wrappers/bazel/query/bazel_aquery_runner"❫
+❪"code/utilities/program/wrappers/bazel/query/bazel_cquery_runner"❫
+❪"code/utilities/program/wrappers/bazel/query/bazel_query_runner"❫
+❪"code/utilities/program/wrappers/bazel/fetch/bazel_fetch_runner"❫
+❪"code/utilities/program/wrappers/bazel/clean/bazel_clean_runner"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/formats/json/converters/type_to_json_string"❫
+❪"code/utilities/web/statsd/statsd_nc_poster"❫
+❪"code/utilities/data_structures/counters/unique_counter/unique_counter"❫
+❪"code/utilities/types/strings/observers/counters/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/utilities/types/strings/observers/path/lib"❫
+❪"code/utilities/metrics/metrics_publisher"❫
+⚞⚟
+
+
+
+◀public: static▶ Workspace_Metrics ☀Get(std::vector<workspace_log::WorkspaceEvent> const& workspace_events) ❰
+
+    Workspace_Metrics x;
+    Analyze_Workspace_Counts(x,workspace_events);
+    
+    // //analyze each event specifically
+    // for (auto const& it: workspace_events){
+    //     switch (it.event_case()){
+    //         case workspace_log::WorkspaceEvent::kDeleteEvent:
+    //             auto delete_event = it.delete_event();
+    //             std::cout << "delete event path: " << delete_event.path() << std::endl;
+    //         break;
+    //     }
+    // }
+    
+    
+    Analyze_Download_And_Extract_Event(x,workspace_events);
+    Analyze_Download_Event(x,workspace_events);
+    Count_Good_And_Bad_Urls(x,workspace_events);
+    
+    Analyze_Execute_Event(x,workspace_events);
+    Analyze_Which_Event(x,workspace_events);
+    
+    return x;
+❱
+
+
+
+◀private: static▶ void ☀Analyze_Workspace_Counts(Workspace_Metrics & x, std::vector<workspace_log::WorkspaceEvent> const& workspace_events) ❰
+
+    //analyze workspace
+    x.total = workspace_events.size();
+    
+    Unique_Counter<std::string> ws_event_counts;
+    
+    ws_event_counts.Add_Empty("ExecuteEvent");
+    ws_event_counts.Add_Empty("DownloadEvent");
+    ws_event_counts.Add_Empty("DownloadAndExtractEvent");
+    ws_event_counts.Add_Empty("FileEvent");
+    ws_event_counts.Add_Empty("OsEvent");
+    ws_event_counts.Add_Empty("SymlinkEvent");
+    ws_event_counts.Add_Empty("TemplateEvent");
+    ws_event_counts.Add_Empty("WhichEvent");
+    ws_event_counts.Add_Empty("ExtractEvent");
+    ws_event_counts.Add_Empty("ReadEvent");
+    ws_event_counts.Add_Empty("DeleteEvent");
+    ws_event_counts.Add_Empty("PatchEvent");
+    ws_event_counts.Add_Empty("Unset");
+    
+    //https://github.com/bazelbuild/bazel/blob/master/src/main/java/com/google/devtools/build/lib/bazel/debug/workspace_log.proto
+    for (auto const& it: workspace_events){
+        switch (it.event_case()){
+            
+            case workspace_log::WorkspaceEvent::kExecuteEvent:
+            ws_event_counts.Add("ExecuteEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kDownloadEvent:
+            ws_event_counts.Add("DownloadEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kDownloadAndExtractEvent:
+            ws_event_counts.Add("DownloadAndExtractEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kFileEvent:
+            ws_event_counts.Add("FileEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kOsEvent:
+            ws_event_counts.Add("OsEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kSymlinkEvent:
+            ws_event_counts.Add("SymlinkEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kTemplateEvent:
+            ws_event_counts.Add("TemplateEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kWhichEvent:
+            ws_event_counts.Add("WhichEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kExtractEvent:
+            ws_event_counts.Add("ExtractEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kReadEvent:
+            ws_event_counts.Add("ReadEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kDeleteEvent:
+            ws_event_counts.Add("DeleteEvent");
+            break;
+            case workspace_log::WorkspaceEvent::kPatchEvent:
+            ws_event_counts.Add("PatchEvent");
+            break;
+            case workspace_log::WorkspaceEvent::EVENT_NOT_SET:
+            ws_event_counts.Add("Unset");
+            break;
+        }
+    }
+    x.event_breakdown = ws_event_counts.hash_table;
+❱
+
+
+◀private: static▶ void ☀Analyze_Download_And_Extract_Event(Workspace_Metrics & x, std::vector<workspace_log::WorkspaceEvent> const& workspace_events) ❰
+    std::vector<std::string> urls;
+    for (auto const& it: workspace_events){
+        switch (it.event_case()){
+            case workspace_log::WorkspaceEvent::kDownloadAndExtractEvent:
+                auto event = it.download_and_extract_event();
+                for (auto url: event.url()){
+                    urls.emplace_back(url);
+                }
+            break;
+        }
+    }
+    x.download_and_extract_urls = urls;
+❱
+
+◀private: static▶ void ☀Analyze_Download_Event(Workspace_Metrics & x, std::vector<workspace_log::WorkspaceEvent> const& workspace_events) ❰
+    std::vector<std::string> urls;
+    for (auto const& it: workspace_events){
+        switch (it.event_case()){
+            case workspace_log::WorkspaceEvent::kDownloadEvent:
+                auto event = it.download_event();
+                for (auto url: event.url()){
+                    urls.emplace_back(Transform_Url_As_Needed(url));
+                }
+            break;
+        }
+    }
+
+    x.download_urls = urls;
+❱
+
+◀private: static▶ void ☀Count_Good_And_Bad_Urls(Workspace_Metrics & x, std::vector<workspace_log::WorkspaceEvent> const& workspace_events) ❰
+
+    std::vector<std::string> urls;
+    for (auto const& it: workspace_events){
+        if (it.event_case() == workspace_log::WorkspaceEvent::EventCase::kDownloadEvent){
+            auto event = it.download_event();
+            for (auto url: event.url()){
+                urls.emplace_back(url);
+            }
+        }
+        if (it.event_case() == workspace_log::WorkspaceEvent::EventCase::kDownloadAndExtractEvent){
+        auto event = it.download_and_extract_event();
+            for (auto url: event.url()){
+                urls.emplace_back(url);
+            }
+        }
+    }
+    
+    int bad_urls = 0;
+    int good_urls = 0;
+    // for (auto const& it: urls){
+    //     if (){
+    //     }
+    // }
+    //TODO
+
+❱
+
+
+
+◀private: static▶ void ☀Analyze_Execute_Event(Workspace_Metrics & x, std::vector<workspace_log::WorkspaceEvent> const& workspace_events) ❰
+    Unique_Counter<std::string> programs;
+    for (auto const& it: workspace_events){
+        switch (it.event_case()){
+            case workspace_log::WorkspaceEvent::kExecuteEvent:
+                auto event = it.execute_event();
+                auto arguments = event.arguments();
+                if (!arguments.empty()){
+                    auto adjusted_program = Transform_Program_Path_As_Needed(arguments[0]);
+                    programs.Add(adjusted_program);
+                }
+            break;
+        }
+    }
+    
+    x.executed_programs = programs.hash_table;
+❱
+
+
+
+
+
+
+
+◀private: static▶ void ☀Analyze_Which_Event(Workspace_Metrics & x, std::vector<workspace_log::WorkspaceEvent> const& workspace_events) ❰
+
+    Unique_Counter<std::string> programs;
+    for (auto const& it: workspace_events){
+        switch (it.event_case()){
+            case workspace_log::WorkspaceEvent::kWhichEvent:
+                auto event = it.which_event();
+                auto program = event.program();
+                programs.Add(program);
+            break;
+        }
+    }
+    x.which_programs = programs.hash_table;
+❱
+
+
+
+
+
+
+
+
+
+◀private: static▶ std::string ☀Transform_Url_As_Needed(std::string url)❰
+    
+    if (Begins_With(url,"file:/var/lib/") && Contains_Substring(url,"external/")){
+        return Remove_Everything_Before_Found_Instance(url,"external/");
+    }
+    
+    return url;
+❱
+
+◀private: static▶ std::string ☀Transform_Program_Path_As_Needed(std::string program_path)❰
+    
+    if (Begins_With(program_path,"/tmp/")){
+        std::string modified_tmp_path;
+        modified_tmp_path += "/tmp/.../";
+        modified_tmp_path += Get_File_Name(program_path);
+        return modified_tmp_path;
+        
+    }
+    
+    if (Begins_With(program_path,"/var/lib/") && Contains_Substring(program_path,"external/")){
+        return Remove_Everything_Before_Found_Instance(program_path,"external/");
+    }
+    
+    return program_path;
+❱

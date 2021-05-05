@@ -1,0 +1,24 @@
+class
+❪iostream❫
+❪fstream❫
+❪map❫
+❪string❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    //event counts
+    int ፠total፠     = 0;
+    std::map<std::string,int> ፠event_breakdown፠;
+    
+    //url data
+    std::vector<std::string> download_and_extract_urls;
+    std::vector<std::string> download_urls;
+    
+    //programs
+    std::map<std::string,int> ፠executed_programs፠;
+    std::map<std::string,int> ፠which_programs፠;
+
+▶
