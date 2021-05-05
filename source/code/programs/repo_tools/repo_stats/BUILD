@@ -22,6 +22,7 @@ hcp(
         "//code/utilities/data_structures/counters/unique_counter:unique_counter",
         "//code/programs/repo_tools/repo_stats/phases:clone_phase",
         "//code/programs/repo_tools/repo_stats/phases:fetch_phase",
+        "//code/programs/repo_tools/repo_stats/phases:query_phase",
     ],
 )
 

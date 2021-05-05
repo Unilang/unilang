@@ -59,10 +59,14 @@ class
     Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "profile_file_size",std::to_string(fetch_result.profile_file_size));
     
     
+    //bes metrics
     Analyze_Bes_Counts(options,fetch_result,phase_prefix);
+    Analyze_Abort_Reason(options,fetch_result,phase_prefix);
+    
+    
+    
+    //workspace metrics
     Analyze_Workspace_Counts(options,fetch_result,phase_prefix);
-    
-    
     
     //analyze each event specifically
     for (auto const& it: fetch_result.workspace_events){
@@ -77,12 +81,36 @@ class
     
     Analyze_Download_And_Extract_Event(options,fetch_result,phase_prefix);
     Analyze_Download_Event(options,fetch_result,phase_prefix);
+    Count_Good_And_Bad_Urls(options,fetch_result,phase_prefix);
+    
     Analyze_Execute_Event(options,fetch_result,phase_prefix);
     Analyze_Which_Event(options,fetch_result,phase_prefix);
     
     
 
 ❱
+
+◀private: static▶ void ☀Analyze_Abort_Reason(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+
+    std::string abort_reason = "-1"; //-1 means we did not abort
+    std::string description;
+    for (auto const& it: fetch_result.build_events){
+        switch (it.payload_case()){
+            case build_event_stream::BuildEvent::PayloadCase::kAborted:
+                auto abort_type = it.aborted();
+                abort_reason = std::to_string(static_cast<int>(abort_type.reason()));
+                description = abort_type.description();
+            break;
+        }
+    }
+    
+    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "abort_type",abort_reason);
+    if (!description.empty()){
+        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "abort_desc","1","text",description);
+    }
+    
+❱
+
 
 ◀private: static▶ void ☀Analyze_Download_And_Extract_Event(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
     std::vector<std::string> urls;
@@ -112,6 +140,30 @@ class
         }
     }
     Statsd_Nc_Poster::Post_Counter(options.Host(),options.Port(),phase_prefix + "download_url","url",urls);
+❱
+
+◀private: static▶ void ☀Count_Good_And_Bad_Urls(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+
+    std::vector<std::string> urls;
+    for (auto const& it: fetch_result.workspace_events){
+        if (it.event_case() == workspace_log::WorkspaceEvent::EventCase::kDownloadEvent){
+            auto event = it.download_event();
+            for (auto url: event.url()){
+                urls.emplace_back(url);
+            }
+        }
+        if (it.event_case() == workspace_log::WorkspaceEvent::EventCase::kDownloadAndExtractEvent){
+        auto event = it.download_and_extract_event();
+            for (auto url: event.url()){
+                urls.emplace_back(url);
+            }
+        }
+    }
+    
+    int bad_urls = 0;
+    int good_urls = 0;
+    //TODO
+
 ❱
 
 ◀private: static▶ std::string ☀Transform_Url_As_Needed(std::string url)❰

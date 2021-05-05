@@ -17,6 +17,7 @@ class
 ❪"code/utilities/data_structures/counters/unique_counter/unique_counter"❫
 ❪"code/programs/repo_tools/repo_stats/phases/clone_phase"❫
 ❪"code/programs/repo_tools/repo_stats/phases/fetch_phase"❫
+❪"code/programs/repo_tools/repo_stats/phases/query_phase"❫
 ⚞⚟
 
 
@@ -40,7 +41,8 @@ class
     
     Fetch_Phase::Perform(repo_context,options);
     
-    Perform_Query_Phase(repo_context,options);
+    Query_Phase::Perform(repo_context,options);
+    
     
     
     
@@ -72,8 +74,4 @@ class
     // for (auto const& it: cquery_result.results()){
     //     std::cout << "[" << it.target().rule().name() << "]" << std::endl;
     // }
-❱
-
-
-◀private: static▶ void ☀Perform_Query_Phase(Build_Repo_Settings const& repo_context, Program_Options const& options) ❰
 ❱
