@@ -1,0 +1,20 @@
+class
+❪iostream❫
+❪fstream❫
+❪map❫
+❪string❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    //event counts
+    int ፠total፠     = 0;
+    std::map<std::string,int> ፠event_breakdown፠;
+    
+    //why the fetch failed
+    std::string ፠abort_type፠;
+    std::string ፠abort_desc፠;
+▶
+

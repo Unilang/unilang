@@ -21,6 +21,7 @@ class
 ❪"code/utilities/types/strings/transformers/removing/lib"❫
 ❪"code/utilities/types/strings/observers/path/lib"❫
 ❪"code/utilities/metrics/metrics_publisher"❫
+❪"code/programs/repo_tools/repo_stats/phases/bes_metrics_getter"❫
 ⚞⚟
 
 
@@ -61,9 +62,15 @@ class
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "profile_file_size",std::to_string(fetch_result.profile_file_size));
     
     
+    
     //bes metrics
-    Analyze_Bes_Counts(endpoints,fetch_result,phase_prefix);
-    Analyze_Abort_Reason(endpoints,fetch_result,phase_prefix);
+    auto bes_metrics = Bes_Metrics_Getter::Get(fetch_result.build_events);
+    
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "bes_events_count",std::to_string(bes_metrics.total));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "bes_event_count","event_type",bes_metrics.event_breakdown);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "abort_type",bes_metrics.abort_type);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "abort_desc","1","text",bes_metrics.abort_desc);
+    
     
     
     
@@ -90,27 +97,6 @@ class
     
     
 
-❱
-
-◀private: static▶ void ☀Analyze_Abort_Reason(std::vector<Endpoint> const& endpoints, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
-
-    std::string abort_reason = "-1"; //-1 means we did not abort
-    std::string description;
-    for (auto const& it: fetch_result.build_events){
-        switch (it.payload_case()){
-            case build_event_stream::BuildEvent::PayloadCase::kAborted:
-                auto abort_type = it.aborted();
-                abort_reason = std::to_string(static_cast<int>(abort_type.reason()));
-                description = abort_type.description();
-            break;
-        }
-    }
-    
-    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "abort_type",abort_reason);
-    if (!description.empty()){
-        Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "abort_desc","1","text",description);
-    }
-    
 ❱
 
 
@@ -237,134 +223,6 @@ class
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "which_program","program",programs.hash_table);
 ❱
 
-
-
-◀private: static▶ void ☀Analyze_Bes_Counts(std::vector<Endpoint> const& endpoints, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
-
-    //analyze bes
-    auto bes_events_count = fetch_result.build_events.size();
-    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "bes_events_count",std::to_string(bes_events_count));
-    
-    Unique_Counter<std::string> bes_event_counts;
-    bes_event_counts.Add_Empty("Progress");
-    bes_event_counts.Add_Empty("Aborted");
-    bes_event_counts.Add_Empty("Started");
-    bes_event_counts.Add_Empty("UnstructuredCommandLine");
-    bes_event_counts.Add_Empty("StructuredCommandLine");
-    bes_event_counts.Add_Empty("OptionsParsed");
-    bes_event_counts.Add_Empty("WorkspaceStatus");
-    bes_event_counts.Add_Empty("Fetch");
-    bes_event_counts.Add_Empty("Configuration");
-    bes_event_counts.Add_Empty("Expanded");
-    bes_event_counts.Add_Empty("Configured");
-    bes_event_counts.Add_Empty("Action");
-    bes_event_counts.Add_Empty("NamedSetOfFiles");
-    bes_event_counts.Add_Empty("Completed");
-    bes_event_counts.Add_Empty("TestResult");
-    bes_event_counts.Add_Empty("TestSummary");
-    bes_event_counts.Add_Empty("Finished");
-    bes_event_counts.Add_Empty("BuildToolLogs");
-    bes_event_counts.Add_Empty("BuildMetrics");
-    bes_event_counts.Add_Empty("WorkspaceInfo");
-    bes_event_counts.Add_Empty("BuildMetadata");
-    bes_event_counts.Add_Empty("Unset");
-    
-    
-    //https://github.com/bazelbuild/bazel/blob/master/src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.proto
-    for (auto const& it: fetch_result.build_events){
-        switch (it.payload_case()){
-            case build_event_stream::BuildEvent::PayloadCase::kProgress:
-            bes_event_counts.Add("Progress");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kAborted:
-            bes_event_counts.Add("Aborted");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kStarted:
-            bes_event_counts.Add("Started");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kUnstructuredCommandLine:
-            bes_event_counts.Add("UnstructuredCommandLine");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kStructuredCommandLine:
-            bes_event_counts.Add("StructuredCommandLine");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kOptionsParsed:
-            bes_event_counts.Add("OptionsParsed");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kWorkspaceStatus:
-            bes_event_counts.Add("WorkspaceStatus");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kFetch:
-            bes_event_counts.Add("Fetch");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kConfiguration:
-            bes_event_counts.Add("Configuration");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kExpanded:
-            bes_event_counts.Add("Expanded");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kConfigured:
-            bes_event_counts.Add("Configured");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kAction:
-            bes_event_counts.Add("Action");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kNamedSetOfFiles:
-            bes_event_counts.Add("NamedSetOfFiles");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kCompleted:
-            bes_event_counts.Add("Completed");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kTestResult:
-            bes_event_counts.Add("TestResult");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kTestSummary:
-            bes_event_counts.Add("TestSummary");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kFinished:
-            bes_event_counts.Add("Finished");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kBuildToolLogs:
-            bes_event_counts.Add("BuildToolLogs");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kBuildMetrics:
-            bes_event_counts.Add("BuildMetrics");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kWorkspaceInfo:
-            bes_event_counts.Add("WorkspaceInfo");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::kBuildMetadata:
-            bes_event_counts.Add("BuildMetadata");
-            break;
-            
-            case build_event_stream::BuildEvent::PayloadCase::PAYLOAD_NOT_SET:
-            bes_event_counts.Add("Unset");
-            break;
-            
-        }
-    }
-    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "bes_event_count","event_type",bes_event_counts.hash_table);
-❱
 
 
 
