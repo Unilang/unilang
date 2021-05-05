@@ -41,6 +41,7 @@ class
     auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
     
     
+    //extract metrics endpoints to use
     auto endpoint_strs = options.Endpoints();
     std::vector<Endpoint> endpoints;
     for (auto const& it: endpoint_strs){
@@ -48,6 +49,8 @@ class
         Endpoint x;
         x.host = parts[0];
         x.port = as_signed(parts[1]);
+        
+        std::cout << x.host << " " << x.port << std::endl;
         endpoints.emplace_back(x);
     }
     
