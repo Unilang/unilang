@@ -41,7 +41,7 @@ class
     auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
     
     
-    auto endpoint_strs = prorgam_options.Endpoints();
+    auto endpoint_strs = options.Endpoints();
     std::vector<Endpoint> endpoints;
     for (auto const& it: endpoint_strs){
         auto parts = Split_Into_Parts_From_Colon(it);

@@ -18,6 +18,7 @@ class
 ❪"code/utilities/data_structures/counters/unique_counter/unique_counter"❫
 ❪"code/utilities/types/strings/observers/splitting/lib"❫
 ❪"code/utilities/types/strings/transformers/trimming/lib"❫
+❪"code/utilities/metrics/metrics_publisher"❫
 ⚞⚟
 
 
@@ -44,7 +45,7 @@ class
             if (split.size() >= 2){
                 auto key = trim(split[0]);
                 auto val = trim(split[1]);
-                Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "count_objects",val,"key",key);
+                Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "count_objects",val,"key",key);
             }
         }
         
@@ -54,12 +55,13 @@ class
         //TODO
         
         
-        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "clone_time",std::to_string(repo_context.repo.clone_time_ms));
-        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "master_commit_count",master_commit_count);
-        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "all_commits_count",all_commits_count);
-        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "number_of_branches",number_of_branches);
-        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "number_of_tags",number_of_tags);
-        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "number_of_remote_tags",number_of_remote_tags);
+        Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "clone_time",std::to_string(repo_context.repo.clone_time_ms));
+        Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "master_commit_count",master_commit_count);
+        Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "all_commits_count",all_commits_count);
+        Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "number_of_branches",number_of_branches);
+        Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "number_of_tags",number_of_tags);
+        Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "number_of_remote_tags",number_of_remote_tags);
+        
     });
     
 ❱

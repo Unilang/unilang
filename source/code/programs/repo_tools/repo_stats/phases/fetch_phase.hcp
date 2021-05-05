@@ -20,6 +20,7 @@ class
 ❪"code/utilities/types/strings/observers/counters/lib"❫
 ❪"code/utilities/types/strings/transformers/removing/lib"❫
 ❪"code/utilities/types/strings/observers/path/lib"❫
+❪"code/utilities/metrics/metrics_publisher"❫
 ⚞⚟
 
 
@@ -41,33 +42,33 @@ class
     
     std::cout << "publishing fetch metrics..." << std::endl;
     std::string phase_prefix = "fetch_phase_";
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_return_code",std::to_string(fetch_result.spawn_results.results.return_code));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_stdout_line_count",std::to_string(Count_Newlines(fetch_result.spawn_results.results.stdout)));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_stderr_line_count",std::to_string(Count_Newlines(fetch_result.spawn_results.results.stderr)));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_stdout_line_size",std::to_string(fetch_result.spawn_results.results.stdout.size()));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_stderr_line_size",std::to_string(fetch_result.spawn_results.results.stderr.size()));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time_stderr_errors",std::to_string(countSubstring(fetch_result.spawn_results.results.stderr,"ERROR:")));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_time_return_code",std::to_string(fetch_result.spawn_results.results.return_code));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_time_stdout_line_count",std::to_string(Count_Newlines(fetch_result.spawn_results.results.stdout)));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_time_stderr_line_count",std::to_string(Count_Newlines(fetch_result.spawn_results.results.stderr)));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_time_stdout_line_size",std::to_string(fetch_result.spawn_results.results.stdout.size()));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_time_stderr_line_size",std::to_string(fetch_result.spawn_results.results.stderr.size()));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_time_stderr_errors",std::to_string(countSubstring(fetch_result.spawn_results.results.stderr,"ERROR:")));
     
     
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "fetch_time",std::to_string(fetch_result.spawn_results.time_s.count()));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_deserialization_time_ms",std::to_string(fetch_result.bes_deserialization_time_ms));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_file_size",std::to_string(fetch_result.bes_file_size));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_deserialization_time_ms",std::to_string(fetch_result.workspace_deserialization_time_ms));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_file_size",std::to_string(fetch_result.workspace_file_size));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "resolved_repos_deserialization_time_ms",std::to_string(fetch_result.resolved_repos_deserialization_time_ms));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "resolved_repos_file_size",std::to_string(fetch_result.resolved_repos_file_size));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "profile_deserialization_time_ms",std::to_string(fetch_result.profile_deserialization_time_ms));
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "profile_file_size",std::to_string(fetch_result.profile_file_size));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_time",std::to_string(fetch_result.spawn_results.time_s.count()));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "bes_deserialization_time_ms",std::to_string(fetch_result.bes_deserialization_time_ms));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "bes_file_size",std::to_string(fetch_result.bes_file_size));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "workspace_deserialization_time_ms",std::to_string(fetch_result.workspace_deserialization_time_ms));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "workspace_file_size",std::to_string(fetch_result.workspace_file_size));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "resolved_repos_deserialization_time_ms",std::to_string(fetch_result.resolved_repos_deserialization_time_ms));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "resolved_repos_file_size",std::to_string(fetch_result.resolved_repos_file_size));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "profile_deserialization_time_ms",std::to_string(fetch_result.profile_deserialization_time_ms));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "profile_file_size",std::to_string(fetch_result.profile_file_size));
     
     
     //bes metrics
-    Analyze_Bes_Counts(options,fetch_result,phase_prefix);
-    Analyze_Abort_Reason(options,fetch_result,phase_prefix);
+    Analyze_Bes_Counts(endpoints,fetch_result,phase_prefix);
+    Analyze_Abort_Reason(endpoints,fetch_result,phase_prefix);
     
     
     
     //workspace metrics
-    Analyze_Workspace_Counts(options,fetch_result,phase_prefix);
+    Analyze_Workspace_Counts(endpoints,fetch_result,phase_prefix);
     
     //analyze each event specifically
     for (auto const& it: fetch_result.workspace_events){
@@ -80,18 +81,18 @@ class
     }
     
     
-    Analyze_Download_And_Extract_Event(options,fetch_result,phase_prefix);
-    Analyze_Download_Event(options,fetch_result,phase_prefix);
-    Count_Good_And_Bad_Urls(options,fetch_result,phase_prefix);
+    Analyze_Download_And_Extract_Event(endpoints,fetch_result,phase_prefix);
+    Analyze_Download_Event(endpoints,fetch_result,phase_prefix);
+    Count_Good_And_Bad_Urls(endpoints,fetch_result,phase_prefix);
     
-    Analyze_Execute_Event(options,fetch_result,phase_prefix);
-    Analyze_Which_Event(options,fetch_result,phase_prefix);
+    Analyze_Execute_Event(endpoints,fetch_result,phase_prefix);
+    Analyze_Which_Event(endpoints,fetch_result,phase_prefix);
     
     
 
 ❱
 
-◀private: static▶ void ☀Analyze_Abort_Reason(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+◀private: static▶ void ☀Analyze_Abort_Reason(std::vector<Endpoint> const& endpoints, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
 
     std::string abort_reason = "-1"; //-1 means we did not abort
     std::string description;
@@ -105,15 +106,15 @@ class
         }
     }
     
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "abort_type",abort_reason);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "abort_type",abort_reason);
     if (!description.empty()){
-        Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "abort_desc","1","text",description);
+        Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "abort_desc","1","text",description);
     }
     
 ❱
 
 
-◀private: static▶ void ☀Analyze_Download_And_Extract_Event(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+◀private: static▶ void ☀Analyze_Download_And_Extract_Event(std::vector<Endpoint> const& endpoints, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
     std::vector<std::string> urls;
     for (auto const& it: fetch_result.workspace_events){
         switch (it.event_case()){
@@ -125,10 +126,10 @@ class
             break;
         }
     }
-    Statsd_Nc_Poster::Post_Counter(options.Host(),options.Port(),phase_prefix + "download_and_extract_url","url",urls);
+    Metrics_Publisher::Publish(endpoints,"c",phase_prefix + "download_and_extract_url","url",urls);
 ❱
 
-◀private: static▶ void ☀Analyze_Download_Event(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+◀private: static▶ void ☀Analyze_Download_Event(std::vector<Endpoint> const& endpoints, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
     std::vector<std::string> urls;
     for (auto const& it: fetch_result.workspace_events){
         switch (it.event_case()){
@@ -140,10 +141,10 @@ class
             break;
         }
     }
-    Statsd_Nc_Poster::Post_Counter(options.Host(),options.Port(),phase_prefix + "download_url","url",urls);
+    Metrics_Publisher::Publish(endpoints,"c",phase_prefix + "download_url","url",urls);
 ❱
 
-◀private: static▶ void ☀Count_Good_And_Bad_Urls(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+◀private: static▶ void ☀Count_Good_And_Bad_Urls(std::vector<Endpoint> const& endpoints, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
 
     std::vector<std::string> urls;
     for (auto const& it: fetch_result.workspace_events){
@@ -180,7 +181,7 @@ class
     return url;
 ❱
 
-◀private: static▶ void ☀Analyze_Execute_Event(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+◀private: static▶ void ☀Analyze_Execute_Event(std::vector<Endpoint> const& endpoints, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
     Unique_Counter<std::string> programs;
     for (auto const& it: fetch_result.workspace_events){
         switch (it.event_case()){
@@ -194,7 +195,7 @@ class
             break;
         }
     }
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "executed_program","program",programs.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "executed_program","program",programs.hash_table);
 ❱
 
 ◀private: static▶ std::string ☀Transform_Program_Path_As_Needed(std::string program_path)❰
@@ -221,7 +222,7 @@ class
 
 
 
-◀private: static▶ void ☀Analyze_Which_Event(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+◀private: static▶ void ☀Analyze_Which_Event(std::vector<Endpoint> const& endpoints, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
 
     Unique_Counter<std::string> programs;
     for (auto const& it: fetch_result.workspace_events){
@@ -233,16 +234,16 @@ class
             break;
         }
     }
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "which_program","program",programs.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "which_program","program",programs.hash_table);
 ❱
 
 
 
-◀private: static▶ void ☀Analyze_Bes_Counts(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+◀private: static▶ void ☀Analyze_Bes_Counts(std::vector<Endpoint> const& endpoints, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
 
     //analyze bes
     auto bes_events_count = fetch_result.build_events.size();
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_events_count",std::to_string(bes_events_count));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "bes_events_count",std::to_string(bes_events_count));
     
     Unique_Counter<std::string> bes_event_counts;
     bes_event_counts.Add_Empty("Progress");
@@ -362,16 +363,16 @@ class
             
         }
     }
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "bes_event_count","event_type",bes_event_counts.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "bes_event_count","event_type",bes_event_counts.hash_table);
 ❱
 
 
 
-◀private: static▶ void ☀Analyze_Workspace_Counts(Program_Options const& options, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
+◀private: static▶ void ☀Analyze_Workspace_Counts(std::vector<Endpoint> const& endpoints, Fetch_Results const& fetch_result, std::string const& phase_prefix) ❰
 
     //analyze workspace
     auto workspace_events_count = fetch_result.workspace_events.size();
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_events_count",std::to_string(workspace_events_count));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "workspace_events_count",std::to_string(workspace_events_count));
     
     Unique_Counter<std::string> ws_event_counts;
     
@@ -435,5 +436,5 @@ class
         }
     }
     
-    Statsd_Nc_Poster::Post_Gauge(options.Host(),options.Port(),phase_prefix + "workspace_event_count","event_type",ws_event_counts.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "workspace_event_count","event_type",ws_event_counts.hash_table);
 ❱

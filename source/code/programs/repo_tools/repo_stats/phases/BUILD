@@ -23,6 +23,7 @@ hcp(
         "//code/utilities/types/strings/observers/splitting:lib",
         "//code/utilities/types/strings/transformers/trimming:lib",
         "//code/utilities/data_structures/endpoint:endpoint",
+        "//code/utilities/metrics:metrics_publisher",
     ],
 )
 
@@ -47,6 +48,7 @@ hcp(
         "//code/utilities/types/strings/transformers/removing:lib",
         "//code/utilities/types/strings/observers/path:lib",
         "//code/utilities/data_structures/endpoint:endpoint",
+        "//code/utilities/metrics:metrics_publisher",
     ],
 )
 
@@ -71,5 +73,6 @@ hcp(
         "//code/utilities/types/strings/transformers/removing:lib",
         "//code/utilities/types/strings/observers/path:lib",
         "//code/utilities/data_structures/endpoint:endpoint",
+        "//code/utilities/metrics:metrics_publisher",
     ],
 )
