@@ -22,6 +22,7 @@ hcp(
         "//code/utilities/data_structures/counters/unique_counter:unique_counter",
         "//code/utilities/types/strings/observers/splitting:lib",
         "//code/utilities/types/strings/transformers/trimming:lib",
+        "//code/utilities/data_structures/endpoint:endpoint",
     ],
 )
 
@@ -45,6 +46,7 @@ hcp(
         "//code/utilities/program/wrappers/bazel/fetch:fetch_results",
         "//code/utilities/types/strings/transformers/removing:lib",
         "//code/utilities/types/strings/observers/path:lib",
+        "//code/utilities/data_structures/endpoint:endpoint",
     ],
 )
 
@@ -68,5 +70,6 @@ hcp(
         "//code/utilities/program/wrappers/bazel/fetch:fetch_results",
         "//code/utilities/types/strings/transformers/removing:lib",
         "//code/utilities/types/strings/observers/path:lib",
+        "//code/utilities/data_structures/endpoint:endpoint",
     ],
 )

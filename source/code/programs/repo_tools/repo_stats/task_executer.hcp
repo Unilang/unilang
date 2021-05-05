@@ -18,6 +18,9 @@ class
 ❪"code/programs/repo_tools/repo_stats/phases/clone_phase"❫
 ❪"code/programs/repo_tools/repo_stats/phases/fetch_phase"❫
 ❪"code/programs/repo_tools/repo_stats/phases/query_phase"❫
+❪"code/utilities/data_structures/endpoint/endpoint"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
+❪"code/utilities/types/strings/observers/converting/lib"❫
 ⚞⚟
 
 
@@ -37,11 +40,22 @@ class
     //Analyze the repository to learn how to build it
     auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
     
-    Clone_Phase::Perform(repo_context,options);
     
-    Fetch_Phase::Perform(repo_context,options);
+    auto endpoint_strs = prorgam_options.Endpoints();
+    std::vector<Endpoint> endpoints;
+    for (auto const& it: endpoint_strs){
+        auto parts = Split_Into_Parts_From_Colon(it);
+        Endpoint x;
+        x.host = parts[0];
+        x.port = as_signed(parts[1]);
+        endpoints.emplace_back(x);
+    }
     
-    Query_Phase::Perform(repo_context,options);
+    Clone_Phase::Perform(repo_context,endpoints);
+    
+    Fetch_Phase::Perform(repo_context,endpoints);
+    
+    Query_Phase::Perform(repo_context,endpoints);
     
     
     

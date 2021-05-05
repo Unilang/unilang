@@ -4,6 +4,7 @@ class
 ❪"code/programs/repo_tools/repo_stats/program_options/program_options"❫
 ❪"code/utilities/build/build_repo_establisher/build_repo_establisher"❫
 ❪"code/utilities/program/wrappers/bazel/fetch/fetch_results"❫
+❪"code/utilities/data_structures/endpoint/endpoint"❫
 ⚯
 ❪"code/utilities/program/wrappers/bazel/query/bazel_aquery_runner"❫
 ❪"code/utilities/program/wrappers/bazel/query/bazel_cquery_runner"❫
@@ -23,7 +24,7 @@ class
 
 
 
-◀public: static▶ void ☀Perform(Build_Repo_Settings const& repo_context, Program_Options const& options) ❰
+◀public: static▶ void ☀Perform(Build_Repo_Settings const& repo_context, std::vector<Endpoint> const& endpoints) ❰
 
     //let's make sure the repo is completely empty
     std::cout << "cleaning..." << std::endl;

@@ -40,8 +40,7 @@ boost::program_options::options_description Program_Options::Get_Options_Descrip
     ("branch",value<std::string>(),"branch to go to after clone")
     ("run_dir",value<std::string>(),"don't clone; use existing dir instead")
     
-    ("host",value<std::string>(),"host to publish metrics to")
-    ("port",value<std::string>(),"port to publish metrics to")
+    ("endpoint",value<std::vector<std::string>>(),"host:port to publish metrics to")
 
 	//+----------------------------------------------------------+
 	//| Obligatory                                               |
@@ -128,19 +127,10 @@ std::string Program_Options::Run_Dir() const{
 	return data;
 }
 
-std::string Program_Options::Host() const{
-	std::string data;
-	if (vm.count("host")){
-		data = vm["host"].as<std::string>();
-	}
-
-	return data;
-}
-
-std::string Program_Options::Port() const{
-	std::string data;
-	if (vm.count("port")){
-		data = vm["port"].as<std::string>();
+std::vector<std::string> Program_Options::Endpoints() const{
+	std::vector<std::string> data;
+	if (vm.count("endpoint")){
+		data = vm["endpoint"].as<std::vector<std::string>>();
 	}
 
 	return data;

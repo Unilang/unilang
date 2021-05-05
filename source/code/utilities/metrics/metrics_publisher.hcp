@@ -1,0 +1,90 @@
+class
+❪string❫
+❪iostream❫
+❪vector❫
+❪"code/utilities/data_structures/endpoint/endpoint"❫
+⚯
+⚞⚟
+
+
+
+//regular value
+◀public: static▶ void ☀Publish(std::vector<Endpoint> const& endpoints, std::string const& type, std::string const& bucket, std::string const& value)❰
+
+
+    for (auto const& endpoint: endpoints){
+        if (type == "g"){
+            Statsd_Nc_Poster::Post_Gauge(endpoint.host, std::to_string(endpoint.port),bucket,value);
+            return;
+        }
+        
+        
+        
+        if (type == "c"){
+            Statsd_Nc_Poster::Post_Counter(endpoint.host, std::to_string(endpoint.port),bucket,value);
+            return;
+        }
+    }
+❱
+
+//regular value + tags
+◀public: static▶ void ☀Publish(std::vector<Endpoint> const& endpoints, std::string const& type, std::string const& bucket, std::string const& value, std::vector<std::pair<std::string,std::string>> const& tags)❰
+
+
+    for (auto const& endpoint: endpoints){
+        if (type == "g"){
+            Statsd_Nc_Poster::Post_Gauge(endpoint.host, std::to_string(endpoint.port),bucket,value,tags);
+            return;
+        }
+        
+        
+        
+        if (type == "c"){
+            Statsd_Nc_Poster::Post_Counter(endpoint.host, std::to_string(endpoint.port),bucket,value,tags);
+            return;
+        }
+    }
+❱
+
+//regular value + single tag
+◀public: static▶ void ☀Publish(std::vector<Endpoint> const& endpoints, std::string const& type, std::string const& bucket, std::string const& value, std::string const& tag_name, std::string const& tag_value)❰
+
+
+    for (auto const& endpoint: endpoints){
+        if (type == "g"){
+            Statsd_Nc_Poster::Post_Gauge(endpoint.host, std::to_string(endpoint.port),bucket,value,tag_name, tag_value);
+            return;
+        }
+        
+        
+        
+    }
+❱
+
+◀public: static▶ void ☀Publish(std::vector<Endpoint> const& endpoints, std::string const& type, std::string const& bucket, std::string const& value, std::map<std::string,int> values)❰
+
+
+    for (auto const& endpoint: endpoints){
+        if (type == "g"){
+            Statsd_Nc_Poster::Post_Gauge(endpoint.host, std::to_string(endpoint.port),bucket,value,values);
+            return;
+        }
+        
+        
+        
+    }
+❱
+
+◀public: static▶ void ☀Publish(std::vector<Endpoint> const& endpoints, std::string const& type, std::string const& bucket, std::string const& value, std::vector<std::string> values)❰
+
+
+    for (auto const& endpoint: endpoints){
+        if (type == "c"){
+            Statsd_Nc_Poster::Post_Counter(endpoint.host, std::to_string(endpoint.port),bucket,value,values);
+            return;
+        }
+        
+        
+        
+    }
+❱

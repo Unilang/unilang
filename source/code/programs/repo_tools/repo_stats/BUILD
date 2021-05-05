@@ -23,6 +23,9 @@ hcp(
         "//code/programs/repo_tools/repo_stats/phases:clone_phase",
         "//code/programs/repo_tools/repo_stats/phases:fetch_phase",
         "//code/programs/repo_tools/repo_stats/phases:query_phase",
+        "//code/utilities/data_structures/endpoint:endpoint",
+        "//code/utilities/types/strings/observers/splitting:lib",
+        "//code/utilities/types/strings/observers/converting:lib",
     ],
 )
 

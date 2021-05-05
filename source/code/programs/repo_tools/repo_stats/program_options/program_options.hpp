@@ -24,8 +24,7 @@ class Program_Options {
 		std::string Run_Dir() const;
 		
 		//how to publish metrics
-		std::string Host() const;
-		std::string Port() const;
+		std::vector<std::string> Endpoints() const;
 
         
         std::string Get_Help_Message();
