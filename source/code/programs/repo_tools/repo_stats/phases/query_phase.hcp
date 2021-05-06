@@ -26,4 +26,19 @@ class
 
 
 ◀public: static▶ void ☀Perform(Build_Repo_Settings const& repo_context, std::vector<Endpoint> const& endpoints) ❰
+
+    auto results = Bazel_Aquery_Runner::Run_Aquery(repo_context.program_to_run_build,"deps(//...)");
+    
+    std::cout << "publishing build graph metrics..." << std::endl;
+    std::string phase_prefix = "build_graph_";
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_time_return_code",std::to_string(results.spawn_results.results.return_code));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_stdout_line_count",std::to_string(Count_Newlines(results.spawn_results.results.stdout)));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_stderr_line_count",std::to_string(Count_Newlines(results.spawn_results.results.stderr)));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_stdout_line_size",std::to_string(results.spawn_results.results.stdout.size()));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_stderr_line_size",std::to_string(results.spawn_results.results.stderr.size()));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_stderr_errors",std::to_string(countSubstring(results.spawn_results.results.stderr,"ERROR:")));
+    
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "aquery_time",std::to_string(results.spawn_results.time_s.count()));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "aquery_deserialization_time_ms",std::to_string(results.aquery_deserialization_time_ms));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "aquery_file_size",std::to_string(results.aquery_file_size));
 ❱

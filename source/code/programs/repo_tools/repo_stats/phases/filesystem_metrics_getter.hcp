@@ -26,6 +26,7 @@ class
 ❪"code/utilities/metrics/metrics_publisher"❫
 ❪"code/utilities/formats/json/converters/json_file_io"❫
 ❪"code/utilities/program/wrappers/cloc/cloc_runner"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
 ⚞⚟
 
 
@@ -34,12 +35,19 @@ class
 
     Filesystem_Metrics x;
     
+    Analyze_Source_Language_Types(x);
+    Analyze_Biggest_Files(x);
+    
+    return x;
+❱
+
+◀private: static▶ void ☀Analyze_Source_Language_Types(Filesystem_Metrics & x) ❰
+    
     auto json = Cloc_Runner::Run_In_Dir_And_Get_Json_Results(".");
     //Json_File_Io::Print_Json(json);
     
     
     for (auto const& it: json.items()){
-        //std::cout << it.key() << " : " << it.value() << "\n";
         
         try{
             x.code_types.emplace(it.key(),static_cast<int>(it.value()["nFiles"]));
@@ -48,7 +56,20 @@ class
             }
     }
     
-    std::cout << x.code_types << std::endl;
+❱
+
+◀private: static▶ void ☀Analyze_Biggest_Files(Filesystem_Metrics & x) ❰
+    auto command = "find -type f -not -path './.git/*' -print0 | du -b --files0-from=- | sort -rn | head -n 10";
+    auto results = execute(command);
+    auto lines = Split_Into_Parts_From_Newline(results);
     
-    return x;
+    
+    for (auto line: lines){
+        auto row = Split_By_Whitespace(line);
+        if (row.size() == 2){
+            std::string val = row[0];
+            std::string file = row[1];
+            x.big_files.emplace(file,as_signed(val));
+        }
+    }
 ❱

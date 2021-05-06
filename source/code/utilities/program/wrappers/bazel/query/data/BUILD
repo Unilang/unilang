@@ -20,3 +20,20 @@ hcp(
         "@bazel//:spawn_proto_cpp",
     ],
 )
+
+hcp(
+    name = "aquery_results",
+    deps = [
+        "//code/utilities/formats/json/converters:lib",
+        "//code/utilities/formats/serialization:protobuf",
+        "//code/utilities/program/call:lib",
+        "//code/utilities/program/call/process_spawn/timed:timed_process_results",
+        "//code/utilities/program/inputs/flags:flag_util",
+        "//code/utilities/program/inputs/flags/data:flags",
+        "//code/utilities/program/wrappers/bazel:run_environment",
+        "//code/utilities/program/wrappers/bazel/query:query_deps_flags",
+        "@bazel//:analysis_proto_cpp",
+        "@bazel//:build_proto_cpp",
+        "@bazel//:spawn_proto_cpp",
+    ],
+)

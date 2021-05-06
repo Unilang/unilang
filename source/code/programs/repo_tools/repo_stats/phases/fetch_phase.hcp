@@ -84,6 +84,10 @@ class
     
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "good_urls",std::to_string(workspace_metrics.urls_good));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "bad_urls",std::to_string(workspace_metrics.urls_bad));
+    
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "deps_with_sha",std::to_string(workspace_metrics.urls_have_sha));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "deps_without_sha",std::to_string(workspace_metrics.urls_not_have_sha));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "urls_missing_sha","url",workspace_metrics.urls_missing_sha);
 
 ❱
 

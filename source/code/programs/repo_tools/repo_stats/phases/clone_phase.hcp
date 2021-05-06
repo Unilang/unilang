@@ -50,6 +50,9 @@ class
             }
         }
         
+        //maybe use: https://github.com/github/git-sizer
+        //TODO
+        
         
         auto contributers_str = execute("git --no-pager shortlog -sn --no-merges");
         auto contributer_lines = Split_Into_Parts_From_Newline(contributers_str);
@@ -66,6 +69,7 @@ class
         auto filesystem_metrics = Filesystem_Metrics_Getter::Get();
         
         Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "language_file_count","language",filesystem_metrics.code_types);
+        Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "big_files","file",filesystem_metrics.big_files);
         
     });
     

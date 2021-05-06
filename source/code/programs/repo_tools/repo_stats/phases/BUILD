@@ -160,5 +160,6 @@ hcp(
         "//code/programs/repo_tools/repo_stats/phases/data:filesystem_metrics",
         "//code/utilities/formats/json/converters:json_file_io",
         "//code/utilities/program/wrappers/cloc:cloc_runner",
+        "//code/utilities/types/strings/observers/splitting:lib",
     ],
 )

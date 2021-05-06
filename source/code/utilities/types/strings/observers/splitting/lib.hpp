@@ -17,6 +17,8 @@ std::vector<std::string> Split_Into_Parts_From_Fwd_Slash(std::string const& str)
 std::vector<std::string> Split_Into_Parts_From_Back_Slash(std::string const& str);
 std::string Get_Last_Line(std::string const& str);
 
+std::vector<std::string> Split_By_Whitespace(std::string const& str);
+
 
 std::vector<std::string> Split_By_Spaces(std::string const& str);
 std::vector<std::vector<std::string>> Split_By_Spaces(std::vector<std::string> const& strs);

@@ -1,5 +1,8 @@
 #include "code/utilities/types/strings/observers/splitting/lib.hpp"
 #include<boost/tokenizer.hpp>
+#include <string>
+#include <iostream>
+#include <sstream>
 
 std::vector<std::vector<std::string>> Split_Into_Parts(std::string const& str, int part1, int part2){
     std::vector<std::vector<std::string>> results;
@@ -27,6 +30,16 @@ std::vector<std::vector<std::string>> Split_Into_Parts(std::string const& str, i
     }
     
     return results;
+}
+
+std::vector<std::string> Split_By_Whitespace(std::string const& str){
+    std::istringstream buffer(str);
+    std::vector<std::string> ret;
+
+    std::copy(std::istream_iterator<std::string>(buffer), 
+              std::istream_iterator<std::string>(),
+              std::back_inserter(ret));
+    return ret;
 }
 
 std::vector<std::string> Split_Into_Parts_From_Delimiter(std::string const& i_str, std::string const& i_delim)

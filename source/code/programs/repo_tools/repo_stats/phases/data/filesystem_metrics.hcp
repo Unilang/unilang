@@ -10,5 +10,7 @@ class
 ◀public:
 
     std::map<std::string,int> ፠code_types፠;
+    
+    std::map<std::string,int> ፠big_files፠;
 
 ▶

@@ -20,13 +20,37 @@ class
 ❪"code/utilities/program/inputs/flags/data/flags"❫
 ❪"code/utilities/program/inputs/flags/flag_util"❫
 ❪"code/utilities/program/wrappers/bazel/query/query_deps_flags"❫
+❪"code/utilities/program/wrappers/bazel/query/data/aquery_results"❫
 ⚯
+❪"code/utilities/program/call/process_spawn/timed/timed_process_spawner"❫
+❪"code/utilities/time/profile/function_profiler"❫
 ⚞⚟
 
 
-◀public: static▶ analysis::ActionGraphContainer ☀Run_Aquery(std::string const& bazel_wrapper, std::string const& dep_name)❰
+◀public: static▶ Aquery_Results ☀Run_Aquery(std::string const& bazel_wrapper, std::string const& dep_name)❰
+
+    //build command
+    Aquery_Results x;
+    x.command = Build_Command(bazel_wrapper,dep_name);
     
+    //execute command and write results to a file
+    x.output_file = Random_Files::Random_Tmp_Filename();
+    x.command += " > " + x.output_file;
+    x.spawn_results = Timed_Process_Spawner::Execute_And_Get_Back_Results(x.command);
     
+    //deserialize into memory
+    x.aquery_deserialization_time_ms = Profile_Function_Ms([&](){
+        x.aquery_result = Deserialize<analysis::ActionGraphContainer>(x.output_file);
+        x.aquery_file_size = std::filesystem::file_size(x.output_file);
+    });
+    
+    return x;
+❱
+
+
+
+◀private: static▶ std::string ☀Build_Command(std::string const& bazel_wrapper, std::string const& dep_name)❰
+
     std::string command = bazel_wrapper;
     command += " aquery ";
     
@@ -53,13 +77,5 @@ class
 
     
     command += "'" + dep_name + "'";
-    
-    std::string output_file = Random_Files::Random_Tmp_Filename();
-    execute_to_file(command,output_file);
-    std::cout << output_file << std::endl;
-    
-    //auto x = Deserialize_Multiple_From_Json_File<analysis::ActionGraphContainer>(output_file);
-    auto x = Deserialize<analysis::ActionGraphContainer>(output_file);
-    //auto x = Deserialize_From_Json_File<analysis::ActionGraphContainer>(output_file);
-    return x;
+    return command;
 ❱

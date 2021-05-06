@@ -49,8 +49,6 @@ class
         Endpoint x;
         x.host = parts[0];
         x.port = as_signed(parts[1]);
-        
-        std::cout << x.host << " " << x.port << std::endl;
         endpoints.emplace_back(x);
     }
     
