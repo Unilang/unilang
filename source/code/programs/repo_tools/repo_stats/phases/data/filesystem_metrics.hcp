@@ -1,0 +1,14 @@
+class
+❪iostream❫
+❪fstream❫
+❪map❫
+❪string❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    std::map<std::string,int> ፠code_types፠;
+
+▶

@@ -14,6 +14,7 @@ std::string& Remove_Periods(std::string & str);
 std::string& Remove_Question_Marks(std::string & str);
 std::string& Remove_Dashes(std::string & str);
 std::string& Remove_Double_Quotes(std::string & str);
+std::string& Remove_Newlines(std::string & str);
 
 std::string As_Removed_Dashes(std::string const& str);
 

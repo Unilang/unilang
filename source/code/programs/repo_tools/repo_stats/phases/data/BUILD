@@ -15,3 +15,9 @@ hcp(
     deps = [
     ],
 )
+
+hcp(
+    name = "filesystem_metrics",
+    deps = [
+    ],
+)

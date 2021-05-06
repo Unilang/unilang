@@ -1,0 +1,55 @@
+class
+❪iostream❫
+❪fstream❫
+❪"code/programs/repo_tools/repo_stats/program_options/program_options"❫
+❪"code/utilities/build/build_repo_establisher/build_repo_establisher"❫
+❪"code/utilities/program/wrappers/bazel/fetch/fetch_results"❫
+❪"code/utilities/data_structures/endpoint/endpoint"❫
+❪"code/programs/repo_tools/repo_stats/phases/data/bes_metrics"❫
+❪"code/programs/repo_tools/repo_stats/phases/data/workspace_metrics"❫
+❪"code/programs/repo_tools/repo_stats/phases/data/filesystem_metrics"❫
+⚯
+❪"code/utilities/program/wrappers/bazel/query/bazel_aquery_runner"❫
+❪"code/utilities/program/wrappers/bazel/query/bazel_cquery_runner"❫
+❪"code/utilities/program/wrappers/bazel/query/bazel_query_runner"❫
+❪"code/utilities/program/wrappers/bazel/fetch/bazel_fetch_runner"❫
+❪"code/utilities/program/wrappers/bazel/clean/bazel_clean_runner"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/formats/json/converters/type_to_json_string"❫
+❪"code/utilities/web/statsd/statsd_nc_poster"❫
+❪"code/utilities/data_structures/counters/unique_counter/unique_counter"❫
+❪"code/utilities/types/strings/observers/counters/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/utilities/types/strings/observers/path/lib"❫
+❪"code/utilities/metrics/metrics_publisher"❫
+❪"code/utilities/formats/json/converters/json_file_io"❫
+❪"code/utilities/program/wrappers/cloc/cloc_runner"❫
+⚞⚟
+
+
+
+◀public: static▶ Filesystem_Metrics ☀Get() ❰
+
+    Filesystem_Metrics x;
+    
+    auto json = Cloc_Runner::Run_In_Dir_And_Get_Json_Results(".");
+    //Json_File_Io::Print_Json(json);
+    
+    
+    for (auto const& it: json.items()){
+        //std::cout << it.key() << " : " << it.value() << "\n";
+        
+        try{
+            x.code_types.emplace(it.key(),static_cast<int>(it.value()["nFiles"]));
+        }
+            catch(...){
+            }
+    }
+    
+    std::cout << x.code_types << std::endl;
+    exit(0);
+    
+    return x;
+❱

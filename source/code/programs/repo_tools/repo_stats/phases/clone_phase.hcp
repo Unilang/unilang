@@ -19,6 +19,7 @@ class
 ❪"code/utilities/types/strings/observers/splitting/lib"❫
 ❪"code/utilities/types/strings/transformers/trimming/lib"❫
 ❪"code/utilities/metrics/metrics_publisher"❫
+❪"code/programs/repo_tools/repo_stats/phases/filesystem_metrics_getter"❫
 ⚞⚟
 
 
@@ -61,6 +62,10 @@ class
         Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "number_of_branches",number_of_branches);
         Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "number_of_tags",number_of_tags);
         Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "number_of_remote_tags",number_of_remote_tags);
+        
+        auto filesystem_metrics = Filesystem_Metrics_Getter::Get();
+        
+        Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "language_file_count","language",filesystem_metrics.code_types);
         
     });
     

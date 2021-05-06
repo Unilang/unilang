@@ -56,6 +56,10 @@ std::string& Remove_Spaces(std::string & str)
 {
     return Remove_All_Instances_Of_Char(str,' ');
 }
+std::string& Remove_Newlines(std::string & str)
+{
+    return Remove_All_Instances_Of_Char(str,'\n');
+}
 std::string& Remove_Commas(std::string & str)
 {
 	return Remove_All_Instances_Of_Char(str,',');
