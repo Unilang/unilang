@@ -13,6 +13,8 @@ class
 
 ◀public: static▶ nlohmann::json ☀Run_In_Dir_And_Get_Json_Results(std::string const& path)❰
 
+    std::string timeout_per_file_s = "60";
+
 
     //get cloc if we don't have it
     execute("wget https://github.com/AlDanial/cloc/releases/download/v1.90/cloc-1.90.pl -O /tmp/cloc");
@@ -20,6 +22,7 @@ class
     
     std::string command;
     command = "/tmp/cloc --json ";
+    command += "--diff-timeout " + timeout_per_file_s + " ";
     command += path;
     auto results = execute(command);
     
