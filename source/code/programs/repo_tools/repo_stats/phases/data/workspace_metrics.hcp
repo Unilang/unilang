@@ -20,6 +20,10 @@ class
     int ፠urls_good፠;
     int ፠urls_bad፠;
     
+    int ፠urls_have_sha፠ = 0;
+    int ፠urls_not_have_sha፠ = 0;
+    std::vector<std::string> ፠urls_missing_sha፠;
+    
     
     
     //programs
