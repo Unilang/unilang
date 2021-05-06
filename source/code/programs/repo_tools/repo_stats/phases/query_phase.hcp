@@ -27,7 +27,11 @@ class
 
 ◀public: static▶ void ☀Perform(Build_Repo_Settings const& repo_context, std::vector<Endpoint> const& endpoints) ❰
 
+     std::cout << "getting aquery results..." << std::endl;
     auto results = Bazel_Aquery_Runner::Run_Aquery(repo_context.program_to_run_build,"deps(//...)");
+    if (results.spawn_results.results.return_code != 0){
+        std::cerr << results.spawn_results.results.stderr << std::endl;
+    }
     
     std::cout << "publishing build graph metrics..." << std::endl;
     std::string phase_prefix = "build_graph_";

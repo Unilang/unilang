@@ -64,6 +64,9 @@ class
     command += "--noshow_task_finish ";
     //command += "--noshow_warnings ";
     
+    //avoid crashes
+    command += "--keep_going ";
+    
     //note sure about this
     command += "--infer_universe_scope ";
     //command += "--order_output=no ";
