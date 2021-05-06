@@ -49,7 +49,6 @@ class
     }
     
     std::cout << x.code_types << std::endl;
-    exit(0);
     
     return x;
 ❱
