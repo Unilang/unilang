@@ -81,6 +81,9 @@ class
     Metrics_Publisher::Publish(endpoints,"c",phase_prefix + "download_url","url",workspace_metrics.download_urls);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "executed_program","program",workspace_metrics.executed_programs);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "which_program","program",workspace_metrics.which_programs);
+    
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "good_urls",std::to_string(workspace_metrics.urls_good));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "bad_urls",std::to_string(workspace_metrics.urls_bad));
 
 ❱
 

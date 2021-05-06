@@ -14,11 +14,17 @@ class
     std::map<std::string,int> ፠event_breakdown፠;
     
     //url data
-    std::vector<std::string> download_and_extract_urls;
-    std::vector<std::string> download_urls;
+    std::vector<std::string> ፠download_and_extract_urls፠;
+    std::vector<std::string> ፠download_urls፠;
+    
+    int ፠urls_good፠;
+    int ፠urls_bad፠;
+    
+    
     
     //programs
     std::map<std::string,int> ፠executed_programs፠;
     std::map<std::string,int> ፠which_programs፠;
+    
 
 ▶

@@ -176,11 +176,19 @@ class
     
     int bad_urls = 0;
     int good_urls = 0;
-    // for (auto const& it: urls){
-    //     if (){
-    //     }
-    // }
-    //TODO
+    for (auto const& it: urls){
+        if (Begins_With(it,"https://storage.googleapis.com/aurora-imaging-artifacts-public/") ||
+            Begins_With(it,"https://mirror.bazel.build/github.com/") ||
+            Begins_With(it,"https://github.com/bazelbuild/")){
+            good_urls++;
+        }
+        else{
+            bad_urls++;
+        }
+    }
+    
+    x.urls_good = good_urls;
+    x.urls_bad = bad_urls;
 
 ❱
 

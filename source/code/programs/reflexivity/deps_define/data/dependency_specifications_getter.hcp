@@ -353,6 +353,9 @@ class
     x.specs.emplace_back(Chrome_Drivers());
     x.specs.emplace_back(CxxUrl());
     
+    //Standalone Tools
+    x.specs.emplace_back(Cloc());
+    
     //networking
     //https://github.com/librg/librg
     
@@ -473,6 +476,8 @@ class
     return x;
 ❱
 
+
+
 ◀private: static▶ Dependency_Specification ☀debian_stretch_amd64_sysroot()❰
     Dependency_Specification spec;
     spec.lib_name = "debian_stretch_amd64_sysroot";
@@ -534,6 +539,18 @@ class
     spec.patch_files.emplace_back("p1");
     spec.patch_args.emplace_back("-p1");
     return spec;
+❱
+◀private: static▶ Dependency_Specification ☀Cloc()❰
+    Dependency_Specification spec;
+    spec.lib_name = "cloc";
+    Add_Unilang_Github_Mirror(spec,"cloc","90070481081b6decd9446d57a35176da3a6d8fbc","da1a0de6d8ce2f4e80fa7554cf605f86d97d761b4ffd647df9b01c4658107dba");
+    
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"])
+)RAW_STRING";
+    return spec;
+
 ❱
 ◀private: static▶ Dependency_Specification ☀Bazel()❰
     Dependency_Specification spec;
