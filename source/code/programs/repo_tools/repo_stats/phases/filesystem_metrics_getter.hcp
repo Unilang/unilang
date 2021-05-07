@@ -36,6 +36,7 @@ class
     Filesystem_Metrics x;
     
     Analyze_Source_Language_Types(x);
+    Analyze_Source_Language_Types_Comment_Coverage(x);
     Analyze_Biggest_Files(x);
     
     x.total_file_count  = as_signed(execute("find . ! -path './.git/*' -type f | wc -l"));
@@ -54,8 +55,37 @@ class
         try{
             x.code_types.emplace(it.key(),static_cast<int>(it.value()["nFiles"]));
         }
-            catch(...){
+        catch(...){
+        }
+    }
+    
+❱
+
+◀private: static▶ void ☀Analyze_Source_Language_Types_Comment_Coverage(Filesystem_Metrics & x) ❰
+    
+    auto json = Cloc_Runner::Run_In_Dir_And_Get_Json_Results(".");
+    //Json_File_Io::Print_Json(json);
+    
+    
+    for (auto const& it: json.items()){
+        
+        try{
+            auto language = it.key();
+            auto code_amount = static_cast<int>(it.value()["code"]);
+            auto comment_amount = static_cast<int>(it.value()["comment"]);
+            int comment_percentage = 0;
+            if (comment_amount >= code_amount){
+                comment_percentage = 100;
             }
+            else{
+                comment_percentage = ((float)comment_amount / (float)code_amount) * 100;
+            }
+            
+            x.code_types_comment_coverage.emplace(language,comment_percentage);
+            
+        }
+        catch(...){
+        }
     }
     
 ❱
