@@ -28,14 +28,43 @@ class
 
 ◀public: static▶ void ☀Perform(Build_Repo_Settings const& repo_context, std::vector<Endpoint> const& endpoints) ❰
 
-     std::cout << "getting aquery results..." << std::endl;
+    Do_Cquery_Stuff(repo_context,endpoints);
+    Do_Aquery_Stuff(repo_context,endpoints);
+    
+❱
+
+◀public: static▶ void ☀Do_Cquery_Stuff(Build_Repo_Settings const& repo_context, std::vector<Endpoint> const& endpoints) ❰
+
+    std::cout << "getting cquery results..." << std::endl;
+    auto results = Bazel_Cquery_Runner::Run(repo_context.program_to_run_build,"deps(//...)");
+    // if (results.spawn_results.results.return_code != 0){
+    //     std::cerr << results.spawn_results.results.stderr << std::endl;
+    // }
+
+    std::cout << "publishing target graph metrics..." << std::endl;
+    std::string phase_prefix = "target_graph_";
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_time_return_code",std::to_string(results.spawn_results.results.return_code));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_stdout_line_count",std::to_string(Count_Newlines(results.spawn_results.results.stdout)));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_stderr_line_count",std::to_string(Count_Newlines(results.spawn_results.results.stderr)));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_stdout_line_size",std::to_string(results.spawn_results.results.stdout.size()));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_stderr_line_size",std::to_string(results.spawn_results.results.stderr.size()));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_stderr_errors",std::to_string(countSubstring(results.spawn_results.results.stderr,"ERROR:")));
+    
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "cquery_time",std::to_string(results.spawn_results.time_s.count()));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "cquery_deserialization_time_ms",std::to_string(results.deserialization_time_ms));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "cquery_file_size",std::to_string(results.cquery_file_size));
+❱
+
+◀public: static▶ void ☀Do_Aquery_Stuff(Build_Repo_Settings const& repo_context, std::vector<Endpoint> const& endpoints) ❰
+
+    std::cout << "getting aquery results..." << std::endl;
     auto results = Bazel_Aquery_Runner::Run_Aquery(repo_context.program_to_run_build,"deps(//...)");
     // if (results.spawn_results.results.return_code != 0){
     //     std::cerr << results.spawn_results.results.stderr << std::endl;
     // }
     
-    std::cout << "publishing build graph metrics..." << std::endl;
-    std::string phase_prefix = "build_graph_";
+    std::cout << "publishing action graph metrics..." << std::endl;
+    std::string phase_prefix = "build_graph_"; //TODO: change to action_graph_
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_time_return_code",std::to_string(results.spawn_results.results.return_code));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_stdout_line_count",std::to_string(Count_Newlines(results.spawn_results.results.stdout)));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "fetch_stderr_line_count",std::to_string(Count_Newlines(results.spawn_results.results.stderr)));
@@ -58,6 +87,4 @@ class
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "configuration_count",std::to_string(aquery_metrics.configuration_count));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "aspect_descriptors_count",std::to_string(aquery_metrics.aspect_descriptors_count));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "rule_classes_count",std::to_string(aquery_metrics.rule_classes_count));
-
-    
 ❱

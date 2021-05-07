@@ -40,6 +40,7 @@ class
     //deserialize into memory
     x.deserialization_time_ms = Profile_Function_Ms([&](){
         x.cquery_result = Deserialize<analysis::CqueryResult>(x.output_file);
+        x.cquery_file_size = std::filesystem::file_size(x.output_file);
     });
     
     return x;

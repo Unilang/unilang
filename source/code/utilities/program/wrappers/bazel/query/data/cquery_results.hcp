@@ -22,6 +22,7 @@ public:
     
     //deserialization time
     double ፠deserialization_time_ms፠;
+    long ፠cquery_file_size፠;
     
     //the in-memory representation of the cquery results
     analysis::CqueryResult cquery_result;
