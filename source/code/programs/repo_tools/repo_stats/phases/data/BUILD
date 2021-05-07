@@ -21,3 +21,9 @@ hcp(
     deps = [
     ],
 )
+
+hcp(
+    name = "aquery_metrics",
+    deps = [
+    ],
+)

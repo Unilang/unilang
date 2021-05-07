@@ -21,6 +21,7 @@ class
 ❪"code/utilities/types/strings/transformers/removing/lib"❫
 ❪"code/utilities/types/strings/observers/path/lib"❫
 ❪"code/utilities/metrics/metrics_publisher"❫
+❪"code/programs/repo_tools/repo_stats/phases/aquery_metrics_getter"❫
 ⚞⚟
 
 
@@ -45,4 +46,7 @@ class
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "aquery_time",std::to_string(results.spawn_results.time_s.count()));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "aquery_deserialization_time_ms",std::to_string(results.aquery_deserialization_time_ms));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "aquery_file_size",std::to_string(results.aquery_file_size));
+    
+    
+    auto aquery_metrics = Aquery_Metrics_Getter::Get(results.aquery_result);
 ❱
