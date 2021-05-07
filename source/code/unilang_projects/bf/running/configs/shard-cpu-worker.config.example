@@ -5,6 +5,7 @@ port: 8981
 # by all shard cluster servers
 public_name: "localhost:8981"
 limit_execution: true
+limit_global_execution: true
 
 # This determines whether the shard instance will participate in the backplane
 # and cache it's operation outputs in its own cache file CAS.

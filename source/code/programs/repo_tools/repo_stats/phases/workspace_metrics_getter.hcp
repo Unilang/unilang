@@ -26,7 +26,7 @@ class
 ⚞⚟
 
 
-
+//https://github.com/bazelbuild/bazel/blob/master/src/main/java/com/google/devtools/build/lib/bazel/debug/workspace_log.proto
 ◀public: static▶ Workspace_Metrics ☀Get(std::vector<workspace_log::WorkspaceEvent> const& workspace_events) ❰
 
     Workspace_Metrics x;
@@ -77,7 +77,6 @@ class
     ws_event_counts.Add_Empty("PatchEvent");
     ws_event_counts.Add_Empty("Unset");
     
-    //https://github.com/bazelbuild/bazel/blob/master/src/main/java/com/google/devtools/build/lib/bazel/debug/workspace_log.proto
     for (auto const& it: workspace_events){
         switch (it.event_case()){
             

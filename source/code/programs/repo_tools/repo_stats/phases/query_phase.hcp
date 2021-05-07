@@ -26,6 +26,7 @@ class
 
 
 
+//https://github.com/bazelbuild/bazel/blob/master/src/main/protobuf/analysis.proto
 ◀public: static▶ void ☀Perform(Build_Repo_Settings const& repo_context, std::vector<Endpoint> const& endpoints) ❰
 
     Do_Cquery_Stuff(repo_context,endpoints);
@@ -53,6 +54,49 @@ class
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "cquery_time",std::to_string(results.spawn_results.time_s.count()));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "cquery_deserialization_time_ms",std::to_string(results.deserialization_time_ms));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "cquery_file_size",std::to_string(results.cquery_file_size));
+    
+    
+    //declare metrics
+    int configured_target_count = 0;
+    Unique_Counter<std::string> config_mnemonics;
+    Unique_Counter<std::string> platform_names;
+    Unique_Counter<std::string> target_discriminator_breakdown;
+    Unique_Counter<std::string> rule_classes;
+    Unique_Counter<std::string> attribute_kinds;
+    Unique_Counter<std::string> exec_properties;
+    
+    //get metrics
+    configured_target_count = results.cquery_result.results().size();
+    for (auto const& it: results.cquery_result.results()){
+        config_mnemonics.Add(it.configuration().mnemonic());
+        platform_names.Add(it.configuration().platform_name());
+        
+        switch (it.target().type()){
+            case blaze_query::Target_Discriminator_RULE:
+            target_discriminator_breakdown.Add("Rule");
+            break;
+            case blaze_query::Target_Discriminator_SOURCE_FILE:
+            target_discriminator_breakdown.Add("Source File");
+            break;
+            case blaze_query::Target_Discriminator_GENERATED_FILE:
+            target_discriminator_breakdown.Add("Generated File");
+            break;
+            case blaze_query::Target_Discriminator_PACKAGE_GROUP:
+            target_discriminator_breakdown.Add("Package Group");
+            break;
+            case blaze_query::Target_Discriminator_ENVIRONMENT_GROUP:
+            target_discriminator_breakdown.Add("Environment Group");
+            break;
+        }
+        
+        
+    }
+    
+    
+    //publish metrics
+    phase_prefix += "cquery_";
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "target_count",std::to_string(configured_target_count));
+    
 ❱
 
 ◀public: static▶ void ☀Do_Aquery_Stuff(Build_Repo_Settings const& repo_context, std::vector<Endpoint> const& endpoints) ❰
