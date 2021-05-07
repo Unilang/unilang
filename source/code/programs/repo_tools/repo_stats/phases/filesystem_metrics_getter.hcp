@@ -38,6 +38,8 @@ class
     Analyze_Source_Language_Types(x);
     Analyze_Biggest_Files(x);
     
+    x.total_file_count  = as_signed(execute("find . ! -path './.git/*' -type f | wc -l"));
+    
     return x;
 ❱
 

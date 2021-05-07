@@ -69,6 +69,7 @@ class
         auto filesystem_metrics = Filesystem_Metrics_Getter::Get();
         
         Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "language_file_count","language",filesystem_metrics.code_types);
+        Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "total_file_count",std::to_string(filesystem_metrics.total_file_count));
         Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "big_files","file",filesystem_metrics.big_files);
         
     });

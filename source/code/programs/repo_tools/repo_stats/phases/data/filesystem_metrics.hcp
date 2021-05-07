@@ -11,6 +11,8 @@ class
 
     std::map<std::string,int> ፠code_types፠;
     
+    
+    int ፠total_file_count፠;
     std::map<std::string,int> ፠big_files፠;
 
 ▶
