@@ -31,5 +31,16 @@ class
 ◀public: static▶ Aquery_Metrics ☀Get(analysis::ActionGraphContainer const& container) ❰
     Aquery_Metrics x;
     
+    //top level member counts
+    x.artifacts_count = container.artifacts().size();
+    x.actions_count = container.actions().size();
+    x.targets_count = container.targets().size();
+    x.dep_set_of_files_count = container.dep_set_of_files().size();
+    x.configuration_count = container.configuration().size();
+    x.aspect_descriptors_count = container.aspect_descriptors().size();
+    x.rule_classes_count = container.rule_classes().size();
+    
+    
+    
     return x;
 ❱

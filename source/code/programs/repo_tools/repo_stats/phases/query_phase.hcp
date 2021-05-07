@@ -49,4 +49,15 @@ class
     
     
     auto aquery_metrics = Aquery_Metrics_Getter::Get(results.aquery_result);
+    
+    phase_prefix += "aquery_";
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "artifacts_count",std::to_string(aquery_metrics.artifacts_count));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "actions_count",std::to_string(aquery_metrics.actions_count));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "targets_count",std::to_string(aquery_metrics.targets_count));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "dep_set_of_files_count",std::to_string(aquery_metrics.dep_set_of_files_count));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "configuration_count",std::to_string(aquery_metrics.configuration_count));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "aspect_descriptors_count",std::to_string(aquery_metrics.aspect_descriptors_count));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "rule_classes_count",std::to_string(aquery_metrics.rule_classes_count));
+
+    
 ❱

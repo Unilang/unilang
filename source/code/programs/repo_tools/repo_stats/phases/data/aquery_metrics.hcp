@@ -9,4 +9,13 @@ class
 
 ◀public:
 
+    //top level member counts
+    int ፠artifacts_count፠     = 0;
+    int ፠actions_count፠     = 0;
+    int ፠targets_count፠     = 0;
+    int ፠dep_set_of_files_count፠     = 0;
+    int ፠configuration_count፠     = 0;
+    int ፠aspect_descriptors_count፠     = 0;
+    int ፠rule_classes_count፠     = 0;
+
 ▶
