@@ -325,7 +325,7 @@ class
     begins_with.emplace_back("https://github.com/bazelbuild/");
     begins_with.emplace_back("file:/var/lib/");
     
-    return Begins_With_Any(url,begins_with);
+    return Begins_With_Any(url,begins_with) || url.empty();
 ❱
 
 
