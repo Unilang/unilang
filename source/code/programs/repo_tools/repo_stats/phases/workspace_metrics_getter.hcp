@@ -46,8 +46,8 @@ class
     Analyze_Download_And_Extract_Event(x,workspace_events);
     Analyze_Download_Event(x,workspace_events);
     Count_Good_And_Bad_Urls(x,workspace_events);
+    Count_Good_And_Bad_First_Urls(x,workspace_events);
     Count_Good_And_Bad_Sha(x,workspace_events);
-    
     Analyze_Execute_Event(x,workspace_events);
     Analyze_Which_Event(x,workspace_events);
     
@@ -178,9 +178,7 @@ class
     int bad_urls = 0;
     int good_urls = 0;
     for (auto const& it: urls){
-        if (Begins_With(it,"https://storage.googleapis.com/aurora-imaging-artifacts-public/") ||
-            Begins_With(it,"https://mirror.bazel.build/github.com/") ||
-            Begins_With(it,"https://github.com/bazelbuild/")){
+        if (Is_Url_Good(it)){
             good_urls++;
         }
         else{
@@ -192,6 +190,45 @@ class
     x.urls_bad = bad_urls;
 
 ❱
+
+◀private: static▶ void ☀Count_Good_And_Bad_First_Urls(Workspace_Metrics & x, std::vector<workspace_log::WorkspaceEvent> const& workspace_events) ❰
+
+    std::vector<std::string> urls;
+    for (auto const& it: workspace_events){
+        if (it.event_case() == workspace_log::WorkspaceEvent::EventCase::kDownloadEvent){
+            auto event = it.download_event();
+            if (!event.url().empty()){
+                urls.emplace_back(event.url()[0]);
+            }
+        }
+        if (it.event_case() == workspace_log::WorkspaceEvent::EventCase::kDownloadAndExtractEvent){
+        auto event = it.download_and_extract_event();
+            if (!event.url().empty()){
+                urls.emplace_back(event.url()[0]);
+            }
+        }
+    }
+    
+    
+    int bad_urls = 0;
+    int good_urls = 0;
+    std::vector<std::string> bad_urls_list;
+    for (auto const& it: urls){
+        if (Is_Url_Good(it)){
+            good_urls++;
+        }
+        else{
+            bad_urls++;
+            bad_urls_list.emplace_back(it);
+        }
+    }
+    
+    x.first_urls_good = good_urls;
+    x.first_urls_bad = bad_urls;
+    x.first_urls_bad_list = bad_urls_list;
+❱
+
+
 
 ◀private: static▶ void ☀Count_Good_And_Bad_Sha(Workspace_Metrics & x, std::vector<workspace_log::WorkspaceEvent> const& workspace_events) ❰
 
@@ -280,7 +317,16 @@ class
 
 
 
+◀private: static▶ bool ☀Is_Url_Good(std::string url)❰
 
+    std::vector<std::string> begins_with;
+    begins_with.emplace_back("https://storage.googleapis.com/aurora-imaging-artifacts-public/");
+    begins_with.emplace_back("https://mirror.bazel.build/github.com/");
+    begins_with.emplace_back("https://github.com/bazelbuild/");
+    begins_with.emplace_back("file:/var/lib/");
+    
+    return Begins_With_Any(url,begins_with);
+❱
 
 
 ◀private: static▶ std::string ☀Transform_Url_As_Needed(std::string url)❰

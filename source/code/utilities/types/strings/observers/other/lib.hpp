@@ -14,6 +14,7 @@ bool Ends_With(std::string const& str, std::string const& end_part);
 bool Begins_And_Ends_With(std::string const& str, std::string const& part);
 bool Begins_Or_Ends_With(std::string const& str, std::string const& part);
 bool Begins_With(std::string const& str, char const& start_part);
+
 bool Ends_With(std::string const& str, char const& end_part);
 bool Begins_And_Ends_With(std::string const& str, char const& part);
 bool Contains_Substring(std::string const& str, std::string const& part);
