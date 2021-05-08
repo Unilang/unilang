@@ -53,6 +53,9 @@ class
         //maybe use: https://github.com/github/git-sizer
         //TODO
         
+        //https://stackoverflow.com/questions/10622179/how-to-find-identify-large-commits-in-git-history
+        //TODO
+        
         
         auto contributers_str = execute("git --no-pager shortlog -sn --no-merges");
         auto contributer_lines = Split_Into_Parts_From_Newline(contributers_str);
