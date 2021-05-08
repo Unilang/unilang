@@ -64,6 +64,8 @@ class
     Unique_Counter<std::string> rule_classes;
     Unique_Counter<std::string> attribute_kinds;
     Unique_Counter<std::string> exec_properties;
+    Unique_Counter<std::string> test_sizes;
+    Unique_Counter<std::string> tags;
     
     //get metrics
     configured_target_count = results.cquery_result.results().size();
@@ -99,6 +101,19 @@ class
                         exec_properties.Add(pair.key());
                     }
                 }
+                
+                if (attribute.name() == "size" && attribute.type() == blaze_query::Attribute_Discriminator_STRING){
+                    auto str = attribute.string_value();
+                    test_sizes.Add(str);
+                }
+                
+                if (attribute.name() == "tags" && attribute.type() == blaze_query::Attribute_Discriminator_STRING_LIST){
+                    for (auto const& str: attribute.string_list_value()){
+                        tags.Add(str);
+                    }
+                }
+                
+                
             }
         }
     }
@@ -116,6 +131,8 @@ class
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "rule_classes","value",rule_classes.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "attribute_kinds","value",attribute_kinds.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "exec_properties","value",exec_properties.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "test_sizes","value",test_sizes.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "tags","value",tags.hash_table);
     
     
 ❱
