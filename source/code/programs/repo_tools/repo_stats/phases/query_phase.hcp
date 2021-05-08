@@ -89,13 +89,34 @@ class
             break;
         }
         
-        
+        if (it.target().has_rule()){
+            rule_classes.Add(it.target().rule().rule_class());
+            for (auto const& attribute: it.target().rule().attribute()){
+                attribute_kinds.Add(attribute.name());
+                
+                if (attribute.name() == "exec_properties" && attribute.type() == blaze_query::Attribute_Discriminator_STRING_DICT){
+                    for (auto pair: attribute.string_dict_value()){
+                        exec_properties.Add(pair.key());
+                    }
+                }
+            }
+        }
     }
+    
+    
+    
     
     
     //publish metrics
     phase_prefix += "cquery_";
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "target_count",std::to_string(configured_target_count));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "config_mnemonics","value",config_mnemonics.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "platform_names","value",platform_names.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "target_discriminator_breakdown","value",target_discriminator_breakdown.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "rule_classes","value",rule_classes.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "attribute_kinds","value",attribute_kinds.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "exec_properties","value",exec_properties.hash_table);
+    
     
 ❱
 
