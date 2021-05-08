@@ -119,6 +119,41 @@ class
     }
     
     
+    //if rule ends in *_test its a test.  Count that.
+    //maybe something interesting can be parsed out of attribute: args
+    //attribute: data (hoe many targets use data).  What is the average data count?
+    //attribute: deps (how many targets have deps).  What is the average deps count?
+    //we could cound "ruleInput" size
+    
+    //attribute: exec_compatible_with
+    //attribute: "target_compatible_with"
+    //attribute features (what are these?)
+    //attribute: "flaky" (count these)
+    //attribute: "licenses" (count these)
+    //attribute: "local" (count these)
+    //attribute: "timeout" (count these)
+    //attribute: "toolchains" (count these)
+    
+    //other attributes:
+    includes
+    copts
+    linkstatic
+    linkopts
+    defines
+    local_defines
+    env
+    alwayslink
+    include_prefix
+    python_version
+    py_interpreter
+    :run_under
+    linkshared
+    
+cxxopts
+cppopts
+clinkopts
+    
+    
     
     
     
