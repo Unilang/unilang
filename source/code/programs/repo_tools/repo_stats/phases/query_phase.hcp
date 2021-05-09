@@ -178,7 +178,6 @@ class
     //attribute: deps (how many targets have deps).  What is the average deps count?
     //we could count "ruleInput" size
     
-    //attribute features (what are these?)
     //attribute: "licenses" (count these)
     
     //other attributes:

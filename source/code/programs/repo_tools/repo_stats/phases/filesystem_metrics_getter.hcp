@@ -38,10 +38,23 @@ class
     Analyze_Source_Language_Types(x);
     Analyze_Source_Language_Types_Comment_Coverage(x);
     Analyze_Biggest_Files(x);
+    Analyze_Current_Repo_Size(x);
+    
     
     x.total_file_count  = as_signed(execute("find . ! -path './.git/*' -type f | wc -l"));
     
     return x;
+❱
+
+
+
+◀private: static▶ void ☀Analyze_Current_Repo_Size(Filesystem_Metrics & x) ❰
+    auto current_dir_size = execute("du -sb --summarize .");
+    
+    auto split = Default_Boost_Tokenize(current_dir_size);
+    if (!split.empty()){
+        x.current_dir_size_bytes = split[0];
+    }
 ❱
 
 ◀private: static▶ void ☀Analyze_Source_Language_Types(Filesystem_Metrics & x) ❰

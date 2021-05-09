@@ -71,6 +71,8 @@ class
         
         auto filesystem_metrics = Filesystem_Metrics_Getter::Get();
         
+        Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "current_dir_size_bytes",filesystem_metrics.current_dir_size_bytes);
+        
         Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "language_file_count","language",filesystem_metrics.code_types);
         Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "language_file_count_comment_coverage","language",filesystem_metrics.code_types_comment_coverage);
         

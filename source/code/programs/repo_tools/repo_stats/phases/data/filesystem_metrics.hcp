@@ -15,5 +15,7 @@ class
     
     int ፠total_file_count፠;
     std::map<std::string,int> ፠big_files፠;
+    
+    std::string current_dir_size_bytes;
 
 ▶
