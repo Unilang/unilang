@@ -58,12 +58,15 @@ class
     
     //declare metrics
     int configured_target_count = 0;
+    int test_count = 0;
     Unique_Counter<std::string> config_mnemonics;
     Unique_Counter<std::string> platform_names;
     Unique_Counter<std::string> target_discriminator_breakdown;
     Unique_Counter<std::string> rule_classes;
     Unique_Counter<std::string> attribute_kinds;
     Unique_Counter<std::string> exec_properties;
+    Unique_Counter<std::string> exec_compatible_with;
+    Unique_Counter<std::string> target_compatible_with;
     Unique_Counter<std::string> test_sizes;
     Unique_Counter<std::string> tags;
     
@@ -92,6 +95,12 @@ class
         }
         
         if (it.target().has_rule()){
+            
+            // I believe this is how bazel determines whether a target is a test or not- based on the rule name suffix.
+            if (Ends_With(it.target().rule().rule_class(),"_test")){
+                test_count++;
+            }
+            
             rule_classes.Add(it.target().rule().rule_class());
             for (auto const& attribute: it.target().rule().attribute()){
                 attribute_kinds.Add(attribute.name());
@@ -113,20 +122,28 @@ class
                     }
                 }
                 
+                if (attribute.name() == "exec_compatible_with" && attribute.type() == blaze_query::Attribute_Discriminator_LABEL_LIST){
+                    for (auto const& str: attribute.string_list_value()){
+                        exec_compatible_with.Add(str);
+                    }
+                }
+                
+                if (attribute.name() == "target_compatible_with" && attribute.type() == blaze_query::Attribute_Discriminator_LABEL_LIST){
+                    for (auto const& str: attribute.string_list_value()){
+                        target_compatible_with.Add(str);
+                    }
+                }
                 
             }
         }
     }
     
     
-    //if rule ends in *_test its a test.  Count that.
     //maybe something interesting can be parsed out of attribute: args
-    //attribute: data (hoe many targets use data).  What is the average data count?
+    //attribute: data (how many targets use data).  What is the average data count?
     //attribute: deps (how many targets have deps).  What is the average deps count?
-    //we could cound "ruleInput" size
+    //we could count "ruleInput" size
     
-    //attribute: exec_compatible_with
-    //attribute: "target_compatible_with"
     //attribute features (what are these?)
     //attribute: "flaky" (count these)
     //attribute: "licenses" (count these)
@@ -135,23 +152,23 @@ class
     //attribute: "toolchains" (count these)
     
     //other attributes:
-    includes
-    copts
-    linkstatic
-    linkopts
-    defines
-    local_defines
-    env
-    alwayslink
-    include_prefix
-    python_version
-    py_interpreter
-    :run_under
-    linkshared
+//     includes
+//     copts
+//     linkstatic
+//     linkopts
+//     defines
+//     local_defines
+//     env
+//     alwayslink
+//     include_prefix
+//     python_version
+//     py_interpreter
+//     :run_under
+//     linkshared
     
-cxxopts
-cppopts
-clinkopts
+// cxxopts
+// cppopts
+// clinkopts
     
     
     
@@ -159,13 +176,16 @@ clinkopts
     
     //publish metrics
     phase_prefix += "cquery_";
-    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "target_count",std::to_string(configured_target_count));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "test_count",std::to_string(configured_target_count));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "target_count",std::to_string(test_count));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "config_mnemonics","value",config_mnemonics.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "platform_names","value",platform_names.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "target_discriminator_breakdown","value",target_discriminator_breakdown.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "rule_classes","value",rule_classes.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "attribute_kinds","value",attribute_kinds.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "exec_properties","value",exec_properties.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "exec_compatible_with","value",exec_compatible_with.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "target_compatible_with","value",target_compatible_with.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "test_sizes","value",test_sizes.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "tags","value",tags.hash_table);
     
