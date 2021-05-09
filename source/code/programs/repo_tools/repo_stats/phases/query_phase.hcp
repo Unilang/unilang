@@ -73,6 +73,7 @@ class
     Unique_Counter<std::string> tags;
     Unique_Counter<std::string> timeouts;
     Unique_Counter<std::string> toolchains;
+    Unique_Counter<std::string> features;
     
     //get metrics
     configured_target_count = results.cquery_result.results().size();
@@ -161,6 +162,12 @@ class
                     }
                 }
                 
+                if (attribute.name() == "features" && attribute.type() == blaze_query::Attribute_Discriminator_STRING_LIST){
+                    for (auto const& str: attribute.string_list_value()){
+                        features.Add(str);
+                    }
+                }
+                
             }
         }
     }
@@ -214,7 +221,8 @@ class
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "test_sizes","value",test_sizes.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "tags","value",tags.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "timeouts","value",timeouts.hash_table);
-    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "toolchains","value",timeouts.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "toolchains","value",toolchains.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "features","value",features.hash_table);
     
     
 ❱
