@@ -60,6 +60,7 @@ class
     int configured_target_count = 0;
     int test_count = 0;
     int flaky_count = 0;
+    int local_count = 0;
     Unique_Counter<std::string> config_mnemonics;
     Unique_Counter<std::string> platform_names;
     Unique_Counter<std::string> target_discriminator_breakdown;
@@ -70,6 +71,8 @@ class
     Unique_Counter<std::string> target_compatible_with;
     Unique_Counter<std::string> test_sizes;
     Unique_Counter<std::string> tags;
+    Unique_Counter<std::string> timeouts;
+    Unique_Counter<std::string> toolchains;
     
     //get metrics
     configured_target_count = results.cquery_result.results().size();
@@ -141,6 +144,23 @@ class
                     }
                 }
                 
+                if (attribute.name() == "local" && attribute.type() == blaze_query::Attribute_Discriminator_BOOLEAN){
+                    if (attribute.boolean_value() == true){
+                        local_count++;
+                    }
+                }
+                
+                if (attribute.name() == "timeout" && attribute.type() == blaze_query::Attribute_Discriminator_STRING){
+                    auto str = attribute.string_value();
+                    timeouts.Add(str);
+                }
+                
+                if (attribute.name() == "toolchains" && attribute.type() == blaze_query::Attribute_Discriminator_LABEL_LIST){
+                    for (auto const& str: attribute.string_list_value()){
+                        toolchains.Add(str);
+                    }
+                }
+                
             }
         }
     }
@@ -152,11 +172,7 @@ class
     //we could count "ruleInput" size
     
     //attribute features (what are these?)
-    //attribute: "flaky" (count these)
     //attribute: "licenses" (count these)
-    //attribute: "local" (count these)
-    //attribute: "timeout" (count these)
-    //attribute: "toolchains" (count these)
     
     //other attributes:
 //     includes
@@ -186,6 +202,7 @@ class
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "target_count",std::to_string(configured_target_count));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "test_count",std::to_string(test_count));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "flaky_count",std::to_string(flaky_count));
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "local_count",std::to_string(local_count));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "config_mnemonics","value",config_mnemonics.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "platform_names","value",platform_names.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "target_discriminator_breakdown","value",target_discriminator_breakdown.hash_table);
@@ -196,6 +213,8 @@ class
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "target_compatible_with","value",target_compatible_with.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "test_sizes","value",test_sizes.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "tags","value",tags.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "timeouts","value",timeouts.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "toolchains","value",timeouts.hash_table);
     
     
 ❱
