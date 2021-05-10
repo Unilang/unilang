@@ -95,14 +95,13 @@ class
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "deps_without_sha",std::to_string(workspace_metrics.urls_not_have_sha));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "urls_missing_sha","url",workspace_metrics.urls_missing_sha);
     
-    //not that things have been fetched, let's get some file metrics about the fetched data
-    Temporarily_Move_To_Path_To_Call_Function(repo_context.repo.path,[&](){
-        auto external_dir_size_bytes = Get_Dir_Size::Calculate_Size_Of_Dir_In_Bytes("external/.");
-        auto external_total_file_count  = Get_Total_File_Count::Get("external/.");
-        
-        Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "external_dir_size_bytes",external_dir_size_bytes);
-        Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "external_total_file_count",external_total_file_count);
-    });
+    //now that things have been fetched, let's get some file metrics about the fetched data
+    auto deps_folder = execute(repo_context.program_to_run_build + " info output_base") + "/external";
+    auto external_dir_size_bytes = Get_Dir_Size::Calculate_Size_Of_Dir_In_Bytes(deps_folder);
+    auto external_total_file_count  = Get_Total_File_Count::Get(deps_folder);
+    
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "external_dir_size_bytes",external_dir_size_bytes);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "external_total_file_count",external_total_file_count);
 
 ❱
 
