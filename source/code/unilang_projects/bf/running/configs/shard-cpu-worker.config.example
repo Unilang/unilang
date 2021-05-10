@@ -80,7 +80,7 @@ cas: {
 #}
 
 # the number of concurrently available slots in the execute phase
-execute_stage_width: 1
+execute_stage_width: 6
 
 # the number of concurrently available slots in the input fetch phase
 input_fetch_stage_width: 1
