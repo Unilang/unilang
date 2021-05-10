@@ -162,6 +162,7 @@ hcp(
         "//code/utilities/formats/json/converters:json_file_io",
         "//code/utilities/program/wrappers/cloc:cloc_runner",
         "//code/utilities/types/strings/observers/splitting:lib",
+        "//code/utilities/filesystem/files/size:get_dir_size",
     ],
 )
 

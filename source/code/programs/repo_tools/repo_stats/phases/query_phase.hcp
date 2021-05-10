@@ -74,6 +74,8 @@ class
     Unique_Counter<std::string> timeouts;
     Unique_Counter<std::string> toolchains;
     Unique_Counter<std::string> features;
+    Unique_Counter<std::string> no_remote_rules;
+    Unique_Counter<std::string> no_cache_rules;
     
     //get metrics
     configured_target_count = results.cquery_result.results().size();
@@ -124,6 +126,13 @@ class
                 if (attribute.name() == "tags" && attribute.type() == blaze_query::Attribute_Discriminator_STRING_LIST){
                     for (auto const& str: attribute.string_list_value()){
                         tags.Add(str);
+                        
+                        if (str == "no-remote"){
+                            no_remote_rules.Add(it.target().rule().rule_class());
+                        }
+                        if (str == "no-cache"){
+                            no_cache_rules.Add(it.target().rule().rule_class());
+                        }
                     }
                 }
                 
@@ -222,7 +231,8 @@ class
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "timeouts","value",timeouts.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "toolchains","value",toolchains.hash_table);
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "features","value",features.hash_table);
-    
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "no_remote_rules","value",no_remote_rules.hash_table);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "no_cache_rules","value",no_cache_rules.hash_table);
     
 ❱
 

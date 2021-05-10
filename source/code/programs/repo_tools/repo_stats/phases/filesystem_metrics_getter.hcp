@@ -27,6 +27,7 @@ class
 ❪"code/utilities/formats/json/converters/json_file_io"❫
 ❪"code/utilities/program/wrappers/cloc/cloc_runner"❫
 ❪"code/utilities/types/strings/observers/splitting/lib"❫
+❪"code/utilities/filesystem/files/size/get_dir_size"❫
 ⚞⚟
 
 
@@ -38,7 +39,7 @@ class
     Analyze_Source_Language_Types(x);
     Analyze_Source_Language_Types_Comment_Coverage(x);
     Analyze_Biggest_Files(x);
-    Analyze_Current_Repo_Size(x);
+    x.current_dir_size_bytes = Get_Dir_Size::Calculate_Size_Of_Dir_In_Bytes(".");
     
     
     x.total_file_count  = as_signed(execute("find . ! -path './.git/*' -type f | wc -l"));

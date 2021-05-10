@@ -1,0 +1,19 @@
+class
+❪string❫
+⚯
+❪"code/utilities/program/call/lib"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
+⚞⚟
+
+
+
+◀public: static▶ std::string ☀Calculate_Size_Of_Dir_In_Bytes(std::string const& path) ❰
+    auto current_dir_size = execute("du -sb --summarize " + path);
+    
+    auto split = Default_Boost_Tokenize(current_dir_size);
+    if (!split.empty()){
+        return split[0];
+    }
+    
+    return 0;
+❱
