@@ -23,6 +23,8 @@ class
 ❪"code/utilities/metrics/metrics_publisher"❫
 ❪"code/programs/repo_tools/repo_stats/phases/bes_metrics_getter"❫
 ❪"code/programs/repo_tools/repo_stats/phases/workspace_metrics_getter"❫
+❪"code/utilities/filesystem/files/size/get_dir_size"❫
+❪"code/utilities/filesystem/files/size/get_total_file_count"❫
 ⚞⚟
 
 
@@ -92,6 +94,13 @@ class
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "deps_with_sha",std::to_string(workspace_metrics.urls_have_sha));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "deps_without_sha",std::to_string(workspace_metrics.urls_not_have_sha));
     Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "urls_missing_sha","url",workspace_metrics.urls_missing_sha);
+    
+    //not that things have been fetched, let's get some file metrics about the fetched data
+    auto external_dir_size_bytes = Get_Dir_Size::Calculate_Size_Of_Dir_In_Bytes("external/.");
+    auto external_total_file_count  = Get_Total_File_Count::Get("external/.");
+    
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "external_dir_size_bytes",external_dir_size_bytes);
+    Metrics_Publisher::Publish(endpoints,"g",phase_prefix + "external_total_file_count",external_total_file_count);
 
 ❱
 

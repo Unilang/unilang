@@ -41,8 +41,6 @@ class
     Analyze_Source_Language_Types_Comment_Coverage(x);
     Analyze_Biggest_Files(x);
     x.current_dir_size_bytes = Get_Dir_Size::Calculate_Size_Of_Dir_In_Bytes(".");
-    
-    
     x.total_file_count  = as_signed(Get_Total_File_Count::Get("."));
     
     return x;

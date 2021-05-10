@@ -52,6 +52,8 @@ hcp(
         "//code/utilities/metrics:metrics_publisher",
         "//code/programs/repo_tools/repo_stats/phases:bes_metrics_getter",
         "//code/programs/repo_tools/repo_stats/phases:workspace_metrics_getter",
+        "//code/utilities/filesystem/files/size:get_dir_size",
+        "//code/utilities/filesystem/files/size:get_total_file_count",
     ],
 )
 
