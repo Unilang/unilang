@@ -163,6 +163,7 @@ hcp(
         "//code/utilities/program/wrappers/cloc:cloc_runner",
         "//code/utilities/types/strings/observers/splitting:lib",
         "//code/utilities/filesystem/files/size:get_dir_size",
+        "//code/utilities/filesystem/files/size:get_total_file_count",
     ],
 )
 

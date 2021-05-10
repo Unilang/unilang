@@ -1,0 +1,14 @@
+class
+❪string❫
+⚯
+❪"code/utilities/program/call/lib"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
+⚞⚟
+
+
+
+◀public: static▶ std::string ☀Get(std::string const& path) ❰
+
+    auto results = execute("find " + path + " ! -path './.git/*' -type f | wc -l");
+    return results;
+❱
