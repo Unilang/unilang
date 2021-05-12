@@ -29,6 +29,8 @@ class
 ⚞⚟
 
 
+//this evaluates the dependencies of a build plan structure that existed internally at a company.
+//Still a good example of taking proto data and rendering a graph image.
 ◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
 
     //settings

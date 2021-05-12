@@ -44,6 +44,8 @@ class
 //https://docs.bazel.build/versions/master/workspace-log.html
 
 
+//A better way to solve the determinism problem is by running an action twice in a remote system and failing it if the outputs do not match.
+//that avoids the memory issue of creating two giant logs whose actions need paired up.
 ◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
 
     //get the default settings modified by user's program options.
