@@ -71,6 +71,5 @@
 #https://www.opensourceforu.com/2016/07/many-approaches-sandboxing-linux/
 #https://wiki.debian.org/Sandbox
 
-
 #https://chromium.googlesource.com/chromium/src/+/master/docs/linux/sandboxing.md
 #http://web.archive.org/web/20141014085847/http://plash.beasts.org/environment.html

@@ -6,7 +6,7 @@ load("//bazel/rules/cpp:object.bzl", "cpp_object")
 hcp(
     name = "metrics_publisher",
     deps = [
-        "//code/utilities/data_structures/endpoint:endpoint",
+        "//code/utilities/data_structures/endpoint",
         "//code/utilities/web/statsd:statsd_nc_poster",
     ],
 )

@@ -278,6 +278,7 @@ code
 ....name
 ....tag
 .....name
+....size
 ....reason for testing
 .....explanation
 ....reason for failing

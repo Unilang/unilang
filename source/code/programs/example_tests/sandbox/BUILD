@@ -10,5 +10,5 @@ sh_test(
 sh_test(
     name = "use_sandbox",
     srcs = ["use_sandbox.sh"],
-    exec_properties = {'linux-sandbox': 'True'},
+    exec_properties = {"linux-sandbox": "True"},
 )

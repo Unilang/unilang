@@ -161,6 +161,7 @@ class
     //Testing
     x.specs.emplace_back(Gtest());
     x.specs.emplace_back(Lcov());
+    x.specs.emplace_back(Catch2());
     
     //Benchmarking
     x.specs.emplace_back(Google_Benchmark());
@@ -899,6 +900,12 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "lcov";
     Add_Unilang_Github_Mirror(spec,"lcov","a5dd9529f9232b8d901a4d6eb9ae54cae179e5b3","97615b9cbb3fae1d1c655c7201b9aa61d59dd8c18eae2a4f94dcea747aa6ecf4");
+    return spec;
+❱
+◀private: static▶ Dependency_Specification ☀Catch2()❰
+    Dependency_Specification spec;
+    spec.lib_name = "catch2";
+    Add_Unilang_Github_Mirror(spec,"Catch2","5eb7aa4f90fd3822adf1ba7a469b061af8bb2713","f9a7d2c608621e76ef230e6142cc978882c3f9e0bc22b7bbecbfff56a7c4ef6a");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Google_Benchmark()❰

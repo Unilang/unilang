@@ -10,10 +10,10 @@ cc_library(
     deps = [
         "//code/utilities/filesystem/paths:lib",
         "//code/utilities/program/call:lib",
+        "//code/utilities/program/call/process_spawn/timed:timed_process_spawner",
         "//code/utilities/random:lib",
         "//code/utilities/random/files:random_files",
         "//code/utilities/types/strings/observers/converting:lib",
-        "//code/utilities/program/call/process_spawn/timed:timed_process_spawner",
     ],
 )
 

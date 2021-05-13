@@ -1,6 +1,5 @@
 #Clang compiler warnings to use by other rules
 
-
 #Linker warnings:
 #"-Wl,--warn-execstack",
 #"-Wl,--detect-odr-violations",
