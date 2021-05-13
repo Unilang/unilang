@@ -23,6 +23,13 @@
 
 //unity & bolt visual scripting
 
+// https://developers.google.com/blockly/
+// https://processing.org/
+// scratch
+// https://processing.org/
+// bluepint - in unreal engine (node connecting)
+// Etoys: Squeak Smalltalk
+
 
 
 //ideas:
