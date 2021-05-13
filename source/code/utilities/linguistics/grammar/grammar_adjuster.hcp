@@ -47,6 +47,7 @@ class
         warnings += Potentially_Auto_Capitalize_Words(word,grammar);
         warnings += Potentially_Auto_Full_Caps_Words(word,grammar);
         warnings += Potentially_Fix_NonEnglish_Words(word,grammar);
+        warnings += Potentially_Fix_Filler_Words(word,grammar);
         
         
         //SID:
@@ -129,6 +130,22 @@ class
 
   //TODO
   std::vector<std::string> warnings;
+  return warnings;
+❱
+◀private: static▶ std::vector<std::string> ☀Potentially_Fix_Filler_Words(std::string & word, Comment_Grammar_Settings const& grammar)❰
+
+
+  std::vector<std::string> warnings;
+  
+  
+  for (auto const& bad_word : grammar.filler_words){
+    if (bad_word == word){
+      
+      if (grammar.warn_filler_words){
+        Add_Warning(warnings,"filler word found: " + word);
+      }
+    }
+  }
   return warnings;
 ❱
 

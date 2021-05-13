@@ -22,6 +22,22 @@ public:
    Comment_Grammar_Cliche_Settings cliches;
    Comment_Grammar_Bad_Word_Settings bad_words;
    
+   //AKA "soft words"
+   
+   bool fix_filler_words=false;
+   bool warn_filler_words=true;
+   std::vector<std::string> filler_words{
+      "first",
+      "firstly",
+      "second",
+      "secondly",
+      "third",
+      "thirdly",
+      "finally",
+      "lastly",
+      "just",
+   };
+   
    //basically a spell check of common things we've seen ourselves do
    bool use_auto_corrects=true;
    bool warn_about_auto_corrects=true;
