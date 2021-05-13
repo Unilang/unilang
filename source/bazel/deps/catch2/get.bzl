@@ -6,7 +6,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 def catch2():
     http_archive(
         name = "catch2",
-        sha256 = "f9a7d2c608621e76ef230e6142cc978882c3f9e0bc22b7bbecbfff56a7c4ef6a",
+        sha256 = "4f6d81264d63982b44f3028b85db07a4a8f4ca44006bffc3f1fa5d6a56b56e93",
         strip_prefix = "Catch2-5eb7aa4f90fd3822adf1ba7a469b061af8bb2713",
         urls = [
             "https://github.com/Unilang/Catch2/archive/5eb7aa4f90fd3822adf1ba7a469b061af8bb2713.tar.gz",
