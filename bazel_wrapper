@@ -23,6 +23,7 @@ sha256=7bee349a626281fc8b8d04a7a0b0358492712377400ab12533aeb39c2eb2b901
 cache_root="${HOME}/.cache"
 install_dir="${cache_root}/bazel/${sha256}"
 bazel="${install_dir}/bazel"
+bazel=/home/luxe/Desktop/repos/bazel/bazel-bin/src/bazel-dev
 
 function robust_download() {
     while [ 1 ]; do
