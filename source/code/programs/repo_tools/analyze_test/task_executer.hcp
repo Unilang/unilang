@@ -1,0 +1,37 @@
+class
+❪iostream❫
+❪fstream❫
+❪"code/programs/repo_tools/analyze_test/program_options/program_options"❫
+❪"code/utilities/build/build_repo_establisher/build_repo_establisher"❫
+⚯
+❪"code/utilities/program/wrappers/bazel/query/bazel_aquery_runner"❫
+❪"code/utilities/program/wrappers/bazel/query/bazel_cquery_runner"❫
+❪"code/utilities/program/wrappers/bazel/query/bazel_query_runner"❫
+❪"code/utilities/program/wrappers/bazel/fetch/bazel_fetch_runner"❫
+❪"code/utilities/program/wrappers/bazel/clean/bazel_clean_runner"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
+❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/formats/json/converters/type_to_json_string"❫
+❪"code/utilities/web/statsd/statsd_nc_poster"❫
+❪"code/utilities/data_structures/counters/unique_counter/unique_counter"❫
+❪"code/utilities/data_structures/endpoint/endpoint"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
+❪"code/utilities/types/strings/observers/converting/lib"❫
+⚞⚟
+
+
+◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
+
+    
+
+    //clone phase
+    //We establish a repo and a context for building artifacts in it.
+    //This setup tries to be agnostic to any expectations about the repo's hosting, layout, and build system.
+    //It tries to derive things like:
+    //where/how the repository is cloned from, what branch it should be on or whether the repo already exists on the system.
+    //Analyze the repository to learn how to build it
+    auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
+
+    
+❱
