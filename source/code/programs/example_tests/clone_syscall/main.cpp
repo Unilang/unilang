@@ -15,7 +15,6 @@ static int child_func(void* arg) {
 }
 
 int main(int argc, char** argv) {
-  // Allocate stack for child task.
   const int STACK_SIZE = 65536;
   char* stack = (char*)malloc(STACK_SIZE);
   if (!stack) {
@@ -23,7 +22,6 @@ int main(int argc, char** argv) {
     exit(1);
   }
 
-  // When called with the command-line argument "vm", set the CLONE_VM flag on.
   unsigned long flags = 0;
   if (argc > 1 && !strcmp(argv[1], "vm")) {
     flags |= CLONE_VM;
