@@ -24,7 +24,7 @@ cache_root="${HOME}/.cache"
 install_dir="${cache_root}/bazel/${sha256}"
 bazel="${install_dir}/bazel"
 if [[ -n "${BAZEL_PATH_OVERRIDE-}" ]]; then
-bazel=${BAZEL_PATH_OVERRIDE}
+    bazel=${BAZEL_PATH_OVERRIDE}
 fi
 
 function robust_download() {

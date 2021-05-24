@@ -108,6 +108,7 @@ class
     Add_Linux_x86_64(infos,"3.7.1","f4187af08710eb16e1bde892584207e3709a75aa15f89aa1ef2fd4ae73996a63");
     Add_Linux_x86_64(infos,"3.7.2","70dc0bee198a4c3d332925a32d464d9036a831977501f66d4996854ad4e4fc0d");
     Add_Linux_x86_64(infos,"4.0.0","7bee349a626281fc8b8d04a7a0b0358492712377400ab12533aeb39c2eb2b901");
+    Add_Linux_x86_64(infos,"4.1.0","0eb2e378d2782e7810753e2162245ad1179c1bb12f848c692b4a595b4edf779b");
     
     //curl -L https://github.com/bazelbuild/bazel/releases/download/3.4.1/bazel-3.4.1-linux-x86_64 | sha256sum
     
