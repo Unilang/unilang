@@ -17,7 +17,7 @@ class
 ◀public: static▶ std::string ☀Possibly_Get_Default_Value(model::DataMember const& it, Source_Language const& source_language)❰
 
     std::string default_seperator = " = ";
-    auto default_value = First_Element_Or_Default(it.default_value).value;
+    auto default_value = First_Element_Or_Default(First_Element_Or_Default(it.default_value).value).value;
     
     if (!default_value.empty()){
         std::string result;

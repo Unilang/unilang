@@ -114,14 +114,14 @@ class
         std::string title = name + ": PASS";
         Append(results,title);
         Append(results," (");
-        Append(results,std::to_string(std::chrono::duration_cast<std::chrono::minutes>(x.time).count()));
+        Append(results,std::to_string(std::chrono::duration_cast<std::chrono::minutes>(x.time_s).count()));
         Append_With_Newline(results,"m)");
     }
     else {
         std::string title = name + ": FAIL";
         Append(results,title);
         Append(results," (");
-        Append(results,std::to_string(std::chrono::duration_cast<std::chrono::minutes>(x.time).count()));
+        Append(results,std::to_string(std::chrono::duration_cast<std::chrono::minutes>(x.time_s).count()));
         Append_With_Newline(results,"m)");
         Append_With_Newline(results,x.results.stderr);
     }

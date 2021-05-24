@@ -315,6 +315,7 @@ code
 ...identifier
 ...units
 ...default value
+....value
 ....default value rationale
 ...partial pack amount
 ...type
