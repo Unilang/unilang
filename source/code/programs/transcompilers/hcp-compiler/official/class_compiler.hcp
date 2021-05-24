@@ -144,6 +144,8 @@ class
   std::string str;
   str += "template<class Archive>\n";
   str += "void serialize(Archive & ar, const unsigned int version){\n";
+  str += "(void)ar; //avoid warning \n";
+  str += "(void)version; //avoid warning \n";
   for (auto const& data_member: structure.Data_Members()){
       str += "\tar & " + as_string(data_member) + ";\n";
   }
