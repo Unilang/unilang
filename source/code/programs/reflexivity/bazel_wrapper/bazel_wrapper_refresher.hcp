@@ -70,6 +70,10 @@ class
     Append_With_Newline(str,"install_dir=\"${cache_root}/bazel/${sha256}\"");
     Append_With_Newline(str,"bazel=\"${install_dir}/bazel\"");
     
+    Append_With_Newline(str,"if [[ -n \"${BAZEL_PATH_OVERRIDE-}\" ]]; then");
+    Append_With_Newline(str,"    bazel=${BAZEL_PATH_OVERRIDE}");
+    Append_With_Newline(str,"fi");
+    
     //bash functions
     Append_With_Newline(str,Robust_Download());
     Append_With_Newline(str,Bootstrap_Bazel());

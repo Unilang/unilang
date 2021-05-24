@@ -4,5 +4,5 @@ package(
 
 cc_test(
     name = "main",
-    srcs = ["main.cpp"]
+    srcs = ["main.cpp"],
 )
