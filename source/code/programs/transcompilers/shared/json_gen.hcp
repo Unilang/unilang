@@ -52,6 +52,8 @@ class
   Append(str,"void to_json(nlohmann::json& j, const ");
   Append(str,type_name);
   Append_With_Newline(str,"&x) {");
+  Append_With_Newline(str,"(void)x; //avoid warning");
+  Append_With_Newline(str,"(void)j; //avoid warning");
   Append_With_Newline(str,"j = nlohmann::json{");
   for (auto const& data_member: data_members){
     Append(str,"{\"");
@@ -68,6 +70,8 @@ class
   Append(str,"void from_json(const nlohmann::json& j, ");
   Append(str,type_name);
   Append_With_Newline(str,"&x) {");
+  Append_With_Newline(str,"(void)x; //avoid warning");
+  Append_With_Newline(str,"(void)j; //avoid warning");
   for (auto const& data_member: data_members){
     Append(str,"j.at(\"");
     Append(str,data_member);

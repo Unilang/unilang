@@ -30,15 +30,18 @@ class
         std::visit(overloaded {
             [&](Positioned_Buildable_Face_Tree & x) {
                 //NOT NEEDED
+                (void)x;
             },
             [&](Positioned_Buildable_Schema_Faced_Tree & x) {
                 x.state.settings.schema = Buildable_Schema_Faced_Tree_Default_Schema::Get();
             },
             [&](Positioned_Image_Data & x) {
                 //NOT NEEDED
+                (void)x;
             },
             [&](Positioned_Animated_Image_Data & x) {
                 //NOT NEEDED
+                (void)x;
             },
         }, it.element);
 ❱
