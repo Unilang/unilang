@@ -2547,6 +2547,8 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "secp256k1";
     Add_Unilang_Github_Mirror(spec,"secp256k1","3dc8c072b6d84845820c1483a2ee21094fb87cc3","85d571a698011159666fa596907028511fc98b6ac73505cf34a4656dba7bd8e5");
+    spec.patch_files.emplace_back("p1");
+    spec.patch_args.emplace_back("-p1");
     
     
     spec.build_defs.raw_starlark = 
@@ -2560,6 +2562,7 @@ hdrs = glob(
         "include/**/*.hpp",
         "src/**/*.hpp",
         "src/**/*.h",
+        "src/**/*.c",
     ],
     exclude = [
     ],
@@ -2574,12 +2577,37 @@ cc_library(
     ],
 )
 
+#build srcs
+srcs = glob(
+    include = [
+        "src/**/*.c"
+    ],
+    exclude = [
+        "src/valgrind_ctime_test.c",
+        "src/tests.c",
+        "src/bench_ecmult.c",
+        "src/bench_ecdh.c",
+        "src/bench_internal.c",
+        "src/bench_verify.c",
+        "src/tests_exhaustive.c",
+        "src/bench_recover.c",
+        "src/gen_context.c",
+        "src/bench_sign.c",
+        "src/bench_schnorrsig.c",
+        "src/bench_recover.c",
+    ],
+)
+
 cc_library(
     name = "lib",
-    srcs = glob(["src/**/*.c"]),
+    srcs = srcs,
     copts = [
+        "-DECMULT_WINDOW_SIZE=2",
+        "-DECMULT_GEN_PREC_BITS=4"
     ],
     includes = [
+        "include",
+        "src",
     ],
     deps = [
         ":hdrs",
