@@ -15,7 +15,7 @@ class
     settings.infos = Bazel_Version_Info_Getter::Get();
     
     //choose
-    settings.bazel_version = "4.0.0";
+    settings.bazel_version = "4.1.0";
     
     
     //programs needed by bazel wrapper for bootstrapping

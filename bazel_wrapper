@@ -12,8 +12,8 @@ set -euo pipefail
 # Regardless, we'll always want some kind of bare bones shell script to get/call other build tools.
 
 
-url=https://github.com/bazelbuild/bazel/releases/download/4.0.0/bazel-4.0.0-linux-x86_64
-sha256=7bee349a626281fc8b8d04a7a0b0358492712377400ab12533aeb39c2eb2b901
+url=https://github.com/bazelbuild/bazel/releases/download/4.1.0/bazel-4.1.0-linux-x86_64
+sha256=0eb2e378d2782e7810753e2162245ad1179c1bb12f848c692b4a595b4edf779b
 
 # paths to place bazel related artifacts.
 # CONSIDER(thickey): should we really install bazel in the user's home directory?

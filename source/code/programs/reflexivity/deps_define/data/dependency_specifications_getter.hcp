@@ -201,6 +201,7 @@ class
     
     //encryption
     x.specs.emplace_back(Monocypher());
+    x.specs.emplace_back(secp256k1());
     
     
     //Debugging
@@ -2542,6 +2543,52 @@ cc_library(
     Add_Unilang_Github_Mirror(spec,"monocypher","45524e41fc84054b0e15304195fa5d3b61e816b5","7b57f854379a7743c21f8a0836081cf05dd2b126f285f576921f2044dd13d4ad");
     return spec;
 ❱
+◀private: static▶ Dependency_Specification ☀secp256k1()❰
+    Dependency_Specification spec;
+    spec.lib_name = "secp256k1";
+    Add_Unilang_Github_Mirror(spec,"secp256k1","3dc8c072b6d84845820c1483a2ee21094fb87cc3","85d571a698011159666fa596907028511fc98b6ac73505cf34a4656dba7bd8e5");
+    
+    
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"])
+
+#build headers
+hdrs = glob(
+    include = [
+        "include/**/*.h",
+        "include/**/*.hpp",
+        "src/**/*.hpp",
+        "src/**/*.h",
+    ],
+    exclude = [
+    ],
+)
+
+cc_library(
+    name = "hdrs",
+    hdrs = hdrs,
+    includes = [
+        "include",
+        "src",
+    ],
+)
+
+cc_library(
+    name = "lib",
+    srcs = glob(["src/**/*.c"]),
+    copts = [
+    ],
+    includes = [
+    ],
+    deps = [
+        ":hdrs",
+    ],
+)
+)RAW_STRING";
+    return spec;
+❱
+
 
 ◀private: static▶ Dependency_Specification ☀Tabulator()❰
     Dependency_Specification spec;
