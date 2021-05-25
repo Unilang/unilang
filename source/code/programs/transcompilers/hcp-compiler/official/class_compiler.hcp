@@ -89,6 +89,7 @@ class
 ❱
 
 ◀private: static▶ void ☀Dump_HPP(std::wofstream & outfile, Class_Structure const& structure, std::string const& hcp_file, bool const& utility_functions)❰
+    (void)hcp_file;
     auto str = Get_Class_Name(structure);
     std::wstring wstr(str.begin(),str.end());
     outfile << "class " << wstr;
