@@ -64,7 +64,7 @@ int main() {
     
     
     get_private_key(ctx,wallet);
-    std::cout << wallet.secret_key_hex << std::endl;
+    std::cout << "PRIVATE: " << wallet.secret_key_hex << std::endl;
 
     if (!secp256k1_ec_seckey_verify(ctx, wallet.secret_key)) {
         printf("Invalid secret key\n");
