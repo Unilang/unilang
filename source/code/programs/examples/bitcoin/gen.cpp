@@ -40,7 +40,7 @@ std::string to_caps_hex(unsigned char *s){
     return mystr;
 }
 
-void get_private_key(secp256k1_context* ctx, Bitcoin_Wallet & wallet){
+void fill_private_key(Bitcoin_Wallet & wallet){
     
     
     /* Load private key (seckey) from random bytes */
@@ -58,12 +58,14 @@ void get_private_key(secp256k1_context* ctx, Bitcoin_Wallet & wallet){
 
 
 int main() {
-    secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
     
     Bitcoin_Wallet wallet;
     
+    secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
     
-    get_private_key(ctx,wallet);
+    
+    
+    fill_private_key(wallet);
     std::cout << "PRIVATE: " << wallet.secret_key_hex << std::endl;
 
     if (!secp256k1_ec_seckey_verify(ctx, wallet.secret_key)) {
