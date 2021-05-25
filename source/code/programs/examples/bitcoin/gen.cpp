@@ -3,6 +3,8 @@
 #include <openssl/sha.h>
 #include <openssl/ripemd.h>
 #include <string.h>
+#include <string>
+#include <iostream>
 
 static secp256k1_context *ctx = NULL;
 typedef unsigned char byte;
@@ -36,7 +38,7 @@ int main() {
     ctx = secp256k1_context_create(
     SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
     /* Declare the private variable as a 32 byte unsigned char */
-    unsigned char seckey[32];
+    unsigned char seckey[32] = "bitcoin";
     
     /* Load private key (seckey) from random bytes */
     FILE *frand = fopen("/dev/urandom", "r");
@@ -46,6 +48,11 @@ int main() {
     
     /* Close the file */
     fclose(frand);
+    
+    //memset(seckey, 'Z', sizeof seckey);
+   //seckey = "KxhniiXPCdBBpJmQnYPHmutKJq42Wm3yPY6AAKxvDPnTt8KA8BJF";
+    std::string test = "sdfsdf";
+    
 
     /* Loop through and print each byte of the private key, */
     printf("Private Key: ");
@@ -65,7 +72,7 @@ int main() {
     secp256k1_ec_pubkey_create(ctx, &pubkey, seckey);
 
     size_t pk_len = 65;
-    char pk_bytes[34];
+    unsigned char pk_bytes[34];
 
     /* Serialize Public Key */
     secp256k1_ec_pubkey_serialize(
@@ -114,6 +121,8 @@ int main() {
     pubaddress[34-(n-1)] = '\0';
     }
 
+    std::string final_address = address;
+    std::cout << final_address << std::endl;
     printf("Address: %s\n\n", address);
 }
 

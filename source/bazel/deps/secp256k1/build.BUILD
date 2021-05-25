@@ -28,7 +28,7 @@ cc_library(
 #build srcs
 srcs = glob(
     include = [
-        "src/**/*.c"
+        "src/**/*.c",
     ],
     exclude = [
         "src/valgrind_ctime_test.c",
@@ -51,7 +51,7 @@ cc_library(
     srcs = srcs,
     copts = [
         "-DECMULT_WINDOW_SIZE=2",
-        "-DECMULT_GEN_PREC_BITS=4"
+        "-DECMULT_GEN_PREC_BITS=4",
     ],
     includes = [
         "include",
