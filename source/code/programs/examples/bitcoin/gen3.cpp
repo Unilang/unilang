@@ -1,18 +1,15 @@
 #include <stdio.h>
-#include "include/secp256k1.h"
+#include <secp256k1.h>
 #include <openssl/sha.h>
 #include <openssl/ripemd.h>
 #include <string.h>
-#include <string>
-#include <iostream>
-#include <sstream>
-#include "code/programs/examples/bitcoin/bitcoin_wallet.hpp"
 
-
+static secp256k1_context *ctx = NULL;
+typedef unsigned char byte;
 
 
 /* See https://en.wikipedia.org/wiki/Positional_notation#Base_conversion */
-char* base58(unsigned char *s, int s_size, char *out, int out_size) {
+char* base58(byte *s, int s_size, char *out, int out_size) {
         static const char *tmpl = "123456789"
                 "ABCDEFGHJKLMNPQRSTUVWXYZ"
                 "abcdefghijkmnopqrstuvwxyz";
@@ -32,49 +29,40 @@ char* base58(unsigned char *s, int s_size, char *out, int out_size) {
         return out;
 }
 
-std::string to_caps_hex(unsigned char *s){
-    std::stringstream ss;
-    for(int i=0; i<32; ++i)
-        ss << std::hex << std::uppercase << (int)s[i];
-    std::string mystr = ss.str();
-    return mystr;
-}
 
-void get_private_key(secp256k1_context* ctx, Bitcoin_Wallet & wallet){
-    
+
+
+int main() {
+    ctx = secp256k1_context_create(
+    SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
+    /* Declare the private variable as a 32 byte unsigned char */
+    unsigned char seckey[32];
     
     /* Load private key (seckey) from random bytes */
     FILE *frand = fopen("/dev/urandom", "r");
     
     /* Read 32 bytes from frand */
-    fread(wallet.secret_key, 32, 1, frand);
+    fread(seckey, 32, 1, frand);
     
     /* Close the file */
     fclose(frand);
-    
-    wallet.secret_key_hex = to_caps_hex(wallet.secret_key);
-}
 
+    /* Loop through and print each byte of the private key, */
+    printf("Private Key: ");
+    for(int i=0; i<32; i++) {
+            printf("%02X", seckey[i]);
+    }
+    printf("\n");
 
-
-int main() {
-    secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
-    
-    Bitcoin_Wallet wallet;
-    
-    
-    get_private_key(ctx,wallet);
-    std::cout << wallet.secret_key_hex << std::endl;
-
-    if (!secp256k1_ec_seckey_verify(ctx, wallet.secret_key)) {
-        printf("Invalid secret key\n");
-        return 1;
+    if (!secp256k1_ec_seckey_verify(ctx, seckey)) {
+    printf("Invalid secret key\n");
+    return 1;
     }
 
 
 
     secp256k1_pubkey pubkey;
-    secp256k1_ec_pubkey_create(ctx, &pubkey, wallet.secret_key);
+    secp256k1_ec_pubkey_create(ctx, &pubkey, seckey);
 
     size_t pk_len = 65;
     unsigned char pk_bytes[34];
@@ -91,8 +79,8 @@ int main() {
 
 
     char pubaddress[34];
-    unsigned char s[65];
-    unsigned char rmd[5 + RIPEMD160_DIGEST_LENGTH];
+    byte s[65];
+    byte rmd[5 + RIPEMD160_DIGEST_LENGTH];
 
 
     int j;  
@@ -110,7 +98,9 @@ int main() {
 
 
     char address[34];
+    
     base58(rmd, 25, address, 34);
+    printf("Address: %s\n\n", address);
 
 
     /* Count the number of 1s at the beginning of the address */
@@ -125,10 +115,8 @@ int main() {
     /* Force the address to finish at the correct length */
     pubaddress[34-(n-1)] = '\0';
     }
-    
-    std::string public_address = pubaddress;
-    std::string final_address = address;
-    //std::cout << "Public: " << public_address << std::endl;
-    std::cout << "WALLET: " << final_address << std::endl;
+
+    printf("Address: %s\n\n", address);
 }
+
 

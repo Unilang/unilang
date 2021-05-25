@@ -1,0 +1,16 @@
+class
+❪string❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    //secret
+    /* Declare the private variable as a 32 byte unsigned char */
+    unsigned char secret_key[32];
+    std::string secret_key_hex;
+    
+    //wallet
+    std::string wallet_address;
+▶
