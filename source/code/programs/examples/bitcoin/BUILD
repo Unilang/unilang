@@ -20,6 +20,7 @@ cpp_main(
         "@boost//:range",
         "@openssl//:crypto",
         "@secp256k1//:lib",
+        "@libbase58//:lib",
     ],
 )
 

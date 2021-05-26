@@ -62,7 +62,11 @@ int main() {
 
 
     secp256k1_pubkey pubkey;
-    secp256k1_ec_pubkey_create(ctx, &pubkey, seckey);
+    if (secp256k1_ec_pubkey_create(ctx, &pubkey, seckey) == 0){
+        printf("secp256k1_ec_pubkey_create\n");
+        return 1;
+    }
+        
 
     size_t pk_len = 65;
     unsigned char pk_bytes[34];

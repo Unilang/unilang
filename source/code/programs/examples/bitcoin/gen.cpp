@@ -1,5 +1,8 @@
 #include <stdio.h>
+#include <algorithm>
+#include <cstdint>
 #include "include/secp256k1.h"
+#include "libbase58.h"
 #include <openssl/sha.h>
 #include <openssl/ripemd.h>
 #include <string.h>
@@ -12,7 +15,6 @@
 #include "boost/algorithm/hex.hpp"
 #include "boost/range/begin.hpp"
 #include "boost/range/end.hpp"
-#include <algorithm>
 
 
 
@@ -79,9 +81,25 @@ std::string unhex(std::string const& str){
     return new_str;
 }
 
+// void skstr_to_sk(const unsigned char *sk_str, unsigned char *sk)
+// {
+//   const unsigned char *sk_pos = sk_str;
+//   int i;
+
+//   for (i = 0; i < PRIVATE_KEY_SIZE; i++) {
+//       sscanf(sk_pos, "%2hhx", &sk[i]);
+//       sk_pos += 2;
+//   }
+// }
+
 
 int main() {
     
+    
+    //Demo this was written off of:
+    //https://royalforkblog.github.io/2014/08/11/graphical-address-generator/
+    
+    //Private key parts
     
     
     //hash a word
@@ -104,24 +122,28 @@ int main() {
     
     
     //convert to base52 private key
-    char p2[34];
-    base58((unsigned char*)unhex(stage1).c_str(), stage1.size(), p2, 34);
+    char p2[256];
+    size_t new_size = 256;
+    std::string stage2_unhex = unhex(stage2);
+    std::cout << std::boolalpha << b58enc(p2, &new_size, stage2_unhex.c_str(), stage2_unhex.size()) << std::endl;
     std::string base58_address(p2);
     std::cout << base58_address << std::endl;
-    exit(0);
     
-    
-    
-    Bitcoin_Wallet wallet;
-    
+    //Public key parts
     secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
     
     
     
-    fill_private_key(wallet);
-    std::cout << "PRIVATE: " << wallet.secret_key_hex << std::endl;
 
-    if (!secp256k1_ec_seckey_verify(ctx, wallet.secret_key)) {
+    std::string sha256_unhex = unhex(sha256);
+    std::cout << sha256_unhex.size() << std::endl;
+    unsigned char m_Test[32];
+    strcpy( (char*) m_Test, sha256_unhex.c_str() );
+    
+    
+    
+    //std::cout << sha256_unhex << std::endl;
+    if (!secp256k1_ec_seckey_verify(ctx, m_Test)) {
         printf("Invalid secret key\n");
         return 1;
     }
@@ -129,10 +151,10 @@ int main() {
 
 
     secp256k1_pubkey pubkey;
-    secp256k1_ec_pubkey_create(ctx, &pubkey, wallet.secret_key);
+    secp256k1_ec_pubkey_create(ctx, &pubkey, m_Test);
 
-    size_t pk_len = 65;
     unsigned char pk_bytes[34];
+    size_t pk_len = 65;
 
     /* Serialize Public Key */
     secp256k1_ec_pubkey_serialize(
@@ -140,9 +162,9 @@ int main() {
     pk_bytes,
     &pk_len,
     &pubkey,
-    SECP256K1_EC_UNCOMPRESSED
+     SECP256K1_EC_UNCOMPRESSED
+    //SECP256K1_EC_COMPRESSED
     );
-
 
 
     char pubaddress[34];
@@ -150,10 +172,12 @@ int main() {
     unsigned char rmd[5 + RIPEMD160_DIGEST_LENGTH];
 
 
-    int j;  
-    for (j = 0; j < 65; j++) {
-    s[j] = pk_bytes[j];
+    for (int j = 0; j < 65; j++) {
+        s[j] = pk_bytes[j];
     }
+    
+    std::string ss((char*)s);
+    std::cout << to_caps_hex(ss) << std::endl;
 
 
     /* Set 0x00 byte for main net */
