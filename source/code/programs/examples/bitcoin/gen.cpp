@@ -94,16 +94,17 @@ std::string unhex(std::string const& str){
     return new_str;
 }
 
-// void skstr_to_sk(const unsigned char *sk_str, unsigned char *sk)
-// {
-//   const unsigned char *sk_pos = sk_str;
-//   int i;
-
-//   for (i = 0; i < PRIVATE_KEY_SIZE; i++) {
-//       sscanf(sk_pos, "%2hhx", &sk[i]);
-//       sk_pos += 2;
-//   }
-// }
+std::string base58(std::string str){
+    char p2[256];
+    size_t new_size = 256;
+    std::string stage2_unhex = unhex(str);
+    if (b58enc(p2, &new_size, stage2_unhex.c_str(), stage2_unhex.size()) == 0){
+        printf("b58enc\n");
+        exit(1);
+    }
+    std::string base58_address(p2);
+    return base58_address;
+}
 
 
 int main() {
@@ -135,14 +136,7 @@ int main() {
     
     
     //convert to base52 private key
-    char p2[256];
-    size_t new_size = 256;
-    std::string stage2_unhex = unhex(stage2);
-    if (b58enc(p2, &new_size, stage2_unhex.c_str(), stage2_unhex.size()) == 0){
-        printf("b58enc\n");
-        exit(1);
-    }
-    std::string base58_address(p2);
+    std::string base58_address = base58(stage2);
     std::cout << base58_address << std::endl;
     
     //Public key parts
@@ -212,7 +206,8 @@ std::cout << pub_checksum << std::endl;
 auto pub_hashed3 = pub_hashed2 + pub_checksum.substr(0,8);
 std::cout << pub_hashed3 << std::endl;
 
-
+    std::string wallet_address = base58(pub_hashed3);
+    std::cout << wallet_address << std::endl;
 
 
 
