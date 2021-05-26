@@ -72,16 +72,16 @@ std::string to_caps_hex_p2(std::string const& str){
 void fill_private_key(Bitcoin_Wallet & wallet){
     
     
-    /* Load private key (seckey) from random bytes */
-    FILE *frand = fopen("/dev/urandom", "r");
+    // /* Load private key (seckey) from random bytes */
+    // FILE *frand = fopen("/dev/urandom", "r");
     
-    /* Read 32 bytes from frand */
-    fread(wallet.secret_key, 32, 1, frand);
+    // /* Read 32 bytes from frand */
+    // fread(wallet.secret_key, 32, 1, frand);
     
-    /* Close the file */
-    fclose(frand);
+    // /* Close the file */
+    // fclose(frand);
     
-    wallet.secret_key_hex = to_caps_hex(wallet.secret_key);
+    // wallet.secret_key_hex = to_caps_hex(wallet.secret_key);
 }
 
 void fill_private_key(Bitcoin_Wallet & wallet, std::string phrase){
@@ -117,7 +117,7 @@ Bitcoin_Wallet create_wallet(std::string const& phrase){
     
     //hash a word
     auto sha256 = Sha256_Hasher::std_sha256(phrase);
-    std::cout << sha256 << std::endl;
+    //std::cout << sha256 << std::endl;
     
     
     //extend hash with bitcoin information
@@ -125,17 +125,17 @@ Bitcoin_Wallet create_wallet(std::string const& phrase){
     stage1 += "80"; //mainnet
     stage1 += sha256;
     stage1 += "01"; //compression
-    std::cout << stage1 << std::endl;
+    //std::cout << stage1 << std::endl;
     
     //add checksum
     auto checksum = Sha256_Hasher::std_sha256(unhex(Sha256_Hasher::std_sha256(unhex(stage1))));
     auto stage2 = stage1 + checksum.substr(0,8);
-    std::cout << stage2 << std::endl;
+    //std::cout << stage2 << std::endl;
     
     
     //convert to base52 private key
     std::string base58_address = base58(stage2);
-    std::cout << base58_address << std::endl;
+    //std::cout << base58_address << std::endl;
     
     //Public key parts
     secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
@@ -183,29 +183,29 @@ Bitcoin_Wallet create_wallet(std::string const& phrase){
   }
   
 for (int i = 0; i < 33; i++) {
-    printf("%.2x", pk_bytes[i]);
+    //printf("%.2x", pk_bytes[i]);
 }
-std::cout << std::endl;
+//std::cout << std::endl;
 
 std::string pub;
 for (int i = 0; i < 33; i++) {
     pub += fmt::sprintf( "%.2x", pk_bytes[i]);
 }
-std::cout << pub << std::endl;
+//std::cout << pub << std::endl;
     
 auto pub_hashed1 = Ripemd160_Hasher::ripemd160(unhex(Sha256_Hasher::std_sha256(unhex(pub))));
 std::string pub_hashed2;
 pub_hashed2 += "00";
 pub_hashed2 += pub_hashed1;
-std::cout << pub_hashed2 << std::endl;
+//std::cout << pub_hashed2 << std::endl;
 auto pub_checksum = Sha256_Hasher::std_sha256(unhex(Sha256_Hasher::std_sha256(unhex(pub_hashed2))));
-std::cout << pub_checksum << std::endl;
+//std::cout << pub_checksum << std::endl;
 
 auto pub_hashed3 = pub_hashed2 + pub_checksum.substr(0,8);
-std::cout << pub_hashed3 << std::endl;
+//std::cout << pub_hashed3 << std::endl;
 
     std::string wallet_address = base58(pub_hashed3);
-    std::cout << wallet_address << std::endl;
+    //std::cout << wallet_address << std::endl;
     
     //create wallet
     Bitcoin_Wallet x;
