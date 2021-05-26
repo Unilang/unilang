@@ -6,7 +6,13 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <openssl/evp.h>
 #include "code/programs/examples/bitcoin/bitcoin_wallet.hpp"
+#include "code/utilities/formats/encryption/SHA256/sha256_hasher.hpp"
+#include "boost/algorithm/hex.hpp"
+#include "boost/range/begin.hpp"
+#include "boost/range/end.hpp"
+#include <algorithm>
 
 
 
@@ -35,7 +41,15 @@ char* base58(unsigned char *s, int s_size, char *out, int out_size) {
 std::string to_caps_hex(unsigned char *s){
     std::stringstream ss;
     for(int i=0; i<32; ++i)
-        ss << std::hex << std::uppercase << (int)s[i];
+        ss << std::hex << std::uppercase << (unsigned int)s[i];
+    std::string mystr = ss.str();
+    return mystr;
+}
+
+std::string to_caps_hex(std::string const& str){
+    std::stringstream ss;
+    for(int i=0; i<str.size(); ++i)
+        ss << std::hex << std::uppercase << (unsigned int)str[i];
     std::string mystr = ss.str();
     return mystr;
 }
@@ -55,9 +69,48 @@ void fill_private_key(Bitcoin_Wallet & wallet){
     wallet.secret_key_hex = to_caps_hex(wallet.secret_key);
 }
 
+void fill_private_key(Bitcoin_Wallet & wallet, std::string phrase){
+}
+
+
+std::string unhex(std::string const& str){
+    std::string new_str;
+    boost::algorithm::unhex ( str, std::back_inserter (new_str));
+    return new_str;
+}
 
 
 int main() {
+    
+    
+    
+    //hash a word
+    std::string phrase = "bitcoin";
+    auto sha256 = Sha256_Hasher::std_sha256(phrase);
+    std::cout << sha256 << std::endl;
+    
+    
+    //extend hash with bitcoin information
+    std::string stage1;
+    stage1 += "80"; //mainnet
+    stage1 += sha256;
+    stage1 += "01"; //compression
+    std::cout << stage1 << std::endl;
+    
+    //add checksum
+    auto checksum = Sha256_Hasher::std_sha256(unhex(Sha256_Hasher::std_sha256(unhex(stage1))));
+    auto stage2 = stage1 + checksum.substr(0,8);
+    std::cout << stage2 << std::endl;
+    
+    
+    //convert to base52 private key
+    char p2[34];
+    base58((unsigned char*)unhex(stage1).c_str(), stage1.size(), p2, 34);
+    std::string base58_address(p2);
+    std::cout << base58_address << std::endl;
+    exit(0);
+    
+    
     
     Bitcoin_Wallet wallet;
     

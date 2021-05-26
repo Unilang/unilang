@@ -14,9 +14,12 @@ hcp(
 cpp_main(
     name = "gen",
     deps = [
+        "//code/programs/examples/bitcoin:bitcoin_wallet",
+        "//code/utilities/formats/encryption/SHA256:sha256_hasher",
+        "@boost//:algorithm",
+        "@boost//:range",
         "@openssl//:crypto",
         "@secp256k1//:lib",
-        "//code/programs/examples/bitcoin:bitcoin_wallet",
     ],
 )
 
@@ -35,4 +38,3 @@ cpp_main(
         "@secp256k1//:lib",
     ],
 )
-

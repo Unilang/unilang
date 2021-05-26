@@ -1,0 +1,87 @@
+class
+❪string❫
+❪stdio.h❫
+❪"include/secp256k1.h"❫
+❪openssl/sha.h❫
+❪openssl/ripemd.h❫
+❪openssl/evp.h❫
+❪iostream❫
+❪string.h❫
+❪string❫
+❪iostream❫
+❪sstream❫
+⚯
+⚞⚟
+
+
+//various implementations for creating hashing to sha256.
+//all functions should create the same results.
+◀public: static▶ std::string ☀std_sha256(const std::string str)
+❰
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+    SHA256_Update(&sha256, str.c_str(), str.size());
+    SHA256_Final(hash, &sha256);
+    std::stringstream ss;
+    for(int i = 0; i < SHA256_DIGEST_LENGTH; i++)
+    {
+        ss << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << (int)hash[i];
+    }
+    return ss.str();
+❱
+
+◀public: static▶ std::string ☀evp_sha256(const std::string& str)
+❰
+    std::string new_str;
+    evp_sha256(str,new_str);
+    return new_str;
+❱
+
+◀public: static▶ std::string ☀sha256(const std::string str)
+❰
+    auto results = SHA256((unsigned char*)str.c_str(), str.size(), 0);
+    std::stringstream ss;
+    for(int i = 0; i < SHA256_DIGEST_LENGTH; i++)
+    {
+        ss << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << (int)results[i];
+    }
+    return ss.str();
+❱
+
+
+
+◀private: static▶ bool ☀evp_sha256(const std::string& unhashed, std::string& hashed)
+❰
+    bool success = false;
+
+    EVP_MD_CTX* context = EVP_MD_CTX_new();
+
+    if(context != NULL)
+    {
+        if(EVP_DigestInit_ex(context, EVP_sha256(), NULL))
+        {
+            if(EVP_DigestUpdate(context, unhashed.c_str(), unhashed.length()))
+            {
+                unsigned char hash[EVP_MAX_MD_SIZE];
+                unsigned int lengthOfHash = 0;
+
+                if(EVP_DigestFinal_ex(context, hash, &lengthOfHash))
+                {
+                    std::stringstream ss;
+                    for(unsigned int i = 0; i < lengthOfHash; ++i)
+                    {
+                        ss << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << (int)hash[i];
+                    }
+
+                    hashed = ss.str();
+                    success = true;
+                }
+            }
+        }
+
+        EVP_MD_CTX_free(context);
+    }
+
+    return success;
+❱

@@ -100,7 +100,6 @@ int main() {
     char address[34];
     
     base58(rmd, 25, address, 34);
-    printf("Address: %s\n\n", address);
 
 
     /* Count the number of 1s at the beginning of the address */
@@ -115,6 +114,7 @@ int main() {
     /* Force the address to finish at the correct length */
     pubaddress[34-(n-1)] = '\0';
     }
+    
 
     printf("Address: %s\n\n", address);
 }

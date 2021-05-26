@@ -202,6 +202,7 @@ class
     //encryption
     x.specs.emplace_back(Monocypher());
     x.specs.emplace_back(secp256k1());
+    x.specs.emplace_back(libbase58());
     
     
     //Debugging
@@ -2604,6 +2605,60 @@ cc_library(
     copts = [
         "-DECMULT_WINDOW_SIZE=2",
         "-DECMULT_GEN_PREC_BITS=4"
+    ],
+    includes = [
+        "include",
+        "src",
+    ],
+    deps = [
+        ":hdrs",
+    ],
+)
+)RAW_STRING";
+    return spec;
+❱
+
+◀private: static▶ Dependency_Specification ☀libbase58()❰
+    Dependency_Specification spec;
+    spec.lib_name = "libbase58";
+    Add_Unilang_Github_Mirror(spec,"libbase58","b1dd03fa8d1be4be076bb6152325c6b5cf64f678","73b4c9bbb2002f781df6b92e40a5ed2b38ef74dfbf90ce83dc6e18af52e7a4b8");
+    // spec.patch_files.emplace_back("p1");
+    // spec.patch_args.emplace_back("-p1");
+    
+    
+    spec.build_defs.raw_starlark = 
+R"RAW_STRING(
+package(default_visibility = ["//visibility:public"])
+
+#build headers
+hdrs = glob(
+    include = [
+        "libbase58.h"
+    ],
+    exclude = [
+    ],
+)
+
+cc_library(
+    name = "hdrs",
+    hdrs = hdrs,
+    includes = [
+    ],
+)
+
+#build srcs
+srcs = glob(
+    include = [
+        "base58.c"
+    ],
+    exclude = [
+    ],
+)
+
+cc_library(
+    name = "lib",
+    srcs = srcs,
+    copts = [
     ],
     includes = [
         "include",
