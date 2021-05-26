@@ -217,6 +217,28 @@ auto pub_hashed3 = pub_hashed2 + pub_checksum.substr(0,8);
 
 int main() {
     
+    //wiki: https://en.bitcoin.it/wiki/Main_Page
+    //glossary: https://academy.binance.com/en/glossary
+    //https://bitcoin.stackexchange.com/
+    //https://ethereum.stackexchange.com/
+    //wallet data: http://addresses.loyce.club/
+    //wallet data: https://gz.blockchair.com/bitcoin/addresses/
+    //other information about private keys: https://allprivatekeys.com/
+    //WIF key generator: https://allprivatekeys.com/generate-address
+    //app: wallet generator: https://github.com/JeanLucPons/VanitySearch
+    //app: wallet generator: https://btckeygen.com/##
+    //app: https://learnmeabitcoin.com/technical/checksum
+    //code wallet generator: https://www.netburner.com/learn/bitcoin-hash-functions-and-printer-drivers/
+    //code: wallet generator: https://asecuritysite.com/encryption/bit_keys
+    //code: wallet generator: https://github.com/Isaacdelly/Plutus/blob/master/plutus.py
+    //code: wallet generator: https://github.com/matja/bitcoin-tool
+    //code: wallet generator: https://github.com/nickfarrow/niceBit
+    
+    //lookup private keys: https://privatekeys.pw/
+    
+    //places to look:
+    //https://ideone.com/ most recent
+    
     auto x = create_wallet("bitcoin");
     std::cout << x.wallet_address << std::endl;
 
