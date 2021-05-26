@@ -107,8 +107,7 @@ std::string base58(std::string str){
 }
 
 
-int main() {
-    
+Bitcoin_Wallet create_wallet(std::string const& phrase){
     
     //Demo this was written off of:
     //https://royalforkblog.github.io/2014/08/11/graphical-address-generator/
@@ -117,7 +116,6 @@ int main() {
     
     
     //hash a word
-    std::string phrase = "bitcoin";
     auto sha256 = Sha256_Hasher::std_sha256(phrase);
     std::cout << sha256 << std::endl;
     
@@ -208,7 +206,19 @@ std::cout << pub_hashed3 << std::endl;
 
     std::string wallet_address = base58(pub_hashed3);
     std::cout << wallet_address << std::endl;
+    
+    //create wallet
+    Bitcoin_Wallet x;
+    x.private_key = base58_address;
+    x.wallet_address = wallet_address;
+    return x;
+}
 
+
+int main() {
+    
+    auto x = create_wallet("bitcoin");
+    std::cout << x.wallet_address << std::endl;
 
 
 }
