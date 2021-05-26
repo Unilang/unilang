@@ -1,0 +1,28 @@
+class
+❪string❫
+❪stdio.h❫
+❪"include/secp256k1.h"❫
+❪openssl/sha.h❫
+❪openssl/ripemd.h❫
+❪openssl/evp.h❫
+❪iostream❫
+❪string.h❫
+❪string❫
+❪iostream❫
+❪sstream❫
+⚯
+⚞⚟
+
+
+//various implementations for creating hashing to ripemd160.
+//all functions should create the same results.
+◀public: static▶ std::string ☀ripemd160(const std::string str)
+❰
+    auto results = RIPEMD160((unsigned char*)str.c_str(), str.size(), 0);
+    std::stringstream ss;
+    for(int i = 0; i < RIPEMD160_DIGEST_LENGTH; i++)
+    {
+        ss << std::hex << std::uppercase << std::setw(0) << (int)results[i];
+    }
+    return ss.str();
+❱

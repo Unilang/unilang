@@ -12,9 +12,12 @@
 #include <openssl/evp.h>
 #include "code/programs/examples/bitcoin/bitcoin_wallet.hpp"
 #include "code/utilities/formats/encryption/SHA256/sha256_hasher.hpp"
+#include "code/utilities/formats/encryption/RIPEMD160/ripemd160_hasher.hpp"
 #include "boost/algorithm/hex.hpp"
 #include "boost/range/begin.hpp"
 #include "boost/range/end.hpp"
+#include "fmt/format.h"
+#include "fmt/printf.h"
 
 
 
@@ -55,6 +58,16 @@ std::string to_caps_hex(std::string const& str){
     std::string mystr = ss.str();
     return mystr;
 }
+
+std::string to_caps_hex_p2(std::string const& str){
+    std::stringstream ss;
+    for(int i=0; i<str.size(); ++i)
+        ss << std::hex << std::setfill('0') << std::setw(2)  << static_cast<unsigned int>(static_cast<unsigned char>(str[i]));
+    std::string mystr = ss.str();
+    return mystr;
+}
+
+
 
 void fill_private_key(Bitcoin_Wallet & wallet){
     
@@ -125,7 +138,10 @@ int main() {
     char p2[256];
     size_t new_size = 256;
     std::string stage2_unhex = unhex(stage2);
-    std::cout << std::boolalpha << b58enc(p2, &new_size, stage2_unhex.c_str(), stage2_unhex.size()) << std::endl;
+    if (b58enc(p2, &new_size, stage2_unhex.c_str(), stage2_unhex.size()) == 0){
+        printf("b58enc\n");
+        exit(1);
+    }
     std::string base58_address(p2);
     std::cout << base58_address << std::endl;
     
@@ -136,7 +152,6 @@ int main() {
     
 
     std::string sha256_unhex = unhex(sha256);
-    std::cout << sha256_unhex.size() << std::endl;
     unsigned char m_Test[32];
     strcpy( (char*) m_Test, sha256_unhex.c_str() );
     
@@ -145,16 +160,19 @@ int main() {
     //std::cout << sha256_unhex << std::endl;
     if (!secp256k1_ec_seckey_verify(ctx, m_Test)) {
         printf("Invalid secret key\n");
-        return 1;
+        exit(1);
     }
 
 
 
     secp256k1_pubkey pubkey;
-    secp256k1_ec_pubkey_create(ctx, &pubkey, m_Test);
+    if (secp256k1_ec_pubkey_create(ctx, &pubkey, m_Test) == 0){
+        printf("secp256k1_ec_pubkey_create\n");
+        exit(1);
+    }
 
-    unsigned char pk_bytes[34];
-    size_t pk_len = 65;
+    unsigned char pk_bytes[33];
+    size_t pk_len = 33;
 
     /* Serialize Public Key */
     secp256k1_ec_pubkey_serialize(
@@ -162,52 +180,41 @@ int main() {
     pk_bytes,
     &pk_len,
     &pubkey,
-     SECP256K1_EC_UNCOMPRESSED
-    //SECP256K1_EC_COMPRESSED
+     //SECP256K1_EC_UNCOMPRESSED
+    SECP256K1_EC_COMPRESSED
     );
-
-
-    char pubaddress[34];
-    unsigned char s[65];
-    unsigned char rmd[5 + RIPEMD160_DIGEST_LENGTH];
-
-
-    for (int j = 0; j < 65; j++) {
-        s[j] = pk_bytes[j];
-    }
     
-    std::string ss((char*)s);
-    std::cout << to_caps_hex(ss) << std::endl;
+  secp256k1_pubkey pubkey2;
+  if (secp256k1_ec_pubkey_parse(ctx, &pubkey2, pk_bytes, 33) == 0) {
+    printf("error re-parsing public key!\n");
+    exit(1);
+  }
+  
+for (int i = 0; i < 33; i++) {
+    printf("%.2x", pk_bytes[i]);
+}
+std::cout << std::endl;
 
-
-    /* Set 0x00 byte for main net */
-    rmd[0] = 0;
-    RIPEMD160(SHA256(s, 65, 0), SHA256_DIGEST_LENGTH, rmd + 1);
-
-
-    memcpy(rmd + 21, SHA256(SHA256(rmd, 21, 0), SHA256_DIGEST_LENGTH, 0), 4);
-
-
-    char address[34];
-    base58(rmd, 25, address, 34);
-
-
-    /* Count the number of 1s at the beginning of the address */
-    int n = 0;
-    for (n = 0; address[n] == '1'; n++);
-
-    /* Do we need to remove any 1s? */
-    if (n > 1) {
-    /* Move the memory so that the address begins at the final 1 */
-    memmove(address, address + (n-1), 34-(n-1));
-
-    /* Force the address to finish at the correct length */
-    pubaddress[34-(n-1)] = '\0';
-    }
+std::string pub;
+for (int i = 0; i < 33; i++) {
+    pub += fmt::sprintf( "%.2x", pk_bytes[i]);
+}
+std::cout << pub << std::endl;
     
-    std::string public_address = pubaddress;
-    std::string final_address = address;
-    //std::cout << "Public: " << public_address << std::endl;
-    std::cout << "WALLET: " << final_address << std::endl;
+auto pub_hashed1 = Ripemd160_Hasher::ripemd160(unhex(Sha256_Hasher::std_sha256(unhex(pub))));
+std::string pub_hashed2;
+pub_hashed2 += "00";
+pub_hashed2 += pub_hashed1;
+std::cout << pub_hashed2 << std::endl;
+auto pub_checksum = Sha256_Hasher::std_sha256(unhex(Sha256_Hasher::std_sha256(unhex(pub_hashed2))));
+std::cout << pub_checksum << std::endl;
+
+auto pub_hashed3 = pub_hashed2 + pub_checksum.substr(0,8);
+std::cout << pub_hashed3 << std::endl;
+
+
+
+
+
 }
 

@@ -16,11 +16,13 @@ cpp_main(
     deps = [
         "//code/programs/examples/bitcoin:bitcoin_wallet",
         "//code/utilities/formats/encryption/SHA256:sha256_hasher",
+        "//code/utilities/formats/encryption/RIPEMD160:ripemd160_hasher",
         "@boost//:algorithm",
         "@boost//:range",
         "@openssl//:crypto",
         "@secp256k1//:lib",
         "@libbase58//:lib",
+        "@fmt",
     ],
 )
 
