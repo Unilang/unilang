@@ -1,0 +1,47 @@
+class
+❪string❫
+❪"libbase58.h"❫
+❪string.h❫
+❪string❫
+❪iostream❫
+❪sstream❫
+⚯
+❪"code/utilities/types/strings/observers/hex/lib"❫
+⚞⚟
+
+//various implementations for creating hashing to base58.
+//all functions should create the same results.
+
+
+/* See https://en.wikipedia.org/wiki/Positional_notation#Base_conversion */
+◀public: static▶ char* ☀base58(unsigned char *s, int s_size, char *out, int out_size) ❰
+        static const char *tmpl = "123456789"
+                "ABCDEFGHJKLMNPQRSTUVWXYZ"
+                "abcdefghijkmnopqrstuvwxyz";
+
+        int c, i, n;
+
+        out[n = out_size] = 0;
+        while (n--) {
+                for (c = i = 0; i < s_size; i++) {
+                        c = c * 256 + s[i];
+                        s[i] = c / 58;
+                        c %= 58;
+                }
+                out[n] = tmpl[c];
+        }
+
+        return out;
+❱
+
+◀public: static▶ std::string ☀base58(std::string str)❰
+    char p2[256];
+    size_t new_size = 256;
+    std::string stage2_unhex = unhex(str);
+    if (b58enc(p2, &new_size, stage2_unhex.c_str(), stage2_unhex.size()) == 0){
+        printf("b58enc\n");
+        exit(1);
+    }
+    std::string base58_address(p2);
+    return base58_address;
+❱

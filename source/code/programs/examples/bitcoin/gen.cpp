@@ -13,6 +13,7 @@
 #include "code/programs/examples/bitcoin/bitcoin_wallet.hpp"
 #include "code/utilities/formats/encryption/SHA256/sha256_hasher.hpp"
 #include "code/utilities/formats/encryption/RIPEMD160/ripemd160_hasher.hpp"
+#include "code/utilities/formats/encryption/BASE58/base58_hasher.hpp"
 #include "boost/algorithm/hex.hpp"
 #include "boost/range/begin.hpp"
 #include "boost/range/end.hpp"
@@ -23,54 +24,7 @@
 #include "code/utilities/filesystem/paths/lib.hpp"
 #include "code/utilities/filesystem/files/creating/lib.hpp"
 #include "code/utilities/linguistics/dictionary/scrabble_2019.hpp"
-
-
-
-
-/* See https://en.wikipedia.org/wiki/Positional_notation#Base_conversion */
-char* base58(unsigned char *s, int s_size, char *out, int out_size) {
-        static const char *tmpl = "123456789"
-                "ABCDEFGHJKLMNPQRSTUVWXYZ"
-                "abcdefghijkmnopqrstuvwxyz";
-
-        int c, i, n;
-
-        out[n = out_size] = 0;
-        while (n--) {
-                for (c = i = 0; i < s_size; i++) {
-                        c = c * 256 + s[i];
-                        s[i] = c / 58;
-                        c %= 58;
-                }
-                out[n] = tmpl[c];
-        }
-
-        return out;
-}
-
-std::string to_caps_hex(unsigned char *s){
-    std::stringstream ss;
-    for(int i=0; i<32; ++i)
-        ss << std::hex << std::uppercase << (unsigned int)s[i];
-    std::string mystr = ss.str();
-    return mystr;
-}
-
-std::string to_caps_hex(std::string const& str){
-    std::stringstream ss;
-    for(int i=0; i<str.size(); ++i)
-        ss << std::hex << std::uppercase << (unsigned int)str[i];
-    std::string mystr = ss.str();
-    return mystr;
-}
-
-std::string to_caps_hex_p2(std::string const& str){
-    std::stringstream ss;
-    for(int i=0; i<str.size(); ++i)
-        ss << std::hex << std::setfill('0') << std::setw(2)  << static_cast<unsigned int>(static_cast<unsigned char>(str[i]));
-    std::string mystr = ss.str();
-    return mystr;
-}
+#include "code/utilities/types/strings/observers/hex/lib.hpp"
 
 
 
@@ -86,28 +40,6 @@ std::string urandom(){
     // // /* Close the file */
     // fclose(frand);
     return "";
-}
-
-void fill_private_key(Bitcoin_Wallet & wallet, std::string phrase){
-}
-
-
-std::string unhex(std::string const& str){
-    std::string new_str;
-    boost::algorithm::unhex ( str, std::back_inserter (new_str));
-    return new_str;
-}
-
-std::string base58(std::string str){
-    char p2[256];
-    size_t new_size = 256;
-    std::string stage2_unhex = unhex(str);
-    if (b58enc(p2, &new_size, stage2_unhex.c_str(), stage2_unhex.size()) == 0){
-        printf("b58enc\n");
-        exit(1);
-    }
-    std::string base58_address(p2);
-    return base58_address;
 }
 
 
@@ -137,7 +69,7 @@ Bitcoin_Wallet create_wallet(std::string const& phrase){
     
     
     //convert to base52 private key
-    std::string base58_address = base58(stage2);
+    std::string base58_address = Base58_Hasher::base58(stage2);
     //std::cout << base58_address << std::endl;
     
     //Public key parts
@@ -207,7 +139,7 @@ auto pub_checksum = Sha256_Hasher::std_sha256(unhex(Sha256_Hasher::std_sha256(un
 auto pub_hashed3 = pub_hashed2 + pub_checksum.substr(0,8);
 //std::cout << pub_hashed3 << std::endl;
 
-    std::string wallet_address = base58(pub_hashed3);
+    std::string wallet_address = Base58_Hasher::base58(pub_hashed3);
     //std::cout << wallet_address << std::endl;
     
     //create wallet
@@ -258,12 +190,12 @@ int main() {
     auto words = Scrabble_2019::Get();
     while (true){
         for (auto const& word: words){
-            try{
+            //try{
                 auto x = create_wallet(word);
                 std::cout << x.wallet_address << std::endl;
                 check_wallet(x,all_wallets);
-            }
-            catch(...){}
+            //}
+            //catch(...){}
         }
     }
 
