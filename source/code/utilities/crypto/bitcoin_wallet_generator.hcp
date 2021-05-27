@@ -135,7 +135,11 @@ std::string pub_hashed2;
 pub_hashed2 += "00";
 pub_hashed2 += pub_hashed1;
 std::cout << pub_hashed2 << std::endl;
-auto pub_checksum = Sha256_Hasher::std_sha256(unhex(Sha256_Hasher::std_sha256(unhex(pub_hashed2))));
+
+std::cout << "aa" << std::endl;
+auto a = Sha256_Hasher::std_sha256(hex_to_string(pub_hashed2));
+std::cout << "a" << std::endl;
+auto pub_checksum = Sha256_Hasher::std_sha256(unhex(a));
 //std::cout << pub_checksum << std::endl;
 
 auto pub_hashed3 = pub_hashed2 + pub_checksum.substr(0,8);
