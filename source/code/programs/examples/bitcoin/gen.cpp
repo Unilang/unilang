@@ -22,6 +22,7 @@
 #include "code/utilities/types/unordered_set/lib.hpp"
 #include "code/utilities/filesystem/paths/lib.hpp"
 #include "code/utilities/filesystem/files/creating/lib.hpp"
+#include "code/utilities/linguistics/dictionary/scrabble_2019.hpp"
 
 
 
@@ -73,19 +74,18 @@ std::string to_caps_hex_p2(std::string const& str){
 
 
 
-void fill_private_key(Bitcoin_Wallet & wallet){
+std::string urandom(){
     
     
     // /* Load private key (seckey) from random bytes */
     // FILE *frand = fopen("/dev/urandom", "r");
     
-    // /* Read 32 bytes from frand */
+    // // /* Read 32 bytes from frand */
     // fread(wallet.secret_key, 32, 1, frand);
     
-    // /* Close the file */
+    // // /* Close the file */
     // fclose(frand);
-    
-    // wallet.secret_key_hex = to_caps_hex(wallet.secret_key);
+    return "";
 }
 
 void fill_private_key(Bitcoin_Wallet & wallet, std::string phrase){
@@ -121,7 +121,6 @@ Bitcoin_Wallet create_wallet(std::string const& phrase){
     
     //hash a word
     auto sha256 = Sha256_Hasher::std_sha256(phrase);
-    //std::cout << sha256 << std::endl;
     
     
     //extend hash with bitcoin information
@@ -218,6 +217,16 @@ auto pub_hashed3 = pub_hashed2 + pub_checksum.substr(0,8);
     return x;
 }
 
+void check_wallet(Bitcoin_Wallet const& x, std::unordered_set<std::string> const& all_wallets){
+
+    if (Exists_In_Set(all_wallets,x.wallet_address)){
+        std::cout << x.private_key << std::endl;
+        auto path = Full_Path_For_Desktop_File(x.wallet_address);
+        Write_To_File(path,x.private_key);
+        
+    }
+}
+
 
 int main() {
     
@@ -246,14 +255,16 @@ int main() {
     //auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/Bitcoin_addresses_May_25_2021.txt");
     auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/some_addresses.txt");
     
-    auto x = create_wallet("bitcoin");
-    std::cout << x.wallet_address << std::endl;
-    
-    if (Exists_In_Set(all_wallets,x.wallet_address)){
-        std::cout << x.private_key << std::endl;
-        auto path = Full_Path_For_Desktop_File(x.wallet_address);
-        Write_To_File(path,x.private_key);
-        
+    auto words = Scrabble_2019::Get();
+    while (true){
+        for (auto const& word: words){
+            try{
+                auto x = create_wallet(word);
+                std::cout << x.wallet_address << std::endl;
+                check_wallet(x,all_wallets);
+            }
+            catch(...){}
+        }
     }
 
 

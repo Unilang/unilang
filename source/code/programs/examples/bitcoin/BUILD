@@ -21,6 +21,7 @@ cpp_main(
         "//code/utilities/types/unordered_set:lib",
         "//code/utilities/filesystem/paths:lib",
         "//code/utilities/filesystem/files/creating:lib",
+        "//code/utilities/linguistics/dictionary:scrabble_2019",
         "@boost//:algorithm",
         "@boost//:range",
         "@openssl//:crypto",
