@@ -81,7 +81,7 @@ int hex_value(unsigned char hex_digit)
 std::string hex_to_string(const std::string& input)
 {
     const auto len = input.length();
-    if (len & 1) throw std::invalid_argument(std::string("odd length= ") + std::to_string(input.length()));
+    if (len & 1) throw std::invalid_argument(std::string("odd length= ") + std::to_string(input.length()) + "/" + std::to_string(input.size()));
 
     std::string output;
     output.reserve(len / 2);
