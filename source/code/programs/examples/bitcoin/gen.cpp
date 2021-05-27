@@ -31,16 +31,18 @@
 
 std::string urandom(){
     
+    // Load private key (seckey) from random bytes
+    FILE *frand = fopen("/dev/urandom", "r");
     
-    // /* Load private key (seckey) from random bytes */
-    // FILE *frand = fopen("/dev/urandom", "r");
+    // Read 32 bytes from frand
+    unsigned char seckey[1231];
+    fread(seckey, 32, 1, frand);
     
-    // // /* Read 32 bytes from frand */
-    // fread(wallet.secret_key, 32, 1, frand);
+    // Close the file
+    fclose(frand);
     
-    // // /* Close the file */
-    // fclose(frand);
-    return "";
+    std::string result((char*)seckey);
+    return result;
 }
 
 void check_wallet(Bitcoin_Wallet const& x, std::unordered_set<std::string> const& all_wallets){
@@ -68,6 +70,7 @@ int main() {
     //app: wallet generator: https://btckeygen.com/##
     //app: https://learnmeabitcoin.com/technical/checksum
     //code wallet generator: https://www.netburner.com/learn/bitcoin-hash-functions-and-printer-drivers/
+    //code wallet generator: https://davanum.wordpress.com/2014/03/17/generating-a-bitcoin-private-key-and-address/
     //code: wallet generator: https://asecuritysite.com/encryption/bit_keys
     //code: wallet generator: https://github.com/Isaacdelly/Plutus/blob/master/plutus.py
     //code: wallet generator: https://github.com/matja/bitcoin-tool
@@ -81,14 +84,13 @@ int main() {
     auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/Bitcoin_addresses_May_25_2021.txt");
     //auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/some_addresses.txt");
     
-    auto words = Scrabble_2019::Get();
-        for (auto const& word: words){
-            //try{
-                auto x = Bitcoin_Wallet_Generator::Create(word);
-                std::cout << x.wallet_address << std::endl;
-                check_wallet(x,all_wallets);
-            //}
-            //catch(...){}
+    //auto words = Scrabble_2019::Get();
+    
+    while (true){
+            auto str = urandom();
+            auto x = Bitcoin_Wallet_Generator::Create(str);
+            std::cout << x.wallet_address << std::endl;
+            check_wallet(x,all_wallets);
         }
 
 
