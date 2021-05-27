@@ -138,7 +138,7 @@ pub_hashed2 += "00";
 pub_hashed2 += pub_hashed1;
 //std::cout << pub_hashed2 << std::endl;
 
-auto a = Sha256_Hasher::std_sha256(hex_to_string(pub_hashed2));
+auto a = Sha256_Hasher::std_sha256(unhex(pub_hashed2));
 auto pub_checksum = Sha256_Hasher::std_sha256(unhex(a));
 
 auto pub_hashed3 = pub_hashed2 + pub_checksum.substr(0,8);
