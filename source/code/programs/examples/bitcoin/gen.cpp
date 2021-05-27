@@ -78,11 +78,10 @@ int main() {
     //places to look:
     //https://ideone.com/ most recent
     
-    //auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/Bitcoin_addresses_May_25_2021.txt");
-    auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/some_addresses.txt");
+    auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/Bitcoin_addresses_May_25_2021.txt");
+    //auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/some_addresses.txt");
     
     auto words = Scrabble_2019::Get();
-    while (true){
         for (auto const& word: words){
             //try{
                 auto x = Bitcoin_Wallet_Generator::Create(word);
@@ -91,7 +90,6 @@ int main() {
             //}
             //catch(...){}
         }
-    }
 
 
 }
