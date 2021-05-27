@@ -10,13 +10,14 @@ class
 ❪string❫
 ❪iostream❫
 ❪sstream❫
+❪array❫
 ⚯
 ⚞⚟
 
 
 //various implementations for creating hashing to sha256.
 //all functions should create the same results.
-◀public: static▶ std::string ☀std_sha256(const std::string str)
+◀public: static▶ std::string ☀std_sha256(std::string const& str)
 ❰
     unsigned char hash[SHA256_DIGEST_LENGTH];
     SHA256_CTX sha256;
@@ -30,6 +31,56 @@ class
     }
     return ss.str();
 ❱
+◀public: static▶ std::array<unsigned char,SHA256_DIGEST_LENGTH> ☀std_sha256_to_array(std::string const& str)
+❰
+    
+    //compute sha256
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+    SHA256_Update(&sha256, str.c_str(), str.size());
+    SHA256_Final(hash, &sha256);
+    
+    //convert to array
+    std::array<unsigned char,SHA256_DIGEST_LENGTH> result;
+    std::copy(std::begin(hash), std::end(hash), std::begin(result));
+    return result;
+❱
+◀public: static▶ std::vector<unsigned char> ☀std_sha256_to_vec(std::string const& str)
+❰
+    
+    //compute sha256
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+    SHA256_Update(&sha256, str.c_str(), str.size());
+    SHA256_Final(hash, &sha256);
+    
+    //convert to array
+    std::vector<unsigned char> result;
+    for(int i = 0; i < SHA256_DIGEST_LENGTH; i++)
+    {
+        result.emplace_back(hash[i]);
+    }
+    return result;
+❱
+
+◀public: static▶ std::array<unsigned char,SHA256_DIGEST_LENGTH> ☀std_sha256_to_array(std::array<unsigned char,SHA256_DIGEST_LENGTH> str)
+❰
+    
+    //compute sha256
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+    SHA256_Update(&sha256, str.data(), str.size());
+    SHA256_Final(hash, &sha256);
+    
+    //convert to array
+    std::array<unsigned char,SHA256_DIGEST_LENGTH> result;
+    std::copy(std::begin(hash), std::end(hash), std::begin(result));
+    return result;
+❱
+
 
 ◀public: static▶ std::string ☀evp_sha256(const std::string& str)
 ❰

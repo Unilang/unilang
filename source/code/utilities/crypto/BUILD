@@ -18,6 +18,7 @@ hcp(
         "//code/utilities/filesystem/files/creating:lib",
         "//code/utilities/linguistics/dictionary:scrabble_2019",
         "//code/utilities/types/strings/observers/hex:lib",
+        "//code/utilities/types/vectors/transformers:lib",
         "@boost//:algorithm",
         "@boost//:range",
         "@openssl//:crypto",
@@ -27,4 +28,6 @@ hcp(
     ],
 )
 
-gtest(name = "bitcoin_wallet_generator_test")
+gtest(name = "bitcoin_wallet_generator_test", deps = [
+     "//code/utilities/crypto:bitcoin_wallet_generator",
+])
