@@ -61,11 +61,18 @@ std::vector<std::string> Read_Each_Line_Of_File_Into_Vector(std::string const& f
 		std::getline(infile, line);
 	}
 	infile.close();
-	// auto all = Read_Entire_File_Into_String(file);
-	// if (Last_Char(all) == '\n'){
-	// 	lines.emplace_back();
-	// }
-
+	return lines;
+}
+std::unordered_set<std::string> Read_Each_Line_Of_File_Into_USet(std::string const& file){
+	std::ifstream infile(file);
+	std::string line;
+	std::unordered_set<std::string> lines;
+	std::getline(infile, line);
+	while (infile){
+		lines.insert(line);
+		std::getline(infile, line);
+	}
+	infile.close();
 	return lines;
 }
 

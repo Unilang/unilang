@@ -18,6 +18,10 @@
 #include "boost/range/end.hpp"
 #include "fmt/format.h"
 #include "fmt/printf.h"
+#include "code/utilities/streams/filestreams/read_all/lib.hpp"
+#include "code/utilities/types/unordered_set/lib.hpp"
+#include "code/utilities/filesystem/paths/lib.hpp"
+#include "code/utilities/filesystem/files/creating/lib.hpp"
 
 
 
@@ -239,8 +243,18 @@ int main() {
     //places to look:
     //https://ideone.com/ most recent
     
+    //auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/Bitcoin_addresses_May_25_2021.txt");
+    auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/some_addresses.txt");
+    
     auto x = create_wallet("bitcoin");
     std::cout << x.wallet_address << std::endl;
+    
+    if (Exists_In_Set(all_wallets,x.wallet_address)){
+        std::cout << x.private_key << std::endl;
+        auto path = Full_Path_For_Desktop_File(x.wallet_address);
+        Write_To_File(path,x.private_key);
+        
+    }
 
 
 }
