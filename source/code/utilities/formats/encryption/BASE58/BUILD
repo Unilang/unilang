@@ -7,8 +7,8 @@ hcp(
     name = "base58_hasher",
     deps = [
         "//code/utilities/types/strings/observers/hex:lib",
+        "@libbase58//:lib",
         "@openssl//:crypto",
         "@secp256k1//:lib",
-        "@libbase58//:lib",
     ],
 )
