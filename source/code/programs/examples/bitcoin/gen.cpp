@@ -27,6 +27,7 @@
 #include "code/utilities/types/strings/observers/hex/lib.hpp"
 #include "code/utilities/crypto/bitcoin_wallet_generator.hpp"
 #include "bitset2.hpp"
+#include <thread>
 
 
 
@@ -36,7 +37,7 @@ std::string urandom(){
     FILE *frand = fopen("/dev/urandom", "r");
     
     // Read 32 bytes from frand
-    unsigned char seckey[1231];
+    unsigned char seckey[32];
     fread(seckey, 32, 1, frand);
     
     // Close the file
@@ -49,7 +50,7 @@ std::string urandom(){
 void check_wallet(Bitcoin_Wallet const& x, std::unordered_set<std::string> const& all_wallets){
 
     if (Exists_In_Set(all_wallets,x.wallet_address)){
-        std::cout << x.private_key << std::endl;
+        std::cout << "FOUND: " << x.private_key << std::endl;
         auto path = Full_Path_For_Desktop_File(x.wallet_address);
         Write_To_File(path,x.private_key);
         
@@ -58,6 +59,19 @@ void check_wallet(Bitcoin_Wallet const& x, std::unordered_set<std::string> const
 
 
 int main() {
+    
+    // Imagine a universe in which storing money is not guarded by metal but left out in the open.
+    // An open field so large it's a statistical improbability that you can guess where I hid it.
+    // A bitcoin address is a number.
+    // It's a number between 0 - 115792089237316195423570985008687907853269984665640564039457584007913129639936
+    // 78 digits.
+    // The number is expressed through 256 bits.
+    // That is to say, 2^256.
+    // The number has a name.  115 quattuorvigintillion.
+    // If you guess the right number you gain access to an infeasible amount of wealth.
+    // So much wealth that if you tried to spent it the sheer supply would devalue the universe it exists in.
+    // Even if you moved a small amount, it would scare everyone that ownership is alive.
+    // The best course of action will be to burn the coins into an invalid address and ciphen only a little out.
     
     //wiki: https://en.bitcoin.it/wiki/Main_Page
     //glossary: https://academy.binance.com/en/glossary
@@ -76,29 +90,42 @@ int main() {
     //code: wallet generator: https://github.com/Isaacdelly/Plutus/blob/master/plutus.py
     //code: wallet generator: https://github.com/matja/bitcoin-tool
     //code: wallet generator: https://github.com/nickfarrow/niceBit
-    
     //lookup private keys: https://privatekeys.pw/
     
     //places to look:
     //https://ideone.com/ most recent
+    
+    // std::string current_number = "1010011111000001110000011010111100101101010001110001000011010001110111010000100011110001001001010100101101110000100111101010011110110101100011101110011011110000100000000000101111101010000110101000110111101010100100110000101111001000111010000011001001010111";
+    
+    // std::thread searcher([&](){
+        
+    //     Bitset2::bitset2<256> bits(current_number);
+    //     while (true){
+    //         //std::cout << bits.to_hex_string() << std::endl;
+    //         --bits;
+    //     }
+    // });
+    
+    // std::thread saver([&](){
+    //     while (true){
+    //         std::cout << urandom() << std::endl;
+    //     }
+    // });
+    
+    
+    // searcher.join();
+    // saver.join();
     
     //auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/Bitcoin_addresses_May_25_2021.txt");
     //auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/some_addresses.txt");
     
     //auto words = Scrabble_2019::Get();
     
-    // while (true){
-    //         auto str = urandom();
-    //         auto x = Bitcoin_Wallet_Generator::Create(str);
-    //         std::cout << x.wallet_address << std::endl;
-    //         check_wallet(x,all_wallets);
-    // }
-    
-    
-    Bitset2::bitset2<256> bits;
     while (true){
-        std::cout << bits.to_hex_string() << std::endl;
-        ++bits;
+            auto str = urandom();
+            auto x = Bitcoin_Wallet_Generator::Create(str);
+            std::cout << x.wallet_address << std::endl;
+            //check_wallet(x,all_wallets);
     }
 
 
