@@ -224,6 +224,7 @@ class
     x.specs.emplace_back(IntervalTree());
     x.specs.emplace_back(Frozen());
     x.specs.emplace_back(stxxl());
+    x.specs.emplace_back(bitset2());
     
     //https://github.com/goldsborough/lru-cache
     //https://github.com/minkezhang/cachepp
@@ -2418,6 +2419,12 @@ cc_binary(
     Dependency_Specification spec;
     spec.lib_name = "stxxl";
     Add_Unilang_Github_Mirror(spec,"stxxl","b9e44f0ecba7d7111fbb33f3330c3e53f2b75236","5350eba594f7899f125e607217662e4027b0c3cb78541b3964e02b9ac36e410f");
+    return spec;
+❱
+◀private: static▶ Dependency_Specification ☀bitset2()❰
+    Dependency_Specification spec;
+    spec.lib_name = "bitset2";
+    Add_Unilang_Github_Mirror(spec,"bitset2","d61e4b0222aced39f7eb5860fb213d5f34ad7607","d92003fe37b64bf85ea1ad578590d29c2bfe9a498abbabe2ade1dd26ad2ae247");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀magnum()❰
