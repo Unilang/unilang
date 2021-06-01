@@ -26,6 +26,7 @@
 #include "code/utilities/linguistics/dictionary/scrabble_2019.hpp"
 #include "code/utilities/types/strings/observers/hex/lib.hpp"
 #include "code/utilities/crypto/bitcoin_wallet_generator.hpp"
+#include "bitset2.hpp"
 
 
 
@@ -81,17 +82,24 @@ int main() {
     //places to look:
     //https://ideone.com/ most recent
     
-    auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/Bitcoin_addresses_May_25_2021.txt");
+    //auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/Bitcoin_addresses_May_25_2021.txt");
     //auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/some_addresses.txt");
     
     //auto words = Scrabble_2019::Get();
     
+    // while (true){
+    //         auto str = urandom();
+    //         auto x = Bitcoin_Wallet_Generator::Create(str);
+    //         std::cout << x.wallet_address << std::endl;
+    //         check_wallet(x,all_wallets);
+    // }
+    
+    
+    Bitset2::bitset2<256> bits;
     while (true){
-            auto str = urandom();
-            auto x = Bitcoin_Wallet_Generator::Create(str);
-            std::cout << x.wallet_address << std::endl;
-            check_wallet(x,all_wallets);
-        }
+        std::cout << bits.to_hex_string() << std::endl;
+        ++bits;
+    }
 
 
 }

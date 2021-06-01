@@ -31,6 +31,7 @@ cpp_main(
         "@libbase58//:lib",
         "@openssl//:crypto",
         "@secp256k1//:lib",
+        "@bitset2//:bitset",
     ],
 )
 
