@@ -116,16 +116,18 @@ int main() {
     // searcher.join();
     // saver.join();
     
-    //auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/Bitcoin_addresses_May_25_2021.txt");
+    std::cout << "loading... "; std::cout.flush();
+    auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/Bitcoin_addresses_May_25_2021.txt");
     //auto all_wallets = Read_Each_Line_Of_File_Into_USet("/home/luxe/Desktop/some_addresses.txt");
+    std::cout << "done" << std::endl;
     
     //auto words = Scrabble_2019::Get();
     
     while (true){
             auto str = urandom();
             auto x = Bitcoin_Wallet_Generator::Create(str);
-            std::cout << x.wallet_address << std::endl;
-            //check_wallet(x,all_wallets);
+            //std::cout << x.wallet_address << std::endl;
+            check_wallet(x,all_wallets);
     }
 
 
