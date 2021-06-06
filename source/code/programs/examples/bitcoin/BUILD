@@ -25,13 +25,13 @@ cpp_main(
         "//code/utilities/streams/filestreams/read_all:lib",
         "//code/utilities/types/strings/observers/hex:lib",
         "//code/utilities/types/unordered_set:lib",
+        "@bitset2//:bitset",
         "@boost//:algorithm",
         "@boost//:range",
         "@fmt",
         "@libbase58//:lib",
         "@openssl//:crypto",
         "@secp256k1//:lib",
-        "@bitset2//:bitset",
     ],
 )
 

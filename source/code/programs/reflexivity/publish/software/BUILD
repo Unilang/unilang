@@ -14,6 +14,7 @@ hcp(
         "//code/utilities/code:concept_static_tree_structs",
         "//code/utilities/filesystem/files/getting:lib",
         "//code/utilities/filesystem/files/moving:lib",
+        "//code/utilities/filesystem/files/observers/other:ldd_results_getter",
         "//code/utilities/filesystem/paths:lib",
         "//code/utilities/formats/pdf:pdf_creator",
         "//code/utilities/formats/pdf:pdf_settings",

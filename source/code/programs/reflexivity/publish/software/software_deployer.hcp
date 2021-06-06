@@ -14,6 +14,7 @@ class
 ❪"code/utilities/program/wrappers/git/update/git_updater"❫
 ❪"code/utilities/filesystem/files/creating/lib"❫
 ❪"code/utilities/personal/hosting/hosting_repo"❫
+❪"code/utilities/filesystem/files/observers/other/ldd_results_getter"❫
 ⚞⚟
 
 //TODO: improve data dependencies of tool-related artifacts
@@ -94,6 +95,9 @@ class
           std::string raw_binary_name = Replace_File_Name(specific_debs[0],program_name);
           Copy_Dereferenced_File_To_Dir(raw_binary_name,".");
           execute("chmod 777 " + raw_binary_name);
+          
+          auto ldd_results = Ldd_Results_Getter::Get(raw_binary_name);
+          
         }
 ❱
 
