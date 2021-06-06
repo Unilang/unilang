@@ -82,8 +82,8 @@ class
     md_settings.headers.h1_as_summary_tags = false;
     md_settings.tables.print = false;
     
-    //auto result = Markdown_Str_Getter::Get(structure,contributors,md_settings);
-    //Write_To_File(file_name,result);
+    auto result = Markdown_Str_Getter::Get(structure,contributors,md_settings);
+    Write_To_File(file_name,result);
     
 ❱
 

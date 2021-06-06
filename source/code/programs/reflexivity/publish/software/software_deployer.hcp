@@ -63,19 +63,12 @@ class
     std::string folder_name = "releases/" + program_name;
     Create_Path_And_Temporarily_Move_To_It_To_Call_Function(folder_name,[&](){
     
-        Find_Debs_And_Copy_Over(debs,program_name);
-        
-        //Create_Program_Documentation(doc_structure,program_name);
-        
-        
-        
-        //transfer deb stuff
-        //Create_List_File(program_name);
-        //Create_Packages_File();
+        Find_Debs_And_Copy_Over_Program_Data(debs,program_name);
+        Find_Debs_And_Copy_Over_Documentation(doc_structure,debs,program_name);
     });
 ❱
 
-◀private: static▶ void ☀Find_Debs_And_Copy_Over(std::vector<std::string> const& debs, std::string const& program_name)❰
+◀private: static▶ void ☀Find_Debs_And_Copy_Over_Program_Data(std::vector<std::string> const& debs, std::string const& program_name)❰
 
         //settings
         bool copy_over_all_found_debs = true;
@@ -95,12 +88,18 @@ class
           Copy_Dereferenced_File_To_Dir(raw_binary_name,".");
           execute("chmod 777 " + raw_binary_name);
           
-          //show ldd results
-          auto ldd_results = Ldd_Results_Getter::Get(raw_binary_name);
-          auto ldd_results_str = Type_To_Json_String::As_JSON_String(ldd_results);
-          //std::cout << ldd_results_str << std::endl;
-          
         }
+❱
+
+◀private: static▶ void ☀Find_Debs_And_Copy_Over_Documentation(model::Module const& doc_structure, std::vector<std::string> const& debs, std::string const& program_name)❰
+
+        //get raw binary name
+        auto specific_debs = Get_Specific_Debs_Of_Program(debs,program_name);
+        std::string raw_binary_name = Replace_File_Name(specific_debs[0],program_name);
+        
+        //get ldd results
+        auto ldd_results = Ldd_Results_Getter::Get(raw_binary_name);
+        auto ldd_results_str = Type_To_Json_String::As_JSON_String(ldd_results);
 ❱
 
 
@@ -111,6 +110,10 @@ class
     });
     return specific_debs;
 ❱
+
+
+
+
 
 
 
