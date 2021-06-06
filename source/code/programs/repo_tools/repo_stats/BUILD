@@ -29,6 +29,13 @@ hcp(
     ],
 )
 
+hcp(
+    name = "repo_stats_documentation_getter",
+    deps = [
+        "//code/utilities/code:concept_static_tree_structs",
+    ],
+)
+
 distributable_cpp_main(
     name = "repo_stats",
     depends = [

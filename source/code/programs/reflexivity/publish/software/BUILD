@@ -24,6 +24,7 @@ hcp(
         "//code/utilities/program/wrappers/git/update:git_updater",
         "//code/utilities/types/strings/observers/path:lib",
         "//code/utilities/types/vectors/observers:lib",
+        "//code/programs/repo_tools/repo_stats:repo_stats_documentation_getter",
     ],
 )
 

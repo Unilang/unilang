@@ -1,0 +1,16 @@
+class
+❪string❫
+❪iostream❫
+❪"code/utilities/code/concept_static_tree_structs"❫
+⚯
+⚞⚟
+
+◀public: static▶ model::Module ☀Get()❰
+    model::Module x;
+    
+    model::ModuleName name;
+    name.value = "repo_stats";
+    x.name.emplace_back(name);
+    
+    return x;
+❱
