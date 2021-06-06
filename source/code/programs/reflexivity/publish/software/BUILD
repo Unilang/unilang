@@ -16,6 +16,7 @@ hcp(
         "//code/utilities/filesystem/files/moving:lib",
         "//code/utilities/filesystem/files/observers/other:ldd_results_getter",
         "//code/utilities/filesystem/paths:lib",
+        "//code/utilities/formats/json/converters:type_to_json_string",
         "//code/utilities/formats/pdf:pdf_creator",
         "//code/utilities/formats/pdf:pdf_settings",
         "//code/utilities/linguistics/computer/frontends/markdown/settings:markdown_settings",

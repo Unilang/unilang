@@ -15,6 +15,7 @@ class
 ❪"code/utilities/filesystem/files/creating/lib"❫
 ❪"code/utilities/personal/hosting/hosting_repo"❫
 ❪"code/utilities/filesystem/files/observers/other/ldd_results_getter"❫
+❪"code/utilities/formats/json/converters/type_to_json_string"❫
 ⚞⚟
 
 //TODO: improve data dependencies of tool-related artifacts
@@ -96,7 +97,10 @@ class
           Copy_Dereferenced_File_To_Dir(raw_binary_name,".");
           execute("chmod 777 " + raw_binary_name);
           
+          //show ldd results
           auto ldd_results = Ldd_Results_Getter::Get(raw_binary_name);
+          auto ldd_results_str = Type_To_Json_String::As_JSON_String(ldd_results);
+          //std::cout << ldd_results_str << std::endl;
           
         }
 ❱
