@@ -32,6 +32,7 @@ class
     
     execute_quietly(command);
     
+    //this fixes output nondeterminism by removing timestamp metadata
     execute(std::string("mogrify -strip ") + file_out); 
 ❱
 

@@ -46,6 +46,9 @@ class
     //stage 5
     settings.force_black_and_white = true;
     
+    //stage 6
+    settings.mogrify = true;
+    
     //run
     Text_Image_Maker::Create(settings);
 

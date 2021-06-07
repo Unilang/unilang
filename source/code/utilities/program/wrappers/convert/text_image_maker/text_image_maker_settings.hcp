@@ -32,5 +32,8 @@ public:
     
     //stage 5
     bool force_black_and_white = true;
+    
+    //stage 6
+    bool mogrify = true;
 
 ▶

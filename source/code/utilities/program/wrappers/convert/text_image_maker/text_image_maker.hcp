@@ -67,6 +67,11 @@ class
     tmp_files.emplace_back(settings.file_name + "_3.png");
     tmp_files.emplace_back(settings.file_name + "_4.png");
     Delete_Files(tmp_files);
+    
+    //stage 6
+    if (settings.mogrify){
+        execute(std::string("mogrify -strip ") + settings.file_name + ".png");
+    }
 
 ❱
 
