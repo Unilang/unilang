@@ -739,6 +739,8 @@ class
         
 //markdeep: https://casual-effects.com/markdeep/
         
+//http://wiki.c2.com/?BusinessRulesMetabase
+        
         
         default:
         std::cerr << "unknown export language" << std::endl;
