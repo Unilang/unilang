@@ -628,7 +628,7 @@ char Get_Last_Char_Of_File(std::string const& file){
 bool File_Ends_In_Newline(std::string const& file){
     auto str = execute(std::string("tail -c1 ") + file);
     if (str.empty()){
-        return false;
+        return true;
     }
     if (str[0] == '\n'){
         return true;

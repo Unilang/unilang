@@ -21,6 +21,7 @@ class
 ❪"code/utilities/logo/unilang_logo_creator"❫
 ❪"code/utilities/code/animate/unilang_hello_world_gif"❫
 ❪"code/utilities/filesystem/files/getting/lib"❫
+❪"code/utilities/filesystem/files/transformers/lib"❫
 ⚞⚟
 
 
@@ -67,7 +68,7 @@ class
     scan_path += "source/code";
     auto headers = Recursively_Get_All_Paths_To_hpp_Files_Of_Path(scan_path);
     for (auto const& it: headers){
-        std::cout << it << std::endl;
+        Add_Newline_If_File_Does_Not_End_With_Newline(it);
     }
 ❱
 

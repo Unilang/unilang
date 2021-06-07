@@ -20,3 +20,5 @@ void Turn_Symbolic_Linked_File_Into_Regular_File(std::string const& path_to_file
 
 
 void Append_To_File(std::string const& path, std::string const& str);
+
+void Add_Newline_If_File_Does_Not_End_With_Newline(std::string const& path);
