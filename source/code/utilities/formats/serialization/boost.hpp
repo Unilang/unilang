@@ -1,6 +1,10 @@
 #pragma once
 #include <fstream>
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-id-macro"
 #define _LIBCPP_ENABLE_CXX17_REMOVED_AUTO_PTR
+#pragma clang diagnostic pop
 #define BOOST_NO_AUTO_PTR
 #include "boost/archive/text_oarchive.hpp"
 #include "boost/archive/text_iarchive.hpp"

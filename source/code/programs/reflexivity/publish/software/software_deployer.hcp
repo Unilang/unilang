@@ -17,6 +17,7 @@ class
 ❪"code/utilities/filesystem/files/observers/other/ldd_results_getter"❫
 ❪"code/utilities/formats/json/converters/type_to_json_string"❫
 ❪"code/programs/repo_tools/repo_stats/repo_stats_documentation_getter"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
 ⚞⚟
 
 //TODO: improve data dependencies of tool-related artifacts
@@ -91,7 +92,7 @@ class
         }
 ❱
 
-◀private: static▶ void ☀Find_Debs_And_Copy_Over_Documentation(model::Module const& doc_structure, std::vector<std::string> const& debs, std::string const& program_name)❰
+◀private: static▶ void ☀Find_Debs_And_Copy_Over_Documentation(model::Module doc_structure, std::vector<std::string> const& debs, std::string const& program_name)❰
 
         //get raw binary name
         auto specific_debs = Get_Specific_Debs_Of_Program(debs,program_name);
@@ -100,6 +101,9 @@ class
         //get ldd results
         auto ldd_results = Ldd_Results_Getter::Get(raw_binary_name);
         auto ldd_results_str = Type_To_Json_String::As_JSON_String(ldd_results);
+        
+        
+        Ensure_Not_Empty(doc_structure.literature);
 ❱
 
 

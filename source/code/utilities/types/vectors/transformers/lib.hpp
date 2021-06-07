@@ -27,6 +27,15 @@ void Move_Indexed_Item_To_Back(std::vector<T>& v, size_t itemIndex)
     std::rotate(it, it + 1, v.end());
 }
 
+template <typename T>
+void Ensure_Not_Empty(std::vector<T>& v)
+{
+    if (v.empty()){
+        T t;
+        v.emplace_back(t);
+    }
+}
+
 
 
 //math (string is treated as integer)
@@ -83,6 +92,11 @@ void Add(std::vector<T> & vec, T const& item){
     vec.emplace_back(item);
 }
 template <typename T>
+void Add(std::vector<T> & vec){
+    T item;
+    vec.emplace_back(item);
+}
+template <typename T>
 void Add_N(std::vector<T> & vec, T const& item, int num){
     for (int i = 0; i < num; ++i){
         vec.emplace_back(item);
@@ -101,7 +115,7 @@ void Add_To_Vector_If_Not_Already_There(std::vector<T> & vec, T const& item){
 
 template <typename T>
 void Expand_Vector_For_Index(std::vector<T> & vec, size_t at_index){
-    for (int i = vec.size(); i < at_index+1; ++i){
+    for (size_t i = vec.size(); i < at_index+1; ++i){
         T t;
         vec.emplace_back(t);
     }

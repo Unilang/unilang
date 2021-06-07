@@ -156,7 +156,11 @@ class
 
 ◀private: static▶ std::string ☀boost_serialization_headers()❰
   std::string str;
+
+  str += "#pragma clang diagnostic push\n";
+  str += "#pragma clang diagnostic ignored \"-Wreserved-id-macro\"\n";
   str += "#define _LIBCPP_ENABLE_CXX17_REMOVED_AUTO_PTR\n";
+  str += "#pragma clang diagnostic pop\n";
   str += "#define BOOST_NO_AUTO_PTR\n";
   str += "#include <boost/archive/text_oarchive.hpp>\n";
   str += "#include <boost/archive/text_iarchive.hpp>\n";

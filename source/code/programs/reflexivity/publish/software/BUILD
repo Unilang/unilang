@@ -25,6 +25,7 @@ hcp(
         "//code/utilities/types/strings/observers/path:lib",
         "//code/utilities/types/vectors/observers:lib",
         "//code/programs/repo_tools/repo_stats:repo_stats_documentation_getter",
+        "//code/utilities/types/vectors/transformers:lib",
     ],
 )
 
