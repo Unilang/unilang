@@ -26,6 +26,7 @@ hcp(
         "//code/utilities/types/strings/observers/path:lib",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/transformers:lib",
+        "//code/utilities/linguistics/computer/frontends/markdown:markdown_str_getter",
     ],
 )
 

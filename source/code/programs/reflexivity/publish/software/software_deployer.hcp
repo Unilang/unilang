@@ -18,6 +18,7 @@ class
 ❪"code/utilities/formats/json/converters/type_to_json_string"❫
 ❪"code/programs/repo_tools/repo_stats/repo_stats_documentation_getter"❫
 ❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/linguistics/computer/frontends/markdown/markdown_str_getter"❫
 ⚞⚟
 
 //TODO: improve data dependencies of tool-related artifacts
@@ -102,9 +103,45 @@ class
         auto ldd_results = Ldd_Results_Getter::Get(raw_binary_name);
         auto ldd_results_str = Type_To_Json_String::As_JSON_String(ldd_results);
         
-        
+        //add ldd results
         Ensure_Not_Empty(doc_structure.literature);
+        model::Paragraph paragraph;
+        
+        model::ParagraphDepth paragraph_depth;
+        paragraph_depth.value = "1";
+        paragraph.depth.emplace_back(paragraph_depth);
+        
+        model::ParagraphTitle paragraph_title;
+        paragraph_title.value = "LDD Results";
+        paragraph.title.emplace_back(paragraph_title);
+        
+        model::ParagraphSentence paragraph_sentence;
+        model::CodeLine code_line;
+        model::Line line;
+        line.value = ldd_results_str;
+        code_line.line.emplace_back(line);
+        paragraph_sentence.code_line.emplace_back(code_line);
+        paragraph.sentence.emplace_back(paragraph_sentence);
+        
+        doc_structure.literature[0].paragraph.emplace_back(paragraph);
+        
+        Create_Markdown(doc_structure,program_name);
 ❱
+
+◀private: static▶ void ☀Create_Markdown(model::Module const& doc_structure, std::string const& program_name)❰
+
+    Markdown_Settings settings;
+    settings.headers.allow_labeled_image_titles = false;
+    settings.headers.h1_as_details_tags = false;
+    settings.headers.h1_as_summary_tags = false;
+    settings.tables.print = false;
+    
+    std::vector<Contributor> contributors;
+    
+    auto str = Markdown_Str_Getter::Get(doc_structure,contributors,settings);
+    Write_To_File(program_name + ".md",str);
+❱
+
 
 
 ◀private: static▶ std::vector<std::string> ☀Get_Specific_Debs_Of_Program(std::vector<std::string> const& debs, std::string const& program_name)❰
