@@ -3,6 +3,21 @@ code
 ..name
 ..code type
 
+..resources
+...pk
+...cpu
+....min
+....max
+...mem
+....min
+....max
+...time
+....min
+....max
+...network
+....block
+
+
 ..foreseeable change
 ...pk
 ...change
