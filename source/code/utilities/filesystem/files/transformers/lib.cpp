@@ -91,8 +91,8 @@ void Turn_Symbolic_Linked_File_Into_Regular_File(std::string const& path_to_file
 
 void Append_To_File(std::string const& path, std::string const& str){
   std::ofstream out;
-  outfile.open(path, std::ios_base::app);
-  outfile << str;
+  out.open(path, std::ios_base::app);
+  out << str;
   out.close();
 }
 
