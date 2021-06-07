@@ -107,6 +107,7 @@ class
         model::Paragraph paragraph;
         
         Add_Sentence(paragraph,"These are the dynamic libraries used by the program");
+        Add_Sentence(paragraph,"Use `apt-file search <file>` to figure out what package you may need to install");
         
         model::ParagraphDepth paragraph_depth;
         paragraph_depth.value = "0";
