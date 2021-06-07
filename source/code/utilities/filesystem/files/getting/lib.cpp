@@ -620,3 +620,18 @@ std::vector<std::string> Recursively_Get_All_Paths_To_Directories_Of_Given_Name_
 std::vector<std::string> Recursively_Get_All_Paths_To_Non_Symlink_Deb_Files_Of_Path(std::string const& path){
     return Recursively_Get_All_Paths_To_Non_Symlink_Files_Of_Given_File_Extension_From_Path("deb",path);
 }
+
+char Get_Last_Char_Of_File(std::string const& file){
+    auto str = execute(std::string("tail -c1 ") + file);
+    return str[0];
+}
+bool File_Ends_In_Newline(std::string const& file){
+    auto str = execute(std::string("tail -c1 ") + file);
+    if (str.empty()){
+        return false;
+    }
+    if (str[0] == '\n'){
+        return true;
+    }
+    return false;
+}

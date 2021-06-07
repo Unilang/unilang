@@ -88,3 +88,10 @@ void Turn_Symbolic_Linked_File_Into_Regular_File(std::string const& path_to_file
         execute_quietly("rm -rf " + path_to_file);
         execute_quietly("cp -rf " + As_All_Chars_Removed_From_Back_Until_Char_Is_Seen(path_to_file,'/') + i + " " + path_to_file);
 }
+
+void Append_To_File(std::string const& path, std::string const& str){
+  std::ofstream out;
+  outfile.open(path, std::ios_base::app);
+  outfile << str;
+  out.close();
+}

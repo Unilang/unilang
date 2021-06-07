@@ -20,6 +20,7 @@ class
 ❪"code/programs/reflexivity/target_build_file_refresher"❫
 ❪"code/utilities/logo/unilang_logo_creator"❫
 ❪"code/utilities/code/animate/unilang_hello_world_gif"❫
+❪"code/utilities/filesystem/files/getting/lib"❫
 ⚞⚟
 
 
@@ -41,6 +42,7 @@ class
     
     //things to do
     Target_Build_File_Refresher::Refresh(settings);
+    Other_File_Autofix(settings);
     Generate_Documentation_Artifacts(settings);
     Generate_Essays(settings);
     
@@ -57,6 +59,16 @@ class
     // We want code that can automatically compare the mirror to the original source and
     // let us know how far behind it is. Additionally it could try to update to
     // the latest and see if everything still builds / passes tests.
+❱
+
+◀private: static▶ void ☀Other_File_Autofix(Reflexive_Refresh_Settings const& settings)❰
+
+    auto scan_path = Bazel_Derived_Root_Of_Repo();
+    scan_path += "source/code";
+    auto headers = Recursively_Get_All_Paths_To_hpp_Files_Of_Path(scan_path);
+    for (auto const& it: headers){
+        std::cout << it << std::endl;
+    }
 ❱
 
 

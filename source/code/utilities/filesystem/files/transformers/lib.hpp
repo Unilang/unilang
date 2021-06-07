@@ -17,3 +17,6 @@ void Rename_Preprocessor_Include_Directive_To_Match_File_Name(std::string path_t
 
 //dealing with file types
 void Turn_Symbolic_Linked_File_Into_Regular_File(std::string const& path_to_file);
+
+
+void Append_To_File(std::string const& path, std::string const& str);

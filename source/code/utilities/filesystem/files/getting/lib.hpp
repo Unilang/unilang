@@ -50,3 +50,7 @@ bool Path_Contains_File_With_Same_Basename_As_File(std::string const& file, std:
 
 
 bool Recursive_Path_Contains_File_With_Same_Basename_As_File(std::string const& file, std::string path);
+
+
+char Get_Last_Char_Of_File(std::string const& file);
+bool File_Ends_In_Newline(std::string const& file);

@@ -8,17 +8,25 @@ class
 
 ◀public: static▶ Reflexive_Refresh_Settings ☀Get()❰
     Reflexive_Refresh_Settings x;
+    
+    //self / build related
     x.refresh_bazel_wrapper = true;
     x.refresh_bazelrc = true;
     x.refresh_dockerfile = true;
+    x.reformat_build_files = true;
     x.refresh_deps_definitions = true;
     x.refresh_scan_deps_definitions = true;
     x.refresh_toolchain_conversion_tests = true;
-    x.reformat_build_files = true;
+    
+    //unilang related
     x.refresh_unilang_documentation = true;
     x.refresh_unilang_logo = true;
     x.refresh_unilang_hello_world_gif = true;
     x.refresh_unilang_concept_tree_image = true;
+    
+    //artifacts
     x.refresh_essays = true;
+    
+    
     return x;
 ❱

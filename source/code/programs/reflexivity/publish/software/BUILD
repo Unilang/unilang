@@ -11,6 +11,7 @@ hcp(
         "//code/programs/repo_tools/repo_stats:repo_stats_debs",
     ],
     deps = [
+        "//code/programs/repo_tools/repo_stats:repo_stats_documentation_getter",
         "//code/utilities/code:concept_static_tree_structs",
         "//code/utilities/filesystem/files/getting:lib",
         "//code/utilities/filesystem/files/moving:lib",
@@ -24,7 +25,6 @@ hcp(
         "//code/utilities/program/wrappers/git/update:git_updater",
         "//code/utilities/types/strings/observers/path:lib",
         "//code/utilities/types/vectors/observers:lib",
-        "//code/programs/repo_tools/repo_stats:repo_stats_documentation_getter",
         "//code/utilities/types/vectors/transformers:lib",
     ],
 )
