@@ -12,5 +12,45 @@ class
     name.value = "repo_stats";
     x.name.emplace_back(name);
     
+    x.literature.emplace_back(MainDoc());
+    
     return x;
+❱
+
+◀private: static▶ model::Literature ☀MainDoc()❰
+    model::Literature x;
+    x.paragraph.emplace_back(Introduction());
+    return x;
+❱
+
+◀private: static▶ model::Paragraph ☀Introduction() ❰
+    model::Paragraph p;
+    
+    model::ParagraphDepth depth;
+    depth.value = "0";
+    
+    model::ParagraphTitle title;
+    title.value = "Introduction";
+    
+    p.depth.emplace_back(depth);
+    p.title.emplace_back(title);
+    
+    Add_Sentence(p,"This tool evaluates a repository and publishes metrics about it");
+    Add_Sentence(p,"It tries to be agnostic to how the repository is setup and what build system it uses.");
+    Add_Sentence(p,"Designed specifically for bazel repositories");
+    return p;
+❱
+   
+   
+
+
+
+
+//Utility
+◀private: static▶ void ☀Add_Sentence(model::Paragraph & p, std::string const& str) ❰
+    model::ParagraphSentence x;
+    model::SentenceText text;
+    text.value = str;
+    x.text.emplace_back(text);
+    p.sentence.emplace_back(x);
 ❱

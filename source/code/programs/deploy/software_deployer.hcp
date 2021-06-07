@@ -69,21 +69,3 @@ class
   std::string file_name = program_name + ".list";
   Write_To_File(file_name,content);
 ❱
-
-◀private: static▶ void ☀Create_Markdown(Structure const& structure, std::string const& file_name)❰
-
-    Program_Input input;
-    input.settings = Root_Settings_Getter::Get();
-    auto contributors = input.settings.compiler_settings.trevor.contributors;
-    auto md_settings = input.settings.compiler_settings.trevor.settings.foreign_language.markdown;
-    
-    md_settings.headers.allow_labeled_image_titles = false;
-    md_settings.headers.h1_as_details_tags = false;
-    md_settings.headers.h1_as_summary_tags = false;
-    md_settings.tables.print = false;
-    
-    auto result = Markdown_Str_Getter::Get(structure,contributors,md_settings);
-    Write_To_File(file_name,result);
-    
-❱
-

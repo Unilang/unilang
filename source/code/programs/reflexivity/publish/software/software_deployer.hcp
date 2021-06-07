@@ -101,14 +101,17 @@ class
         
         //get ldd results
         auto ldd_results = Ldd_Results_Getter::Get(raw_binary_name);
-        auto ldd_results_str = Type_To_Json_String::As_JSON_String(ldd_results);
+        auto ldd_results_str = Type_To_Json_String::As_JSON_String(ldd_results.results);
+        std::cout << ldd_results_str << std::endl;
         
         //add ldd results
         Ensure_Not_Empty(doc_structure.literature);
         model::Paragraph paragraph;
         
+        Add_Sentence(paragraph,"These are the dynamic libraries used by the program");
+        
         model::ParagraphDepth paragraph_depth;
-        paragraph_depth.value = "1";
+        paragraph_depth.value = "0";
         paragraph.depth.emplace_back(paragraph_depth);
         
         model::ParagraphTitle paragraph_title;
@@ -125,7 +128,11 @@ class
         
         doc_structure.literature[0].paragraph.emplace_back(paragraph);
         
+        //create markdown
         Create_Markdown(doc_structure,program_name);
+        
+        // create html file
+        execute("pandoc " + program_name + ".md --from markdown --to html5 > " + program_name + ".html");
 ❱
 
 ◀private: static▶ void ☀Create_Markdown(model::Module const& doc_structure, std::string const& program_name)❰
@@ -178,6 +185,16 @@ class
   return docs;
 ❱
 
+
+
+//Utility
+◀private: static▶ void ☀Add_Sentence(model::Paragraph & p, std::string const& str) ❰
+    model::ParagraphSentence x;
+    model::SentenceText text;
+    text.value = str;
+    x.text.emplace_back(text);
+    p.sentence.emplace_back(x);
+❱
 
 
 

@@ -39,12 +39,15 @@ class
 
 
 ◀public: static▶ bool ☀More_Of_A_Labeled_Image_Title_Display(model::Paragraph const& p, std::vector<Contributor> const& contributors, Markdown_Settings const& settings)❰
+    
     if (!p.title.empty()){
+        int count = 0;
         for (auto const& s: p.sentence){
-            if (s.text.empty()){
-                return true;
+            if (!s.text.empty()){
+                ++count;
             }
         }
+        return count == 0;  
     }
     return false;
 ❱
