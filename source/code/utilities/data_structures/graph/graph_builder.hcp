@@ -7,7 +7,7 @@ class
 ⚯
 ⚞⚟
 
-◀public: static▶ Graph ☀Build_Cpp_Graph(std::vector<Object_To_Counted_Objects> const& rels)❰
+◀public: static▶ Graph ☀Build_Graph(std::vector<Object_To_Counted_Objects> const& rels)❰
 
 
     Graph G;

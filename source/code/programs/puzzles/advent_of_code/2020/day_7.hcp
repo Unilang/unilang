@@ -37,7 +37,7 @@ class
 
     std::string start_node = "shiny gold bag";
     auto rels = Create_Relationships(lines);
-    auto graph = Graph_Builder::Build_Cpp_Graph(rels);
+    auto graph = Graph_Builder::Build_Graph(rels);
     auto reachable = graph.explore(start_node);
     
     //-1 because we don't want to count ourselves

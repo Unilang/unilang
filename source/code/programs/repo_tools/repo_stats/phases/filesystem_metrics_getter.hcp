@@ -43,6 +43,8 @@ class
     x.current_dir_size_bytes = Get_Dir_Size::Calculate_Size_Of_Dir_In_Bytes(".");
     x.total_file_count  = as_signed(Get_Total_File_Count::Get("."));
     
+    //find broken symlinks
+    
     return x;
 ❱
 
