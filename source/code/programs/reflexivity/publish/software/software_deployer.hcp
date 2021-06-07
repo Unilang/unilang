@@ -114,7 +114,7 @@ class
         paragraph.depth.emplace_back(paragraph_depth);
         
         model::ParagraphTitle paragraph_title;
-        paragraph_title.value = "LDD Results";
+        paragraph_title.value = "Ldd Results";
         paragraph.title.emplace_back(paragraph_title);
         
         model::ParagraphSentence paragraph_sentence;
