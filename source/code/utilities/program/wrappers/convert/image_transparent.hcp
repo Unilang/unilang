@@ -12,11 +12,21 @@ class
 //convert image.gif -transparent white result.gif
 ◀public: static▶ void ☀Convert(std::string const& file_in, std::string const& file_out) ❰
 
+
+
     std::string command;
     command += "convert ";
     command += file_in;
     command += " ";
     command += "-transparent white ";
+    
+    //BUG! For some reason this creates a slightly different image each time.
+    //It's not deterministic so git always says the generated file is dirty even
+    //though it looks exactly the same.
+    //But when I run it outside of code it works.  wtf.
+    //I think the date is being injected.
+    command += "-define png:exclude-chunks=date ";
+    
     command += file_out;
     
     execute_quietly(command);
