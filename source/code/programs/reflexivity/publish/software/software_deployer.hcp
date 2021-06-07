@@ -100,9 +100,7 @@ class
         std::string raw_binary_name = Replace_File_Name(specific_debs[0],program_name);
         
         //get ldd results
-        auto ldd_results = Ldd_Results_Getter::Get(raw_binary_name);
-        auto ldd_results_str = Type_To_Json_String::As_JSON_String(ldd_results.results);
-        std::cout << ldd_results_str << std::endl;
+        auto ldd_results_str = Get_Ldd_Shared_Objects(raw_binary_name);
         
         //add ldd results
         Ensure_Not_Empty(doc_structure.literature);
@@ -133,6 +131,17 @@ class
         
         // create html file
         execute("pandoc " + program_name + ".md --from markdown --to html5 > " + program_name + ".html");
+❱
+
+◀private: static▶ std::string ☀Get_Ldd_Shared_Objects(std::string const& raw_binary_name)❰
+        auto ldd_results = Ldd_Results_Getter::Get(raw_binary_name);
+        //auto ldd_results_str = Type_To_Json_String::As_JSON_String(ldd_results.results);
+        
+        std::string result;
+        for (auto const& it: ldd_results.results.entries){
+            result += it.so + "\n";
+        }
+        return result;
 ❱
 
 ◀private: static▶ void ☀Create_Markdown(model::Module const& doc_structure, std::string const& program_name)❰
