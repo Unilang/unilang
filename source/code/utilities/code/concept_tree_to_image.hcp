@@ -88,5 +88,5 @@ class
     Frame_Renderer::Render(elements,settings);
     
     //additional cleanuo
-    Image_Transparent::Convert(settings.file_name);
+    //Image_Transparent::Convert(settings.file_name);
 ❱
