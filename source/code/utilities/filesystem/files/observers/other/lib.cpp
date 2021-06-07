@@ -80,3 +80,7 @@ std::optional<std::time_t> Last_Modification_Time_If_File_Exists(std::string pat
   //return an optional modification time
   return potential_time;
 }
+
+std::string Instances_Of_Double_Semicolon(std::string const& filename){
+  return execute(std::string("ag ';(\\s)+;' -G ") + filename);
+}

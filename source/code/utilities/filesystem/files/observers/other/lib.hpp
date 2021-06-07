@@ -17,3 +17,5 @@ std::string Type_Of_File(std::string const& path);
 bool Is_A_Dynamic_Executable_According_to_Ldd(std::string const& path);
 
 std::optional<std::time_t> Last_Modification_Time_If_File_Exists(std::string path_to_file);
+
+std::string Instances_Of_Double_Semicolon(std::string const& filename);
