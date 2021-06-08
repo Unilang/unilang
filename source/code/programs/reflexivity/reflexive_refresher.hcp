@@ -22,6 +22,7 @@ class
 ❪"code/utilities/code/animate/unilang_hello_world_gif"❫
 ❪"code/utilities/filesystem/files/getting/lib"❫
 ❪"code/utilities/filesystem/files/transformers/lib"❫
+❪"code/programs/reflexivity/publish/unilang_documentation_generator"❫
 ⚞⚟
 
 
@@ -78,7 +79,7 @@ class
     //generate unilang documentation
     if (settings.refresh_unilang_documentation){
         std::cout << "Generating Unilang Documentation..." << std::endl;
-        //Unilang_Documentation_Generator::Generate();
+        Unilang_Documentation_Generator::Generate();
     }
     
     if (settings.refresh_unilang_logo){
