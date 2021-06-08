@@ -47,6 +47,8 @@ class
     //build markdown documentation
     Markdown_Settings md_settings;
     md_settings.image.style = Markdown_Image_Style::HTML;
+    md_settings.headers.h1_as_details_tags = false;
+    md_settings.headers.h1_as_summary_tags = false;
     
     std::vector<Contributor> contributors;
     auto str = Markdown_Str_Getter::Get(structure.module[0],contributors,md_settings);

@@ -3,8 +3,6 @@
 **A universal programming language**
 
 
-</details>
-<details>
 
 <img width="" height="" src=".readme/hello_world.gif">
 
