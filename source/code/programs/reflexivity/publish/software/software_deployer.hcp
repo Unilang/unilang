@@ -68,7 +68,9 @@ class
     Create_Path_And_Temporarily_Move_To_It_To_Call_Function(folder_name,[&](){
     
         Find_Debs_And_Copy_Over_Program_Data(debs,program_name);
-        Find_Debs_And_Copy_Over_Documentation(doc_structure,debs,program_name);
+        Create_Path_And_Temporarily_Move_To_It_To_Call_Function("docs",[&](){
+            Find_Debs_And_Copy_Over_Documentation(doc_structure,debs,program_name);
+        });
     });
 ❱
 
