@@ -6,6 +6,7 @@ class
 ❪vector❫
 ❪"code/utilities/formats/pdf/pdf_settings"❫
 ❪"code/utilities/code/concept_static_tree_structs"❫
+❪"code/utilities/contributor/contributor"❫
 ⚯
 ❪"code/utilities/types/general/lib"❫
 ❪"code/utilities/program/common_actions/exits/lib"❫
@@ -18,6 +19,7 @@ class
 ❪"code/utilities/program/call/process_spawn/process_spawner"❫
 ❪"code/utilities/program/wrappers/pandoc/pandoc_pdf_generator"❫
 ❪"code/utilities/program/wrappers/pandoc/settings/pandoc_pdf_settings"❫
+❪"code/utilities/linguistics/computer/frontends/markdown/markdown_str_getter"❫
 ⚞⚟
 
 //garbage deps (needs fixed)
@@ -29,17 +31,13 @@ class
 //sudo tlmgr option repository ftp://tug.org/historic/systems/texlive/2017/tlnet-final
 //tlmgr install xcolor
 
-◀public: static▶ void ☀Create_Pdf(model::Module const& structure, Pdf_Settings const& pdf_settings)❰
+◀public: static▶ void ☀Create_Pdf(model::Module const& structure, std::vector<Contributor> const& contributors, Pdf_Settings const& pdf_settings)❰
     
-    // //get contributors
-    // Program_Input input;
-    // input.settings = Root_Settings_Getter::Get();
-    // auto contributors = input.settings.compiler_settings.trevor.contributors;
     
     // //get temporary markdown file
-    // auto result = Markdown_Str_Getter::Get(structure,contributors,pdf_settings.markdown_settings);
-    // auto temp3_ = Temp_File(pdf_settings.pandoc_settings.md_format,result,false);
+    auto result = Markdown_Str_Getter::Get(structure,contributors,pdf_settings.markdown_settings);
+    auto temp3_ = Temp_File(pdf_settings.pandoc_settings.md_format,result,false);
     
-    // //convert markdown into pdf
-    // Pandoc_Pdf_Generator::Create_Pdf(pdf_settings.pandoc_settings);
+    //convert markdown into pdf
+    Pandoc_Pdf_Generator::Create_Pdf(pdf_settings.pandoc_settings);
 ❱

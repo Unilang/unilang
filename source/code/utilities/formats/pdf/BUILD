@@ -27,6 +27,8 @@ hcp(
         "//code/utilities/program/wrappers/pandoc:pandoc_pdf_generator",
         "//code/utilities/program/wrappers/pandoc/settings:pandoc_pdf_settings",
         "//code/utilities/types/general:lib",
+        "//code/utilities/contributor:contributor",
+        "//code/utilities/linguistics/computer/frontends/markdown:markdown_str_getter",
     ],
 )
 

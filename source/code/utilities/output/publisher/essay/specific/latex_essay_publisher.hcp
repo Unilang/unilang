@@ -67,7 +67,8 @@ class
     pdf_settings.markdown_settings = Get_Pdf_Markdown_Settings();
     
     
-    Pdf_Creator::Create_Pdf(structure,pdf_settings);
+    std::vector<Contributor> contributors;
+    Pdf_Creator::Create_Pdf(structure,contributors,pdf_settings);
     
     Existing_Temp_File created_pdf(pdf_settings.pandoc_settings.resulting_pdf);
     

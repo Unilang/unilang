@@ -31,7 +31,6 @@ class
       
       std::string markdown_file_name = program_name + ".md";
       std::string html_file_name = program_name + ".html";
-      Create_Markdown(doc_structure,markdown_file_name);
       
       // create html file
       execute("pandoc " + program_name + ".md --from markdown --to html5 > " + html_file_name);
@@ -54,6 +53,10 @@ class
 
     return md_settings;
 ❱
+
+
+
+
 
 
 

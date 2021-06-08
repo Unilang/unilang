@@ -43,43 +43,43 @@ class
     Conceptually_Laid_Out_Node node;
     
     node.name = "unilang-editor";
-    name.pos.x = 0;
-    name.pos.y = 0;
+    node.pos.x = 0;
+    node.pos.y = 0;
     g.nodes.emplace_back(node);
     
     node.name = "file.unilang";
-    name.pos.x = 1;
-    name.pos.y = 0;
+    node.pos.x = 1;
+    node.pos.y = 0;
     g.nodes.emplace_back(node);
     
     node.name = "unilang-to-code";
-    name.pos.x = 2;
-    name.pos.y = 0;
+    node.pos.x = 2;
+    node.pos.y = 0;
     g.nodes.emplace_back(node);
     
     node.name = "code.json";
-    name.pos.x = 3;
-    name.pos.y = 0;
+    node.pos.x = 3;
+    node.pos.y = 0;
     g.nodes.emplace_back(node);
     
     node.name = "code-to-cpp";
-    name.pos.x = 4;
-    name.pos.y = 0;
+    node.pos.x = 4;
+    node.pos.y = 0;
     g.nodes.emplace_back(node);
     
     node.name = "c++ code";
-    name.pos.x = 5;
-    name.pos.y = 0;
+    node.pos.x = 5;
+    node.pos.y = 0;
     g.nodes.emplace_back(node);
     
     node.name = "code-to-python";
-    name.pos.x = 4;
-    name.pos.y = 1;
+    node.pos.x = 4;
+    node.pos.y = 1;
     g.nodes.emplace_back(node);
     
     node.name = "python code";
-    name.pos.x = 5;
-    name.pos.y = 1;
+    node.pos.x = 5;
+    node.pos.y = 1;
     g.nodes.emplace_back(node);
     
     Conceptually_Laid_Out_Edge edge;
