@@ -13,6 +13,7 @@ hcp(
         "//code/programs/reflexivity/deps_define/refresh:deps_definition_refresher",
         "//code/programs/reflexivity/deps_define/scan:deps_repo_scanner",
         "//code/programs/reflexivity/docker:dockerfile_refresher",
+        "//code/programs/reflexivity/publish:unilang_documentation_generator",
         "//code/programs/reflexivity/publish/essays:all_essay_publisher",
         "//code/programs/reflexivity/settings:reflexive_refresh_settings",
         "//code/programs/reflexivity/settings:reflexive_refresh_settings_getter",
@@ -27,7 +28,6 @@ hcp(
         "//code/utilities/program/common_actions/locale:lib",
         "//code/utilities/program/name:program_name_getter",
         "//code/utilities/types/strings/transformers/appending:lib",
-        "//code/programs/reflexivity/publish:unilang_documentation_generator",
     ],
 )
 

@@ -32,8 +32,8 @@ hcp(
 hcp(
     name = "repo_stats_documentation_getter",
     deps = [
-        "//code/utilities/code:concept_static_tree_structs",
         "//code/programs/repo_tools/repo_stats/program_options:lib",
+        "//code/utilities/code:concept_static_tree_structs",
     ],
 )
 

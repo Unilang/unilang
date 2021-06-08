@@ -6,7 +6,7 @@ load("//bazel/rules/cpp:object.bzl", "cpp_object")
 hcp(
     name = "conceptually_laid_out_node",
     deps = [
-        "//code/utilities/data_structures/position:position",
+        "//code/utilities/data_structures/position",
     ],
 )
 
@@ -19,7 +19,7 @@ hcp(
 hcp(
     name = "conceptually_laid_out_graph",
     deps = [
-        "//code/utilities/data_structures/graph/conceptually_laid_out_graph:conceptually_laid_out_node",
         "//code/utilities/data_structures/graph/conceptually_laid_out_graph:conceptually_laid_out_edge",
+        "//code/utilities/data_structures/graph/conceptually_laid_out_graph:conceptually_laid_out_node",
     ],
 )

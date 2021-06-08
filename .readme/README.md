@@ -6,6 +6,3 @@ For now, we just target the main Readme.md
 
 consider this casing:  
 ᴜɴɪʟᴀɴɢ
-
-If you need to white-trim some images, I've used:  
-mogrify -trim *.png

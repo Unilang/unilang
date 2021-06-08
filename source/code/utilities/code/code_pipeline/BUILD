@@ -6,6 +6,7 @@ hcp(
     name = "code_pipeline_image_maker",
     deps = [
         "//code/utilities/code:concept_string_tree_getter",
+        "//code/utilities/data_structures/graph/conceptually_laid_out_graph",
         "//code/utilities/data_structures/graphics/bitmap/premade:tree_button",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree:buildable_schema_face_tree_drawer",
@@ -26,7 +27,6 @@ hcp(
         "//code/utilities/types/strings/transformers/appending:lib",
         "//code/utilities/types/tree/converters:tree_full_paths_getter",
         "//code/utilities/types/vectors/observers:lib",
-        "//code/utilities/data_structures/graph/conceptually_laid_out_graph:conceptually_laid_out_graph",
         "@tree",
     ],
 )

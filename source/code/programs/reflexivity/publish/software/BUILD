@@ -20,13 +20,13 @@ hcp(
         "//code/utilities/formats/json/converters:type_to_json_string",
         "//code/utilities/formats/pdf:pdf_creator",
         "//code/utilities/formats/pdf:pdf_settings",
+        "//code/utilities/linguistics/computer/frontends/markdown:markdown_str_getter",
         "//code/utilities/linguistics/computer/frontends/markdown/settings:markdown_settings",
         "//code/utilities/personal/hosting:hosting_repo",
         "//code/utilities/program/wrappers/git/update:git_updater",
         "//code/utilities/types/strings/observers/path:lib",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/transformers:lib",
-        "//code/utilities/linguistics/computer/frontends/markdown:markdown_str_getter",
     ],
 )
 
