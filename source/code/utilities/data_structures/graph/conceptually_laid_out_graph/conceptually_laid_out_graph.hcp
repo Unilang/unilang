@@ -1,0 +1,10 @@
+class
+❪"code/utilities/data_structures/graph/conceptually_laid_out_graph/conceptually_laid_out_node"❫
+❪"code/utilities/data_structures/graph/conceptually_laid_out_graph/conceptually_laid_out_edge"❫
+⚯
+⚞⚟
+◀public:
+
+  std::vector<Conceptually_Laid_Out_Node> ፠nodes፠;
+  std::vector<Conceptually_Laid_Out_Edge> ፠edges፠;
+▶ 

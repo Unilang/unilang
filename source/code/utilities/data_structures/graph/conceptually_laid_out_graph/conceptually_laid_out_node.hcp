@@ -1,0 +1,17 @@
+class
+❪"code/utilities/data_structures/position/position"❫
+⚯
+⚞⚟
+◀public:
+
+  std::string ፠name፠;
+  
+  // the position is not pixel position or something else context-defined.
+  // the position is intended to be the conceptual layout assuming the nodes are fitted to a flexible grid based on the node sizes.
+  // so position should be the row / column the node conceptually exists in.
+  // this information can be used to derive a more specific pixel position based on the image generator that decides the node shapes
+  // an example of 3 nodes that look like A -> B -> C -\
+  //                                                 D <-
+  // would have positions (0,0), (1,0), (2,0), (2,1), 
+  Position ፠pos፠;
+▶ 
