@@ -3,6 +3,7 @@ class
 ❪iostream❫
 ❪"code/utilities/linguistics/computer/frontends/markdown/settings/markdown_settings"❫
 ❪"code/utilities/code/concept_static_tree_structs"❫
+❪"code/utilities/formats/pdf/pdf_settings"❫
 ⚯
 ❪"code/utilities/filesystem/files/getting/lib"❫
 ❪"code/utilities/filesystem/paths/lib"❫
@@ -19,6 +20,7 @@ class
 ❪"code/programs/repo_tools/repo_stats/repo_stats_documentation_getter"❫
 ❪"code/utilities/types/vectors/transformers/lib"❫
 ❪"code/utilities/linguistics/computer/frontends/markdown/markdown_str_getter"❫
+❪"code/utilities/formats/pdf/pdf_creator"❫
 ⚞⚟
 
 //TODO: improve data dependencies of tool-related artifacts
@@ -132,6 +134,9 @@ class
         
         // create html file
         execute("pandoc " + program_name + ".md --from markdown --to html5 > " + program_name + ".html");
+        
+        //create PDF
+        Create_Pdf(doc_structure,program_name);
 ❱
 
 ◀private: static▶ std::string ☀Get_Ldd_Shared_Objects(std::string const& raw_binary_name)❰
@@ -157,6 +162,37 @@ class
     
     auto str = Markdown_Str_Getter::Get(doc_structure,contributors,settings);
     Write_To_File(program_name + ".md",str);
+❱
+
+
+
+◀private: static▶ void ☀Create_Pdf(model::Module const& doc_structure, std::string const& program_name)❰
+    std::vector<Contributor> contributors;
+    auto settings = Get_Pdf_Settings(program_name);
+    Pdf_Creator::Create_Pdf(doc_structure,contributors,settings);
+❱
+
+◀private: static▶ Pdf_Settings ☀Get_Pdf_Settings(std::string const& program_name)❰
+      Pdf_Settings pdf_settings;
+      pdf_settings.pandoc_settings.latex_template = "temp_latex.tex";
+      pdf_settings.pandoc_settings.md_format = "temp_markdown.md";
+      pdf_settings.pandoc_settings.resulting_pdf = program_name + ".pdf";
+      pdf_settings.pandoc_settings.font_size = 10;
+      pdf_settings.markdown_settings = Get_Pdf_Markdown_Settings();
+    return pdf_settings;
+❱
+      
+◀private: static▶ Markdown_Settings ☀Get_Pdf_Markdown_Settings()❰
+
+    Markdown_Settings md_settings;
+    md_settings.headers.allow_labeled_image_titles = false;
+    md_settings.headers.h1_as_details_tags = false;
+    md_settings.headers.h1_as_summary_tags = false;
+    md_settings.tables.print = true;
+    md_settings.tables.as_list = true;
+    md_settings.image.style = Markdown_Image_Style::CLASSIC;
+
+    return md_settings;
 ❱
 
 
