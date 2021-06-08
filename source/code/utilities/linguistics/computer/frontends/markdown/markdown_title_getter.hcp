@@ -81,6 +81,7 @@ class
         for (auto const& it: p.title){
             Append(text,it.value);
         }
+        Append_With_Newline(text,"");
         Append(text,"% ");
         Append_With_Newline(text,Date_As_Full_Month_Day_Year());
     }

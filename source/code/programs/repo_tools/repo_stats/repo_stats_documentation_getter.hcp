@@ -19,8 +19,33 @@ class
 
 ◀private: static▶ model::Literature ☀MainDoc()❰
     model::Literature x;
+    x.paragraph.emplace_back(Title());
     x.paragraph.emplace_back(Introduction());
     return x;
+❱
+
+◀private: static▶ model::Paragraph ☀Title() ❰
+    model::Paragraph p;
+    
+    model::ParagraphDepth depth;
+    depth.value = "0";
+    
+    model::ParagraphTitle title;
+    title.value = "Calculates and publishes repository metrics";
+    
+    p.depth.emplace_back(depth);
+    p.title.emplace_back(title);
+    
+    model::ParagraphSentence s;
+    model::Image img;
+    model::AlternativeText alt;
+    alt.value = "repo_stats";
+    
+    img.alternative_text.emplace_back(alt);
+    s.image.emplace_back(img);
+    p.sentence.emplace_back(s);
+    
+    return p;
 ❱
 
 ◀private: static▶ model::Paragraph ☀Introduction() ❰
@@ -37,7 +62,7 @@ class
     
     Add_Sentence(p,"This tool evaluates a repository and publishes metrics about it");
     Add_Sentence(p,"It tries to be agnostic to how the repository is setup and what build system it uses.");
-    Add_Sentence(p,"Designed specifically for bazel repositories");
+    Add_Sentence(p,"It was designed specifically for bazel repositories, so many metrics will be published related to bazel's fetch / query phases");
     return p;
 ❱
    
