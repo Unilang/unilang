@@ -2,6 +2,7 @@ class
 ❪string❫
 ❪iostream❫
 ❪"code/utilities/code/concept_static_tree_structs"❫
+❪"code/programs/repo_tools/repo_stats/program_options/program_options"❫
 ⚯
 ⚞⚟
 
@@ -21,6 +22,7 @@ class
     model::Literature x;
     x.paragraph.emplace_back(Title());
     x.paragraph.emplace_back(Introduction());
+    x.paragraph.emplace_back(Command_Line());
     return x;
 ❱
 
@@ -65,6 +67,28 @@ class
     Add_Sentence(p,"It was designed specifically for bazel repositories, so many metrics will be published related to bazel's fetch / query phases");
     return p;
 ❱
+
+◀private: static▶ model::Paragraph ☀Command_Line() ❰
+    model::Paragraph p;
+    
+    model::ParagraphDepth depth;
+    depth.value = "0";
+    
+    model::ParagraphTitle title;
+    title.value = "Command Line";
+    
+    p.depth.emplace_back(depth);
+    p.title.emplace_back(title);
+    
+    std::stringstream ss;
+    char *args[] = {
+        (char*)"--help",
+        NULL
+    };
+    Program_Options po(1,args);
+    Add_Sentence_With_Code(p,"The tool can be used from the command line",po.Get_Help_Message());
+    return p;
+❱
    
    
 
@@ -78,4 +102,20 @@ class
     text.value = str;
     x.text.emplace_back(text);
     p.sentence.emplace_back(x);
+❱
+◀private: static▶ void ☀Add_Sentence_With_Code(model::Paragraph & p, std::string const& str, std::string const& code) ❰
+    model::ParagraphSentence x;
+    model::SentenceText text;
+    text.value = str;
+    x.text.emplace_back(text);
+    
+    model::CodeLine code_line;
+    model::Line line;
+    line.value = code;
+    code_line.line.emplace_back(line);
+    x.code_line.emplace_back(code_line);
+    
+    p.sentence.emplace_back(x);
+    
+    
 ❱
