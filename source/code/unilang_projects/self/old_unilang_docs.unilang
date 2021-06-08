@@ -7,15 +7,17 @@
 􏱭0􏱮􏱕􏱖􏱫Introduction􏱬
 
 
-The language was written to improve the quality of software by allowing a paradigm of rich data annotation.
-It was also designed to make developing more interactive like a video game. 
 
 􏱭1􏱮􏱕􏱖􏱫Summary􏱬
 􏱩Unilang is a programming language and IDE􏱪􏱟􏱠􏱧􏱨
 􏱩It has a graphical and textual fronted for creating software􏱪􏱟􏱠􏱧􏱨
 􏱩The language unifies with other languages through transcompilation􏱪􏱟􏱠􏱧􏱨
-􏱩It was written to automate and improve the productivity of a single person􏱪􏱟􏱠􏱧􏱨
-􏱩But maybe you'll find something useful in it too?􏱪􏱟􏱠􏱧􏱨
+
+The language was written to improve the quality of software by allowing a paradigm of rich data annotation.
+It was also designed to make developing more interactive like a video game. 
+
+It was written to automate and improve the productivity of a single person
+But maybe you'll find something useful in it too?
 
 􏱭1􏱮􏱕􏱖􏱫GPL Shortcomings􏱬
 􏱏GPLs are not the right solution to all programing problems􏱐
