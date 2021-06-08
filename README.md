@@ -38,8 +38,15 @@ Various CIs are used to test the correctness of the build.  Referencing these bu
 
 | Continuous Integration | Status | Notes | 
 | --- | --- | --- | 
-| App Veyor | X | Bootstraps Build | 
-Circle | X | Bootstraps Build | 
+| App Veyor | [![Build status](https://ci.appveyor.com/api/projects/status/wscwfed3pk5pxk6y?svg=true)](https://ci.appveyor.com/project/luxe/unilang) | Bootstraps Build | 
+Circle | [![CircleCI](https://circleci.com/gh/luxe/unilang.svg?style=svg)](https://circleci.com/gh/luxe/unilang) | Bootstraps Build | 
+Cirrus | [![Build Status](https://api.cirrus-ci.com/github/luxe/unilang.svg)](https://cirrus-ci.com/github/luxe/unilang) | Bootstraps Build | 
+Codeship | [![Codeship Status for luxe/unilang](https://app.codeship.com/projects/d4f94f6b-5462-4a6e-8468-af99c4aee8c5/status?branch=master) | Bootstraps Build | 
+Drone | [![Build Status](https://cloud.drone.io/api/badges/luxe/unilang/status.svg)](https://cloud.drone.io/luxe/unilang) | Bootstraps Build | 
+Scrutinizer | [![Build Status](https://scrutinizer-ci.com/g/luxe/unilang/badges/build.png?b=master)](https://scrutinizer-ci.com/g/luxe/unilang/build-status/master) | Bootstraps Build | 
+Semaphore | [![Build Status](https://semaphoreci.com/api/v1/luxe/everything/branches/master/shields_badge.svg) | Bootstraps Build | 
+Shippable | [![Run Status](https://api.shippable.com/projects/5c3163fd4e246e0700cea316/badge?branch=master)](https://app.shippable.com/accounts/5c3163cad1578b0700302159/dashboard) | Bootstraps Build | 
+Travis | [![Build status](https://travis-ci.com/luxe/unilang.svg?branch=master)](https://travis-ci.com/luxe/unilang) | Bootstraps Build | 
 
 The unilang schema is used to encode the concept tree and can be enforceable during projectional editing.  The abbreviations "pk" and "fk" correspond to primary and foreign keys to allow association between subtrees.  This is a similar concept found in ERDs and databases.  
 <img width="" height="" src=".readme/unilang_concept_tree.png">
