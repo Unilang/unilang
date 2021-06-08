@@ -20,5 +20,9 @@ hcp(
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
         "//code/utilities/web/dropbox:dropbox_uploader",
+        "//code/utilities/assets/literature:unilang_json_data_getter",
+        "//code/utilities/formats/json/converters:json_file_io",
+        "//code/utilities/code:concept_static_tree_structs",
+        "//code/utilities/linguistics/computer/frontends/markdown:markdown_str_getter",
     ],
 )

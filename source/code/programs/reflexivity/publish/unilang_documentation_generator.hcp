@@ -1,6 +1,7 @@
 class
 
 ❪"code/utilities/formats/pdf/pdf_settings"❫
+❪"code/utilities/code/concept_static_tree_structs"❫
 ⚯
 ❪"code/utilities/types/general/lib"❫
 ❪"code/utilities/program/common_actions/exits/lib"❫
@@ -15,6 +16,9 @@ class
 ❪"code/utilities/personal/secret/secret_getter"❫
 ❪"code/utilities/filesystem/files/temp/temp_file"❫
 ❪"code/utilities/formats/pdf/pdf_creator"❫
+❪"code/utilities/assets/literature/unilang_json_data_getter"❫
+❪"code/utilities/formats/json/converters/json_file_io"❫
+❪"code/utilities/linguistics/computer/frontends/markdown/markdown_str_getter"❫
 ⚞⚟
 
 //garbage deps (needs fixed)
@@ -25,32 +29,30 @@ class
 //tlmgr install xcolor
 ◀public: static▶ void ☀Generate() ❰
 
-    // //Unicode please
-    // Set_English_UTF8_Locale();
-
-    // //move somewhere
-    // Move_To_Bazel_Derived_Path_To_Self_Unilang();
+    //get documentation object
+    auto json_file_name = Unilang_Json_Data_Getter::Get();
+    model::Code structure;
+    Json_File_Io::Read_Json_From_File(structure,json_file_name);
     
-    // //the files we are reading/building
-    // auto from = "unilang_docs.unilang";
-    // auto to_readme = Bazel_Derived_Root_Of_Repo() + "README.md";
-    // auto to_raw_pdf = Bazel_Derived_Root_Of_Repo() + "README-pdf.md";
-    // auto to_manual_pdf = Bazel_Derived_Root_Of_Repo() + "README.pdf";
-    // auto to_latex_template = Bazel_Derived_Root_Of_Repo() + "README.tx";
-    // auto slides_base_name = Bazel_Derived_Root_Of_Repo() + "README-slides";
-    // bool upload_to_dropbox = true;
+    //the files we are reading/building
+    auto to_readme = Bazel_Derived_Root_Of_Repo() + "README.md";
+    auto to_raw_pdf = Bazel_Derived_Root_Of_Repo() + "README-pdf.md";
+    auto to_manual_pdf = Bazel_Derived_Root_Of_Repo() + "README.pdf";
+    auto to_latex_template = Bazel_Derived_Root_Of_Repo() + "README.tx";
+    auto slides_base_name = Bazel_Derived_Root_Of_Repo() + "README-slides";
+    bool upload_to_dropbox = true;
     
     
-    // Program_Input input;
-    // input.settings = Root_Settings_Getter::Get();
     
-    // //build markdown documentation
-    // auto structure = File_To_Structure_Converter::Convert(from);
-    // auto contributors = input.settings.compiler_settings.trevor.contributors;
-    // auto md_settings = input.settings.compiler_settings.trevor.settings.foreign_language.markdown;
-    // md_settings.image.style = Markdown_Image_Style::HTML;
-    // auto result = Markdown_Str_Getter::Get(structure,contributors,md_settings);
-    // Write_To_File(to_readme,result);
+    //build markdown documentation
+    Markdown_Settings md_settings;
+    md_settings.image.style = Markdown_Image_Style::HTML;
+    
+    std::vector<Contributor> contributors;
+    auto str = Markdown_Str_Getter::Get(structure.module[0],contributors,md_settings);
+    Write_To_File(to_readme,str);
+    
+    
     
     // //build pdf documentation
     // Pdf_Settings pdf_settings;
