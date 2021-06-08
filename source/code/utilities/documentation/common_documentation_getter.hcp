@@ -6,6 +6,11 @@ class
 ⚞⚟
 
 
+//This was common documentation I was adding to every software manual.
+//This way of installing debs worked somewhat for me.  
+//It got the sfotware installed, but it had some other issues when re-installing or trying to remove.
+//And when I did install from the deb it seemed to have a ton of repeated information.
+//Maybe there is a better way to host debs and explain how to install them.
 ◀public: static▶ Paragraph ☀Common_Installation_Instructions(std::string const& prog_name) ❰
 
     Paragraph p;
