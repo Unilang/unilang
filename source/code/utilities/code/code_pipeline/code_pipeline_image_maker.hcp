@@ -1,0 +1,120 @@
+class
+❪string❫
+❪iostream❫
+❪cmath❫
+❪map❫
+❪"code/utilities/data_structures/tree/generic/string_tree"❫
+❪"code/utilities/code/concept_string_tree_getter"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/positioned_button_face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
+❪"code/utilities/peripheral/mouse/state/mouse_state"❫
+❪"code/utilities/peripheral/pc/pc_input_state"❫
+❪"src/tree.hh"❫
+❪"code/utilities/data_structures/graph/conceptually_laid_out_graph/conceptually_laid_out_graph"❫
+⚯
+❪"code/utilities/data_structures/graphics/bitmap/premade/tree_button"❫
+❪"code/utilities/fonts/bdf/complete/unilang/unilang_character_maps"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_tree_label_drawer"❫
+❪"code/utilities/graphics/cairo/render/cairo_render_settings"❫
+❪"code/utilities/graphics/cairo/render/frame_renderer"❫
+❪"code/utilities/data_structures/graphics/objects/label/style/default_label_styles"❫
+❪"code/utilities/personal/hosting/hosting_repo"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/types/tree/converters/tree_full_paths_getter"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/string_tree_to_buttoned_face_tree"❫
+❪"code/utilities/program/wrappers/convert/image_transparent"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/string_tree_to_buildable_schema_faced_tree"❫
+❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/buildable_schema_face_tree_drawer"❫
+⚞⚟
+
+
+//create a diagram showing the unilang transformation
+◀public: static▶ void ☀Create()❰
+
+    auto fitted_graph = Create_Conceptually_Fitted_Graph();
+
+
+❱
+
+◀private: static▶ Conceptually_Laid_Out_Graph ☀Create_Conceptually_Fitted_Graph()❰
+    Conceptually_Laid_Out_Graph g;
+    
+    Conceptually_Laid_Out_Node node;
+    
+    node.name = "unilang-editor";
+    name.pos.x = 0;
+    name.pos.y = 0;
+    g.nodes.emplace_back(node);
+    
+    node.name = "file.unilang";
+    name.pos.x = 1;
+    name.pos.y = 0;
+    g.nodes.emplace_back(node);
+    
+    node.name = "unilang-to-code";
+    name.pos.x = 2;
+    name.pos.y = 0;
+    g.nodes.emplace_back(node);
+    
+    node.name = "code.json";
+    name.pos.x = 3;
+    name.pos.y = 0;
+    g.nodes.emplace_back(node);
+    
+    node.name = "code-to-cpp";
+    name.pos.x = 4;
+    name.pos.y = 0;
+    g.nodes.emplace_back(node);
+    
+    node.name = "c++ code";
+    name.pos.x = 5;
+    name.pos.y = 0;
+    g.nodes.emplace_back(node);
+    
+    node.name = "code-to-python";
+    name.pos.x = 4;
+    name.pos.y = 1;
+    g.nodes.emplace_back(node);
+    
+    node.name = "python code";
+    name.pos.x = 5;
+    name.pos.y = 1;
+    g.nodes.emplace_back(node);
+    
+    Conceptually_Laid_Out_Edge edge;
+    
+    edge.from = "unilang-editor";
+    edge.to = "file.unilang";
+    g.edges.emplace_back(edge);
+    
+    edge.from = "file.unilang";
+    edge.to = "unilang-editor";
+    g.edges.emplace_back(edge);
+    
+    edge.from = "file.unilang";
+    edge.to = "unilang-to-code";
+    g.edges.emplace_back(edge);
+    
+    edge.from = "unilang-to-code";
+    edge.to = "code.json";
+    g.edges.emplace_back(edge);
+    
+    edge.from = "code.json";
+    edge.to = "code-to-cpp";
+    g.edges.emplace_back(edge);
+    
+    edge.from = "code-to-cpp";
+    edge.to = "c++ code";
+    g.edges.emplace_back(edge);
+    
+    edge.from = "code.json";
+    edge.to = "code-to-python";
+    g.edges.emplace_back(edge);
+    
+    edge.from = "code-to-python";
+    edge.to = "python code";
+    g.edges.emplace_back(edge);
+    
+    return g;
+❱
