@@ -89,42 +89,29 @@ class
 
 
 //BACKUP:
-// <img src=".readme/unilang_logo.png"> [<img width="60" height="60" src=".readme/pdf_download.png">](https://www.dropbox.com/s/1qde65ekii8nyb9/unilang.pdf?dl=1)
-
-// **A universal programming language**
-
-// <img width="" height="" src=".readme/hello_world.gif">
-
-// </details>
-// <details>
-
-// <summary>Introduction</summary>
-
-
-
-// ## Summary
-// Unilang is a programming language and IDE.  It has a graphical and textual fronted for creating programs.  The language unifies with other languages through transcompilation.  It was written to automate and improve the productivity of a single person.  But maybe you'll find something useful in it too?  
-
-
-// ## GPL Shortcomings
-// Despite their name, **general-purpose programming languages (GPLs)** become associated with specific niches that target particular programming domains.  Due to the differences between these languages (both internal and external to their design), evaluations on the problem space lead to different languages being chosen.  A cross-domain problem is then solved through a mixture of languages.  Under such circumstances, individual GPLs have not proven general enough as the solution to the entire problem space.  Unilang's stance is that the amalgamation of different languages could be an implementation detail below a more conceptually pure representation of the full problem ontology.  We consider different languages within the same ontology to be less productive for establishing insight and enabling code evolution.  It is better to have the entire problem space of software encoded from the same unifying model, otherwise system-wide reflexivity becomes untenable.  A unifying language can operate as a transcompiler to other existing GPLs as needed.  
-
-
-// ## Design
-// The creation of this language is different from traditional programing languages because it rejects using lexical analysis for syntax conformance and language grammars for semantic conformance.  The solidification of a language frontend can be achieved without tokenization toward gramatical AST construction.  Programming in Unilang is the declarative encoding of concept values to a language's meta-model.  This avoids the typical transformation process where syntactical expressions are parsed into ASTs; a strategy that seems to lose the pragmatic meaning from the originally intended encoded information.  An example of this issue can be more widely seen if we reflect on the usefulness of compiler errors.  A large amount of effort has gone into trying to make error messages as clear as possible, but often times there still remains a clarity gap that could be filled.  By any means, why should the programmer be capable of making syntactical mistakes in the first place?  Projectional editing can solve this.  A longer description for the rationale around Unilang's design is covered in the remaining subsections.  
 
 
 // ## The Next Layer
-// Unilang is a **universal programming language (UPL)**.  A UPL has not been formally defined prior to this document, but as an informal definition, envision a UPL as a language abstraction over GPLs and IDLs.  It's a high level Universal Computer Oriented Language (UNCOL).  UPLs are a universal encoding for developing software.  In this case, Unilang is also a visual programming language (VPL).  
+// Unilang is a **universal programming language (UPL)**.
+// A UPL has not been formally defined prior to this document, but as an informal definition, envision a UPL as a language abstraction over GPLs and IDLs.
+// It's a high level Universal Computer Oriented Language (UNCOL).
+// UPLs are a universal encoding for developing software.
+// In this case, Unilang is also a visual programming language (VPL).
 
 
 // ## Addressing Scope
-// Creating a language that could properly be the right choice for every programming domain sounds impractical.  Domains can have opposite requirements.  Trying to encode everything necessary for all domains would result in something so complicated, contradictory, and convoluted that it would defeat the purpose it set out to accomplish.  It would become too difficult to use in any domain.  These concerns are valid, and maybe even inevitable. We acknowledge them here as they have been influential in Unilang's design.  If Unilang were built in the traditional way that GPLs are, we would certainly hit many of these problems.  We instead take different approaches toward a language's role in facilitating software development.  Unilang is an experiment to challenge these concerns and to try and innovate ways around them.  
+// Creating a language that could properly be the right choice for every programming domain sounds impractical.
+// Domains can have opposite requirements.
+// Trying to encode everything necessary for all domains would result in something so complicated, contradictory, and convoluted that it would defeat the purpose it set out to accomplish.
+// It would become too difficult to use in any domain.
+// These concerns are valid, and maybe even inevitable.
+// We acknowledge them here as they have been influential in Unilang's design.
+// If Unilang were built in the traditional way that GPLs are, we would certainly hit many of these problems.
+// We instead take different approaches toward a language's role in facilitating software development.
+// Unilang is an experiment to challenge these concerns and to try and innovate ways around them.
 
-// </details>
-// <details>
 
-// <summary>Development</summary>
+
 
 
 
@@ -156,5 +143,581 @@ class
 
 // ## Contribute
 // There are no rules.  Make a ticket about anything. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//OLD UNILANG:
+/*
+
+
+The language was written to improve the quality of software by allowing a paradigm of rich data annotation.
+It was also designed to make developing more interactive like a video game. 
+
+It was written to automate and improve the productivity of a single person
+But maybe you'll find something useful in it too?
+
+
+
+􏱭1􏱮􏱕􏱖􏱫GPL Shortcomings􏱬
+􏱏GPLs are not the right solution to all programing problems􏱐
+􏱏Its advantageous to encode the entire problem ontology in a unified language􏱐
+􏱏A unified language could be built on top of GPLs􏱐
+􏱩despite their name, **general-purpose programming languages (GPLs)** become associated with specific niches that target particular programming domains􏱪􏱟􏱠􏱧􏱨
+􏱩due to the differences between these languages (both internal and external to their design), evaluations on the problem space lead to different languages being chosen􏱪􏱟􏱠􏱧say something about tradeoffs?􏱨
+􏱩a cross-domain problem is then solved through a mixture of languages􏱪􏱟􏱠􏱧􏱨
+􏱩under such circumstances, individual GPLs have not proven general enough as the solution to the entire problem space􏱪􏱟􏱠􏱧􏱨
+􏱩unilang's stance is that the amalgamation of different languages could be an implementation detail below a more conceptually pure representation of the full problem ontology􏱪􏱟􏱠􏱧􏱨
+the benefits of a...
+􏱩we consider different languages within the same ontology to be less productive for establishing insight and enabling code evolution􏱪􏱟􏱠􏱧􏱨
+􏱩it is better to have the entire problem space of software encoded from the same unifying model, otherwise system-wide reflexivity becomes untenable􏱪􏱟􏱠􏱧􏱨
+􏱩a unifying language can operate as a transcompiler to other existing GPLs as needed􏱪􏱟􏱠􏱧􏱨
+
+Syntactical Obfuscation
+    The productivity of any language becomes contained
+
+􏱭1􏱮􏱕􏱖􏱫Design􏱬
+􏱩The creation of this language is different from traditional programing languages because it rejects using lexical analysis for syntax conformance and language grammars for semantic conformance􏱪􏱟􏱠􏱧􏱨
+􏱩the solidification of a language frontend can be achieved without tokenization toward gramatical AST construction􏱪􏱟􏱠􏱧􏱨
+􏱩programming in Unilang is the declarative encoding of concept values to a language's meta-model􏱪􏱟􏱠􏱧􏱨
+􏱩this avoids the typical transformation process where syntactical expressions are parsed into ASTs; a strategy that seems to lose the pragmatic meaning from the originally intended encoded information􏱪􏱟􏱠􏱧􏱨
+􏱩An example of this issue can be more widely seen if we reflect on the usefulness of compiler errors􏱪􏱟􏱠􏱧􏱨
+􏱩A large amount of effort has gone into trying to make error messages as clear as possible, but often times there still remains a clarity gap that could be filled􏱪􏱟􏱠􏱧􏱨
+􏱩By any means, why should the programmer be capable of making syntactical mistakes in the first place?􏱪􏱟􏱠􏱧􏱨
+􏱩Projectional editing can solve this􏱪􏱟􏱠􏱧􏱨
+With the subtraction of syntax the programmer is essentially tasked with building out not the abstract syntax tree, but an abstract concept tree
+a strategy leading to the attenuation of pragmatic meaning which further hurts static analysis, error messages, and programmatic changes
+
+consider the difficulty of other language compilers struggling to provide a high level description of an error message
+􏱩a longer description for the rationale around Unilang's design is covered in the remaining subsections􏱪􏱟􏱠􏱧􏱨
+
+􏱭1􏱮􏱕􏱖􏱫The Next Layer􏱬
+􏱏a universal programming language is invented􏱐
+􏱏its a transcompiler to every other GPL􏱐
+􏱩Unilang is a **universal programming language (UPL)**􏱪􏱟􏱠􏱧􏱨
+􏱩a UPL has not been formally defined prior to this document, but as an informal definition, envision a UPL as a language abstraction over GPLs and IDLs􏱪􏱟􏱠􏱧􏱨
+􏱩It's a high level Universal Computer Oriented Language (UNCOL)􏱪􏱟􏱠􏱧􏱨
+https://en.wikipedia.org/wiki/UNCOL
+􏱩UPLs are a universal encoding for developing software􏱪􏱟􏱠􏱧􏱨
+􏱩In this case, Unilang is also a visual programming language (VPL)􏱪􏱟􏱠􏱧􏱨
+
+􏱭1􏱮􏱕􏱖􏱫Addressing Scope􏱬
+􏱏unilang is an experiment to see if this is possible􏱐
+􏱩creating a language that could properly be the right choice for every programming domain sounds impractical􏱪􏱟􏱠􏱧􏱨
+􏱩domains can have opposite requirements􏱪􏱟􏱠􏱧􏱨
+􏱩trying to encode everything necessary for all domains would result in something so complicated, contradictory, and convoluted that it would defeat the purpose it set out to accomplish􏱪􏱟􏱠􏱧􏱨
+􏱩it would become too difficult to use in any domain􏱪􏱟􏱠􏱧􏱨
+􏱩these concerns are valid, and maybe even inevitable. We acknowledge them here as they have been influential in Unilang's design􏱪􏱟􏱠􏱧􏱨
+􏱩if Unilang were built in the traditional way that GPLs are, we would certainly hit many of these problems􏱪􏱟􏱠􏱧􏱨
+􏱩we instead take different approaches toward a language's role in facilitating software development􏱪􏱟􏱠􏱧facilitate?􏱨
+􏱩unilang is an experiment to challenge these concerns and to try and innovate ways around them􏱪􏱟􏱠􏱧􏱨
+
+
+things to maybe mention somewhere:
+"A language is a dialect with an army and navy"
+https://en.wikipedia.org/wiki/Rule_of_least_power
+
+macros/constexpr(D) - design time
+templates - compile time
+regular code - run time
+
+conceptually pure, paradigm agnostic, syntactically irrelevant
+
+we will address the particular issues later
+for now, we simply acknowledge the ambition and scope of the project
+
+A Wider Net
+
+the requirements for universality
+encoded information and software-related artifacts
+comparison to other programming languages
+
+a primary focus when first introducing Unilang is a discussion around **encoded information** and **software-related artifacts**
+what do we encode for software and what are the resulting software artifacts?
+we discuss what engineers need to encode while working in a problem domain, and what products should come from such an encoding
+a conclusion is made that engineers are not encoding everything necessary due to the limitations, scope, and enforced structure of individual tools
+additionally, the effect of not having a universal encoding results in multiple encodings across different languages which makes maintenance less feasible over time
+an argument is made that more concepts related to software must be semantically encoded at the language level
+the technical aspects of making this feasible are discussed later
+we will compare it to other programming languages to show the similarities and key differences between them
+the key take-away from this comparison is that Unilang is not competing with other programming languages
+it embraces all of them in its own implementation
+by supporting more and more languages as an output, unilang can extract out paradigms and concepts universal to programing, and prove its genericness through other language toolchains
+
+Full Scope
+let's start by getting you acquainted with the big picture
+Unilang is a tool for writing software
+and like all tools in software, it takes an input and produces an output
+the scope of Unilang's throughput however is ambitious
+everything a software engineer can express around a problem domain must be encoded in the same ontology
+we find this necessary in maximizing our current understanding of the problem domain, and adapting to its change over time (mention maintenance?)
+the output of this ontology is every chosen artifact that facilitates desired tasks in that domain
+From a programming perspective, we unify all formal and informal languages involved around software
+this information is then encoded as a single abstract data model which is used to create various artifacts
+.readme/unilang_overview.png very high level overview of Unilang
+the diagram above is intentionally vague
+however, we can use it to compare the transformation process of source code in other programing languages
+the scope of these other languages do not entail all of the work that needs to be done in a real-world software engineering context
+.readme/typical_gpl_overview.png high level overview of a GPL
+
+the goals of general purpose programming languages (GPLs) shown above, are also realized within Unilang
+Unilang can be used to generate programs for any domain
+A key feature of Unilang is that it can even target the source code of all other GPLs
+this means that Unilang can be easily adopted in current systems as a transcompiler to other programming languages
+.readme/unilang_as_a_transcompiler.png Unilang as a transcompiler
+There are many other types of artifacts that should be created alongside software
+Unilang facilitates the creation of these artifacts as well
+.readme/unilang_to_many_artifacts.png Unilang to many artifacts
+in fact, what you are reading now was generated from Unilang
+
+Motivation
+the motivation behind Unilang has grown organically while working as a software engineer
+it serves a purpose both practical and personal while working in the industry
+some of it has been designed to help within a professional context
+other parts have been designed around the personal/hobby context
+in this section we will cover the specific motivations around Unilang
+
+Practical
+
+File Flexibility
+Unilang avoids having to create multiple files if undesirable
+its customizable in the granularity of files it produces
+n number of unilang files may create a single artifact file
+a single unilang file might also create hundreds of artifact files
+these decisions are highly customizable and can be dependent on file contents
+
+Code Bloat
+Many GPLs accrue areas where ideas need repeated
+Decelerations and definitions may need repeated signatures
+Documentation may need to repeat names above the names being documented
+Unit may tests need to repeat the unit being tested
+Unilang avoids code bloat by not needing things repeated
+
+Concept Locality
+Unilang allows you to describe information local to the data and functions they belong to
+For example, unit tests, benchmarks, examples, constraint specifications, and documentation can all be specified right next to the data / functions they are operating on
+This makes maintenance easier, and improves static analysis given the associated context
+
+As an analogy, I'd like you consider the same phenomenon that has already happened in web development
+HTML, CSS, and JavaScript had been traditionally grouped separately in the implementation of web applications
+it seems logical to keep semantic markup, styling, and functionality disjoint as a means of low coupling (an engineering discipline where we don't want to conflate different things together)
+however, it was only later that the engineering community realized that this was actually a matter of high cohesion where the three languages need unified to create a particular component
+
+
+Personal
+sometimes it is frustrating working with other people
+quite often others will advocate misguided opinions that slow me down and lead to worse software
+compromising with and teaching others is a social undertaking that wastes a lot of my time and can often lead to higher tension
+i have found it better to write software correctly without compromise, and then transform it into a shared development space
+this lets me keep my integrity as an engineer and not break any of my engineering values while still working with others
+this process also helps me get along with other people because they think they are helping, even though my true interests are not in anything they contribute to
+.readme/unilang-personal-overview.png an overview of how unilang is used for personal reasons
+we attribute labels on which parts of the development cycle we care about
+this reveals a "don't care" cycle which we use unilang to optimize the speed of iteration
+the improved iteration speed of the "don't care" cycle also helps unilang grow to be more conceptually pure, and applicable in more domains
+what we do care about remains streamlined and isolated from other people
+.readme/unilang-personal-annotated.png an overview of how unilang is used for personal reasons
+this shows that even if the project being worked on is meaningless, we measure our success from a personal space outside
+summarized this shows us that Unilang supplies a fork that we can care about, and a less desired public-facing path that we can indirectly contribute to through automation
+.readme/unilang-personal-annotated2.png summarized workflow with unilang
+
+
+Till The End
+unilang may never be finished
+like many projects it will simply grow closer toward the ideals it has set before itself
+since unilang is intended to be used for all facets of software engineering, we embrace the large scope of the project
+scope creep is only detrimental if you intend to finish something completely
+unilang will grow organically to meet the needs of software engineering and along the way, we will develop, record, and maintain features and capabilities provided by the language
+
+
+
+
+
+
+
+
+
+
+
+
+This means you can use it to solve any programming problem
+Whether you can, doesn't mean that you should
+Problems can be solved best not with polyglot, but
+
+
+Software Ontology
+the design and implementation of Unilang is built with particular language philosophies in mind
+this overview will discuss some of these main ideas first in order to build the foundation for the rest of Unilang
+unilang will also be described in the context of software engineering
+
+preface junk:
+a conceptual model is used to raise the design and implementation abstraction above other high level languages
+you can use Unilang to transcompile down to other languages and data formats
+Unilang has an abundance of interesting code transformations and static analysis techniques
+it was built to improve the efficiency of the modern software engineer
+the language empowers a level of engineering discipline that users would not be able to sustain in other languages
+
+Unilang is the unification of programming concepts without syntax.
+It is a reconstructed approach on how language should be used to facilitate the creation of software.
+A conceptual model is used to raise the design and implementation abstraction above other high level languages.
+
+
+Initial critique:  sounds like a cluster fuck.
+talk about 1 giant ontology that creates other onotologies.  
+vs manually maintaining a set of ontologies that all share some partial information with each other.
+diagram of one big graph, deriving all the other graphs.  vs a set of graphs with dotted lines between things that must be manually maintained
+close with an argument that, the would is complex and problems are complex and systems grow to huge complexity.  
+and all of this encoded information is necessary anyway, and its really a matter of "how do you want to manage this complexity?"  
+and which system is better for managing the growth and changes of complexity in a fluid undefined problem domain.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Language Design
+in this section, we will discuss the theory of what a programming language should be
+we show how these ideas are applied in shaping the design of Unilang
+
+Hierarchy
+in this section we discuss the hierarchy of language
+consider the current language abstractions within the software engineering domain
+Unilang and its conceptual model are placed above these high level languages
+.readme/language-abstraction.png software engineering language abstraction with Unilang placed at the top
+Unilang can transcompile down to other languages
+
+Structure
+in this section we discuss the structure of language
+many programming languages represent their syntactic structure as an abstract syntax tree
+other languages like Lisp and its derivations choose nested lists
+the structure of Unilang is a composed set of algebraic data types
+.readme/choosing-structure.png choosing the Unilang structure
+this is a subtle but important distinction
+an ADT models the concise structure and shape of programming concepts
+this allows us to work backwards and enable programmers to efficiently populate this structure
+trying to contort a variety of programming concepts syntactically, and then extracting them out with regular expressions and grammars into generic data structures such as trees and lists has proven insufficient for semantic analysis
+its the reason that parsing errors are often confusing and unhelpful
+its the reason that community tooling on code transformation is often limited
+most importantly, its the reason a language's evolution tends to stagnate as more abstract concepts are squeezed into an existing syntax and grammar
+
+## Direct semantic encoding (syntax considered harmful)
+TODO.  
+essentially end at a markup language.  
+markup language is great from the compilers perspective,
+but terrible from the programmers perspective.  
+Explain how we fix this.  
+uh, we'll probably need a deeper section about natural language vs programming language.  
+what is relevant, what is not. how properties of natural language has incorrectly been applied in programming
+talk about how semantics is what matters most in programming
+
+here is a good example that sumarizes why the whole syntatical approach is incorrect.  
+Where they focus on keyword, we have Unilang language tokens
+http://mail.openjdk.java.net/pipermail/amber-spec-experts/2019-January/000945.html
+
+Ergonomics
+in this section we discuss the ergonomics of the language in terms of reading and writing
+TODO. this is where we talk about discrete infinity
+TODO. this is where we talk about projectional editors
+
+Guiding Principles
+
+Syntax
+syntax doesn't matter.  It never has, and it never will
+we eliminate syntax complexity through unique symbolic tokens
+Unilang pulls from Unicode's Private Use Area (PUA)
+As a result, no matter how many tokens get added the the language, the lexical and syntactical analysis remains trivial
+Unilang comes with its own font, but users can choose their own glyphs to represent individual code points
+Although Unilang could equally be represented in a markup format such as json or yaml, we provide the unicode textual frontend as it tends to look simpler, allow for custom glyphs, and is easy to colorize in editors
+User's can choose to write directly in this unicode format, or use the graphical system built on top of it
+.readme/unilang-look.png Unilang's frontend perspectives vs developer experience
+
+The first point of contention people have with the language,  
+is that they cannot fire of vim and start writing in it.  
+In its ascii markup format, Unilang is too dense.  
+It's dense, because we don't play any games with syntax or grammar in an attempt to make it more palatable.  
+We want the user to be encoding concepts as close to the Unilang conceptual ADT as possible.  
+Programming in unicode has proven to be a good trade-off between readability and writeability.  
+I urge you to remember, that software engineering requires a lot more reading than it does writing.  
+
+**Design choice:**  
+Code is data.  We intend to make the language as close to a data structure as possible.  
+Without making yet another lisp-like language, and have you drowning in parenthesis, we  
+chose to target a conceptual ADT utilizing nested variants.  It's richer than an AST, or having everything as a list.
+
+Grammar
+You can express anything in any order assuming that it makes sense conceptually
+Semantic analysis builds an ADT nearly identical to the tokens you write
+You can leave many token out, and based on various configurations, you will get default values, automated enrichments, or descriptive errors
+So many languages have bad compiler errors
+You will not find this in Unilang due to the rich token set and easy to understand grammar
+
+**Design choice:**  
+We are already set on using unique tokens for 1-1 mappings on the conceptual ADT.  
+It is trivial to parse these independent tokens in any order so why enforce it.  
+If user's want consistency, Unilang can simply tidy itself to a particular user chosen order.  
+
+Code Generation
+Unilang could target LLVM, output byte code for the JVM, or operate under its own interpreter
+However, there is little reason to invest in these efforts at this time
+We stand on the shoulder's of giants and transcompile to other languages
+This is a strategic decision because it helps Unilang grow in 2 ways
+The more languages Unilang can transcompile to other languages, the more we can generalize programming concepts across the ecosystem
+It also helps us show that two seemingly apposing language design decisions  can be incorporated into the same language and chosen programatically at build time
+
+**Design choice:**  
+This was an easy decision.  For Unilang to grow in a conceptually pure way,  
+we measure our success by our ability to transcompile to other languages.  
+It's also less work for the backend, and it lets us secretly and immediately use Unilang in industrial cirumstances.  
+We get real situations where Unilang is being used, and user's are unaware that they  
+are contributing to its success by commenting on the transcompiled format.  
+We can usually meet the needs of other programmers reading the transcompiled version  
+of Unilang by putting their opinions into the configuration of the backend transcompiler.  
+
+Supersets
+many people believe a language should have a strong and simple core
+this is followed by the advice of having libraries do the rest of the heavy lifting
+this stems from the experience of how difficult it becomes to change a language once so much code is written in it
+unilang puts as much in the language as possible, because anything that is added must be a concept that stands independent of the code that is generated
+extending Unilang with new tokens is backwards-compatible, and doesn't affect the existing grammar
+although Unilang may have a large number of language tokens to account for all these concepts, it is not very overwhelming because the majority of them are not required
+
+**Design choice:**  
+The more context a compiler has, the more it can do.  
+It can generate better code, give better error messages,  
+and improve static analysis.
+
+Steal
+Unilang is not afraid to steal all the good ideas from other languages
+Through its design, it avoids all of the pitfalls that current languages accrue when adding too many features
+
+No trade-offs
+Typical programming languages are designed around trade-offs
+Unilang refuses to make trade-offs
+Most opinions can be dual supported at the language level, and chosen during code generation
+
+
+Features
+TODO. also consider a language matrix of tests/features that we have working across languages.
+
+IDL support
+TODO
+
+GPL support
+TODO
+
+DSL support
+TODO
+
+User Guide
+Here we talk about how to use Unilang􏱪
+
+􏱭0􏱮􏱕􏱖􏱫Development􏱬
+
+􏱭1􏱮􏱕􏱖􏱫Build􏱬
+􏱩The IDE can be used the following way􏱪
+􏱍git clone git@github.com:luxe/unilang.git􏱎
+􏱍cd unilang􏱎
+􏱍./user_run_optimized //code/programs/ide:main􏱎
+
+􏱩various CIs are used to test the correctness of the build􏱪
+􏱩Referencing these builds may help you acquire any additional dependencies􏱪
+􏱩The reason we use multiple CIs is to ensure a general consensus and catch any outlying issues􏱪
+􏱩However, these services have limitations at their free tier, and so full builds/tests are not performed􏱪
+
+􏱛Builds from online CIs􏱜
+􏱙Continuous Integration􏱚􏱙Status􏱚􏱙Notes􏱚
+􏱗App Veyor􏱘􏱗[![Build status](https://ci.appveyor.com/api/projects/status/wscwfed3pk5pxk6y?svg=true)](https://ci.appveyor.com/project/luxe/unilang)􏱘􏱗Bootstraps Build􏱘
+􏱗Circle􏱘􏱗[![CircleCI](https://circleci.com/gh/luxe/unilang.svg?style=svg)](https://circleci.com/gh/luxe/unilang)􏱘􏱗Bootstraps Build􏱘
+􏱗Cirrus􏱘􏱗[![Build Status](https://api.cirrus-ci.com/github/luxe/unilang.svg)](https://cirrus-ci.com/github/luxe/unilang)􏱘􏱗Bootstraps Build􏱘
+􏱗Codeship􏱘􏱗[![Codeship Status for luxe/unilang](https://app.codeship.com/projects/d4f94f6b-5462-4a6e-8468-af99c4aee8c5/status?branch=master)](https://app.codeship.com/projects/416731)􏱘􏱗Bootstraps Build􏱘
+􏱗Drone􏱘􏱗[![Build Status](https://cloud.drone.io/api/badges/luxe/unilang/status.svg)](https://cloud.drone.io/luxe/unilang)􏱘􏱗Bootstraps Build􏱘
+􏱗Scrutinizer􏱘􏱗[![Build Status](https://scrutinizer-ci.com/g/luxe/unilang/badges/build.png?b=master)](https://scrutinizer-ci.com/g/luxe/unilang/build-status/master)􏱘􏱗Bootstraps Build􏱘
+􏱗Semaphore􏱘􏱗[![Build Status](https://semaphoreci.com/api/v1/luxe/everything/branches/master/shields_badge.svg)](https://semaphoreci.com/luxe/unilang)􏱘􏱗Bootstraps Build􏱘
+􏱗Shippable􏱘􏱗[![Run Status](https://api.shippable.com/projects/5c3163fd4e246e0700cea316/badge?branch=master)](https://app.shippable.com/accounts/5c3163cad1578b0700302159/dashboard)􏱘􏱗Bootstraps Build􏱘
+􏱗Travis􏱘􏱗[![Build status](https://travis-ci.com/luxe/unilang.svg?branch=master)](https://travis-ci.com/luxe/unilang)􏱘􏱗Bootstraps Build􏱘
+
+􏱩The unilang schema is used to encode the concept tree and can be enforceable during projectional editing􏱪
+􏱥.readme/unilang_concept_tree.png􏱦􏱣Unilang concept tree􏱤􏱡Unilang Concept Tree􏱢
+
+to install directly, you can use
+TODO: add commands
+
+
+Textual Frontend
+
+YAML
+Unilang code can be stored in YAML format and changed directly
+
+JSON
+Unilang code can be stored in JSON format and changed directly
+
+Graphical Frontend
+Unilang has its own graphical IDE which makes working in the language easier
+This is the recommended way of using Unilang
+
+Bazel Rule Examples
+
+Tutorials
+These are learning-oriented tutorials to get you antiquated with concepts
+
+How To Guides
+These are goal-oriented to show you how to solve particular problems
+
+Explanations
+These are understanding-oriented to provide you with background and context
+
+Reference
+These is information-oriented to provide you with complete and accurate details
+
+Developer Guide
+TODO. here we talk about information for anyone who wants to contribute to the Unilang project
+
+Build System
+TODO
+
+Hermetics
+the project is designed to be hermetic
+this means that all external dependencies should be bootstrapped by the build system and self-contained within the repository
+if anything in the build relies on an external dependency (not available or tracked by the repository) this can break user's builds, and it is a bug
+here is an overview on what the build system looks like
+.readme/build-system.png diagram of the build system
+
+If you experience a build issue, make a ticket.  
+Also take a look at the CIs that are passing, and see if they  
+do anything extra to get a successful build.  
+
+Things to improve:  
+ - bundle sysroot
+ - disable all external linking / include file paths (same as sysroot?)
+ - test in different docker containers (kind of have this with existing CIs)
+ - move more system dependencies (see CI config files) into bazel deps (GMP specifically)
+ - set a default compiler toolchain automatically? (instead of specifying directly on cli)
+ 
+Known recorded problems:  
+docker build -t unilang .
+Sending build context to Docker daemon  22.98MB
+
+Step 1/19 : FROM ubuntu:14.04
+Get https://registry-1.docker.io/v2/library/ubuntu/manifests/14.04: net/http: TLS handshake timeout
+
+􏱭1􏱮􏱕􏱖􏱫Contribute􏱬
+􏱩there are no rules􏱪
+􏱩make a ticket about anything􏱪
+􏱩we'll figure it out together􏱪
+
+
+
+
+
+//WHY WE NEED A HIGHER HIGH LEVEL GUI LANGUAGE:
+//things that are dumb, that code generation will fix:
+//- having to write two files for global code (only one file now)
+//- having to write two/three files for object code (only one file now)
+//- but what if the object is just data without methods? (configurable to any number of exported files (likely just the one file containing that struct of data)
+
+//-repetitions that are no longer an issue:
+// - source files automatically include their corresponding header files, with a header comment
+// - no need to write both function decelerations and definitions.
+// - no need to match the parameter name for doxygen comments
+// - no need to figure out what the include guards are, and no need to type them.
+// - no need to type the giant doxygen comment block header thing we use.
+
+//dealing with boilerplate code:
+//  - hard to keep consistent across files (generated automatically now)
+//  - structs having that unnecessary extra name
+//    (doesn't matter now.  All the structs you need are generated 
+//    automatically based on member variables,functions, and the file name)
+//hungarian notation is terrible.  This softens the blow, as the correct notation can be generated and met at the function signature level.
+//Since you shouldn't be writing any code outside of functions, this analogous to static enforcement by the compiler.
+//make a better write up later...
+
+//at meta level:
+
+//at import level:
+
+//macro level:
+
+//enum level:
+
+
+
+
+//at the function level:  
+// parameters are passed based on their passed intent instead of through specific language features such as references/pointers
+// empty functions don't need to specify void
+// deceleration/definition is done automatically
+// documentation is duplicated automatically
+// doxygen parameter names and in/out notation is derived automatically
+// notation is derived automatically
+
+
+
+
+//SPECIFC TERMINOLOGY YOU MAY ENCOUNTER:
+//terminology: manager methods / lifetime methods
+//definition: categorizes constructors and destructors under one name.
+//resources: http://stackoverflow.com/questions/33788300/is-there-an-umbrella-term-for-constructor-destructor-methods
+
+//terminology: state specifier
+//definition: 
+//resources: 
+
+//terminology: operation category(this might go away)
+//definition: 
+//resources: 
+
+
+
+#### Stand-alone binaries
+TODO.  
+what do we want here?  
+deb packages? rpm?  other distribution methods?
+I want a quick and easy installer for people.
+
+#### Is it building in the cloud?  
+We strive to get all of these to pass.  
+Due to the different limitations of these free services, that might not always be possible.  
+At the very least, it gives us some good visibility into different issues.  
+If the majority of these are passing, you have a good chance of succeeding in a local build.  
+If they are failing,  I recomend you look back to a commit where they passed and clone from there.  
+
+
+[1]: https://en.wikipedia.org/wiki/Private_Use_Areas
+[2]: https://en.wikipedia.org/wiki/Code_point
+
+
+*/
+
+
 
 
