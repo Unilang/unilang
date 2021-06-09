@@ -247,6 +247,22 @@ class
 
 
 
+//not used
+◀private: static▶ void ☀Create_Packages_File()❰
+  
+  //why does this create a different file each time?
+  execute("dpkg-scanpackages -m . | gzip -c > Packages.gz");
+❱
+
+◀private: static▶ void ☀Create_List_File(std::string const& program_name)❰
+  
+  std::string content = "deb [trusted=yes] https://github.com/luxe/luxe.github.com/raw/master/releases/" + program_name + " /";
+  std::string file_name = program_name + ".list";
+  Write_To_File(file_name,content);
+❱
+
+
+
 
 
 
