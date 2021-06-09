@@ -56,21 +56,50 @@ class
     
     
     
-    // //build pdf documentation
-    // Pdf_Settings pdf_settings;
-    // pdf_settings.pandoc_settings.latex_template = to_latex_template;
-    // pdf_settings.pandoc_settings.md_format = to_raw_pdf;
-    // pdf_settings.pandoc_settings.resulting_pdf = to_manual_pdf;
-    // pdf_settings.markdown_settings = Get_Pdf_Unilang_Doc_Markdown_Settings();
+    //build pdf documentation
+    Pdf_Settings pdf_settings;
+    pdf_settings.pandoc_settings.latex_template = to_latex_template;
+    pdf_settings.pandoc_settings.md_format = to_raw_pdf;
+    pdf_settings.pandoc_settings.resulting_pdf = to_manual_pdf;
+    pdf_settings.markdown_settings = Get_Pdf_Unilang_Doc_Markdown_Settings();
     
-    // Pdf_Creator::Create_Pdf(structure,pdf_settings);
+    
+    Pdf_Creator::Create_Pdf(structure.module[0],contributors,pdf_settings);
     
     // //build html slides documentation
     // auto dz_settings = input.settings.compiler_settings.trevor.settings.foreign_language.dzslides;
     // Dzslides_Exporter::Create_Markdown_And_Slides(structure,contributors,dz_settings,slides_base_name);
     
     
-    // Upload(upload_to_dropbox,to_manual_pdf);
+    Upload(upload_to_dropbox,to_manual_pdf);
+❱
+
+
+
+◀private: static▶ Markdown_Settings ☀Get_Pdf_Unilang_Doc_Markdown_Settings()❰
+
+    Markdown_Settings md_settings;
+    md_settings.headers.allow_labeled_image_titles = false;
+    md_settings.headers.h1_as_details_tags = false;
+    md_settings.headers.h1_as_summary_tags = false;
+    md_settings.tables.print = false;
+    md_settings.tables.as_list = true;
+    md_settings.image.style = Markdown_Image_Style::CLASSIC;
+
+    return md_settings;
+❱
+
+◀private: static▶ void ☀Upload(bool const& upload_to_dropbox, std::string const& to_manual_pdf)❰
+
+    //upload pdf to dropbox
+    if (upload_to_dropbox){
+        Dropbox_Upload_Settings d_settings;
+        d_settings.access_token = Secret_Getter::Unilang_Dropbox_Access_Key();
+        d_settings.local_file_path = to_manual_pdf;
+        d_settings.docker_file_path = "unilang/unilang.pdf";
+        d_settings.strategy = Upload_To_Dropbox_Strategy::CURL_LIB;
+        Dropbox_Uploader::Upload(d_settings);
+    }
 ❱
 
 
