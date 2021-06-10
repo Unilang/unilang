@@ -10,5 +10,6 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/faced_label/data:faced_label",
         "//code/utilities/data_structures/graph/conceptually_laid_out_graph:conceptually_laid_out_graph",
         "//code/utilities/data_structures/graphics/objects/fitted_faced_label_graph/data:fitted_faced_label_graph",
+        "//code/utilities/data_structures/graphics/objects/faced_label/premade:faced_label_premades",
     ],
 )

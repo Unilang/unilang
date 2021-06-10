@@ -21,6 +21,15 @@ class
 ❪"code/utilities/data_structures/graphics/objects/cursor/data/default_cursor_ability"❫
 ⚞⚟
 
+
+◀public: static▶ Faced_Label ☀Single_Plain_Gray_Box(std::string const& name_and_text)❰
+    Faced_Label x;
+    
+    x.state.faces.emplace_back(Name_And_Text_Gray_Face(name_and_text));
+    x.state.index = 0;
+    
+    return x;
+❱
 ◀public: static▶ Faced_Label ☀Highlightable_Single_Plain_White_Box()❰
     Faced_Label x;
     
@@ -98,5 +107,15 @@ class
     face.name = "<value>";
     face.label.message = "<value>";
     face.label.styles = Default_Label_Styles::Plain_White_Box();
+    return face;
+❱
+
+◀public: static▶ Label_Face ☀Name_And_Text_Gray_Face(std::string const& name)❰
+    Label_Face face;
+    face.name = name;
+    face.label.message = name;
+    face.label.styles = Default_Label_Styles::Plain_Gray_Box();
+
+    
     return face;
 ❱
