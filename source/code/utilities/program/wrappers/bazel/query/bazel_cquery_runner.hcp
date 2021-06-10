@@ -50,7 +50,7 @@ class
     std::string command = bazel_wrapper;
     
     //avoid OOM
-    command += "--host_jvm_args=-Xmx32g ";
+    command += " --host_jvm_args=-Xmx32g ";
     
     
     command += " cquery ";
