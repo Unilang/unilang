@@ -1,18 +1,12 @@
 class
 ❪vector❫
-❪"code/utilities/data_structures/graphics/objects/faced_label/data/faced_label"❫
-❪"code/utilities/data_structures/graph/conceptually_laid_out_graph/conceptually_laid_out_graph"❫
-❪"src/tree.hh"❫
+❪"code/utilities/data_structures/graphics/objects/fitted_faced_label_graph/data/fitted_faced_label_graph_state"❫
 ⚯
 
 ⚞⚟
 
 ◀public:
 
-    //this represents an idealized layout of the graph based on an integer grid
-    Conceptually_Laid_Out_Graph ፠concept፠;
-    
-    //these are the actual graphics contents with their own sizes whose positions will be adjusted based on the concept.
-    std::vector<Faced_Label> ፠nodes፠;
+    Fitted_Faced_Label_Graph_State ፠state፠;
 ▶
 
