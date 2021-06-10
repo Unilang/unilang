@@ -1,0 +1,15 @@
+class
+❪string❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/data/faced_label"❫
+❪"code/utilities/data_structures/graph/conceptually_laid_out_graph/conceptually_laid_out_graph"❫
+❪"code/utilities/data_structures/graphics/objects/fitted_faced_label_graph/data/fitted_faced_label_graph"❫
+⚯
+⚞⚟
+
+
+//color related
+◀public: static▶ Fitted_Faced_Label_Graph ☀Remove_Pos(Conceptually_Laid_Out_Graph const& concept)
+❰
+    Fitted_Faced_Label_Graph x;
+    return x;
+❱

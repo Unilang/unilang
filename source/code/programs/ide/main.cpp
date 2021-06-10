@@ -31,6 +31,9 @@
 // Etoys: Squeak Smalltalk
 
 
+//for data:
+//https://app.quicktype.io/
+
 
 //ideas:
 //optional thread pool on drawing grid
@@ -51,3 +54,4 @@ int main(int argc, char** argv)
         return Unilang_Ide::Run(po);
     });
 }
+ 

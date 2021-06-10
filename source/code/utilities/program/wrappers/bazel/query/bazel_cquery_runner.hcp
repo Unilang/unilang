@@ -48,6 +48,11 @@ class
 ◀private: static▶ std::string ☀Build_Command(std::string const& bazel_wrapper, std::string const& dep_name)❰
 
     std::string command = bazel_wrapper;
+    
+    //avoid OOM
+    command += "--host_jvm_args=-Xmx32g ";
+    
+    
     command += " cquery ";
     //command += "--output=proto ";
     command += "--output=proto ";
@@ -57,7 +62,7 @@ class
     command += "--noshow_loading_progress ";
     command += "--noshow_task_finish ";
     //command += "--noshow_warnings ";
-    
+    //avoid crashes
     command += "--keep_going ";
     
     command += "'" + dep_name + "'";
