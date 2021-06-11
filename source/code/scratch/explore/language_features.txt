@@ -1037,3 +1037,16 @@ There will be some natural language processing for the new function names of cou
 "Despite duality, independent implementations are sometimes more efficient, in which case both actions and transformations need to be provided." - Elements of Programming (section 2.5)
 
 
+
+-Language specifiers for describing how the code achieves adopting the technology
+GOTO video: How to Break the Rules by Dan North
+talks about this book: The Goal: A Process of Ongoing Improvement
+And its really important to break down "How to adopt a technology"
+
+So here are the things we want to specify on the software we create, and they should be tokens in the language:
+
+What is the power of the technology?
+What limitation does the technology diminish?
+What rules enabled us to manage this limitation?
+What new rules will we need?
+by the way, 3 should not be !(4)
