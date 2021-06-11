@@ -97,3 +97,14 @@ enum_cpp(
         "alphabetize_and_sort_by_length",
     ],
 )
+
+#useful for directed graphs
+enum_cpp(
+    name = "arrow_direction",
+    values = [
+        "start",
+        "end",
+        "both",
+        "none",
+    ],
+)

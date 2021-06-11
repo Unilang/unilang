@@ -36,7 +36,7 @@ class
     }
     
     
-    elements.types += Draw_Connections(font_chars,x,drawable_labels,pc_input);
+    elements.types += Draw_Connections(font_chars,x,drawable_labels,pc_input).types;
     
     return elements;
 ❱

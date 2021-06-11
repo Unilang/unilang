@@ -1,0 +1,18 @@
+class
+❪string❫
+❪vector❫
+❪"code/utilities/data_structures/position/position"❫
+❪"code/utilities/data_structures/arrow_direction"❫
+⚯
+
+⚞⚟
+
+◀
+public:
+    
+    //absolute pixel positions
+    std::vector<Position> ፠points፠;
+    
+    //decides where to draw the arrow head
+    Arrow_Direction ፠direction፠ = Arrow_Direction::NONE;
+▶
