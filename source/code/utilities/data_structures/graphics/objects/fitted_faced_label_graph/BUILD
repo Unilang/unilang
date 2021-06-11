@@ -27,5 +27,7 @@ hcp(
         "//code/utilities/peripheral/mouse/state:mouse_state",
         "//code/utilities/fonts/bdf/character_maps:character_maps",
         "//code/utilities/data_structures/graphics/objects/faced_label:faced_label_drawer",
+        "//code/utilities/data_structures/graphics/objects/faced_label:faced_label_dimension_getter",
+        "//code/utilities/data_structures/graphics/objects/faced_label:faced_label_first_name",
     ],
 )

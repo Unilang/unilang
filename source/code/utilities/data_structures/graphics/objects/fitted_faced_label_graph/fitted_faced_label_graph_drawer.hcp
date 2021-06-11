@@ -6,6 +6,9 @@ class
 ❪"code/utilities/data_structures/graphics/objects/fitted_faced_label_graph/data/fitted_faced_label_graph"❫
 ❪"code/utilities/data_structures/graphics/objects/fitted_faced_label_graph/data/positioned_fitted_faced_label_graph"❫
 ❪"code/utilities/data_structures/graphics/objects/faced_label/premade/faced_label_premades"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_dimension_getter"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_first_name"❫
 ❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
 ❪"code/utilities/peripheral/mouse/state/mouse_state"❫
 ❪"code/utilities/fonts/bdf/character_maps/character_maps"❫
@@ -20,7 +23,7 @@ class
     return Full_Draw(font_chars,x.state,x.pos,pc_input);
 ❱
 
-◀public: static▶ Frame_Elements ☀Full_Draw(Character_Maps const& font_chars, Fitted_Faced_Label_Graph_State const& x, Position const& pos, Pc_Input_State const& pc_input)
+◀public: static▶ Frame_Elements ☀Full_Draw(Character_Maps const& font_chars, Fitted_Faced_Label_Graph_State const& x, Position pos, Pc_Input_State const& pc_input)
 ❰
     Frame_Elements elements;
     
@@ -55,14 +58,14 @@ class
             new_column_width = std::max(new_column_width,Faced_Label_Dimension_Getter::Get(column_node).x);
         }
         
-        pos.x += new_solumn_width + width_buffer;
+        pos.x += new_column_width + width_buffer;
         
     }
     
     
     //not that we have all the nodes to draw, draw them
-    for (auto const& it: drawable_labels){
-        elements.types += Faced_Label_Drawer::Draw(font_chars,it,pc_input.mouse);
+    for (auto & it: drawable_labels){
+        elements.types += Faced_Label_Drawer::Draw(font_chars,it,pc_input.mouse).types;
     }
     
     return elements;
@@ -82,12 +85,23 @@ class
 ◀private: static▶ std::vector<Positioned_Faced_Label>  ☀Get_Concept_Nodes_By_Column(Fitted_Faced_Label_Graph_State const& x, int column)❰
 
     std::vector<Positioned_Faced_Label> labels;
+    
+    //found concept node
     for (auto const& it: x.concept.nodes){
         if (it.pos.x == column){
-            Positioned_Faced_Label temp;
-            temp.state = it.state;
-            temp.state.pos = it.pos;
-            labels.emplace_back(it);
+            
+            //found corresponding real node
+            for (auto const& it2: x.nodes){
+                if (Faced_Label_First_Name::Get(it2) == it.name){
+                    
+                    //Return positioned real node
+                    Positioned_Faced_Label temp;
+                    temp.state = it2.state;
+                    temp.pos = it.pos;
+                    labels.emplace_back(temp);
+                    break;
+                }
+            }
         }
     }
     return labels;

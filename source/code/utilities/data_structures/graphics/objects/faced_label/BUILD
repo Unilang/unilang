@@ -133,3 +133,12 @@ hcp(
         "//code/utilities/peripheral/pc:pc_input_state",
     ],
 )
+
+hcp(
+    name = "faced_label_dimension_getter",
+    deps = [
+        "//code/utilities/data_structures/graphics/objects/faced_label/data:positioned_faced_label",
+        "//code/utilities/data_structures/graphics/objects/faced_label/data:faced_label",
+        "//code/utilities/data_structures/graphics/objects/label:label_dimension_getter",
+    ],
+)
