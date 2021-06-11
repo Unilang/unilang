@@ -19,6 +19,7 @@ hcp(
         "//code/programs/reflexivity/settings:reflexive_refresh_settings_getter",
         "//code/utilities/build:self_builder",
         "//code/utilities/code:concept_tree_to_image",
+        "//code/utilities/code/code_pipeline:code_pipeline_image_maker",
         "//code/utilities/filesystem/files/creating:lib",
         "//code/utilities/filesystem/files/getting:lib",
         "//code/utilities/filesystem/files/transformers:lib",
@@ -28,7 +29,6 @@ hcp(
         "//code/utilities/program/common_actions/locale:lib",
         "//code/utilities/program/name:program_name_getter",
         "//code/utilities/types/strings/transformers/appending:lib",
-        "//code/utilities/code/code_pipeline:code_pipeline_image_maker",
     ],
 )
 
