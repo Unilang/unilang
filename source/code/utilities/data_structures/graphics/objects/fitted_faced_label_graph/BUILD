@@ -29,5 +29,7 @@ hcp(
         "//code/utilities/fonts/bdf/character_maps",
         "//code/utilities/peripheral/mouse/state:mouse_state",
         "//code/utilities/types/vectors/operators:lib",
+        "//code/utilities/data_structures/graphics/objects/arrow/data:arrow",
+        "//code/utilities/data_structures/graphics/objects/arrow:arrow_drawer",
     ],
 )

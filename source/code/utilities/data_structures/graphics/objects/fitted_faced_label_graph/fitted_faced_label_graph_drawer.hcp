@@ -15,6 +15,8 @@ class
 ⚯
 ❪"code/utilities/types/vectors/operators/lib"❫
 ❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/arrow/data/arrow"❫
+❪"code/utilities/data_structures/graphics/objects/arrow/arrow_drawer"❫
 ⚞⚟
 
 
@@ -47,6 +49,29 @@ class
 ◀private: static▶ Frame_Elements ☀Draw_Connections(Character_Maps const& font_chars, Fitted_Faced_Label_Graph_State const& x, std::vector<Positioned_Faced_Label> const& labels, Pc_Input_State const& pc_input)
 ❰
     Frame_Elements elements;
+    
+    for (auto const& it: x.concept.edges){
+        auto node_from = Get_Node_By_Name(labels,it.from);
+        auto node_to = Get_Node_By_Name(labels,it.from);
+        
+        //build an arrow
+        Arrow arrow;
+        auto start_pos = node_from.pos;
+        start_pos.y += 8;
+        start_pos.x += Faced_Label_Dimension_Getter::Get(node_from).x;
+        arrow.points.emplace_back(start_pos);
+        
+        auto end_pos = node_to.pos;
+        end_pos.y += 8;
+        arrow.points.emplace_back(end_pos);
+        
+        arrow.direction = Arrow_Direction::END;
+        
+        //draw arrow
+        elements.types += Arrow_Drawer::Draw(arrow).types;
+    }
+    
+    
     
     return elements;
 ❱
@@ -132,3 +157,17 @@ class
     }
     return labels;
 ❱
+
+
+◀private: static▶ Positioned_Faced_Label ☀Get_Node_By_Name(std::vector<Positioned_Faced_Label> const& labels, std::string const& name)❰
+    for (auto const& it: labels){
+        if (Faced_Label_First_Name::Get(it) == name){
+            return it;
+        }
+    }
+    
+    //couldn't find
+    Positioned_Faced_Label x;
+    return x;
+❱
+

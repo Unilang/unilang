@@ -8,6 +8,9 @@ class
 ⚯
 ⚞⚟
 
+◀public: static▶ std::string ☀Get(Positioned_Faced_Label const& label)❰
+    return label.state.faces[0].name;
+❱
 ◀public: static▶ std::string ☀Get(Faced_Label const& label)❰
     return label.state.faces[0].name;
 ❱
