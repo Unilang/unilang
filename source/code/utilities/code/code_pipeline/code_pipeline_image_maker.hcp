@@ -11,6 +11,8 @@ class
 ❪"code/utilities/peripheral/pc/pc_input_state"❫
 ❪"src/tree.hh"❫
 ❪"code/utilities/data_structures/graph/conceptually_laid_out_graph/conceptually_laid_out_graph"❫
+❪"code/utilities/data_structures/graphics/objects/fitted_faced_label_graph/data/fitted_faced_label_graph"❫
+❪"code/utilities/data_structures/graphics/objects/fitted_faced_label_graph/data/positioned_fitted_faced_label_graph"❫
 ⚯
 ❪"code/utilities/data_structures/graphics/bitmap/premade/tree_button"❫
 ❪"code/utilities/fonts/bdf/complete/unilang/unilang_character_maps"❫
@@ -28,6 +30,8 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/buildable_schema_face_tree_drawer"❫
 ❪"code/utilities/data_structures/graphics/objects/fitted_faced_label_graph/fitted_faced_label_graph_creator"❫
 ❪"code/utilities/data_structures/graphics/objects/fitted_faced_label_graph/fitted_faced_label_graph_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/premade/faced_label_premades"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_first_name"❫
 ⚞⚟
 
 
@@ -41,6 +45,12 @@ class
     //actual graph with concept information
     auto drawable_fitted_graph = Fitted_Faced_Label_Graph_Creator::Create(fitted_graph);
     
+    //recolor some nodes
+    Change_Color(drawable_fitted_graph,"file.unilang");
+    Change_Color(drawable_fitted_graph,"code.json");
+    Change_Color(drawable_fitted_graph,"c++ code");
+    Change_Color(drawable_fitted_graph,"python code");
+    
     //render object
     Pc_Input_State pc_input;
     auto unilang_font_lookup = Unilang_Character_Maps::Get();
@@ -53,9 +63,24 @@ class
 
 ❱
 
+◀private: static▶ void ☀Change_Color(Fitted_Faced_Label_Graph & drawable_fitted_graph, std::string const& name)❰
+    for (auto & it: drawable_fitted_graph.state.nodes){
+        if (Faced_Label_First_Name::Get(it) == name){
+            it = Faced_Label_Premades::Single_Plain_Light_Purple_Box(name);
+        }
+    }
+❱
+
 ◀private: static▶ Conceptually_Laid_Out_Graph ☀Create_Conceptually_Fitted_Graph()❰
     Conceptually_Laid_Out_Graph g;
+    Add_Nodes(g);
+    Add_Edges(g);
     
+    return g;
+❱
+
+◀private: static▶ void ☀Add_Nodes(Conceptually_Laid_Out_Graph & g)❰
+
     Conceptually_Laid_Out_Node node;
     
     node.name = "unilang-editor";
@@ -97,7 +122,10 @@ class
     node.pos.x = 5;
     node.pos.y = 1;
     g.nodes.emplace_back(node);
-    
+❱
+
+◀private: static▶ void ☀Add_Edges(Conceptually_Laid_Out_Graph & g)❰
+
     Conceptually_Laid_Out_Edge edge;
     
     edge.from = "unilang-editor";
@@ -131,8 +159,6 @@ class
     edge.from = "code-to-python";
     edge.to = "python code";
     g.edges.emplace_back(edge);
-    
-    return g;
 ❱
 
 ◀private: static▶ void ☀Convert_To_Image(Frame_Elements const& elements)❰
