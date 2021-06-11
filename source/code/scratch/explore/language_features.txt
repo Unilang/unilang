@@ -1093,3 +1093,35 @@ return foo_set.size();
 should have been a size_t, and a little redundant to type and document.
 documentation can be generated automatically if we know that its wrapping the function.
 Also, we would be able to automatically forward arguments, and automatically return from the call if we know that is wrapping
+
+
+
+
+
+-specify functions as inverses creating automatic tests
+you should be able to label functions as inverses. this will automatically generate tests
+```
+T before;
+before == serialize(deserialize(...)))
+```
+
+-check for unfinished sentence in comment
+sometimes you are writing code, get distracted, and you don't finish writing a comment.
+instead of having people catch this in review, lets try to have the compiler catch it for you.
+
+
+
+-rules on enforcing parameter order
+in what order should parameters be passed?
+There may be a lot of opinions about this, but at the very least we can codify rules and enforce them.
+
+I've noticed personally,
+
+we at least want consistency. If something is passed first most of the time, we should make sure it keeps getting passed first. And maybe the higher up the call chain that the object existed, the more priority it should get to being placed first in the paramter list.
+
+Another opnion maybe to pass the bigest objects first. Again, that just something that people may do conceptually to better understand what is being moved around. Usually because that reserves booleans and enums and flag like types to be ordered last. Again, these are just opnions.
+
+Lastly, we may want to pass things that are being transformed first, followed by things that are being copied(but mutable), followed by things that are read only.
+
+Also, if it is a tie, we might want to trump by whether it is a container or by the sizeof the object
+
