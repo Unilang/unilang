@@ -22,6 +22,7 @@ class
     x.refresh_unilang_documentation = true;
     x.refresh_unilang_logo = true;
     x.refresh_unilang_hello_world_gif = true;
+    x.refresh_unilang_code_pipeline_image = true;
     x.refresh_unilang_concept_tree_image = true;
     
     //artifacts

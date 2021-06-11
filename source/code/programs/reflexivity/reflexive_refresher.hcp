@@ -23,6 +23,7 @@ class
 ❪"code/utilities/filesystem/files/getting/lib"❫
 ❪"code/utilities/filesystem/files/transformers/lib"❫
 ❪"code/programs/reflexivity/publish/unilang_documentation_generator"❫
+❪"code/utilities/code/code_pipeline/code_pipeline_image_maker"❫
 ⚞⚟
 
 
@@ -90,6 +91,11 @@ class
     if (settings.refresh_unilang_hello_world_gif){
         std::cout << "Hello World Gif..." << std::endl;
         Unilang_Hello_World_Gif::Create();
+    }
+    
+    if (settings.refresh_unilang_code_pipeline_image){
+        std::cout << "Unilang Code Pipeline..." << std::endl;
+        Code_Pipeline_Image_Maker::Create();
     }
     
     //generate unilang documentation
