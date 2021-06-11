@@ -9,7 +9,7 @@ class
 
 
 //color related
-◀public: static▶ Fitted_Faced_Label_Graph ☀Remove_Pos(Conceptually_Laid_Out_Graph const& concept)
+◀public: static▶ Fitted_Faced_Label_Graph ☀Create(Conceptually_Laid_Out_Graph const& concept)
 ❰
     Fitted_Faced_Label_Graph x;
     x.state.concept = concept;

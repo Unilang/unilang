@@ -26,13 +26,26 @@ class
 ❪"code/utilities/types/vectors/observers/lib"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/string_tree_to_buildable_schema_faced_tree"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/buildable_schema_face_tree_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/fitted_faced_label_graph/fitted_faced_label_graph_creator"❫
+❪"code/utilities/data_structures/graphics/objects/fitted_faced_label_graph/fitted_faced_label_graph_drawer"❫
 ⚞⚟
 
 
 //create a diagram showing the unilang transformation
 ◀public: static▶ void ☀Create()❰
 
+
+    //concept
     auto fitted_graph = Create_Conceptually_Fitted_Graph();
+    
+    //actual graph with concept information
+    auto drawable_fitted_graph = Fitted_Faced_Label_Graph_Creator::Create(fitted_graph);
+    
+    //render
+    Pc_Input_State pc_input;
+    auto unilang_font_lookup = Unilang_Character_Maps::Get();
+    Position pos;
+    auto frame_elements = Fitted_Faced_Label_Graph_Drawer::Full_Draw(unilang_font_lookup,drawable_fitted_graph.state,pos,pc_input);
 
 
 ❱
@@ -117,4 +130,17 @@ class
     g.edges.emplace_back(edge);
     
     return g;
+❱
+
+◀private: static▶ void ☀Convert_To_Image(Frame_Elements const& elements)❰
+
+    //draw the elements to an image
+    Cairo_Render_Settings settings;
+    
+    auto host_folder = Bazel_Derived_Root_Of_Repo();
+    settings.file_name = host_folder + ".readme/unilang_code_pipeline.png";
+    Frame_Renderer::Render(elements,settings);
+    
+    //additional cleanuo
+    Image_Transparent::Convert(settings.file_name);
 ❱

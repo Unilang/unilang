@@ -28,5 +28,7 @@ hcp(
         "//code/utilities/types/tree/converters:tree_full_paths_getter",
         "//code/utilities/types/vectors/observers:lib",
         "@tree",
+        "//code/utilities/data_structures/graphics/objects/fitted_faced_label_graph:fitted_faced_label_graph_creator",
+        "//code/utilities/data_structures/graphics/objects/fitted_faced_label_graph:fitted_faced_label_graph_drawer",
     ],
 )
