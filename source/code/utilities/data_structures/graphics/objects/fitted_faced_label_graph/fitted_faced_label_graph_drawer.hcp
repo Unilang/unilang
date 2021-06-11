@@ -27,7 +27,7 @@ class
 ❰
     Frame_Elements elements;
     
-    int height_buffer = 20;
+    int height_buffer = 40;
     int width_buffer = 10;
 
     //find biggest pos.x (so we know when were done)
@@ -36,7 +36,7 @@ class
 
     //construct individually positioned nodes based on their conceptual layout but with their actual pixel layout
     std::vector<Positioned_Faced_Label> drawable_labels;
-    for (size_t column = 0; column < max_pos_x; ++column){
+    for (size_t column = 0; column < max_pos_x+1; ++column){
         
         
         //add all the column nodes

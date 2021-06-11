@@ -41,11 +41,14 @@ class
     //actual graph with concept information
     auto drawable_fitted_graph = Fitted_Faced_Label_Graph_Creator::Create(fitted_graph);
     
-    //render
+    //render object
     Pc_Input_State pc_input;
     auto unilang_font_lookup = Unilang_Character_Maps::Get();
     Position pos;
     auto frame_elements = Fitted_Faced_Label_Graph_Drawer::Full_Draw(unilang_font_lookup,drawable_fitted_graph.state,pos,pc_input);
+    
+    //make image
+    Convert_To_Image(frame_elements);
 
 
 ❱
