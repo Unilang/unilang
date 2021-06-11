@@ -1,0 +1,24 @@
+class
+❪vector❫
+❪string❫
+❪unordered_map❫
+⚯
+
+⚞⚟
+
+◀
+public:
+
+   bool warn_about_sarcasm=true;
+   std::vector<std::string> phrases{
+      "bunch of stuff",
+      "tons of stuff",
+      "hundreds of times",
+      "millions of times",
+      "billions of times",
+      "hundredth time",
+      "millionth time",
+      "billionth time",
+   };
+
+▶

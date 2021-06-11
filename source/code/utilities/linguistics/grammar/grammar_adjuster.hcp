@@ -31,6 +31,7 @@ class
     std::vector<std::string> warnings;
     warnings += Possibly_Fix_Setences_Ending_In_A_Preposition(str,grammar);
     warnings += Possibly_Fix_Setences_That_Use_Cliche(str,grammar);
+    warnings += Possibly_Fix_Setences_That_Use_Sarcasm_Or_Exageration(str,grammar);
     
     //get a dictionary that we may need for various analysis
     auto dictionary = Dictionary_Getter::Get();
@@ -174,6 +175,19 @@ class
     for (auto cliche: grammar.cliches.cliches){
       if (Contains_Substring(sentence,cliche)){
         Add_Warning(warnings,"sentence has a cliche: " + cliche);
+      }
+    }
+  }
+  
+  return warnings;
+❱
+
+◀private: static▶ std::vector<std::string> ☀Possibly_Fix_Setences_That_Use_Sarcasm_Or_Exageration(std::string & sentence, Comment_Grammar_Settings const& grammar)❰
+  std::vector<std::string> warnings;
+  if (grammar.sarcasm.warn_about_sarcasm){
+    for (auto sarcasm: grammar.sarcasm.phrases){
+      if (Contains_Substring(sentence,sarcasm)){
+        Add_Warning(warnings,"sentence has a sarcasm or exaggeration: " + sarcasm);
       }
     }
   }

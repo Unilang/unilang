@@ -1076,3 +1076,20 @@ void for_each_variation(styles v, Fun fun){
     }
 }
 ```
+
+
+-high level data flow animator through function call stack
+see what kind of visualizations are out there to do this.
+It could be big an complicated showing a dictionary of custom types being manipulated though a function.
+It could also be simple something like showing the type transitions between function calls.
+Hmmm.. we would have to know that two types are related via a transformation. But I suppose this could be done by tracing parameters / return values. And seeing what goes in, and what comes out.
+
+
+-allow syntax for wrapping a function
+to avoid incorrect return types like this:
+unsigned int size(){
+return foo_set.size();
+}
+should have been a size_t, and a little redundant to type and document.
+documentation can be generated automatically if we know that its wrapping the function.
+Also, we would be able to automatically forward arguments, and automatically return from the call if we know that is wrapping

@@ -22,6 +22,12 @@ hcp(
 )
 
 hcp(
+    name = "comment_grammar_sarcasm_settings",
+    deps = [
+    ],
+)
+
+hcp(
     name = "comment_grammar_bad_word_settings",
     deps = [
     ],
@@ -42,5 +48,6 @@ hcp(
         "//code/utilities/linguistics/grammar/settings:comment_grammar_preposition_settings",
         "//code/utilities/linguistics/grammar/settings:comment_grammar_puncuation_settings",
         "//code/utilities/linguistics/grammar/settings:comment_grammar_spellcheck_settings",
+        "//code/utilities/linguistics/grammar/settings:comment_grammar_sarcasm_settings",
     ],
 )
