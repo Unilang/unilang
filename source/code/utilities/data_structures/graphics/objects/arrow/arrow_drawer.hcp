@@ -44,13 +44,14 @@ class
     //draw arrows
     if (arrow.direction == Arrow_Direction::START){
         auto arrow_pos = arrow.points[0];
-        arrow_pos.y -= 4;
+        arrow_pos.y -= 2;
         auto arrow_head = Left_Arrow::Create_Positioned(arrow_pos,4);
         x.types.emplace_back(arrow_head);
     }
     else if (arrow.direction == Arrow_Direction::END){
         auto arrow_pos = arrow.points[arrow.points.size()-1];
-        arrow_pos.x -= 4;
+        arrow_pos.y -= 2;
+        arrow_pos.x -= 1;
         auto arrow_head = Right_Arrow::Create_Positioned(arrow_pos,4);
         x.types.emplace_back(arrow_head);
     }
@@ -58,8 +59,9 @@ class
         
         auto arrow_pos1 = arrow.points[0];
         auto arrow_pos2 = arrow.points[arrow.points.size()-1];
-        arrow_pos1.y -= 4;
-        arrow_pos2.x -= 4;
+        arrow_pos1.y -= 2;
+        arrow_pos2.y -= 2;
+        arrow_pos2.x -= 1;
         auto arrow_head1 = Left_Arrow::Create_Positioned(arrow_pos1,4);
         auto arrow_head2 = Right_Arrow::Create_Positioned(arrow_pos2,4);
         x.types.emplace_back(arrow_head1);
