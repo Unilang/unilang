@@ -1163,3 +1163,35 @@ Fuzzing (both for crashes and value checking)
 
 comparing interface against a well-known interface
 http://www.lihaoyi.com/post/PrinciplesofAutomatedTesting.html
+
+
+-incorperate the OODA loop
+https://en.wikipedia.org/wiki/OODA_loop
+whether as an export or somehow describable in UniLang
+
+
+
+-numerical inremenet and alphabet detection static analysis
+sometimes code looks like:
+
+1. sfkjskdfsdf
+dfgdfgfgd
+
+2. sfddfgdfg
+dfgdfgdfg
+
+3. dfgdfgdfg
+dfgfdg
+
+If we can detect this, we can report any place that a number was out of place or missing.
+Assuming the numbers are in enough order already.
+
+The same analysis can be done for things in alphabetical order.
+
+Basically we want to detect these patterns, and report any info on what could make the pattern more consistent. That will help find errors (most likely)
+
+because their are some other things I can think of such as alphabetical in reverse order, counting down,
+count by even numbers, or counting by base 2...
+we'll probably want a numerical pattern database...
+
+We also might want to do some research on what kind research on existing text pattern analysis algorithms
