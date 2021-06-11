@@ -1,0 +1,80 @@
+class
+❪string❫
+❪cmath❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/data/faced_label"❫
+❪"code/utilities/data_structures/graph/conceptually_laid_out_graph/conceptually_laid_out_graph"❫
+❪"code/utilities/data_structures/graphics/objects/fitted_faced_label_graph/data/fitted_faced_label_graph"❫
+❪"code/utilities/data_structures/graphics/objects/fitted_faced_label_graph/data/positioned_fitted_faced_label_graph"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/premade/faced_label_premades"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_dimension_getter"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_first_name"❫
+❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
+❪"code/utilities/peripheral/mouse/state/mouse_state"❫
+❪"code/utilities/fonts/bdf/character_maps/character_maps"❫
+❪"code/utilities/data_structures/graphics/objects/arrow/data/arrow"❫
+⚯
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_drawer"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/vertical_line"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/horizontal_line"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/l_line"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/right_arrow"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/left_arrow"❫
+⚞⚟
+
+
+◀public: static▶ Frame_Elements ☀Draw(Arrow const& arrow)
+❰
+    Frame_Elements x;
+    
+    //nothing to draw
+    if (arrow.points.empty()){
+        return x;
+    }
+    
+    //analyze points two at a time
+    for (size_t i = 0; i < arrow.points.size(); ++i){
+        if (i+1 < arrow.points.size()){
+            x.types += Draw_Line(arrow.points[i],arrow.points[i+1]).types;
+        }
+    }
+    
+    //draw arrows
+    if (arrow.direction == Arrow_Direction::START){
+        auto arrow_head = Left_Arrow::Create_Positioned(arrow.points[0],4);
+        x.types.emplace_back(arrow_head);
+    }
+    else if (arrow.direction == Arrow_Direction::END){
+        auto arrow_head = Right_Arrow::Create_Positioned(arrow.points[arrow.points.size()-1],4);
+        x.types.emplace_back(arrow_head);
+    }
+    else if (arrow.direction == Arrow_Direction::BOTH){
+        auto arrow_head1 = Left_Arrow::Create_Positioned(arrow.points[0],4);
+        auto arrow_head2 = Right_Arrow::Create_Positioned(arrow.points[arrow.points.size()-1],4);
+        x.types.emplace_back(arrow_head1);
+        x.types.emplace_back(arrow_head2);
+    }
+    
+    return x;
+❱
+
+◀private: static▶ Frame_Elements ☀Draw_Line(Position const& start, Position const& end)
+❰
+    Frame_Elements x;
+    
+    //horizontal line
+    if (start.x == end.x){
+        x.types.emplace_back(Horizontal_Line::Create_Positioned(start, end.x - start.x));
+        return x;
+    }
+    
+    //diagonal line, curved line, or it needs made of two lines
+    x.types.emplace_back(Vertical_Line::Create_Positioned(start, end.y - start.y));
+    auto new_pos = start;
+    new_pos.y = end.y;
+    x.types.emplace_back(Horizontal_Line::Create_Positioned(new_pos, end.x - new_pos.x));
+    
+    
+    return x;
+❱
