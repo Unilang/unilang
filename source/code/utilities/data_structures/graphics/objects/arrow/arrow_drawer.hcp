@@ -65,18 +65,45 @@ class
 ◀private: static▶ Frame_Elements ☀Draw_Line(Position const& start, Position const& end)
 ❰
     Frame_Elements x;
+    std::cout << "a" << std::endl;
     
     //horizontal line
     if (start.x == end.x){
-        x.types.emplace_back(Horizontal_Line::Create_Positioned(start, end.x - start.x));
-        return x;
+        
+        //left to right
+        if (start.x <= end.x){
+            std::cout << "a1" << std::endl;
+            x.types.emplace_back(Horizontal_Line::Create_Positioned(start, end.x - start.x));
+            std::cout << "a2" << std::endl;
+            return x;
+        }
+        else{
+            std::cout << "a3" << std::endl;
+            x.types.emplace_back(Horizontal_Line::Create_Positioned(end, start.x - end.x));
+            std::cout << "a4" << std::endl;
+            return x;
+        }
     }
     
     //diagonal line, curved line, or it needs made of two lines
+    std::cout << "a5" << std::endl;
     x.types.emplace_back(Vertical_Line::Create_Positioned(start, end.y - start.y));
     auto new_pos = start;
     new_pos.y = end.y;
-    x.types.emplace_back(Horizontal_Line::Create_Positioned(new_pos, end.x - new_pos.x));
+    std::cout << "a6" << std::endl;
+    
+    //left to right
+    if (new_pos.x <= end.x){
+        std::cout << "a8 " << std::endl;
+        std::cout << new_pos.x << " " << new_pos.y << " | " << end.x << " " << end.y << std::endl;
+        x.types.emplace_back(Horizontal_Line::Create_Positioned(new_pos, end.x - new_pos.x));
+    }
+    else{
+        std::cout << "a9 " << std::endl;
+        std::cout << new_pos.x << " " << new_pos.y << " | " << end.x << " " << end.y << std::endl;
+        x.types.emplace_back(Horizontal_Line::Create_Positioned(end, new_pos.x - end.x));
+    }
+    std::cout << "a7" << std::endl;
     
     
     return x;

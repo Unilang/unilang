@@ -52,7 +52,7 @@ class
     
     for (auto const& it: x.concept.edges){
         auto node_from = Get_Node_By_Name(labels,it.from);
-        auto node_to = Get_Node_By_Name(labels,it.from);
+        auto node_to = Get_Node_By_Name(labels,it.to);
         
         //build an arrow
         Arrow arrow;
