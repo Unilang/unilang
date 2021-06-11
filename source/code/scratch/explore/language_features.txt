@@ -1015,3 +1015,25 @@ void some_func(){
 ```
 
 
+
+-Allow transformation functions to also return copies via a wrapper
+In the Jstd, I would always write:
+```
+void Lowercase(Str & s);
+Str As_Lowercased(Str s);
+```
+If we always create the transformer first, we can get the As_ functio for free.
+From Sean Parent's talk:
+The Permutation Paradox:
+"There is a duality between transformations and the corresponding actions:
+An action is definable in terms of a transformation and vice versa:
+void a(T& x){ x = f(x); } // action from transformation
+and 
+T f(T x){a(x); return x; } // transformation from action
+
+Actually they are both turring complete, so either one can be used to create the other.
+There will be some natural language processing for the new function names of course.
+
+"Despite duality, independent implementations are sometimes more efficient, in which case both actions and transformations need to be provided." - Elements of Programming (section 2.5)
+
+
