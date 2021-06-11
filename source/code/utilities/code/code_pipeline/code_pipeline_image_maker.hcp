@@ -50,6 +50,7 @@ class
     Change_Color(drawable_fitted_graph,"code.json");
     Change_Color(drawable_fitted_graph,"c++ code");
     Change_Color(drawable_fitted_graph,"python code");
+    Change_Color(drawable_fitted_graph,"X");
     
     //render object
     Pc_Input_State pc_input;
@@ -122,6 +123,16 @@ class
     node.pos.x = 5;
     node.pos.y = 1;
     g.nodes.emplace_back(node);
+    
+    node.name = "code-to-X";
+    node.pos.x = 4;
+    node.pos.y = 2;
+    g.nodes.emplace_back(node);
+    
+    node.name = "X";
+    node.pos.x = 5;
+    node.pos.y = 2;
+    g.nodes.emplace_back(node);
 ❱
 
 ◀private: static▶ void ☀Add_Edges(Conceptually_Laid_Out_Graph & g)❰
@@ -158,6 +169,10 @@ class
     
     edge.from = "code-to-python";
     edge.to = "python code";
+    g.edges.emplace_back(edge);
+    
+    edge.from = "code-to-X";
+    edge.to = "X";
     g.edges.emplace_back(edge);
 ❱
 

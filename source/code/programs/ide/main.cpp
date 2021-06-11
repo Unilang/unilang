@@ -35,6 +35,10 @@
 //https://app.quicktype.io/
 
 
+//showing code depth:
+//https://www.greenfoot.org/doc/tut-2
+
+
 //ideas:
 //optional thread pool on drawing grid
 //label button
