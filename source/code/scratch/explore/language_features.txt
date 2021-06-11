@@ -1195,3 +1195,12 @@ count by even numbers, or counting by base 2...
 we'll probably want a numerical pattern database...
 
 We also might want to do some research on what kind research on existing text pattern analysis algorithms
+
+
+
+
+-when describing something, allow for a layman's and detailed explanation
+[creates a more accurate values using a well known algorithm]
+[employs the made-up-person conjecture utilizing geometric-based rounding to facilitate parallel foos in 3d space]
+
+I dunno. You get the idea. Two sentences that say the same thing but one is in laymans term and the other is a more detailed explanation. Both are important depending on the reader and the context.
