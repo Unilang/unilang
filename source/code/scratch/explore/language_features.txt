@@ -1140,3 +1140,26 @@ example of a warning we should be able to get:
 
 -check for duplicate brief / detailed sections across data members.
 This will hopefully catch any copy and paste errors in UniLang
+
+
+
+-documentation=tutorials+how-to-guide+explanation+reference
+https://www.divio.com/blog/documentation/
+
+
+-static analysis: if string changes; check code base for same original string
+if a string changes in one file, the same string may need changed elsewhere
+this is a static analysis we want to check during CI.
+
+
+
+-support various test methods
+unilang should support:
+Unit Testing
+Property-based Testing
+Integration Testing
+
+Fuzzing (both for crashes and value checking)
+
+comparing interface against a well-known interface
+http://www.lihaoyi.com/post/PrinciplesofAutomatedTesting.html
