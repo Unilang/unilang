@@ -54,8 +54,20 @@ class
         auto node_from = Get_Node_By_Name(labels,it.from);
         auto node_to = Get_Node_By_Name(labels,it.to);
         
+        
         //build an arrow
         Arrow arrow;
+        
+        //make we sure we draw line left-to-right
+        if (node_from.pos.x >= node_to.pos.x){
+            std::swap(node_from,node_to);
+            arrow.direction = Arrow_Direction::START;
+        }
+        else{
+            arrow.direction = Arrow_Direction::END;
+        }
+        
+        
         auto start_pos = node_from.pos;
         start_pos.y += 8;
         start_pos.x += Faced_Label_Dimension_Getter::Get(node_from).x;
@@ -65,7 +77,6 @@ class
         end_pos.y += 8;
         arrow.points.emplace_back(end_pos);
         
-        arrow.direction = Arrow_Direction::END;
         
         //draw arrow
         elements.types += Arrow_Drawer::Draw(arrow).types;
