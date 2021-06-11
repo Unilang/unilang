@@ -1125,3 +1125,18 @@ Lastly, we may want to pass things that are being transformed first, followed by
 
 Also, if it is a tie, we might want to trump by whether it is a container or by the sizeof the object
 
+
+
+
+-detect constants found in for loops and code
+example of a warning we should be able to get:
+```
+        for (size_t i = 0; i < 4; ++i)
+        {
+            for (size_t j = 0; j < 4; ++j)
+            {
+```
+
+
+-check for duplicate brief / detailed sections across data members.
+This will hopefully catch any copy and paste errors in UniLang
