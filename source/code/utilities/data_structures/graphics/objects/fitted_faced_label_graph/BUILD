@@ -19,6 +19,8 @@ hcp(
     deps = [
         "//code/utilities/data_structures/graph/conceptually_laid_out_graph",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
+        "//code/utilities/data_structures/graphics/objects/arrow:arrow_drawer",
+        "//code/utilities/data_structures/graphics/objects/arrow/data:arrow",
         "//code/utilities/data_structures/graphics/objects/faced_label:faced_label_dimension_getter",
         "//code/utilities/data_structures/graphics/objects/faced_label:faced_label_drawer",
         "//code/utilities/data_structures/graphics/objects/faced_label:faced_label_first_name",
@@ -29,7 +31,5 @@ hcp(
         "//code/utilities/fonts/bdf/character_maps",
         "//code/utilities/peripheral/mouse/state:mouse_state",
         "//code/utilities/types/vectors/operators:lib",
-        "//code/utilities/data_structures/graphics/objects/arrow/data:arrow",
-        "//code/utilities/data_structures/graphics/objects/arrow:arrow_drawer",
     ],
 )

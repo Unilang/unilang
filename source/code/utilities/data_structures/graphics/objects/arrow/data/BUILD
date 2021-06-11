@@ -6,7 +6,7 @@ load("//bazel/rules/cpp:object.bzl", "cpp_object")
 hcp(
     name = "arrow",
     deps = [
-        "//code/utilities/data_structures/position:position",
         "//code/utilities/data_structures:arrow_direction",
+        "//code/utilities/data_structures/position",
     ],
 )
