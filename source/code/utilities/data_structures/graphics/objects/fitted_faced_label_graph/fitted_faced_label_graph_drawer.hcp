@@ -27,8 +27,34 @@ class
 ❰
     Frame_Elements elements;
     
-    int height_buffer = 40;
-    int width_buffer = 10;
+    auto drawable_labels = Create_Drawable_Nodes(x,pos);
+    
+    
+    //now that we have all the nodes to draw, draw them
+    for (auto & it: drawable_labels){
+        elements.types += Faced_Label_Drawer::Draw(font_chars,it,pc_input.mouse).types;
+    }
+    
+    
+    elements.types += Draw_Connections(font_chars,x,drawable_labels,pc_input);
+    
+    return elements;
+❱
+
+
+
+
+◀private: static▶ Frame_Elements ☀Draw_Connections(Character_Maps const& font_chars, Fitted_Faced_Label_Graph_State const& x, std::vector<Positioned_Faced_Label> const& labels, Pc_Input_State const& pc_input)
+❰
+    Frame_Elements elements;
+    
+    return elements;
+❱
+
+◀private: static▶ std::vector<Positioned_Faced_Label> ☀Create_Drawable_Nodes(Fitted_Faced_Label_Graph_State const& x, Position pos)❰
+
+    int height_buffer = 20;
+    int width_buffer = 20;
 
     //find biggest pos.x (so we know when were done)
     int max_pos_x = Get_Conceptual_Max_Pos_X(x);
@@ -62,14 +88,14 @@ class
         
     }
     
-    
-    //not that we have all the nodes to draw, draw them
-    for (auto & it: drawable_labels){
-        elements.types += Faced_Label_Drawer::Draw(font_chars,it,pc_input.mouse).types;
-    }
-    
-    return elements;
+    return drawable_labels;
 ❱
+
+
+
+
+
+
 
 
 
