@@ -1003,7 +1003,15 @@ Its probably something like 800 segments for every mile"
 These things could be expressed with a number range, and an explanation token
 
 
+-static analysis of mis-ordered parameters through identifier matching.
+example of param flip issue:
+```
+void func (int a, int b);  
 
-
+void some_func(){
+   int a; int b;
+   func(b,a); //static analysis says this is a mistake
+}
+```
 
 
