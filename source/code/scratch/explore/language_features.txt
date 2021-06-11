@@ -1050,3 +1050,29 @@ What limitation does the technology diminish?
 What rules enabled us to manage this limitation?
 What new rules will we need?
 by the way, 3 should not be !(4)
+
+-suggest enums in place of boolean parameters
+
+
+
+-generate free function that iterates over all combinations of iterable data members
+example:
+something like this:
+
+```
+struct styles{
+vector<color> colors;
+vector<sizes> sizes;
+}
+```
+should generate a function that does this:
+```
+template <Fun>
+void for_each_variation(styles v, Fun fun){
+    for (auto color: v.colors){
+        for(auto size: v.sizes){
+            fun(color,size);
+        }
+    }
+}
+```
