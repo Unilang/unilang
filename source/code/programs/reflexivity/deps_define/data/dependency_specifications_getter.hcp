@@ -111,6 +111,7 @@ class
     x.specs.emplace_back(Rules_Rust());
     x.specs.emplace_back(Rules_Fuzzing());
     //x.specs.emplace_back(Rules_Python());
+    x.specs.emplace_back(Rules_Pkg());
 
 
     
@@ -2839,6 +2840,13 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "rules_python";
     Add_Unilang_Github_Mirror(spec,"rules_python","f1b6b742254ec11f9e7bd6bff19ad2b327107a45","56bae84082f326c5d51fe63a0929a825ae6f415ff7e3e49df20ba799dca62a7f");
+    spec.build_content_in_dependency=true;
+    return spec;
+❱
+◀private: static▶ Dependency_Specification ☀Rules_Pkg()❰
+    Dependency_Specification spec;
+    spec.lib_name = "rules_pkg";
+    Add_Unilang_Github_Mirror(spec,"rules_pkg","a2752f79380fd68b557c4b248dc1faedfc3756d4","451c17a9694c4cf0acc833f097eac0abb41fc6e7e25d203817cdb1d1b4dab596");
     spec.build_content_in_dependency=true;
     return spec;
 ❱
