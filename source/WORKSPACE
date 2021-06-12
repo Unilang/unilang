@@ -133,3 +133,36 @@ load(
 )
 
 _cc_image_repos()
+
+
+
+########################################
+# Rules fuzzing instructions
+########################################
+
+#load("@rules_fuzzing//fuzzing:repositories.bzl", "rules_fuzzing_dependencies")
+
+# Pass jazzer = True to rules_fuzzing_dependencies for Java fuzzing support.
+#rules_fuzzing_dependencies(jazzer = True)
+
+#load("@rules_fuzzing//fuzzing:init.bzl", "rules_fuzzing_init")
+
+#rules_fuzzing_init()
+
+# For Java fuzzing support, uncomment the following lines.
+# load("@jazzer//:repositories.bzl", "jazzer_dependencies")
+#
+# jazzer_dependencies()
+#
+# load("@jazzer//:init.bzl", "jazzer_init")
+#
+# jazzer_init()
+
+
+
+
+
+#######################################
+
+
+

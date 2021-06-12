@@ -109,7 +109,8 @@ class
     x.specs.emplace_back(Io_Bazel_Rules_Docker());
     x.specs.emplace_back(Rules_Swift());
     x.specs.emplace_back(Rules_Rust());
-    
+    x.specs.emplace_back(Rules_Fuzzing());
+    x.specs.emplace_back(Rules_Python());
 
 
     
@@ -2827,7 +2828,20 @@ cc_library(
     spec.build_content_in_dependency=true;
     return spec;
 ❱
-
+◀private: static▶ Dependency_Specification ☀Rules_Fuzzing()❰
+    Dependency_Specification spec;
+    spec.lib_name = "rules_fuzzing";
+    Add_Unilang_Github_Mirror(spec,"rules_fuzzing","ce7b85c762cbb8ff2697b053ae7b7c9e43dd4a99","d6cd2fda74ddf25a066585b7af378cfcbdb7ddcca783480432cb0debfbce6907");
+    spec.build_content_in_dependency=true;
+    return spec;
+❱
+◀private: static▶ Dependency_Specification ☀Rules_Python()❰
+    Dependency_Specification spec;
+    spec.lib_name = "rules_python";
+    Add_Unilang_Github_Mirror(spec,"rules_python","f1b6b742254ec11f9e7bd6bff19ad2b327107a45","56bae84082f326c5d51fe63a0929a825ae6f415ff7e3e49df20ba799dca62a7f");
+    spec.build_content_in_dependency=true;
+    return spec;
+❱
 
 
 ◀private: static▶ Dependency_Specification ☀gecode()❰
