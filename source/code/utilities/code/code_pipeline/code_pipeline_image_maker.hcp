@@ -50,7 +50,7 @@ class
     Change_Color(drawable_fitted_graph,"code.json");
     Change_Color(drawable_fitted_graph,"c++ code");
     Change_Color(drawable_fitted_graph,"python code");
-    Change_Color(drawable_fitted_graph,"X");
+    Change_Color(drawable_fitted_graph,"artifact");
     
     //render object
     Pc_Input_State pc_input;
@@ -124,12 +124,12 @@ class
     node.pos.y = 1;
     g.nodes.emplace_back(node);
     
-    node.name = "code-to-X";
+    node.name = "code-to-artifact";
     node.pos.x = 4;
     node.pos.y = 2;
     g.nodes.emplace_back(node);
     
-    node.name = "X";
+    node.name = "artifact";
     node.pos.x = 5;
     node.pos.y = 2;
     g.nodes.emplace_back(node);
@@ -171,8 +171,12 @@ class
     edge.to = "python code";
     g.edges.emplace_back(edge);
     
-    edge.from = "code-to-X";
-    edge.to = "X";
+    edge.from = "code.json";
+    edge.to = "code-to-artifact";
+    g.edges.emplace_back(edge);
+    
+    edge.from = "code-to-artifact";
+    edge.to = "artifact";
     g.edges.emplace_back(edge);
 ❱
 
