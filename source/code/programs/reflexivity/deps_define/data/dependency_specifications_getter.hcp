@@ -2811,7 +2811,8 @@ cc_library(
 ◀private: static▶ Dependency_Specification ☀Io_Bazel_Rules_Docker()❰
     Dependency_Specification spec;
     spec.lib_name = "io_bazel_rules_docker";
-    Add_Unilang_Github_Mirror(spec,"rules_docker","708e6c7c2d611c546b62fb21fbd2945fd8dc1cdb","1a8c205254a75d9affd745b9ff9bdc359e9173fb420cce92b5bf1276887cc0c1");
+    //Add_Unilang_Github_Mirror(spec,"rules_docker","708e6c7c2d611c546b62fb21fbd2945fd8dc1cdb","1a8c205254a75d9affd745b9ff9bdc359e9173fb420cce92b5bf1276887cc0c1");
+    Add_Unilang_Github_Mirror(spec,"rules_docker","454981e65fa100d37b19210ee85fedb2f7af9626","b6dc35134f1563b95db4fcfffd9c2e8673709c0b6b3b4a112b1b5bdbd843caa4");
     spec.build_content_in_dependency=true;
     return spec;
 ❱
