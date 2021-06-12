@@ -124,6 +124,8 @@ remote_apis_switched_rules_by_language(
     java = True,
 )
 
+###################
+
 load(
     "@io_bazel_rules_docker//repositories:repositories.bzl",
     container_repositories = "repositories",
@@ -157,3 +159,5 @@ load(
 )
 
 _cc_image_repos()
+
+######################
