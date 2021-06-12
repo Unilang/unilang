@@ -6,9 +6,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 def ioBazelRulesDocker():
     http_archive(
         name = "io_bazel_rules_docker",
-        sha256 = "1a8c205254a75d9affd745b9ff9bdc359e9173fb420cce92b5bf1276887cc0c1",
-        strip_prefix = "rules_docker-708e6c7c2d611c546b62fb21fbd2945fd8dc1cdb",
+        sha256 = "b6dc35134f1563b95db4fcfffd9c2e8673709c0b6b3b4a112b1b5bdbd843caa4",
+        strip_prefix = "rules_docker-454981e65fa100d37b19210ee85fedb2f7af9626",
         urls = [
-            "https://github.com/Unilang/rules_docker/archive/708e6c7c2d611c546b62fb21fbd2945fd8dc1cdb.tar.gz",
+            "https://github.com/Unilang/rules_docker/archive/454981e65fa100d37b19210ee85fedb2f7af9626.tar.gz",
         ],
     )

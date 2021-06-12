@@ -110,7 +110,7 @@ class
     x.specs.emplace_back(Rules_Swift());
     x.specs.emplace_back(Rules_Rust());
     x.specs.emplace_back(Rules_Fuzzing());
-    //x.specs.emplace_back(Rules_Python());
+    x.specs.emplace_back(Rules_Python());
     //x.specs.emplace_back(Rules_Pkg());
 
 
