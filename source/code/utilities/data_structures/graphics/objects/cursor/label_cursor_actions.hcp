@@ -85,6 +85,7 @@ class
     auto chars_to_type = pc_input.keyboard.buffered_chars;
     if (!chars_to_type.empty()){
         
+        //first delete any text that may be highlighted
         if (Highlighted_Chars_Exist(selection)){
             Backspace_On_Selection(font_chars,pos,label,selection);
         }
