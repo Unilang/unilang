@@ -14,6 +14,9 @@ class
 ❪"code/utilities/types/vectors/observers/lib"❫
 ⚞⚟
 
+//NOTE: system probably still needs python3 installed
+//update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+
 
 ◀public: static▶ void ☀Create(Dependency_Specifications all_specs)❰
 
