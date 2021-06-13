@@ -1268,3 +1268,8 @@ This is boiler plate we could generate with something like this:
 ```
 and maybe and attribute saying that the function creates one locally. and returns an instance of it...
 It might be tricky, if the object does not have a default constructor
+
+
+
+
+-Is idempotence and pure the same thing, how do we annotate this?
