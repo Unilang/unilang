@@ -751,6 +751,12 @@ cc_library(
     Add_Unilang_Github_Mirror(spec,"protobuf","66e3562aafce093d30473555248f22b3fdc88aad","ea97ff1804cb8508b78fc672c27f57e60087979ce7dbb3f66a1586a3dbf57cf2");
     spec.build_content_in_dependency=true;
     //spec.repo_mapping.push_back({"zlib","zlib_internal"});
+    spec.workspace.priority = 8;
+    spec.workspace.raw_starlark = 
+R"RAW_STRING(
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+protobuf_deps()
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Google_Apis()❰
@@ -2168,6 +2174,12 @@ cc_library(
     Add_Unilang_Github_Mirror(spec,"grpc","ac6f3a78188ee157a38973e7847a02aba80f4d1f","b3a6378b08680d9c39bf91968b2bbb6a419d203a9d4ca7debd82dbe866014ec9");
     //spec.repo_mapping.push_back({"zlib","zlib_internal"});
     spec.build_content_in_dependency=true;
+    spec.workspace.priority = 9;
+    spec.workspace.raw_starlark = 
+R"RAW_STRING(
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+grpc_deps()
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Fmt()❰
