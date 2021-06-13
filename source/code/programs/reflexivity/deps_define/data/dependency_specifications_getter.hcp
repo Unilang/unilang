@@ -2835,6 +2835,25 @@ cc_library(
     spec.lib_name = "rules_fuzzing";
     Add_Unilang_Github_Mirror(spec,"rules_fuzzing","ce7b85c762cbb8ff2697b053ae7b7c9e43dd4a99","d6cd2fda74ddf25a066585b7af378cfcbdb7ddcca783480432cb0debfbce6907");
     spec.build_content_in_dependency=true;
+    
+    spec.workspace.priority = 1;
+    spec.workspace.raw_starlark = 
+R"RAW_STRING(
+load("@rules_fuzzing//fuzzing:repositories.bzl", "rules_fuzzing_dependencies")
+
+# Pass jazzer = True to rules_fuzzing_dependencies for Java fuzzing support.
+rules_fuzzing_dependencies(jazzer = True)
+
+load("@rules_fuzzing//fuzzing:init.bzl", "rules_fuzzing_init")
+
+rules_fuzzing_init()
+
+#For Java fuzzing support, uncomment the following lines.
+load("@jazzer//:repositories.bzl", "jazzer_dependencies")
+jazzer_dependencies()
+load("@jazzer//:init.bzl", "jazzer_init")
+jazzer_init()
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Rules_Python()❰

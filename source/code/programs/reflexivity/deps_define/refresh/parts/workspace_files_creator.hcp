@@ -30,8 +30,14 @@ class
 ❱
 
 ◀private: static▶ std::string ☀Create_Workspace_Content(Dependency_Specifications const& all_specs)❰
-    std::string result;
+    std::string x;
+    
+    //all the dependencies themselves
+    //hopefully this can always go first since they are just http_archive-like rules
+    Append_With_Newline(x,"load(\"//bazel/deps:third_party_libraries.bzl\", \"third_party_libraries\")");
+    Append_With_Newline(x,"third_party_libraries()");
     
     
-    return result;
+    
+    return x;
 ❱
