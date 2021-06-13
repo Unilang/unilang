@@ -25,12 +25,13 @@ class
     std::string str;
     Append_With_Newline(str,Generated_Comment_Getter::Get());
     
-    //backwards compatibility junk
+    //backwards compatibility junk (Try to remove these)
     Append_With_Newline(str,"build --incompatible_disable_crosstool_file=false");
     Append_With_Newline(str,"build --incompatible_use_python_toolchains=false");
     Append_With_Newline(str,"build --incompatible_use_specific_tool_files=false");
     
-    Append_With_Newline(str,"build --keep_going");
+    //Sometimes we want to keep going (depends on state of the repo)
+    //Append_With_Newline(str,"build --keep_going");
     
     //trying to fix java jni issue
     //Append_With_Newline(str,"build --javabase=@embedded_jdk//:jdk");
@@ -54,16 +55,24 @@ class
     //Append_With_Newline(str,"build --experimental_sandbox_base=/run/shm");
     
     //I don't want the symlinks showing up in the repository.
-    //Its bad for IDEs, and prevents code from accidently relying on their existence
+    //Its bad for IDEs, and prevents code from accidentally relying on their existence
     //Append_With_Newline(str,"build --experimental_convenience_symlinks=ignore");
     
     
-// build --bes_results_url=http://localhost:8080/invocation/
-// build --bes_backend=grpc://localhost:1985
-// build --remote_cache=grpc://localhost:1985
+    //BES Stuff
+    // build --bes_results_url=http://localhost:8080/invocation/
+    // build --bes_backend=grpc://localhost:1985
+    // build --remote_cache=grpc://localhost:1985
     
     //allow unilang to write to places outside of the main repo
     Append_With_Newline(str,"build:unilang --sandbox_writable_path=" + Full_Path_To_Desktop() + "repos");
+    
+    
+    //make fuzzing possible
+    Append_With_Newline(str,"# Define the --config=asan-libfuzzer configuration.");
+    Append_With_Newline(str,"build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine=@rules_fuzzing//fuzzing/engines:libfuzzer");
+    Append_With_Newline(str,"build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine_instrumentation=libfuzzer");
+    Append_With_Newline(str,"build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine_sanitizer=asan");
     
     return str;
 ❱
