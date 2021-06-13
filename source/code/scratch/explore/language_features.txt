@@ -1315,3 +1315,165 @@ That way someone has context on how to meet the needs of an interface.
 -programatically do all of wikipedia's software development philosophies
 https://en.wikipedia.org/wiki/List_of_software_development_philosophies
 
+
+
+-automatic moving when needed
+you should never need to "move" in Unilang.
+Ideally this is something that could be deduced and applied automatically.
+That might not actually be the case, but that's the dream.
+
+-add machine learning algorithm to try and sumarize what code is doing
+We can evaluate if our code is easy to understand based on the explanation that a machine learning algorithm comes up with
+
+
+-unit test depenency graph
+some unit tests depend on other tests.
+we can't test clear() without first knowing that add() works
+Make sure we can label unit tests as assuming that other tests work before they run.
+This will ensure that unit tests will only crash on problems specific to what they are testing
+
+
+
+-specify functions as "possibly" doing something. 
+a very common pattern is the following:
+```
+if (flag){
+   do_thing();
+}
+```
+this gets re-factored into:
+
+```
+possibly_do_thing(flag);
+```
+we should have a syntax of being able to customize this on a function definition.
+That we can generate a comment saying "This may be a NOP.".
+Ideally we'd want the function to support a token that lets us specify the check on whether the function is really called... this would mean we don't event have to write the possibly_x function.
+It could be generated, based on our condition token.
+
+We can add other fun customization like a function prefix:
+
+possibly_do_x
+maybe_do_x
+conditionally_do_x
+etc.
+
+
+
+
+
+
+-every function should implicitly take the world state object. 
+Good programming requires grouping configuration and settings together into one giant type.
+Then this type needs passed through all the function call stack. We should implicitly include it as part of every function if we use anything in the function or in a sub call of a function.
+We should also automatically decompose the object as far as needed.
+
+So ideally, we would change one line of code in a nested function
+to be foo.bar.x from foo.bar.
+And that will trigger a cascade of changes up the call stack to pass in a different type.
+
+Same with using a global config in a nested function that never used it before.
+It would trigger the implicit world state to be the first parameter of all those parent functions.
+^ Not thrilled with the idea.  Yes, dependency injection is a thing that frameworks do...
+there's some kind of more underlying issue here.  It would be easier for the writer, but perhaps harder for the reader
+but maybe not, that's why we generate it this way for the reader...
+
+
+
+
+
+-abbreviation dictionary (allow automatic function abbreviating)
+Some static analyzers are dumb, and complain if your function name is more than 21 characters.
+I don't think to affect the way I actually write code. Instead Unilang will automatically abbreviate if it was customized to do so. In order to abbreviate effectively, we will want to include an "abbreviation dictionary".
+
+Things like:
+program -> prog
+variable -> var
+derive -> get (hmm.. might need some discussion about verb usage)
+arguments -> args
+
+also, if the the name of the function has the type name or the argument name in it...
+we can probably throw that out.. or warn about it. Abbreviating it by throwing it out, MIGHT cause overload issues... but I think that may be somewhat rare and the benefits out weigh that negative.
+
+
+
+
+
+
+
+
+
+
+
+-static analyzer should check the following "good code" principals
+https://cdiggins.github.io/blog/programming-tips.html
+Follow the Single Responsibility Principle
+Minimize Shared State
+Localize Side Effects
+Prefer Immutable Objects
+Interfaces over Classes(Functions that accept an interface (or a template argument or concept in the case of C++) are more reusable than functions that operate on a class.)
+*maybe.. but also not having a type is tricky in understanding as well
+Apply Good Principles to Modules
+Minmize dependencies
+Each project should have a single well defined responsibility
+Don't repeat yourself
+Avoid Inheritance
+Test as you Design and Develop
+Prefer Standard Libraries to Hand-Rolled Ones
+Avoid Writing New Code
+
+
+
+-test that unit tests give the right errors when they fail
+There should be a way to dump unit test failure messages so that we can observe if its clear why the problem occurred
+
+
+-cout/cin are prohibited. You should call a unilang print
+unilang needs its own abastraction for printing.
+That way it can be generated into a cout or a cin or a log call.
+You might think that you can just write this abstraction in one place, and call that function.
+That's true, and we should probably do that as well.
+Nonetheless, we get more control if we enforce this, and it brings us closer to a true universal language.
+
+
+-force an implementation based on whiley ensure statements
+generate counter-examples,
+and force the correct implementation by providing ensure statements
+see the language whiley for examples
+
+
+-cleaner syntax for range based for loops
+has special syntax for traversing forward or backwards
+backwards would generate something like:
+
+for (auto it : boost::adaptors::reverse(container))
+also we need better verbs to generate:
+
+for (auto it:
+for (const auto it:
+for (const auto & it:
+for (auto & it:
+
+
+
+-all boolean expressions should be a function call
+Strict RULE! Might be helpful for clean code.
+The only boolean expressions that are allowed to exist are in return statements. wow
+
+
+
+
+
+-static analysis on container interface matching through typedefs
+containers are always collections of things.
+So we will always make a typedef from thing
+to `using things = vector<thing>`.
+
+We can then brute force compiler things as different things:
+
+```
+list<thing>
+doubly_list<thing>
+```
+If we are using a container agnostic interface, these changes should compile.
+At the unilang level, we may inject slightly different code, or rely on other included header code that allows for similar interface calling
