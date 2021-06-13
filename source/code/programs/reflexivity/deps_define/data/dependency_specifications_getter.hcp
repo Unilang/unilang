@@ -543,8 +543,8 @@ class
     Dependency_Specification spec;
     spec.lib_name = "gmp";
     Add_Unilang_Github_Mirror(spec,"GMP","cc09e59afe9a23de9e7d0ef10598a395d7e8c850","341237cd00ec7b72f609d8246569ceda322992efcee853ac21c43ce8bf310de9");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Cloc()❰
@@ -563,11 +563,11 @@ package(default_visibility = ["//visibility:public"])
     Dependency_Specification spec;
     spec.lib_name = "bazel";
     Add_Unilang_Github_Mirror(spec,"bazel","2895cd5ce6797a22279dc7482926371ae9ea78b5","e3138b869f19c480c1bb28e553cfd7d67ecaf8d86df66ba70dc7e156b40c0aab");
-    spec.patch_cmds.emplace_back("find . -name 'BUILD' -type f -delete");
-    spec.patch_cmds.emplace_back("sed -i 's/repeated string direct_artifact_ids/repeated bytes direct_artifact_ids/' src/main/protobuf/analysis.proto");
-    spec.patch_cmds.emplace_back("sed -i 's/repeated string output_ids/repeated bytes output_ids/' src/main/protobuf/analysis.proto");
-    spec.patch_cmds.emplace_back("sed -i 's/repeated string transitive_dep_set_ids/repeated bytes transitive_dep_set_ids/' src/main/protobuf/analysis.proto");
-    spec.patch_cmds.emplace_back("sed -i 's/repeated string input_dep_set_ids/repeated bytes input_dep_set_ids/' src/main/protobuf/analysis.proto");
+    spec.patch.patch_cmds.emplace_back("find . -name 'BUILD' -type f -delete");
+    spec.patch.patch_cmds.emplace_back("sed -i 's/repeated string direct_artifact_ids/repeated bytes direct_artifact_ids/' src/main/protobuf/analysis.proto");
+    spec.patch.patch_cmds.emplace_back("sed -i 's/repeated string output_ids/repeated bytes output_ids/' src/main/protobuf/analysis.proto");
+    spec.patch.patch_cmds.emplace_back("sed -i 's/repeated string transitive_dep_set_ids/repeated bytes transitive_dep_set_ids/' src/main/protobuf/analysis.proto");
+    spec.patch.patch_cmds.emplace_back("sed -i 's/repeated string input_dep_set_ids/repeated bytes input_dep_set_ids/' src/main/protobuf/analysis.proto");
     
     spec.build_defs.raw_starlark = 
 R"RAW_STRING(
@@ -681,8 +681,8 @@ cc_proto_library(
     Dependency_Specification spec;
     spec.lib_name = "nuspell";
     Add_Unilang_Github_Mirror(spec,"nuspell","3cf62b59e2eba32b09ee3cdbd0ca4d92c6f214f0","0a477f8a64427d2828745b8b0c136b48f4d93ecff2f5ac10a6f7d62427e57684");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     spec.build_defs.raw_starlark = 
 R"RAW_STRING(
 package(default_visibility = ["//visibility:public"])
@@ -739,8 +739,8 @@ cc_library(
 ◀private: static▶ Dependency_Specification ☀Remote_APIs()❰
     Dependency_Specification spec;
     spec.lib_name = "remote_apis";
-    spec.patch_cmds = Common_Patch_Cmds_Getter::Remove_Bazel_Stuff();
-    //spec.patch_cmds = Common_Patch_Cmds_Getter::Remove_Bazel_Workspace();
+    spec.patch.patch_cmds = Common_Patch_Cmds_Getter::Remove_Bazel_Stuff();
+    //spec.patch.patch_cmds = Common_Patch_Cmds_Getter::Remove_Bazel_Workspace();
     Add_Unilang_Github_Mirror(spec,"remote-apis","f54876595da9f2c2d66c98c318d00b60fd64900b","b3bd7c29e8a9dccb40b13287edc7c451a9d4f36be605bbef6b58a240e99f373d");
     //spec.build_content_in_dependency=true;
     return spec;
@@ -756,8 +756,8 @@ cc_library(
 ◀private: static▶ Dependency_Specification ☀Google_Apis()❰
     Dependency_Specification spec;
     spec.lib_name = "googleapis";
-    spec.patch_cmds = Common_Patch_Cmds_Getter::Remove_Bazel_Stuff();
-    //spec.patch_cmds = Common_Patch_Cmds_Getter::Remove_Bazel_Workspace();
+    spec.patch.patch_cmds = Common_Patch_Cmds_Getter::Remove_Bazel_Stuff();
+    //spec.patch.patch_cmds = Common_Patch_Cmds_Getter::Remove_Bazel_Workspace();
     Add_Unilang_Github_Mirror(spec,"googleapis","3dbeac0d54125b123c8dfd39c774b37473c36944","1ca9e4c0de992c44c3c95cf72c3b93ec4c14b8916e42703ecce0eaf41a908557");
     //spec.build_content_in_dependency=true;
     return spec;
@@ -1069,7 +1069,7 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "expat";
     Add_Unilang_Github_Mirror(spec,"libexpat","5801a1b70adeb59964be51e61ac753be8ebe75e8","35133afefe3ce180cf368efb49b04642249e3b2dc50846f525ee5609939bb45f");
-    spec.patch_files.emplace_back("p1");
+    spec.patch.patch_files.emplace_back("p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Flatbuffers()❰
@@ -1347,7 +1347,7 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "statsd_cpp";
     Add_Unilang_Github_Mirror(spec,"statsd-cpp","abed359419ebd9ff8d8374c46e6d209c2619d8e0","e758e633326ff96144226c8b1cee13f96ca23339caa338c652e53061bcf4457a");
-    spec.patch_cmds.emplace_back("mv include/version.hpp.in include/version.hpp");
+    spec.patch.patch_cmds.emplace_back("mv include/version.hpp.in include/version.hpp");
     
     spec.build_defs.raw_starlark = 
 R"RAW_STRING(
@@ -1419,31 +1419,31 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "xcb";
     Add_Unilang_Github_Mirror(spec,"xcb-libxcb","ee9dfc9a7658e7fe75d27483bb5ed1ba4d1e2c86","0e6dceb9133b42a405d06b7336ba0f06884e3bad8af080d817243c78c4a6e409");
-    spec.patch_files.emplace_back("config");
-    spec.patch_files.emplace_back("gen");
-    spec.patch_args.emplace_back("-p1");
-    spec.patch_cmds.emplace_back("mv src/ xcb/");
+    spec.patch.patch_files.emplace_back("config");
+    spec.patch.patch_files.emplace_back("gen");
+    spec.patch.patch_args.emplace_back("-p1");
+    spec.patch.patch_cmds.emplace_back("mv src/ xcb/");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀xcb_util()❰
     Dependency_Specification spec;
     spec.lib_name = "xcb_util";
     Add_Unilang_Github_Mirror(spec,"xcb-util","e3d56200f322c6e25a80381d27fe37205826a4c1","fad7112b1f325fd1da26083e0765e1c9746b9910d9f39291aeffdb14ed278078");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
-    spec.patch_cmds.emplace_back("mkdir xcb");
-    spec.patch_cmds.emplace_back("mv aux/xcb_aux.h xcb");
-    spec.patch_cmds.emplace_back("mv aux/xcb_aux.c xcb");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
+    spec.patch.patch_cmds.emplace_back("mkdir xcb");
+    spec.patch.patch_cmds.emplace_back("mv aux/xcb_aux.h xcb");
+    spec.patch.patch_cmds.emplace_back("mv aux/xcb_aux.c xcb");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀xcb_util_wm()❰
     Dependency_Specification spec;
     spec.lib_name = "xcb_util_wm";
     Add_Unilang_Github_Mirror(spec,"xcb__util-wm","24eb17df2e1245885e72c9d4bbb0a0f69f0700f2","b30675911336660c4af2ac50d89e29ad10b859bc9934c7eb74a6dc401d74dce5");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_cmds.emplace_back("mv icccm/xcb_icccm.h xcb");
-    spec.patch_cmds.emplace_back("mv icccm/icccm.c xcb");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_cmds.emplace_back("mv icccm/xcb_icccm.h xcb");
+    spec.patch.patch_cmds.emplace_back("mv icccm/icccm.c xcb");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 
@@ -1451,9 +1451,9 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "x11";
     Add_Unilang_Github_Mirror(spec,"xorg-libX11","b8766a438461e20b5c6f7a6111b703d4cb71501f","b422eaeaf9c62d8a8fd344d29e21a31dc7f6b50d0005f0d25daf6006230c41ad");
-    spec.patch_files.emplace_back("ks_tables");
-    spec.patch_files.emplace_back("config");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("ks_tables");
+    spec.patch.patch_files.emplace_back("config");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Xtrans()❰
@@ -1464,30 +1464,30 @@ cc_library(
     //for some reason, this library doesn't include the headers of symbols it needs?
     //why? does the build system do something weird where they get pasted in somehow?
     //lets just add these headers to the sources.
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtrans.h>\\\\n/' Xtrans.c");
-    spec.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtransint.h>\\\\n/' Xtrans.c");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtrans.h>\\\\n/' Xtrans.c");
+    spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtransint.h>\\\\n/' Xtrans.c");
     
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtrans.h>\\\\n/' transport.c");
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtransint.h>\\\\n/' transport.c");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtrans.h>\\\\n/' transport.c");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtransint.h>\\\\n/' transport.c");
     
-    spec.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtrans.h>\\\\n/' Xtranslcl.c");
-    spec.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtransint.h>\\\\n/' Xtranslcl.c");
+    spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtrans.h>\\\\n/' Xtranslcl.c");
+    spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtransint.h>\\\\n/' Xtranslcl.c");
     
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtrans.h>\\\\n/' Xtranssock.c");
-    spec.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtransint.h>\\\\n/' Xtranssock.c");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtrans.h>\\\\n/' Xtranssock.c");
+    spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtransint.h>\\\\n/' Xtranssock.c");
     
-    spec.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtransint.h>\\\\n/' Xtransutil.c");
+    spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtransint.h>\\\\n/' Xtransutil.c");
     
-    spec.patch_cmds.emplace_back("sed -i -z 's/static int\\\\nis_numeric/int\\\\nis_numeric/g' Xtransutil.c");
-    spec.patch_cmds.emplace_back("sed -i -z 's/static int\\\\ntrans_mkdir/int\\\\ntrans_mkdir/g' Xtransutil.c");
+    spec.patch.patch_cmds.emplace_back("sed -i -z 's/static int\\\\nis_numeric/int\\\\nis_numeric/g' Xtransutil.c");
+    spec.patch.patch_cmds.emplace_back("sed -i -z 's/static int\\\\ntrans_mkdir/int\\\\ntrans_mkdir/g' Xtransutil.c");
     
-    spec.patch_cmds.emplace_back("sed -i '/stropts/d' Xtranslcl.c");
+    spec.patch.patch_cmds.emplace_back("sed -i '/stropts/d' Xtranslcl.c");
     
     //other libraries expect everything to be in the following folder after installation.
     //it seems easier to just move it there and then build it.
-    spec.patch_cmds.emplace_back("mkdir -p X11/Xtrans");
-    spec.patch_cmds.emplace_back("mv *.h X11/Xtrans/");
-    spec.patch_cmds.emplace_back("mv *.c X11/Xtrans/");
+    spec.patch.patch_cmds.emplace_back("mkdir -p X11/Xtrans");
+    spec.patch.patch_cmds.emplace_back("mv *.h X11/Xtrans/");
+    spec.patch.patch_cmds.emplace_back("mv *.c X11/Xtrans/");
     
     return spec;
 ❱
@@ -1495,8 +1495,8 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "Xau";
     Add_Unilang_Github_Mirror(spec,"xorg-libXau","42e152c6f2d1bd839e77c5e97f3a509d890c3237","f3f7dabba13edcc0bfa20f0feca37b6fe43a0754d49987bf2bdd3829e2756881");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 
@@ -1504,9 +1504,9 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "Xaw";
     Add_Unilang_Github_Mirror(spec,"xorg-libXaw","197e9d055f3cd351ae73551955ff463294b965bf","c30f3e7bbe6bf949bca40e2c0421f3bdae7d43753ae9f92d303ac44cf5de5e5a");
-    spec.patch_cmds.emplace_back("sed -i '1s/^/#include <wchar.h>\\\\n/' src/TextAction.c");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <wchar.h>\\\\n/' src/TextAction.c");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 
@@ -1514,76 +1514,76 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "Xmu";
     Add_Unilang_Github_Mirror(spec,"libXmu","4459e6940fe3fdf26a8d5d4c71989498bc400a62","f7967206f463472f6c86fa0816aa8f85192cfd179cfed8b0fa728799d3816c1d");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Xorg_libSM()❰
     Dependency_Specification spec;
     spec.lib_name = "xorg_libSM";
     Add_Unilang_Github_Mirror(spec,"xorg-libSM","b347e9f8ef3ae027c049741ab5c0c8dac45c9eb2","d75853ecf1c8e46a3a3cb4441e70e5264f17cd1ced6646db81e3276d65720d74");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
-    spec.patch_cmds.emplace_back("mv include/X11 X11");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
+    spec.patch.patch_cmds.emplace_back("mv include/X11 X11");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Xorg_libICE()❰
     Dependency_Specification spec;
     spec.lib_name = "xorg_libICE";
     Add_Unilang_Github_Mirror(spec,"xorg-libICE","ff5e59f32255913bb1cdf51441b98c9107ae165b","236a51f17ce2bba509be970e8b8ff4aef4ab3e5edcc3234cd817671d01d8e288");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtransint.h>\\\\n/' Xtrans.c");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <Xtransint.h>\\\\n/' Xtrans.c");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀libXpm()❰
     Dependency_Specification spec;
     spec.lib_name = "libXpm";
     Add_Unilang_Github_Mirror(spec,"libXpm","42ca8d956276bc00bec09e410d76daf053ae35f9","56c3d912c1125a42d85ef3829f5d7f45fc9a147786bd4f93783780e868d4a255");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀xorg_libXt()❰
     Dependency_Specification spec;
     spec.lib_name = "xorg_libXt";
     Add_Unilang_Github_Mirror(spec,"xorg-libXt","51cbf52b7668ad46a428dabe8e79e6819e825b20","d154ab7b84da70d5df5cd7be6b2a6cd16f13524937c20c4ecfc28fcdcb253bfe");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
-    spec.patch_cmds.emplace_back("mv include/X11 X11");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
+    spec.patch.patch_cmds.emplace_back("mv include/X11 X11");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀xorg_libXext()❰
     Dependency_Specification spec;
     spec.lib_name = "xorg_libXext";
     Add_Unilang_Github_Mirror(spec,"xorg-libXext","a07b4bb8290d0c1bba7bcecd5bb6896fbe1b169c","483a2c0ddba32f30deaf8c114264f17678781b4a0935742e7cfaa76456e4e4c1");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
-    spec.patch_cmds.emplace_back("mv include/X11 X11");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
+    spec.patch.patch_cmds.emplace_back("mv include/X11 X11");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀xorg_libXi()❰
     Dependency_Specification spec;
     spec.lib_name = "xorg_libXi";
     Add_Unilang_Github_Mirror(spec,"xorg-libXi","e05da79a98775edb91ffe3de3b413f156bc4d6e7","110301e384be0aa08eede5568681e5aebee96949922364262d464ed57eee5f83");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀xorg_libXfixes()❰
     Dependency_Specification spec;
     spec.lib_name = "xorg_libXfixes";
     Add_Unilang_Github_Mirror(spec,"xorg-libXfixes","174a94975af710247719310cfc53bd13e1f3b44d","ed38275d3b662b7b9be6da5db75b891f596a52bf21dcb1547324d76c37347b99");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀xorg_libXdamage()❰
     Dependency_Specification spec;
     spec.lib_name = "xorg_libXdamage";
     Add_Unilang_Github_Mirror(spec,"xorg-libXdamage","8c8f9c1e356e9481fdf5a7bd1927dbfdac196310","5639c66abeb72dd34870ceac33666a485a1180bb752f6422e22dc7a090875c66");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 
@@ -1591,8 +1591,8 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "xorg_libXcursor";
     Add_Unilang_Github_Mirror(spec,"xorg-libXcursor","75b10c972d15c036a692ef4590a81a6c54d384f6","2d38e476bd958d420b05d702bf07f81e8167bc920e0ff160c1f06b411b4941fb");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 
@@ -1600,8 +1600,8 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "xorg_libXinerama";
     Add_Unilang_Github_Mirror(spec,"xorg-libXinerama","56777107b0c517ba58304d6a247bf65f7a27eb96","981e6d6ec2d5282ba8cc7234990ff1ee664607e835858c127bdb14ab3d0afc1d");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 
@@ -1609,8 +1609,8 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "xorg_libXtst";
     Add_Unilang_Github_Mirror(spec,"xorg-libXtst","769598f20386845f5839fbc68dfed1f4245197be","0a6e749520f1d4c2a3b44f549f240b592ba9e625f1577ba26fa28652f1b41bf9");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 
@@ -1619,16 +1619,16 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "xorg_libXrandr";
     Add_Unilang_Github_Mirror(spec,"xorg-libXrandr","55dcda4518eda8ae03ef25ea29d3c994ad71eb0a","f03c4a89f1cfcdad9973e9f0371d74d1a4984484d193a376f63caa3953a4570c");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀xorg_libXrender()❰
     Dependency_Specification spec;
     spec.lib_name = "xorg_libXrender";
     Add_Unilang_Github_Mirror(spec,"xorg-libXrender","bce0618839fc33f44edd8b5498b8e33d167806ff","f7ec77bdde44d3caa991100760da7ae0af6fa4555b5796bb000f57d8c9c206cc");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀xorg_glproto()❰
@@ -1697,8 +1697,8 @@ cc_binary(
     Dependency_Specification spec;
     spec.lib_name = "xorg_libxshmfence";
     Add_Unilang_Github_Mirror(spec,"xorg-libxshmfence","db7966bee2ec46b835d0bb374f35ae631a0edbd1","bd300affe41db9a9c889a6aa88dcd96147ce7fbcc1d2984248fdcbcff0b1b598");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     
     return spec;
 ❱
@@ -1766,12 +1766,12 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "xscreensaver";
     Add_Unilang_Github_Mirror(spec,"xscreensaver","9c9ac21de7b85b6c4c767f3005b510d78b0a3e97","014c757da20b2c369c51bcaa2860e39e1844f1e3a3d784fc29685f390b762f77");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_files.emplace_back("p2");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_files.emplace_back("p2");
+    spec.patch.patch_args.emplace_back("-p1");
     
     
-    spec.patch_cmds.emplace_back("sed -i '1s/^/void clear_gl_error(void);\\\\n /' hacks/glx/xlock-gl-utils.c");
+    spec.patch.patch_cmds.emplace_back("sed -i '1s/^/void clear_gl_error(void);\\\\n /' hacks/glx/xlock-gl-utils.c");
     
     
     return spec;
@@ -1782,8 +1782,8 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "libXxf86vm";
     Add_Unilang_Github_Mirror(spec,"libXxf86vm","92d18649e92566ccc3abeba244adabda249cce1b","f067f5e0383d845b1c20b71cb029f92161cf11fbf410cccb502898d68d6acdb2");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 
@@ -1791,47 +1791,47 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "xorg_xorgproto";
     Add_Unilang_Github_Mirror(spec,"xorg-xorgproto","f61f9a3ee1aa77ebcc67730cda9bfde88e4e9c5f","d15b1d6980ddd0a47f18473b2d1460a3cb4d20c979a7828cad02515fe3370426");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀mesa()❰
     Dependency_Specification spec;
     spec.lib_name = "mesa";
     Add_Unilang_Github_Mirror(spec,"mesa","d1f9d1e26a2aab71d6ba6edcf195b972f12cff80","7998af53dbac10902a23bf9aadd42c458dd5df7d9a7cbc92b9bc227779f33f54");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀mesa_glu()❰
     Dependency_Specification spec;
     spec.lib_name = "mesa_glu";
     Add_Unilang_Github_Mirror(spec,"mesa-glu","dd4e18eb7557a31a3c8318d6612801329877c745","11e1eff80197b0d192040c520522dfa6919170c202b7c00b647ee70a3ee10887");
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <stdlib.h>\\\\n/' src/libnurbs/internals/nurbsinterfac.cc");
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <stdio.h>\\\\n/' src/libnurbs/internals/nurbsinterfac.cc");
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <assert.h>\\\\n/' src/libnurbs/internals/nurbsinterfac.cc");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <stdlib.h>\\\\n/' src/libnurbs/internals/nurbsinterfac.cc");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <stdio.h>\\\\n/' src/libnurbs/internals/nurbsinterfac.cc");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <assert.h>\\\\n/' src/libnurbs/internals/nurbsinterfac.cc");
     
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <stdlib.h>\\\\n/' src/libnurbs/internals/varray.cc");
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <stdio.h>\\\\n/' src/libnurbs/internals/varray.cc");
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <assert.h>\\\\n/' src/libnurbs/internals/varray.cc");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <stdlib.h>\\\\n/' src/libnurbs/internals/varray.cc");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <stdio.h>\\\\n/' src/libnurbs/internals/varray.cc");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <assert.h>\\\\n/' src/libnurbs/internals/varray.cc");
     
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <stdlib.h>\\\\n/' src/libnurbs/internals/trimline.h");
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <stdio.h>\\\\n/' src/libnurbs/internals/trimline.h");
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <assert.h>\\\\n/' src/libnurbs/internals/trimline.h");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <stdlib.h>\\\\n/' src/libnurbs/internals/trimline.h");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <stdio.h>\\\\n/' src/libnurbs/internals/trimline.h");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <assert.h>\\\\n/' src/libnurbs/internals/trimline.h");
     
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <stdlib.h>\\\\n/' src/libnurbs/internals/arc.h");
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <stdio.h>\\\\n/' src/libnurbs/internals/arc.h");
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <assert.h>\\\\n/' src/libnurbs/internals/arc.h");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <stdlib.h>\\\\n/' src/libnurbs/internals/arc.h");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <stdio.h>\\\\n/' src/libnurbs/internals/arc.h");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <assert.h>\\\\n/' src/libnurbs/internals/arc.h");
     
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <stdlib.h>\\\\n/' src/libnurbs/nurbtess/rectBlock.h");
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <stdio.h>\\\\n/' src/libnurbs/nurbtess/rectBlock.h");
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <assert.h>\\\\n/' src/libnurbs/nurbtess/rectBlock.h");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <stdlib.h>\\\\n/' src/libnurbs/nurbtess/rectBlock.h");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <stdio.h>\\\\n/' src/libnurbs/nurbtess/rectBlock.h");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <assert.h>\\\\n/' src/libnurbs/nurbtess/rectBlock.h");
     
-    //spec.patch_cmds.emplace_back("sed -i '1s/^/#include <assert.h>\\\\n/' src/libnurbs/internals/bufpool.h");
+    //spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <assert.h>\\\\n/' src/libnurbs/internals/bufpool.h");
     
-    spec.patch_cmds.emplace_back("sed -i 's/register/ /g' src/libnurbs/internals/varray.cc");
+    spec.patch.patch_cmds.emplace_back("sed -i 's/register/ /g' src/libnurbs/internals/varray.cc");
     
-     spec.patch_cmds.emplace_back("sed -i '1s/^/#include <limits.h>\\\\n/' src/libtess/priorityq-heap.c");
+     spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <limits.h>\\\\n/' src/libtess/priorityq-heap.c");
     
     return spec;
 ❱
@@ -1854,16 +1854,16 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "FreeGLUT";
     Add_Unilang_Github_Mirror(spec,"FreeGLUT","349a23dcc1264a76deb79962d1c90462ad0c6f50","90828907ea4e30a79ce7f36c5b3e4d60039912d92ec17788fd709c955f4d0a04");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀gl3w()❰
     Dependency_Specification spec;
     spec.lib_name = "gl3w";
     Add_Unilang_Github_Mirror(spec,"gl3w","7729692af8a2322cddb636b90393a42c130b1c85","399cab5d702a80e281c8e37fe1b3abc9d9a3517502c72053e16e75afaaa0dd35");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 
@@ -1872,17 +1872,17 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "sdl2";
     Add_Unilang_Github_Mirror(spec,"SDL-mirror","36ea2544f08508f42d5193e175d3a269c3b95bdf","d532a339c0d33c4a090983a32017798e9108873dce445e4b617a0f726f90d081");
-    //spec.patch_cmds.emplace_back("find . -type f -name '*.c' -exec sed -i 's/#include \\\"SDL.h\\\"/#include \\\"SDL.h\\\"\\n#include <stdio.h>/g' {} \\;");
-    //spec.patch_cmds.emplace_back("find . -type f -name '*.c' -exec sed -i 's/#include <stdio.h>/#include <stdio.h>\\n#include <stdlib.h>/g' {} \\;");
-    spec.patch_cmds.emplace_back("sed -i '1s/^/#include <stdlib.h>\\\\n/' src/dynapi/SDL_dynapi.c");
-    spec.patch_cmds.emplace_back("sed -i '1s/^/#include <stdio.h>\\\\n/' src/dynapi/SDL_dynapi.c");
-    spec.patch_cmds.emplace_back("sed -i 's#fn = dlsym#fn = NULL;\\\\/\\\\/#g' src/thread/pthread/SDL_systhread.c");
-    spec.patch_cmds.emplace_back("sed -i 's#ppthread_setname_np = #ppthread_setname_np = NULL;\\\\/\\\\/#g' src/thread/pthread/SDL_systhread.c");
+    //spec.patch.patch_cmds.emplace_back("find . -type f -name '*.c' -exec sed -i 's/#include \\\"SDL.h\\\"/#include \\\"SDL.h\\\"\\n#include <stdio.h>/g' {} \\;");
+    //spec.patch.patch_cmds.emplace_back("find . -type f -name '*.c' -exec sed -i 's/#include <stdio.h>/#include <stdio.h>\\n#include <stdlib.h>/g' {} \\;");
+    spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <stdlib.h>\\\\n/' src/dynapi/SDL_dynapi.c");
+    spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <stdio.h>\\\\n/' src/dynapi/SDL_dynapi.c");
+    spec.patch.patch_cmds.emplace_back("sed -i 's#fn = dlsym#fn = NULL;\\\\/\\\\/#g' src/thread/pthread/SDL_systhread.c");
+    spec.patch.patch_cmds.emplace_back("sed -i 's#ppthread_setname_np = #ppthread_setname_np = NULL;\\\\/\\\\/#g' src/thread/pthread/SDL_systhread.c");
     
     
-    spec.patch_files.emplace_back("config");
-    spec.patch_files.emplace_back("gen_files");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("config");
+    spec.patch.patch_files.emplace_back("gen_files");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀sdl2_bazel_registry()❰
@@ -1914,12 +1914,12 @@ cc_library(
     //pthread local not working...
     //replace with regular void*
     //I have no idea if this will cause different issues, but it got past a segfault
-    spec.patch_cmds.emplace_back("sed -i 's/.*m_key(0).*/ptr(nullptr)/' src/SFML/System/Unix/ThreadLocalImpl.cpp");
-    spec.patch_cmds.emplace_back("sed -i 's/.*pthread_key_create.*/ptr = nullptr;/' src/SFML/System/Unix/ThreadLocalImpl.cpp");
-    spec.patch_cmds.emplace_back("sed -i 's/.*pthread_key_delete.*//' src/SFML/System/Unix/ThreadLocalImpl.cpp");
-    spec.patch_cmds.emplace_back("sed -i 's/.*pthread_setspecific.*/ptr = value;/' src/SFML/System/Unix/ThreadLocalImpl.cpp");
-    spec.patch_cmds.emplace_back("sed -i 's/.*pthread_getspecific.*/return ptr;/' src/SFML/System/Unix/ThreadLocalImpl.cpp");
-    spec.patch_cmds.emplace_back("sed -i 's/.*pthread_key_t m_key.*/void* ptr=nullptr;/' src/SFML/System/Unix/ThreadLocalImpl.hpp");
+    spec.patch.patch_cmds.emplace_back("sed -i 's/.*m_key(0).*/ptr(nullptr)/' src/SFML/System/Unix/ThreadLocalImpl.cpp");
+    spec.patch.patch_cmds.emplace_back("sed -i 's/.*pthread_key_create.*/ptr = nullptr;/' src/SFML/System/Unix/ThreadLocalImpl.cpp");
+    spec.patch.patch_cmds.emplace_back("sed -i 's/.*pthread_key_delete.*//' src/SFML/System/Unix/ThreadLocalImpl.cpp");
+    spec.patch.patch_cmds.emplace_back("sed -i 's/.*pthread_setspecific.*/ptr = value;/' src/SFML/System/Unix/ThreadLocalImpl.cpp");
+    spec.patch.patch_cmds.emplace_back("sed -i 's/.*pthread_getspecific.*/return ptr;/' src/SFML/System/Unix/ThreadLocalImpl.cpp");
+    spec.patch.patch_cmds.emplace_back("sed -i 's/.*pthread_key_t m_key.*/void* ptr=nullptr;/' src/SFML/System/Unix/ThreadLocalImpl.hpp");
     
     
     return spec;
@@ -1951,13 +1951,13 @@ cc_library(
     //Apparently its pretty easy to come up with too many vertexes in the buffer.
     //Changing this is the author's suggestion, and the code even has a comment to do this.
     //these use some imconfig.h file to overwrite, but this is fine too.
-    spec.patch_cmds.emplace_back("find . -type f -name '*.h' -exec sed -i 's/typedef unsigned short ImDrawIdx;/typedef unsigned int ImDrawIdx;/g' {} \\;");
+    spec.patch.patch_cmds.emplace_back("find . -type f -name '*.h' -exec sed -i 's/typedef unsigned short ImDrawIdx;/typedef unsigned int ImDrawIdx;/g' {} \\;");
     
-    spec.patch_cmds.emplace_back("sed -i '1s/^/#include <cfloat>\\\\n/' imgui_internal.h");
-    spec.patch_cmds.emplace_back("sed -i '1s/^/#include <float.h>\\\\n/' imgui_internal.h");
+    spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <cfloat>\\\\n/' imgui_internal.h");
+    spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <float.h>\\\\n/' imgui_internal.h");
     
-    spec.patch_cmds.emplace_back("sed -i '1s/^/#include <cfloat>\\\\n/' imgui.h");
-    spec.patch_cmds.emplace_back("sed -i '1s/^/#include <float.h>\\\\n/' imgui.h");
+    spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <cfloat>\\\\n/' imgui.h");
+    spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <float.h>\\\\n/' imgui.h");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Cairo()❰
@@ -1976,7 +1976,7 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "libpng";
     Add_Unilang_Github_Mirror(spec,"libpng","301f7a14295a3bdfaf406dbb5004d0784dc137ea","16ca00dca64c72f293a27af290a349a0d9ae2ef7336f6bd9caae612f67ffba8b");
-    spec.patch_files.emplace_back("p1");
+    spec.patch.patch_files.emplace_back("p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Lib_Jpeg()❰
@@ -1989,8 +1989,8 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "libtiff";
     Add_Unilang_Github_Mirror(spec,"libtiff","9f657ff8a7411c95ffe83ec39e3e881c3fec6bb0","c18b37467d2ad20bd2778c25d3be76fe4d43b421ff358dbdda8a192393fcf0e3");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀GD()❰
@@ -2015,26 +2015,26 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "pixman";
     Add_Unilang_Github_Mirror(spec,"pixman","6f8b8b383f3e9c2c8b9ec22fac73e9e84d0232d3","201917adc8a5be5074f9bddc5c3f5e514949f7fea5a801d04e3fb759af6c990f");
-    spec.patch_files.emplace_back("p1");
+    spec.patch.patch_files.emplace_back("p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Ncurses()❰
     Dependency_Specification spec;
     spec.lib_name = "ncurses";
     Add_Unilang_Github_Mirror(spec,"ncurses","9193d076200365eeb5ff932acdbbdcc5e452292c","a76cc838501ae16392bf748242fabe1108a479a9c5e8a6f905954e619c919f2a");
-    spec.patch_cmds.emplace_back("sed -i '1s/^/#include <wchar.h>\\\\n/' ncurses/curses.priv.h");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_cmds.emplace_back("sed -i '1s/^/#include <wchar.h>\\\\n/' ncurses/curses.priv.h");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀imtui()❰
     Dependency_Specification spec;
     spec.lib_name = "imtui";
     Add_Unilang_Github_Mirror(spec,"imtui","f4d4b1eb8e57770a7c329b8dc76127013fa31a11","a3c857905567255f2329593f98c86044c6ca1f8ee335f31205b0deefbd3ebf00");
-    spec.patch_cmds.emplace_back("find . -type f -name '*.h' -exec sed -i 's/imgui\\\\/imgui/imgui/g' {} \\;");
-    spec.patch_cmds.emplace_back("find . -type f -name '*.h' -exec sed -i 's/<ncurses.h>/<curses.h>/g' {} \\;");
-    spec.patch_cmds.emplace_back("find . -type f -name '*.cpp' -exec sed -i 's/<ncurses.h>/<curses.h>/g' {} \\;");
-    spec.patch_cmds.emplace_back("sed -i '/ImGui::InputFloat(\\\"Font offset\\\"/d' examples/imtui-demo.cpp");
+    spec.patch.patch_cmds.emplace_back("find . -type f -name '*.h' -exec sed -i 's/imgui\\\\/imgui/imgui/g' {} \\;");
+    spec.patch.patch_cmds.emplace_back("find . -type f -name '*.h' -exec sed -i 's/<ncurses.h>/<curses.h>/g' {} \\;");
+    spec.patch.patch_cmds.emplace_back("find . -type f -name '*.cpp' -exec sed -i 's/<ncurses.h>/<curses.h>/g' {} \\;");
+    spec.patch.patch_cmds.emplace_back("sed -i '/ImGui::InputFloat(\\\"Font offset\\\"/d' examples/imtui-demo.cpp");
     return spec;
 ❱
 
@@ -2080,7 +2080,7 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "curl";
     Add_Unilang_Github_Mirror(spec,"curl","11974ac859c5d82def59e837e0db56fef7f6794e","3f6c54fb691853e9b00ed484ea2f52566c7af172ecd48cd9eeec8041a9ac679b");
-    spec.patch_files.emplace_back("p1");
+    spec.patch.patch_files.emplace_back("p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Chrome_Drivers()❰
@@ -2180,15 +2180,15 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "xdotool";
     Add_Unilang_Github_Mirror(spec,"xdotool","a7903d0fdad57e12209b77d9126587a6f9aa87dc","ad218add49f48979b8e21c2ee7609c97cc24771f4fee63118b28b9ac801483a0");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Python3()❰
     Dependency_Specification spec;
     spec.lib_name = "python3";
     Add_Unilang_Github_Mirror(spec,"python3","7f755fe87d217177603a27d9dcc2fedc979f0f1a","36592ee2910b399c68bf0ddad1625f2c6a359ab9a8253d676d44531500e475d4");
-    spec.patch_cmds.emplace_back("sed -i '/HAVE_CRYPT_H/d'  usr/include/x86_64-linux-gnu/python3.6m/pyconfig.h");
+    spec.patch.patch_cmds.emplace_back("sed -i '/HAVE_CRYPT_H/d'  usr/include/x86_64-linux-gnu/python3.6m/pyconfig.h");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Tippecanoe()❰
@@ -2249,7 +2249,7 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "uuid";
     Add_Unilang_Github_Mirror(spec,"uuid","f895102e2ddaf86387a62c3544abb78c0a5cfbae","9283885688c5ab1c90c9e4072484b14937062a634632400a356ded8972317afd");
-    spec.patch_cmds.emplace_back("mv src uuid");
+    spec.patch.patch_cmds.emplace_back("mv src uuid");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Dtl()❰
@@ -2317,7 +2317,7 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "openal";
     Add_Unilang_Github_Mirror(spec,"OpenAL","631ad459dda5f5598863f7efc21070347aed757d","992d88ffb89a9a8fd2ed42936caaca20fb3cee3f23ac8a07de568087e37cae88");
-    spec.patch_cmds.emplace_back("sed -i '/HAVE_IEEEFP_H/d'  OpenAL32/Include/config.h");
+    spec.patch.patch_cmds.emplace_back("sed -i '/HAVE_IEEEFP_H/d'  OpenAL32/Include/config.h");
     
     
     return spec;
@@ -2440,17 +2440,17 @@ cc_binary(
     Dependency_Specification spec;
     spec.lib_name = "dbus";
     Add_Unilang_Github_Mirror(spec,"dbus","5c0575850fe17177bc1b82ff2fe1a1e4dc4e9261","2e44543b27364868ceb02b3aed734c142253d447f13c2ec87dff5d1a2909e9fb");
-    spec.patch_files.emplace_back("config");
-    spec.patch_files.emplace_back("arch_deps");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("config");
+    spec.patch.patch_files.emplace_back("arch_deps");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀libglvnd()❰
     Dependency_Specification spec;
     spec.lib_name = "libglvnd";
     Add_Unilang_Github_Mirror(spec,"libglvnd","3e8684a739dffe1d5441362679b4ee149425e6d6","bf6c8774d7fcd6ef2372325cafe2d780ccd48a62b0b5c4abc973c4597a196ace");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀glproto()❰
@@ -2497,24 +2497,24 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "vorbis";
     Add_Unilang_Github_Mirror(spec,"vorbis","0a4beb1d04f802c48016b11fb939690e24173168","5dc382c4c00de0742e9d1433e9b332cd1c28cdce5145d02961614083d955f1dd");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀ogg()❰
     Dependency_Specification spec;
     spec.lib_name = "ogg";
     Add_Unilang_Github_Mirror(spec,"ogg","0bbcba4e7cf32324170470569c4527ffd0002870","727861aa1796ec1c630477d736856dabb438b04dca31a8a74a9f426e22eef029");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀flac()❰
     Dependency_Specification spec;
     spec.lib_name = "flac";
     Add_Unilang_Github_Mirror(spec,"flac","ce6dd6b5732e319ef60716d9cc9af6a836a4011a","96a46aba218bb65826a8a650eb2d4f3b4c207543d10fe2b5248d91a77ab10e18");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀plantuml()❰
@@ -2558,8 +2558,8 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "secp256k1";
     Add_Unilang_Github_Mirror(spec,"secp256k1","3dc8c072b6d84845820c1483a2ee21094fb87cc3","85d571a698011159666fa596907028511fc98b6ac73505cf34a4656dba7bd8e5");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     
     
     spec.build_defs.raw_starlark = 
@@ -2632,8 +2632,8 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "libbase58";
     Add_Unilang_Github_Mirror(spec,"libbase58","b1dd03fa8d1be4be076bb6152325c6b5cf64f678","73b4c9bbb2002f781df6b92e40a5ed2b38ef74dfbf90ce83dc6e18af52e7a4b8");
-    // spec.patch_files.emplace_back("p1");
-    // spec.patch_args.emplace_back("-p1");
+    // spec.patch.patch_files.emplace_back("p1");
+    // spec.patch.patch_args.emplace_back("-p1");
     
     
     spec.build_defs.raw_starlark = 
@@ -2699,20 +2699,20 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "ibus";
     Add_Unilang_Github_Mirror(spec,"ibus","f591381e3c892947ecaffe9131b9039ab9014498","d2fee505277e2d168678ad49eaf91f57203cb4ef68c843981faca7f15e67500c");
-    spec.patch_files.emplace_back("config");
-    spec.patch_files.emplace_back("src_gen");
-    spec.patch_files.emplace_back("marshalers");
-    spec.patch_files.emplace_back("srcs");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("config");
+    spec.patch.patch_files.emplace_back("src_gen");
+    spec.patch.patch_files.emplace_back("marshalers");
+    spec.patch.patch_files.emplace_back("srcs");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀libevent()❰
     Dependency_Specification spec;
     spec.lib_name = "libevent";
     Add_Unilang_Github_Mirror(spec,"libevent","eee26deed38fc7a6b6780b54628b007a2810efcd","9b436b404793be621c6e01cea573e1a06b5db26dad25a11c6a8c6f8526ed264c");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
-    spec.patch_cmds.emplace_back("find . -type f -name '*.c' -exec sed -i 's/#include <stdlib.h>/#include <stdlib.h>\\n#include <stdint.h>\\n/g' {} \\;");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
+    spec.patch.patch_cmds.emplace_back("find . -type f -name '*.c' -exec sed -i 's/#include <stdlib.h>/#include <stdlib.h>\\n#include <stdint.h>\\n/g' {} \\;");
     
     return spec;
 ❱
@@ -2720,16 +2720,16 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "glib";
     Add_Unilang_Github_Mirror(spec,"glib","2ba0f14b5298f49dcc3b376d2bdf6505b2c32bd3","80753e02bd0baddfa03807dccc6da4e063f272026f07fd0e05e17c6e5353b07e");
-    spec.patch_files.emplace_back("glib_config");
-    spec.patch_files.emplace_back("glib_config2");
-    spec.patch_files.emplace_back("glib_enums");
-    spec.patch_files.emplace_back("gio_enums");
-    spec.patch_files.emplace_back("gnetworking");
-    spec.patch_files.emplace_back("xdp_dbus");
-    spec.patch_files.emplace_back("gdbus_daemon");
-    spec.patch_files.emplace_back("gmoduleconf");
-    spec.patch_files.emplace_back("gconstructor");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("glib_config");
+    spec.patch.patch_files.emplace_back("glib_config2");
+    spec.patch.patch_files.emplace_back("glib_enums");
+    spec.patch.patch_files.emplace_back("gio_enums");
+    spec.patch.patch_files.emplace_back("gnetworking");
+    spec.patch.patch_files.emplace_back("xdp_dbus");
+    spec.patch.patch_files.emplace_back("gdbus_daemon");
+    spec.patch.patch_files.emplace_back("gmoduleconf");
+    spec.patch.patch_files.emplace_back("gconstructor");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀glibc()❰
@@ -2749,8 +2749,8 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "systemd";
     Add_Unilang_Github_Mirror(spec,"systemd","2233c2703c91325f8c742daf2d37c1343f35998e","6f273444c068c047b6f339832944b1aadfcb9229889f2ae24f1af36440994e73");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 
@@ -2877,8 +2877,8 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "libgpg-error";
     Add_Unilang_Github_Mirror(spec,"libgpg-error","8047ca99858a7ee812ef11ed3bd2868e920ac1b7","46d749c769008a225c26d140632303f15c699f4b903f57920e55560c63eeb868");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 
@@ -2886,8 +2886,8 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "libgcrypt";
     Add_Unilang_Github_Mirror(spec,"libgcrypt","1a83df98b198902ee6d71549231a3af37088d452","2c45f8573db60156926bcaf8601032029a1e82afef5baac949c0911ba4631f97");
-    spec.patch_files.emplace_back("p1");
-    spec.patch_args.emplace_back("-p1");
+    spec.patch.patch_files.emplace_back("p1");
+    spec.patch.patch_args.emplace_back("-p1");
     return spec;
 ❱
 

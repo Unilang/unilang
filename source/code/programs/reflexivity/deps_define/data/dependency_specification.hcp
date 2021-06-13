@@ -4,6 +4,7 @@ class
 ❪"code/programs/reflexivity/deps_define/data/dependency_location"❫
 ❪"code/programs/reflexivity/deps_define/data/build_definitions"❫
 ❪"code/programs/reflexivity/deps_define/data/patch_file"❫
+❪"code/programs/reflexivity/deps_define/data/patch_settings"❫
 ⚯
 
 ⚞⚟
@@ -26,17 +27,11 @@ class
     bool system=false;
     std::string system_path;
     
-    //information on building the dependency
-    //patches are inevitable, and they are described here
-    std::vector<std::string> patch_cmds;
+    //all the settings related to patching the dependency
+    Patch_Settings patch;
     
-    //reference preexisting files
-    std::vector<std::string> patch_files;
-    
-    //reference files encoded in this structure
-    std::vector<Patch_File> inline_patch_files;
-    
-    std::vector<std::string> patch_args;
+    //for dependencies that need dependencies, these are often mapped in
+    std::vector<std::pair<std::string,std::string>> repo_mapping;
     
     //sometimes the dependency itself is a bazel repo that already has bazel files inside of it.
     //in that case, we don't need to point to our own maintained BUILD rule.
@@ -44,9 +39,6 @@ class
     //sometimes repositories do have their own bazel BUILD files but they are still hard to integrate.
     //in those cases you sometimes see patch files deleting them, and this staying at false.
     bool build_content_in_dependency=false;
-    
-    //for dependencies that need dependencies, these are often mapped in
-    std::vector<std::pair<std::string,std::string>> repo_mapping;
     
     //this represents the content for the entire build file
     //we want to generate things as much as possible for flexibility and introspection.

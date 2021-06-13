@@ -122,16 +122,16 @@ class
     Add_Patch_Files(result,spec,folder_name);
     
     //add patch args
-    if (!spec.patch_args.empty()){
+    if (!spec.patch.patch_args.empty()){
         Append(result,"        ");
-        Append(result,As_Named_Python_List_Of_Strings("patch_args",spec.patch_args));
+        Append(result,As_Named_Python_List_Of_Strings("patch_args",spec.patch.patch_args));
         Append_With_Newline(result,",");
     }
     
     //add patch commands
-    if (!spec.patch_cmds.empty()){
+    if (!spec.patch.patch_cmds.empty()){
         Append(result,"        ");
-        Append(result,As_Named_Python_List_Of_Strings("patch_cmds",spec.patch_cmds));
+        Append(result,As_Named_Python_List_Of_Strings("patch_cmds",spec.patch.patch_cmds));
         Append_With_Newline(result,",");
     }
     
@@ -160,7 +160,7 @@ class
 ◀private: static▶ void ☀Add_Patch_Files(std::string & result, Dependency_Specification spec, std::string const& folder_name)❰
 
     //transform the patch files if they are relative patches
-    std::vector<std::string> patch_files = spec.patch_files;
+    std::vector<std::string> patch_files = spec.patch.patch_files;
     for (auto & it: patch_files){
         if (!Begins_With(it,"//")){
             it = "//bazel/deps/" + folder_name + "/patches:" + it + ".patch";
@@ -169,7 +169,7 @@ class
     
     
     //add patch files
-    if (!spec.patch_files.empty()){
+    if (!spec.patch.patch_files.empty()){
         Append(result,"        ");
         Append(result,As_Named_Python_List_Of_Strings("patches",patch_files));
         Append_With_Newline(result,",");

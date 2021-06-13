@@ -17,6 +17,14 @@ hcp(
         "//code/programs/reflexivity/deps_define/data:build_definitions",
         "//code/programs/reflexivity/deps_define/data:dependency_location",
         "//code/programs/reflexivity/deps_define/data:patch_file",
+        "//code/programs/reflexivity/deps_define/data:patch_settings",
+    ],
+)
+
+hcp(
+    name = "patch_settings",
+    deps = [
+        "//code/programs/reflexivity/deps_define/data:patch_file",
     ],
 )
 
