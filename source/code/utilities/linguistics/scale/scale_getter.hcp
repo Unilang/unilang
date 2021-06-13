@@ -275,6 +275,10 @@ class
     scale.units.emplace_back(point);
     point.word_phrases.clear();
     
+    point.word_phrases.emplace_back("freezing");
+    scale.units.emplace_back(point);
+    point.word_phrases.clear();
+    
     point.word_phrases.emplace_back("cold");
     scale.units.emplace_back(point);
     point.word_phrases.clear();
@@ -476,5 +480,29 @@ class
     point.word_phrases.clear();
     return scale;
 ❱
+◀public: static▶ Scale ☀Requirement() ❰
+    Scale scale;
+    Scale_Point point;
+    scale.name = "requirement";
+    
+    point.word_phrases.emplace_back("must");
+    scale.units.emplace_back(point);
+    point.word_phrases.clear();
+    
+    point.word_phrases.emplace_back("should");
+    scale.units.emplace_back(point);
+    point.word_phrases.clear();
+    
+    point.word_phrases.emplace_back("may");
+    scale.units.emplace_back(point);
+    point.word_phrases.clear();
+    
+    return scale;
+❱
+
+
+
+
+
 //Numbers: 1 < 2 < 3...
 
