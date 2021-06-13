@@ -5,6 +5,7 @@ class
 ❪"code/programs/reflexivity/deps_define/data/build_definitions"❫
 ❪"code/programs/reflexivity/deps_define/data/patch_file"❫
 ❪"code/programs/reflexivity/deps_define/data/patch_settings"❫
+❪"code/programs/reflexivity/deps_define/data/workspace_settings"❫
 ⚯
 
 ⚞⚟
@@ -44,4 +45,7 @@ class
     //we want to generate things as much as possible for flexibility and introspection.
     //these contents may be described in other ways, and effectively transformed into a final string here.
     Build_Definitions build_defs;
+    
+    //Sometimes the dependencies need to also put stuff in the repo's main workspace
+    Workspace_Settings workspace;
 ▶

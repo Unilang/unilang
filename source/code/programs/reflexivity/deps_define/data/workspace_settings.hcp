@@ -12,4 +12,8 @@ class
     
     //more concrete way to express it:
     //TODO
+    
+    //the order in the workspace the content should appear (this seems to matter sometimes)
+    int priority = 0;
+
 ▶

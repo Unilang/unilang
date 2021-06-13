@@ -18,6 +18,7 @@ hcp(
         "//code/programs/reflexivity/deps_define/data:dependency_location",
         "//code/programs/reflexivity/deps_define/data:patch_file",
         "//code/programs/reflexivity/deps_define/data:patch_settings",
+        "//code/programs/reflexivity/deps_define/data:workspace_settings",
     ],
 )
 
@@ -51,6 +52,12 @@ hcp(
 
 hcp(
     name = "build_definitions",
+    deps = [
+    ],
+)
+
+hcp(
+    name = "workspace_settings",
     deps = [
     ],
 )

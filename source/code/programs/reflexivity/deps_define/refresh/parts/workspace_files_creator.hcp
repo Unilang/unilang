@@ -1,0 +1,37 @@
+class
+❪string❫
+❪vector❫
+❪algorithm❫
+❪"code/programs/reflexivity/deps_define/data/dependency_specifications_getter"❫
+❪"code/utilities/filesystem/paths/lib"❫
+⚯
+❪"code/utilities/filesystem/files/creating/lib"❫
+❪"code/programs/reflexivity/comment/generated_comment_getter"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/utilities/types/strings/transformers/casing/case_modifier"❫
+❪"code/utilities/types/strings/transformers/search_replace/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+⚞⚟
+
+
+◀public: static▶ void ☀Create(Dependency_Specifications all_specs)❰
+
+
+    //move to where the file goes
+    Temporarily_Move_To_Path_To_Call_Function(Bazel_Workspace_Directory(),[&](){
+    
+        //create its content
+        auto content = Create_Workspace_Content(all_specs);
+        
+        //write it out to a file
+        Write_To_File_With_Auto_Gen_Comment("WORKSPACE",Source_Language::PYTHON,content);
+    
+    });
+❱
+
+◀private: static▶ std::string ☀Create_Workspace_Content(Dependency_Specifications const& all_specs)❰
+    std::string result;
+    
+    
+    return result;
+❱

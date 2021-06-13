@@ -11,5 +11,6 @@ hcp(
         "//code/programs/reflexivity/deps_define/refresh/parts:build_files_creator",
         "//code/programs/reflexivity/deps_define/refresh/parts:get_files_creator",
         "//code/programs/reflexivity/deps_define/refresh/parts:main_deps_file_creator",
+        "//code/programs/reflexivity/deps_define/refresh/parts:workspace_files_creator",
     ],
 )
