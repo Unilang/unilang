@@ -76,5 +76,6 @@ hcp(
         "//code/utilities/types/strings/transformers/removing:lib",
         "//code/utilities/types/strings/transformers/search_replace:lib",
         "//code/utilities/types/vectors/converters:lib",
+        "//code/utilities/types/vectors/observers:lib",
     ],
 )

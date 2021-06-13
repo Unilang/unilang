@@ -11,6 +11,7 @@ class
 ❪"code/utilities/types/strings/transformers/casing/case_modifier"❫
 ❪"code/utilities/types/strings/transformers/search_replace/lib"❫
 ❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
 ⚞⚟
 
 
@@ -37,7 +38,20 @@ class
     Append_With_Newline(x,"load(\"//bazel/deps:third_party_libraries.bzl\", \"third_party_libraries\")");
     Append_With_Newline(x,"third_party_libraries()");
     
+    //get all the specs that change the workspace
+    auto specs = Filter(all_specs.specs,[&](Dependency_Specification d){
+        return !d.workspace.raw_starlark.empty();
+    });
     
+    //get them in the order we want to print them
+    std::sort(specs.begin(),specs.end(),[&](Dependency_Specification a, Dependency_Specification b){
+        return a.workspace.priority < b.workspace.priority;
+    });
+    
+    for (auto const& it: specs){
+        x += it.workspace.raw_starlark;
+        x += "\n\n";
+    }
     
     return x;
 ❱
