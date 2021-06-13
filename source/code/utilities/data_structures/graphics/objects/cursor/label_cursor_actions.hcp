@@ -91,14 +91,26 @@ class
         
         
         for (auto const& c: chars_to_type){
-            label.message.insert(selection.label_index+1,1,c);
-            Label_Cursor_Mover::Move_Cursor_Forward(font_chars,pos,label,selection);
+            
+            //create mew message
+            auto new_message = label.message;
+            new_message.insert(selection.label_index+1,1,c);
+            
+            //possibly apply new message
+            if (Text_Value_Is_Valid(new_message,label)){
+                label.message = new_message;
+                Label_Cursor_Mover::Move_Cursor_Forward(font_chars,pos,label,selection);
+            }
+            
         }
     }
 ❱
 
 
+◀private: static▶ bool ☀Text_Value_Is_Valid(std::string const& str, Label_Settings const& label)❰
 
+    return true;
+❱
 
 
 
