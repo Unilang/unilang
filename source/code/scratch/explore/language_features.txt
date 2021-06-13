@@ -1273,3 +1273,45 @@ It might be tricky, if the object does not have a default constructor
 
 
 -Is idempotence and pure the same thing, how do we annotate this?
+
+
+
+
+
+
+
+
+-find a type, by querying other types for composition relationship
+Foo is inside Bar which is inside Baz.
+We can say does Baz have a Foo?
+The result is yes,
+Foo->Bar->Baz
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-where should these parameter values come from
+sometimes you might have:
+
+void take_good_foos(Foo f);
+
+and we would like to document:
+//f comes from the good_foo_factory::give, or the foo_provide(style::good);
+
+That way someone has context on how to meet the needs of an interface.
+
+
+
+-programatically do all of wikipedia's software development philosophies
+https://en.wikipedia.org/wiki/List_of_software_development_philosophies
+
