@@ -2,9 +2,8 @@ load("//bazel/deps:third_party_libraries.bzl", "third_party_libraries")
 
 third_party_libraries()
 
-########################################
+################################################################################
 # Rules fuzzing instructions
-########################################
 
 load("@rules_fuzzing//fuzzing:repositories.bzl", "rules_fuzzing_dependencies")
 
@@ -21,9 +20,10 @@ jazzer_dependencies()
 load("@jazzer//:init.bzl", "jazzer_init")
 jazzer_init()
 
-#######################################
+###############################################################################
 
-# ###############################################
+
+
 # Pulling in and building clang
 
 load("@com_grail_bazel_toolchain//toolchain:deps.bzl", "bazel_toolchain_dependencies")
@@ -61,28 +61,45 @@ llvm_toolchain(
 load("@llvm_toolchain//:toolchains.bzl", "llvm_register_toolchains")
 
 llvm_register_toolchains()
+############################################################################################
 
-load("@build_stack_rules_proto//cpp:deps.bzl", "cpp_proto_compile")
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+go_rules_dependencies()
+go_register_toolchains()
+############################################################################################
+
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-load("@googleapis//:repository_rules.bzl", "switched_rules_by_language")
+gazelle_dependencies()
 
-##########################
-#load(
-#    "@build_bazel_rules_swift//swift:repositories.bzl",
-#    "swift_rules_dependencies",
-#)
-
-#swift_rules_dependencies()
-####################################
+############################################################################################
+load("@build_bazel_rules_swift//swift:repositories.bzl","swift_rules_dependencies")
+swift_rules_dependencies()
+############################################################################################
 
 load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
-
 rust_repositories()
-####################################
 
+############################################################################################
+
+load("@build_stack_rules_proto//cpp:deps.bzl", "cpp_proto_compile")
 cpp_proto_compile()
+
+############################################################################################
+
+
+
+
+
+
+
+
+
+
+load("@googleapis//:repository_rules.bzl", "switched_rules_by_language")
+
+
+
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
@@ -91,12 +108,6 @@ protobuf_deps()
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
-
-go_rules_dependencies()
-
-go_register_toolchains()
-
-gazelle_dependencies()
 
 switched_rules_by_language(
     name = "com_google_googleapis_imports",

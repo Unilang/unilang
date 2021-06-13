@@ -776,6 +776,12 @@ cc_library(
     Add_Unilang_Github_Mirror(spec,"rules_proto","b2913e6340bcbffb46793045ecac928dcf1b34a5","d456a22a6a8d577499440e8408fc64396486291b570963f7b157f775be11823e");
 
     spec.build_content_in_dependency=true;
+    spec.workspace.priority = 7;
+    spec.workspace.raw_starlark = 
+R"RAW_STRING(
+load("@build_stack_rules_proto//cpp:deps.bzl", "cpp_proto_compile")
+cpp_proto_compile()
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Abseil()❰
@@ -2785,6 +2791,46 @@ cc_library(
     spec.lib_name = "com_grail_bazel_toolchain";
     Add_Unilang_Github_Mirror(spec,"bazel-toolchain","f2d1ba2c9d713b2aa6e7063f6d11dd3d64aa402a","6bf2b30c8ab190eee44e1843f0cff457a5379250ad8239155dcf5bd38e4cc70f");
     spec.build_content_in_dependency=true;
+    
+    spec.workspace.priority = 2;
+    spec.workspace.raw_starlark = 
+R"RAW_STRING(
+load("@com_grail_bazel_toolchain//toolchain:deps.bzl", "bazel_toolchain_dependencies")
+
+bazel_toolchain_dependencies()
+
+load("@com_grail_bazel_toolchain//toolchain:rules.bzl", "llvm_toolchain")
+
+llvm_toolchain(
+    name = "llvm_toolchain",
+    llvm_version = "11.0.0",
+
+    # this sysroot was stolen from the grail_bazel_toolchain discussion.
+    # I think its related to the chromium project?  or google somehow?
+    # sysroot = {
+    #     "linux": "@debian_stretch_amd64_sysroot//:sysroot",
+    #     "darwin": "@debian_stretch_amd64_sysroot//:sysroot",
+    # },
+
+    # This is a custom built sysroot using a Dockerfile to build
+    # needed compiler files
+    #sysroot = {
+    #    "linux": "@ubuntu_14_04_clang_10_sysroot//:sysroot",
+    #    "darwin": "@ubuntu_14_04_clang_10_sysroot//:sysroot",
+    #},
+
+    # This is a custom built sysroot using a Dockerfile to build
+    # needed compiler files
+    sysroot = {
+        "linux": "@ubuntu_20_04_clang_11_sysroot//:sysroot",
+        "darwin": "@ubuntu_20_04_clang_11_sysroot//:sysroot",
+    },
+)
+
+load("@llvm_toolchain//:toolchains.bzl", "llvm_register_toolchains")
+
+llvm_register_toolchains()
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Io_Bazel_Rules_M4()❰
@@ -2799,6 +2845,14 @@ cc_library(
     spec.lib_name = "io_bazel_rules_go";
     Add_Unilang_Github_Mirror(spec,"rules_go","64bfa14993c7841aaefbbe1f1aecaad72f302974","693542a4d8ed25eda1ebb3cae03330210ede99401b490dded05a0d47b8402baa");
     spec.build_content_in_dependency=true;
+    
+    spec.workspace.priority = 3;
+    spec.workspace.raw_starlark = 
+R"RAW_STRING(
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+go_rules_dependencies()
+go_register_toolchains()
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Bazel_Gazelle()❰
@@ -2806,6 +2860,13 @@ cc_library(
     spec.lib_name = "bazel_gazelle";
     Add_Unilang_Github_Mirror(spec,"bazel-gazelle","2f9261b27f1d2660e2952bc9a0e79e4e81691afe","079e615ddbbcd53a0a730341dfe5d52dcc06771bcf782254eb6fd581ec20b102");
     spec.build_content_in_dependency=true;
+    
+    spec.workspace.priority = 4;
+    spec.workspace.raw_starlark = 
+R"RAW_STRING(
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+gazelle_dependencies()
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Io_Bazel_Rules_Docker()❰
@@ -2821,6 +2882,12 @@ cc_library(
     spec.lib_name = "build_bazel_rules_swift";
     Add_Unilang_Github_Mirror(spec,"rules_swift","b7a269355fc9852a885c5becbdeb1497cf787164","f443f39617ad489a6e91e577f79ad831425d84b53287e254ac68b576eccf1e18");
     spec.build_content_in_dependency=true;
+    spec.workspace.priority = 5;
+    spec.workspace.raw_starlark = 
+R"RAW_STRING(
+load("@build_bazel_rules_swift//swift:repositories.bzl","swift_rules_dependencies")
+swift_rules_dependencies()
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Rules_Rust()❰
@@ -2828,6 +2895,12 @@ cc_library(
     spec.lib_name = "io_bazel_rules_rust";
     Add_Unilang_Github_Mirror(spec,"rules_rust","df18ddbece5b68f86e63414ea4b50d691923039a","8e1bae501e0df40e8feb2497ebab37c84930bf00b332f8f55315dfc08d85c30a");
     spec.build_content_in_dependency=true;
+    spec.workspace.priority = 6;
+    spec.workspace.raw_starlark = 
+R"RAW_STRING(
+load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
+rust_repositories()
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Rules_Fuzzing()❰
