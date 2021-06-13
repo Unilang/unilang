@@ -1237,3 +1237,34 @@ And then maybe we can have a special unilang attribute that says the return valu
 That sounds good in theory, but we might care about the placement of the output parameter in an argument list. If its a return value we can annotate where in the argument list we want the parameter to be specified.
 
 So maybe an argument is still the best approach...
+
+
+
+-create a human intuition AI to test how others will understand code and how long it will take them, and what directions they might go to lead to confusion
+
+
+
+
+-automatically generate both return function and output param function with special syntax
+every type returning function can be expressed as a void function with that type as an out parameter.
+We might want a special syntax to generate these two functions automatically.
+
+Because there is a lot of duplication in terms of:
+
+```
+TYPE get_type(...){
+    TYPE t;
+    ...
+    return t;
+}
+```
+This is boiler plate we could generate with something like this:
+```
+[TYPE][t]
+[get_type][...]
+[
+... body...
+]
+```
+and maybe and attribute saying that the function creates one locally. and returns an instance of it...
+It might be tricky, if the object does not have a default constructor
