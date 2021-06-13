@@ -1204,3 +1204,36 @@ We also might want to do some research on what kind research on existing text pa
 [employs the made-up-person conjecture utilizing geometric-based rounding to facilitate parallel foos in 3d space]
 
 I dunno. You get the idea. Two sentences that say the same thing but one is in laymans term and the other is a more detailed explanation. Both are important depending on the reader and the context.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-anytime a function has an outparameter we should generate a function that gives it as a return value
+its very common for a function to have an out parameter because the return value is being used for something else such as a return code or something. But after this function is written, we inevitably want to fill the variable and use it. This leads to two lines of code instead of one.
+
+So basically we want to be able to generate the function that wraps the function that uses an output parameter, but returns that out parameter as a return value.
+
+Hmmm, this could be a more philosophical question about whether we think Unilang should have out parameters at all when it supports multiple return values.
+
+Should output parameters always be cleared/emptied/re-initialized. I think yes. So you can't ague that an out parameter might need some initial configuration by the user before passing it in, and thus can't be a return value only. In fact. It probably can.
+
+I think we still need out parameters. I was hoping to avoid explicitly stating them like D does, but that analysis may be tricky. I suppose that if we explicitly state them as output parameters, we can generate the code to automatically the clear the variable.
+hmm. I change my mind. Out parameters in unilang should Ideally just be return values.
+
+In theory every return value is like an out parameter. We could transform every function to be void and take an out parameter which use to be the return value.
+but the question is, do we require that any output parameter actually be specified as a return value.
+And then maybe we can have a special unilang attribute that says the return value should be expressed as a return value?
+
+That sounds good in theory, but we might care about the placement of the output parameter in an argument list. If its a return value we can annotate where in the argument list we want the parameter to be specified.
+
+So maybe an argument is still the best approach...
