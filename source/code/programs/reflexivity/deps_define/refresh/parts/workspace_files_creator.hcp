@@ -49,6 +49,7 @@ class
     });
     
     for (auto const& it: specs){
+        x += "#############################################\n";
         x += it.workspace.raw_starlark;
         x += "\n\n";
     }
