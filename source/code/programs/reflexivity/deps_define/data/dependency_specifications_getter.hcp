@@ -743,6 +743,17 @@ cc_library(
     //spec.patch.patch_cmds = Common_Patch_Cmds_Getter::Remove_Bazel_Workspace();
     Add_Unilang_Github_Mirror(spec,"remote-apis","f54876595da9f2c2d66c98c318d00b60fd64900b","b3bd7c29e8a9dccb40b13287edc7c451a9d4f36be605bbef6b58a240e99f373d");
     //spec.build_content_in_dependency=true;
+    spec.workspace.priority = 11;
+    spec.workspace.raw_starlark = 
+R"RAW_STRING(
+load("@remote_apis//:repository_rules.bzl", remote_apis_switched_rules_by_language = "switched_rules_by_language")
+remote_apis_switched_rules_by_language(
+    name = "bazel_remote_apis_imports",
+    cc = True,
+    go = False,
+    java = True,
+)
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Protobuf()❰
@@ -766,6 +777,24 @@ protobuf_deps()
     //spec.patch.patch_cmds = Common_Patch_Cmds_Getter::Remove_Bazel_Workspace();
     Add_Unilang_Github_Mirror(spec,"googleapis","3dbeac0d54125b123c8dfd39c774b37473c36944","1ca9e4c0de992c44c3c95cf72c3b93ec4c14b8916e42703ecce0eaf41a908557");
     //spec.build_content_in_dependency=true;
+    spec.workspace.priority = 10;
+    spec.workspace.raw_starlark = 
+R"RAW_STRING(
+load("@googleapis//:repository_rules.bzl", "switched_rules_by_language")
+switched_rules_by_language(
+    name = "com_google_googleapis_imports",
+    cc = True,
+    csharp = False,
+    gapic = False,
+    go = False,
+    grpc = False,
+    java = False,
+    nodejs = False,
+    php = False,
+    python = False,
+    ruby = False,
+)
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Google_Apis_Common_Protos()❰
@@ -2887,6 +2916,39 @@ gazelle_dependencies()
     //Add_Unilang_Github_Mirror(spec,"rules_docker","708e6c7c2d611c546b62fb21fbd2945fd8dc1cdb","1a8c205254a75d9affd745b9ff9bdc359e9173fb420cce92b5bf1276887cc0c1");
     Add_Unilang_Github_Mirror(spec,"rules_docker","454981e65fa100d37b19210ee85fedb2f7af9626","b6dc35134f1563b95db4fcfffd9c2e8673709c0b6b3b4a112b1b5bdbd843caa4");
     spec.build_content_in_dependency=true;
+    spec.workspace.priority = 12;
+    spec.workspace.raw_starlark = 
+R"RAW_STRING(
+load(
+    "@io_bazel_rules_docker//repositories:repositories.bzl",
+    container_repositories = "repositories",
+)
+
+container_repositories()
+
+load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
+
+container_deps()
+
+load(
+    "@io_bazel_rules_docker//container:container.bzl",
+    "container_pull",
+)
+
+container_pull(
+    name = "java_base",
+    digest = "sha256:deadbeef",
+    registry = "gcr.io",
+    repository = "distroless/java",
+)
+
+load(
+    "@io_bazel_rules_docker//cc:image.bzl",
+    _cc_image_repos = "repositories",
+)
+
+_cc_image_repos()
+)RAW_STRING";
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Rules_Swift()❰

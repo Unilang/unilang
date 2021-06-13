@@ -96,19 +96,6 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 grpc_deps()
 
 ############################################################################################
-
-
-
-
-
-
-
-
-
-
-
-
-
 load("@googleapis//:repository_rules.bzl", "switched_rules_by_language")
 switched_rules_by_language(
     name = "com_google_googleapis_imports",
@@ -123,6 +110,7 @@ switched_rules_by_language(
     python = False,
     ruby = False,
 )
+############################################################################################
 
 load("@remote_apis//:repository_rules.bzl", remote_apis_switched_rules_by_language = "switched_rules_by_language")
 
@@ -133,7 +121,16 @@ remote_apis_switched_rules_by_language(
     java = True,
 )
 
-###################
+############################################################################################
+
+
+
+
+
+
+
+
+
 
 load(
     "@io_bazel_rules_docker//repositories:repositories.bzl",
