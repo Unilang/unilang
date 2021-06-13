@@ -72,9 +72,7 @@ class
     std::string paste_text = ImGui::GetClipboardText();
     
     //first delete any text that may be highlighted
-    if (Highlighted_Chars_Exist(selection)){
-        Backspace_On_Selection(font_chars,pos,label,selection);
-    }
+    Remove_Existing_Selection(font_chars,pos,label,selection);
     
     label.message.insert(selection.label_index+1,paste_text);
     Label_Cursor_Mover::Move_Cursor_Forward_N_Spaces(font_chars,pos,label,selection,paste_text.size());
@@ -86,9 +84,8 @@ class
     if (!chars_to_type.empty()){
         
         //first delete any text that may be highlighted
-        if (Highlighted_Chars_Exist(selection)){
-            Backspace_On_Selection(font_chars,pos,label,selection);
-        }
+        Remove_Existing_Selection(font_chars,pos,label,selection);
+        
         
         
         for (auto const& c: chars_to_type){
@@ -111,6 +108,13 @@ class
 ◀private: static▶ bool ☀Text_Value_Is_Valid(std::string const& str, Label_Settings const& label)❰
 
     return true;
+❱
+
+
+◀private: static▶ void ☀Remove_Existing_Selection(Character_Maps const& font_chars, Position pos, Label_Settings & label, Label_Cursor_Selection & selection)❰
+    if (Highlighted_Chars_Exist(selection)){
+        Backspace_On_Selection(font_chars,pos,label,selection);
+    }
 ❱
 
 
