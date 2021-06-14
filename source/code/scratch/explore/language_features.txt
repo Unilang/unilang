@@ -1661,3 +1661,274 @@ there's still different investments ^
 financial, joy, etc
 
 
+
+
+
+-provide answers for counterpoints expressed in post
+some person argues about making a meta lanaguage.
+He goes about it the wrong way, and everyone responds misses the mark.
+
+
+
+
+-special notation for functions that answer a boolean question
+something like this, is confusing:
+
+bool& On(bool & b);
+It could be misused as:
+
+if (On(var)){}
+instead of setting something to true.
+
+This could be fixed by specifying functions as return bool types, or by "answering questions".. which also return bool types
+
+https://www.reddit.com/r/ProgrammingLanguages/comments/7oo0gu/polymorphic_programming/?submit_url=https%3A%2F%2Fbrianmckenna.org%2Fblog%2Fpolymorphic_programming&already_submitted=true&submit_title=
+
+Unilang is a practical meta language, and we ought to answer these questions now, as people will make the same dumb arguments about Unilang in the future.
+
+
+
+
+
+-be able to taint identifiers or types. add tainting checker
+note about "tainting" intersection types
+https://checkerframework.org/manual/#tainting-checker
+
+
+-add support for immer containers and library features
+https://sinusoid.es/immer/containers.html
+
+
+-add the concept of a "bubble-up gimmie"
+I invented this.
+Basically we just want data. When we compose data inside data however,
+we still want to be able to access the composed data easily and consistently. So we could generate functions like this:
+```
+Baz get_baz(Foo foo){
+   return foo.bar.baz;
+}
+Baz get_baz(Bar foo){
+   return bar.baz;
+}
+Baz get_baz(Baz foo){
+   return baz;
+}
+```
+We should be able to "tag" data members as having "bubble-up gimmie behaviour"
+Then if anybody composes the data inside data, we can generate methods for them.
+
+Also keep in mind, we could access them as if these methods existed in Unilang but still transcompile them into the a.b.c.d format.
+
+What about conflicts? We can make that a static guarantee, not generate methods at all, force the user to unspecify one of them.
+
+The parent composing "bubble-up gimmes" as members (wither directly or indirectly), should be able to turn them on/off.
+This also could be done with one massive template function that uses
+constexpr if to branch the type and return the appropriate a.b.c.d format.
+
+
+
+
+
+
+
+
+
+
+
+-add support for different types of property tests
+Property Test
+Random Property Test
+Exhaustive Property Test
+Specialized Exhaustive Property Test
+Specialized Random Property Test
+(Fuzzing)
+Generators for values that should all pass
+Generators for values that should all fail
+
+
+
+
+
+-support SLA agreements and metrics
+basically support everything on this wikipedia page:
+https://en.wikipedia.org/wiki/Service-level_agreement
+
+
+
+
+-Mass nouns decector
+https://en.wikipedia.org/wiki/Mass_noun
+
+
+
+
+
+
+
+
+-deriving ownership tags for data
+[derived from]
+[populated by]
+
+both can take types:
+
+example:
+struct person
+{
+string first,middle,last;
+
+string initials [first,middle,last]
+}
+
+
+
+
+
+
+-unit tests need lorem mipseum generated test data
+Inside unit tests, I basically want:
+[unique_key_pair]
+which turns into:
+```
+{'foo': 'abc'}
+```
+or something like that
+
+[unique_string]
+turns into "foo",
+
+you can also append number sso that they can be re-used:
+
+[unique_string_1][unique_string_2]
+which will always be:
+"foo", "bar"
+
+without the _# suffix, it basically counts up implicitly, and skips any explicitly stated ones
+
+
+
+
+
+
+
+-support pair-wise testing
+
+
+
+
+
+
+
+
+
+
+
+
+-all error messages should tell the user to go manually do something
+nothing is worse than seeing an error message that just says something failed.
+Even if it explains why it failed, it rarely explains how to fix it.
+
+All error messages should give an instruction to the user on how they could get it to work.
+Sometimes the instructions could be as simple as "talk to infra team #channel".
+Or it could be: "check your internet connection, and try again."
+^ not a great one, but it does give instruction.
+
+Also explain all the reasons why this error could have happened.
+
+
+
+
+
+-"abstraction level" inlining or auto-inling on small functions
+Some developers are inexperienced and inept at writing software. they prefer to write large functions. We've all heard the argument again and again throughout the decades. There is truth in terms of context switching. But this is of course a limitation of code's linear structure which will be solved by unilang anyway, Despite the projectional shortcomings from traditional software processes inling functions to avoid indirection its far out-wighted by all the benefits that functions provide. The problem with developing software an industry, is that some developers don't just prefer to write large functons, they actual require it from others. Although small functions are clearly the correct choice, it becomes a classic circle-jerking bike-shedding philosophy that is not worth my time.
+Since I'm incapable of stooping down to that level of incompetence, we must automate it.
+
+So wait, will unilang put the war to rest? Yes. I can get the best of both worlds.
+Functional decomposition (the way software ought to be) with an inlined view and transcompilation will inline it for the devs that don't know any better
+
+Therefore, Unilang should allow us to automatically inline the functions we write based on some configurable credentials. Whether the function is too small, if its only used in < n places, if we can detect some kind of abstraction level of detail, and inline based on that. It might also be interesting to do the opposite automatically as well. Which I have often thought about for outside-module boundary functions.
+A thin layer to allow us to handle calls from outside parties differently through code generation.
+
+
+
+
+
+-OpenAPI support
+support for all the attributes in REST API things
+
+
+
+
+
+
+-think about frame of references with unit measurements
+in math:
+
+```
+superscript: Car
+T
+subscript: World
+```
+```
+superscript: <FRAME>
+<TYPE>
+subscript: <NAME>
+```
+
+in programming:
+car_from_world
+from
+
+pose_car_wrt_world
+sign_wrt_car
+
+you know they match and cancel when they are written like this:
+car_from_world * world_from_SubA (correct)
+car_from_world * subA_from_world (wrong)
+
+the first is correct because "world" appears right next to each other
+
+
+
+
+
+
+
+
+
+
+
+
+-Need an Object Relational Mapping (ORM) exporter
+Basically to get us to the point of using databases, and getting everything back as the same types we are familiar with. We should probably think about "database schemas", or "table creation scripts" or whatever to make the use of using databases blend easily with whatever language we are using.
+
+
+
+
+
+-a better way to set options in code through data member usage
+-optional static analysis (with tags in the language) to fail if the following is not true:
+all data members of Foo need to be used (in the scope of the function)
+each data member of Foo can only be used once (in the scope of the function)
+the data members must be accessed in order.
+This can mean recursively down through the composition also
+
+
+
+
+
+
+-get list of decorators and annotations from other languages
+c#,rust,javascript,java,Kotlin ... a lot of these languages have interesting annotation extensions that we should steal
+https://projectlombok.org/features/all
+
+
+
+
+
+-UniSlang for Unilang Terminology
+move glossary terms to a section called UniSlang.
+just fun word play stuff.
+UniSlang / UniClang
+UniGang (group of contributors?)
+whatever. just fun terminology for terminology to consider
