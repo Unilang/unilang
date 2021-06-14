@@ -109,18 +109,16 @@ enum_cpp(
     ],
 )
 
-
 #every feature / pull request should have kind of a life cycle on how it came to be
 #something like that
 enum_cpp(
     name = "feature_lifecycle",
     values = [
-"discover",
-"design",
-"implementation",
-"testing",
-"documentation",
-"maintain",
+        "discover",
+        "design",
+        "implementation",
+        "testing",
+        "documentation",
+        "maintain",
     ],
 )
-
