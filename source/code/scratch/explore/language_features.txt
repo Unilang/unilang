@@ -1477,3 +1477,111 @@ doubly_list<thing>
 ```
 If we are using a container agnostic interface, these changes should compile.
 At the unilang level, we may inject slightly different code, or rely on other included header code that allows for similar interface calling
+
+
+
+
+
+
+
+
+
+-Sentence Style For Naming Unit Tests
+http://wiki.c2.com/?SentenceStyleForNamingUnitTests
+
+
+
+-be able to mark a line of code as something to "remove in the future"
+maybe just a coment token
+[we want to remove this line in the future because ...]
+
+
+
+
+-unilang should only accept some form of if/else pattern matching
+unilang should only accept some form of if/else pattern matching
+it can generate the switch statement stuff from that for enums..
+
+
+
+-pipeline and cascade operator functionality
+https://www.dartlang.org/guides/language/language-tour#cascade-notation-
+https://github.com/tc39/proposal-pipeline-operator
+
+
+
+
+-eye tracking on source code read
+we need to track the eye sight of people using Unilang.
+It should be intuitively, left to right. We may find that using the pipe operator will better facilitate this
+
+
+
+-generate KLEE LLVM unit tests
+fuzzy test using the KLEE symbolic virtual machine
+http://klee.github.io/tutorials/testing-function/
+
+
+
+-every tool should have alias names
+we'll only create one binary, but it would be nice to also add a bunch of aliases for alternative names of the binary..
+that way I never have to look them up, and I can type print_* or dump_* or show_*, and usually get the right commands
+
+
+
+
+-derive specification from tests
+a programs correctness is relative to whether it behaves according to the specification
+we should be able to generate the specification from tests
+
+
+
+
+
+
+
+
+-support different types of documentation
+https://www.divio.com/en/blog/documentation/
+four different functions: tutorials, how-to guides, explanation and technical reference. Each of them requires a distinct mode of writing. 
+table:
+  | Most useful when we’re studying | Most useful when we’re coding
+-- | -- | --
+Tutorials | How-to guides
+Explanation | Reference
+
+
+
+-every type can have a picture representation
+This way we could show a nested set of types through nested pictures
+
+
+
+
+-2 functions body for defensive and contract
+create two function implementations. one for a defensive approach. The other for a contract-based approach
+
+
+
+
+
+
+
+
+-add generator combinanator attributes
+say you have a struct of
+struct settings{
+int a, b, c;
+};
+
+You might find that you need to figure what values work best for a,b,c.
+You can specify ranges, values possibilities, that generators, ehatev
+
+which will allow you generate the struct in all of those combinations so you can brute force solutions.
+
+
+
+
+-auto generate regression tests
+we should be able to specify sets of inputs/outputs which will automatically generate regression tests.
+The tests will have things like.. we are happy with the new results, so reset the output.

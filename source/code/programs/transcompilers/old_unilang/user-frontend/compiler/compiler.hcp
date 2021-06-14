@@ -752,6 +752,20 @@ class
 //ReasonML: https://reasonml.github.io/
         
         
+        
+// static website generators:
+// (Jekyll, Hugo, Middleman)
+
+// web frameworks:
+// (Ruby on Rails, Laravel, Django)
+
+// dedicated doc tools:
+// (Docusaurus, Read the Docs, Sphinx)
+
+// SaaS products:
+// (HelpDocs, Corilla)
+        
+        
         default:
         std::cerr << "unknown export language" << std::endl;
     }

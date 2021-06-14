@@ -38,6 +38,8 @@
 //showing code depth:
 //https://www.greenfoot.org/doc/tut-2
 
+//Grasshopper for Rhino is a good example of visual programming
+
 
 //ideas:
 //optional thread pool on drawing grid
