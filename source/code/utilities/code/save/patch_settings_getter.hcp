@@ -26,6 +26,7 @@ class
     patches.emplace_back(Patch_3);
     patches.emplace_back(Patch_4);
     patches.emplace_back(Patch_5);
+    patches.emplace_back(Patch_6);
     
     //add more
     return patches;
@@ -118,6 +119,21 @@ class
         }
     }
 ❱
+◀private: static▶ void ☀Patch_6(nlohmann::json & j)❰
 
-//Type_To_Json_String::As_JSON_String();
+    //this patch is because a new data member was added to label: message_constraints
+    for (auto & element: j["elements"]["types"]){
+        
+        //if its the variant structure we care about
+        if (element["element"]["index"] == 1){
+            for (auto & label: element["element"]["value"]["state"]["tree"]["state"]["structure"]["nodes"]){
+                    for (auto & face:  label[1]["label"]["state"]["faces"]){
+                        face["label"]["message_constraints"]["required_regex"] = nlohmann::json::array();
+                    }
+            }
+        }
+    }
+❱
+
+
 

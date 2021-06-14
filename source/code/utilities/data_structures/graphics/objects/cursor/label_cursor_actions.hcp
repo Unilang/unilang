@@ -74,8 +74,15 @@ class
     //first delete any text that may be highlighted
     Remove_Existing_Selection(font_chars,pos,label,selection);
     
-    label.message.insert(selection.label_index+1,paste_text);
-    Label_Cursor_Mover::Move_Cursor_Forward_N_Spaces(font_chars,pos,label,selection,paste_text.size());
+    //create mew potential message
+    auto new_message = label.message;
+    new_message.insert(selection.label_index+1,paste_text);
+
+    //possibly apply new message
+    if (Text_Value_Is_Valid(new_message,label)){
+        label.message = new_message;
+        Label_Cursor_Mover::Move_Cursor_Forward_N_Spaces(font_chars,pos,label,selection,paste_text.size());
+    }
     
 ❱
 ◀public: static▶ void ☀Handle_Fowards_Insertion(Character_Maps const& font_chars, Position pos, Label_Settings & label, Label_Cursor_Selection & selection, Pc_Input_State const& pc_input)❰
@@ -90,7 +97,7 @@ class
         
         for (auto const& c: chars_to_type){
             
-            //create mew message
+            //create mew potential message
             auto new_message = label.message;
             new_message.insert(selection.label_index+1,1,c);
             

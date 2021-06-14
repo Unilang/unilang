@@ -29,10 +29,15 @@ class
         x = json.get<Save_State>();
     }
     catch(std::exception const& e){
-        std::cerr << "We couldn't convert the json to the c++ object properly :(" << std::endl;
+        std::cerr << "The Unilang deserializaer couldn't convert the saved json file to the c++ data type properly :(" << std::endl;
         std::cerr << "Here is the library exception: " << e.what() << std::endl;
-        std::cerr << "What this means is that the upgrade patching mechanism for the saved format did not properly adjust your data for proper deserialization." << std::endl;
+        std::cerr << "What this means is that the upgrade patching mechanism for the saved format did not properly adjust your data for correct deserialization." << std::endl;
+        std::cerr << "Example: Unilang saved the file for a C++ object at v1, and now you've tried to load the object for C++ object at v2" << std::endl;
+        std::cerr << "This should be possible, the save state loader failed at applying the correct upgrade patch." << std::endl;
         std::cerr << "How to fix it?  The right patch needs added or corrected inside the editor's save state loader." << std::endl;
+        std::cerr << "Good luck!" << std::endl;
+        
+        //this is a very big json object
         //std::cerr << "We will now dump that object:" << std::endl;
         //std::cerr << json.dump(2) << std::endl;
         exit(-1);
