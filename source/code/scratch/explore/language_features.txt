@@ -1932,3 +1932,13 @@ just fun word play stuff.
 UniSlang / UniClang
 UniGang (group of contributors?)
 whatever. just fun terminology for terminology to consider
+
+
+
+
+
+-contextual organization tags on functions and things
+any time you implement anything, you inevitability have to write some utility functions.
+maybe something does some string parsing, maybe something has to do quick geomoetry.
+We don't have time or authority to split and organize all of this as it should be.
+Instead, we will tag functions as things as to whether or not they are directly applicable to solving the problem domain or if they are slightly deviated away from the problem domain and could probably be re-used somewhere else. That way, later when we refactor things, we can easily see whats utility and whats core functional decomposition
