@@ -765,6 +765,10 @@ class
 // SaaS products:
 // (HelpDocs, Corilla)
         
+
+//deploy packages with flatpak
+//https://flatpak.org/
+        
         
         default:
         std::cerr << "unknown export language" << std::endl;
