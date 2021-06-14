@@ -11,6 +11,7 @@ class
 ❪"code/utilities/peripheral/keyboard/key_detector"❫
 ❪"code/utilities/data_structures/graphics/objects/cursor/label_cursor_mover"❫
 ❪"code/utilities/data_structures/graphics/objects/cursor/text_box_action_decider"❫
+❪"code/utilities/types/strings/observers/regex/lib"❫
 ⚞⚟
 
 
@@ -93,8 +94,6 @@ class
         //first delete any text that may be highlighted
         Remove_Existing_Selection(font_chars,pos,label,selection);
         
-        
-        
         for (auto const& c: chars_to_type){
             
             //create mew potential message
@@ -113,7 +112,11 @@ class
 
 
 ◀private: static▶ bool ☀Text_Value_Is_Valid(std::string const& str, Label_Settings const& label)❰
-
+    for (auto const& regex: label.message_constraints.required_regex){
+        if (!Matches_Regex(label.message,regex)){
+            return false;
+        }
+    }
     return true;
 ❱
 

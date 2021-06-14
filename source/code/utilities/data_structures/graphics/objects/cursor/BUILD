@@ -66,6 +66,7 @@ hcp(
         "//code/utilities/peripheral/keyboard:key_detector",
         "//code/utilities/peripheral/pc:pc_input_state",
         "@imgui//:imgui_sdl_opengl3",
+        "//code/utilities/types/strings/observers/regex:lib",
     ],
 )
 
