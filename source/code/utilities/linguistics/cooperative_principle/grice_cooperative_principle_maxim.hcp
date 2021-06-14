@@ -11,5 +11,5 @@ class
 public:
     
     Grice_Cooperative_Principle_Maxims ፠maxim፠;
-    Grice_Cooperative_Principle_Maxim_Actions ፠actions፠;
+    Grice_Cooperative_Principle_Maxim_Actions ፠action፠;
 ▶
