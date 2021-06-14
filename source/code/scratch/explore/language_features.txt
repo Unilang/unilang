@@ -1981,3 +1981,88 @@ Isn't not crashing kind of a behavioral test?
 
 -tokens and generation for rest APIs
 tokesns and generation for rest APIs.. probably extensions of data tokens
+
+
+
+
+
+
+
+-generate tests based on function/object definition
+we should try to avoid writing tests as much as possible.
+You heard me right. Instead we should rely on our documentation generating tests for us!
+This will avoid inconsistencies in how we test vs what we claim.
+It's also just less work, and if we can get the tests we care about to generate properly, that means we've described the interface correctly.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-natural language expression of function call (generic and specific)
+This is very important, and we can start generating documentation for it now.
+
+Why do functions look like this?:
+
+create_shape(name,radius,points);
+yet in natural language, we might say something like:
+
+create a shape called <name> with a <radius> and <n> number of points
+(ignore any details on units... that's not the point of this, but they would be a part of this also)
+
+with values:
+
+create_shape("star,20,5)
+in natural language:
+
+create a shape called star with a radius of 20 and 5 points
+Ok, not the best example, but I'm sure I'll find a lot better examples in the wild.
+Here's the point though. Can you turn an arbitrary function into the natural way that somebody would informally be talking about it?
+
+Probably not in an elegant way without the help of pre-documentation mustaching.
+
+//create a shape called {{1}} with a radius of {{2}} and n number of {{3}}
+create_shape(name,radius,points);
+
+generates to:  
+create a shape called <name> with a radius of <radius> and n number of <points>
+we'll have to think about whether we want this in two versions.
+(generic identifier version and specific value version).
+As you can see from my simple example above, it feels like it might be good to have both?
+
+This has a lot of good use cases apart from just extra documentation above functions.
+You could also interactively print this information when code is running or leave it as part of a debug or express it as part of a requirements doc, etc, etc.
+
+Having functionality expressed this way in english is great for helping write tests, helping verify tests. Good for a QA team. Good for anyone who is not a developer, or a new developer trying to understand at a high informal level what's kind of going on without having to look functions, read the identifiers, read the types. Understand what was happening at run time/evaluation time.
+
+Lastly, I think this will affect the age old conundrum of what order parameters should go in.
+It's not always an obvious thing on the order parameters should be. It can often be chalked up to opinion, and with natural language, you could just as easily have a multitude of orders as well.
+
+However, we could optionally enforce that the mustache params are ordered in the natural clause provided. This gives a developers an extra avenue of exporting the inter-algorithms they don't even know they are running in their mind to make a natural language sentence that "sounds the best".
+
+Of course we can try to be more formal on the matter. And make sure things seem to fit a linguistic typology. I'm talking subject–verb–object (SVO). That may also require us to tag arguments as these english things... so we'll consider this as well.
+
+A fun little discovery here is think about object oriented code. Your subject is what has all the methods. That's why its first (subject.method()).
+So when we are thinking about what functions are focusing on observering/transforming a particular data type/identifier, its probably the subject, which means it probably aught to be the first argument in a non-object-oriented rendering. (Think every language that doesn't do OO (either intentially or due to missing language capability), and make what is essentially the object the first parameter. A lot to think about here.
+
+which means you could also static analyze and say something like, "this is ref" but comes later after all o of these other arguments, and based on the rules it might be a subject so you might want to put it first.
+
+Let's get the basic functionality in, and we can make separate tickets for more interesting things later, when are comfortable and proud enough to have this as a basis, and are optionally able to use it in production code.
+
+this will be dope for the AAA testing too.
+I can imagine generating documentation like:
+```
+We arrange the <foo> given a <bar> and <baz>.  
+The <foo> is <binged> into a <bazzling> <juke>
+We check that the <juke> is indeed <bazzling>
+```
