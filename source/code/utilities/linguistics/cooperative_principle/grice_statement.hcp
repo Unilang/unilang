@@ -1,0 +1,17 @@
+class
+❪string❫
+❪vector❫
+❪"code/utilities/linguistics/cooperative_principle/grice_cooperative_principle_maxim"❫
+❪"code/utilities/linguistics/cooperative_principle/grice_cooperative_principle_maxim_actions"❫
+⚯
+
+⚞⚟
+
+◀
+public:
+    
+    Grice_Cooperative_Principle_Maxim ፠quality፠;
+    Grice_Cooperative_Principle_Maxim ፠quantity፠;
+    Grice_Cooperative_Principle_Maxim ፠manner፠;
+    Grice_Cooperative_Principle_Maxim ፠relevance፠;
+▶

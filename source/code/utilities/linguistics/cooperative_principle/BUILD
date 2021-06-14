@@ -32,3 +32,19 @@ hcp(
         "//code/utilities/linguistics/cooperative_principle:grice_cooperative_principle_maxim_actions",
     ],
 )
+
+hcp(
+    name = "grice_statement",
+    deps = [
+        "//code/utilities/linguistics/cooperative_principle:grice_cooperative_principle_maxim",
+        "//code/utilities/linguistics/cooperative_principle:grice_cooperative_principle_maxim_actions",
+    ],
+)
+
+hcp(
+    name = "conversationally_cooperative_checker",
+    deps = [
+        "//code/utilities/linguistics/cooperative_principle:grice_cooperative_principle_maxim",
+        "//code/utilities/linguistics/cooperative_principle:grice_statement",
+    ],
+)

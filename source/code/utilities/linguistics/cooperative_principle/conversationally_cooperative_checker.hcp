@@ -1,0 +1,16 @@
+class
+❪string❫
+❪iostream❫
+❪cstdlib❫
+❪iostream❫
+❪"code/utilities/linguistics/cooperative_principle/grice_cooperative_principle_maxim"❫
+❪"code/utilities/linguistics/cooperative_principle/grice_statement"❫
+⚯
+
+⚞⚟
+
+
+◀public: static▶ bool ☀Check(Grice_Statement const& statement) ❰
+    
+    return true;
+❱
