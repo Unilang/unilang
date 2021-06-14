@@ -1585,3 +1585,79 @@ which will allow you generate the struct in all of those combinations so you can
 -auto generate regression tests
 we should be able to specify sets of inputs/outputs which will automatically generate regression tests.
 The tests will have things like.. we are happy with the new results, so reset the output.
+
+
+-function contracts should automatically generate unit tests
+"So, assertions are declarative while UnitTests are imperative. Assertions are for static reasoning about code while UnitTests are for dynamically testing a few examples. You need both. They complement each other. Put it this way: could you generate the UnitTests from the assertions? Or vice versa? I think mostly not. To the extent you can, I'd prefer to write the assertions first and then have a tool generate some UnitTests from them."
+-- DaveHarris
+
+
+
+
+
+-akka stream syntac for In, Out, Mat
+take a look at akka streams.
+I think they allow you to specify the flow of data at the api level:
+Flow[In,Out,Mat]
+
+
+
+-generate images showing Deliberate Architecture properties / emergences
+https://www.youtube.com/watch?v=9e3lflYhNd8
+great video about emergences. dimensions of software quality.
+stakeholders, software boundaries
+properties of software. light equations on factors that affect software.
+A lot of these properties could be turned into tokens where the author describes their feelings about each, and rates them by percentage. stuff like that.
+
+
+-document salient attributes
+salient attributes were invented by John Lakos to describe the "value" of an object.
+when talking about vector, size() is salient, but capacity is not.
+Find a way for Unilang to support and document this.
+
+
+
+
+-flag function as using internet
+allow functions to be tagged as "using internet"
+or "using disk" or "displaying to graphics"
+This will be helpful in terms of how unit tests should be run.
+
+
+
+-embed polls / surveys inside source code
+embed polls / surveys inside source code
+so that people with a special UniLang IDE can give feedback / data back to a maintainer.
+Things like, "should the interface look like x, y or z?"
+"Would you know how to do x with this API?" Things like that.
+Every interface can have a "what were you trying to solve with this API?" "Did the API help you solve it?"
+"what were the good things / bad things?"
+
+This is a really good way to help maintain code with minimal effort and the group collective can be shared with all other developers.
+
+We'll have to think about how to handle the survey data as the code changes, because the results may no longer be applicable from code changes.
+
+
+
+-every function / api / program has an ROI value derived from use cases
+We can imagine all the possible ways something can be used. We list all of these ways in tokens.
+The number of use cases may be able to create some kind of "return on investment" rating.
+Maybe ROI isn't the best term.. because some things can be easy to learn and others can be hard.. and thats uncorrelated with how useful the effort to learn things is.
+
+ROI is more like a graph where x is investment time and y is return on investment (however we choose to measure returned investment).
+
+Basically what I'm thinking is simple functions like "add" have a single use case.
+More complicated functions/tools like "calculator" have more use cases... more functionality I should say.
+So if we can tag functions based on how much functionality they allow, we may be able to derive the overall functionality / use cases available for a tool.
+
+something to think about/
+
+oh:
+```
+The Return on Investment Formula
+According to Investopedia, the return on an investment is the gain minus the cost, divided by the cost.
+```
+there's still different investments ^
+financial, joy, etc
+
+
