@@ -1942,3 +1942,42 @@ any time you implement anything, you inevitability have to write some utility fu
 maybe something does some string parsing, maybe something has to do quick geomoetry.
 We don't have time or authority to split and organize all of this as it should be.
 Instead, we will tag functions as things as to whether or not they are directly applicable to solving the problem domain or if they are slightly deviated away from the problem domain and could probably be re-used somewhere else. That way, later when we refactor things, we can easily see whats utility and whats core functional decomposition
+
+
+
+
+
+-Data member ordering affects the information structure presented in a compostional rendering
+the order of the structures and data members should be arranged based on how they are logically read in a composition chart. For example:
+
+a struct that has a foo and two trigger events about foo's state.
+
+You would want to say "Foo whose events are a and b", and not
+"events a and b... which belong to foo.
+
+The reason this is bad is because Foo is sort of the object of the sentence, so it should be introduced first.
+This goes along with pragmatic concepts in linguistics on information structure.
+sentences are normally SVO (subject verb object)... but at a more conceptual level, humans prefer to hear things in a particular order to reduce cognitive load. This may have to do with relevance and such, but we can read more into "information structure within pragmatics" to optimize this ordering.
+
+The specific use case I had involved areas of land, and events on what to do when you enter and leave the land. So I would want to say: "object foo has a chunk of land, with two event actions based on our location on the land."
+
+it would be less efficient to say this: "there are two events" (now the reader has to hang onto that dangling non-fully resolved concept) "and a submap that those events are about".
+
+Hopefully you can see why this is bad. Data member ordering affects composition ordering which affects the pragmatics of how it is read. We could think about adding another token that sort of has these linguistical information structure correlations, and then they can be automatically reordred for things like treesheets rendering. Something to think about.
+
+
+
+
+
+-test properties that need added
+expected time of test ( < 500ms; instant, short, medium, longer, etc)
+no network
+no io
+what kind of test it is: "no crash", "behavioral" .
+Isn't not crashing kind of a behavioral test?
+(look up different kinds of test)
+
+
+
+-tokens and generation for rest APIs
+tokesns and generation for rest APIs.. probably extensions of data tokens
