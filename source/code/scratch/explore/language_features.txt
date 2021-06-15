@@ -2117,3 +2117,56 @@ understandability
 functionality
 timeliness
 
+
+
+
+
+
+
+-static analysis for identifer anti-patterns 
+Naming Scalars Like Objects
+Bad example:
+store = "Jason's Capsaicin Station"
+Good example:
+store_name = "Jason's Capsaicin Station"
+
+Naming Counts Like Collections
+Bad example:
+products = 0
+Good example:
+product_count = 0
+
+Naming a Variable After Its Type
+Bad example:
+array = []
+Good example:
+customers = []
+
+Overabbreviation
+Bad example:
+passwd
+fname
+cust
+o
+Good example:
+password
+first_name
+customer
+order
+SSN, USA and admin are all fine because these are predictable and already familiar to most people.
+
+Use of “Stuff Words” For Collections
+Bad example:
+news[0]
+inventory[0]
+Good example:
+articles[0]
+inventory_items[0]
+Explanation: There are certain words that have no singular form. Examples include “stuff”, “garbage” and “laundry”. I call these “stuff words”. This anti-pattern especially applies to database table names.
+
+Key/Value Mystery
+Bad examples:
+products.each { |key, value| puts value }
+products.each { |k, v| puts v }
+Good example:
+products.each { |name, price| puts price }
