@@ -1,0 +1,13 @@
+class
+❪vector❫
+❪string❫
+❪"src/main/protobuf/remote_execution_log.pb.h"❫
+⚯
+⚞⚟
+
+◀
+public:
+    
+    std::vector<remote_logging::LogEntry> entries;
+    
+▶
