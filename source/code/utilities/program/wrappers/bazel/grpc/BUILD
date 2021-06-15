@@ -4,9 +4,9 @@ load("//bazel/rules/hcp:hcp.bzl", "hcp")
 load("//bazel/rules/cpp:object.bzl", "cpp_object")
 load("//bazel/rules/enum_cpp:enum_cpp.bzl", "enum_cpp")
 
-# hcp(
-#     name = "grpc_log_data",
-#     deps = [
-#         "@bazel//:remote_execution_log_cpp",
-#     ],
-# )
+hcp(
+    name = "grpc_log_data",
+    deps = [
+        "@bazel//:remote_execution_log_cpp",
+    ],
+)
