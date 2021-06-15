@@ -2170,3 +2170,59 @@ products.each { |key, value| puts value }
 products.each { |k, v| puts v }
 Good example:
 products.each { |name, price| puts price }
+
+
+
+overloading and default values should be convertable to each other both ways
+if we specify overloads with different number of arguments, we should be able to convert them to the same method with a default value (some of the times... think about..) and same thing about converting the other way
+
+
+
+
+
+
+-add an "indexes to" property on data members
+this a property on data to data member relationships.
+Should the relationship information be tied to A, B, or in a separate table?
+A[B] B
+A B[A]
+A B [A][B]
+I feel like a lot of these problems are data base related. How do you make a descion on these kinds of things?
+Is there a way to get the best of both worlds?
+
+Either way, we want to specify that a data member is "indexibally related".
+Meaning that one data member, can be used to index into another data member.
+
+This occurs occasionally when we have a vector of indexes for a vector of rich data
+```
+vector<fidget_ids> ids;
+vector<fidget_heavy_data> fidgets;
+```
+
+
+
+-do we need public/private contracts?
+And article states:
+
+https://www.win.tue.nl/~wstomv/edu/2ip30/references/design-by-contract/index.html
+```
+ DBC During Implementation
+
+    Implementation of effective (concrete) classes are constrained by their ancestor contracts. But new features (routines) may be added with their own contracts. Requirements must be achievable by clients of the class so they must be expressed only in terms of 'public' features of the class - not 'private' attributes. For example:
+
+    remove is
+            -- Remove an item.
+        require
+            not_empty: not empty
+        do
+            ...
+        ensure
+            not_full: not full
+            one_less: count = old count - 1
+        end
+
+Where features count, empty and full must be 'public' features accessible to clients of the class. Without this constraint, it would not be possible for clients to understand, let alone satisfy, the contract.
+```
+but I want the best of both worlds.
+Contracts that the user can understand and conceptualize
+as well as contracts the implementer can understand and protect themselves with
