@@ -2065,4 +2065,55 @@ I can imagine generating documentation like:
 We arrange the <foo> given a <bar> and <baz>.  
 The <foo> is <binged> into a <bazzling> <juke>
 We check that the <juke> is indeed <bazzling>
+
 ```
+
+
+
+-tokens to describe what an abstraction is and is not
+an article states:
+http://www.tedinski.com/2018/01/30/the-one-ring-problem-abstraction-and-power.html
+"You cannot create an abstraction without saying two things: what it is, and what it is not."
+
+That's a good point. We should have tokens for labelling functions and classes as:
+[things that it is] and [things that it is not]
+
+
+
+
+
+-Tokens and language support for Meyers Quality Factors
+https://www.win.tue.nl/~wstomv/edu/2ip30/references/design-by-contract/index.html#r1
+2.2 Meyer's Internal and External Software Product Quality Factors
+
+A star graph where each point may pull at one another:
+
+image 1:
+performance
+flexibility
+power efficiency
+scalability
+security
+reliability
+maintainability
+testability
+robustness
+deployability
+usability
+cost
+
+image 2:
+cost
+correctness
+robusness
+efficiency
+extendability
+reusability
+compatibility
+portability
+ease of use
+testability
+understandability
+functionality
+timeliness
+
