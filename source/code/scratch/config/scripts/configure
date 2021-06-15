@@ -1,5 +1,10 @@
+
+#install all custom scripts
 rm -rf ~/.bin/scripts/project
 mkdir -p ~/.bin/scripts/project/src/scripts/all
 #cp -r src ~/.bin/scripts/project
 find src -type f -exec cp {} ~/.bin/scripts/project/src/scripts/all \;
 chmod 777 -R  ~/.bin/scripts/project
+
+wget https://github.com/bazelbuild/bazelisk/releases/download/v1.9.0/bazelisk-linux-amd64 -O ~/.bin/scripts/project/src/scripts/all/bazelisk
+chmod 777 ~/.bin/scripts/project/src/scripts/all/bazelisk
