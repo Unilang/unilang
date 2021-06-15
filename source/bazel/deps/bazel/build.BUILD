@@ -103,3 +103,29 @@ cc_proto_library(
 #     name = "failure_details_cpp",
 #     deps = [":failure_details"],
 # )
+
+
+
+
+
+
+# for parsing grpc log
+proto_library(
+    name = "remote_execution_log",
+    srcs = ["src/main/protobuf/remote_execution_log.proto"],
+    deps = [
+        "@com_google_protobuf//:timestamp_proto",
+        "@googleapis//:google_bytestream_bytestream_proto",
+        "@remote_apis//:remote_execution_proto",
+                "@googleapis//:google_rpc_status_proto",
+        "@googleapis//:google_longrunning_operations_proto",
+    ]
+)
+
+cc_proto_library(
+    name = "remote_execution_log_cpp",
+    deps = [":remote_execution_log"],
+)
+
+
+
