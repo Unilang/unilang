@@ -8,6 +8,7 @@ hcp(
     name = "task_executer",
     deps = [
         "//code/programs/repo_tools/bazel_grpc_log_reader/program_options:lib",
+        "//code/utilities/program/wrappers/bazel/grpc:grpc_log_parser",
     ],
 )
 

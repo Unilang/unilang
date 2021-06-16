@@ -3,10 +3,50 @@ class
 ❪fstream❫
 ❪"code/programs/repo_tools/bazel_grpc_log_reader/program_options/program_options"❫
 ⚯
+❪"code/utilities/program/wrappers/bazel/grpc/grpc_log_parser"❫
 ⚞⚟
 
 
 ◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
 
+    auto x = Grpc_Log_Parser::Parse(options.Path());
+    std::cout << x.entries.size() << std::endl;
+    
+    for (auto const& it: x.entries){
+        
+        //1. metadata
+        // std::cout << it.metadata().tool_details().tool_name() << std::endl;
+        // std::cout << it.metadata().tool_details().tool_version() << std::endl;
+        // std::cout << it.metadata().action_id() << std::endl;
+        // std::cout << it.metadata().tool_invocation_id() << std::endl;
+        // std::cout << it.metadata().correlated_invocations_id() << std::endl;
+        // std::cout << it.metadata().action_mnemonic() << std::endl;
+        // std::cout << it.metadata().target_id() << std::endl;
+        // std::cout << it.metadata().configuration_id() << std::endl;
+            
+        //2. status
+        std::cout << it.status().code() << " ";
+        std::cout << "[" << it.status().message() << "] ";
+        //std::cout <<  it.status().details() << std::endl;
+        
+        //3. method name
+        std::cout << it.method_name() << " ";
+        
+        //4. details
+        
+        
+        
+        
+        //5. time range
+        std::cout << it.start_time().seconds() << " " << it.start_time().nanos() << " - ";
+        std::cout << it.end_time().seconds() << " " << it.end_time().nanos();
+        std::cout << std::endl;
+    }
 
 ❱
+
+
+
+
+
+
