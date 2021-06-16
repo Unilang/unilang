@@ -8,6 +8,8 @@ class
 ◀
 public:
     
+    size_t file_size = 0;
+    double deserialization_time_ms = 0;
     std::vector<remote_logging::LogEntry> entries;
     
 ▶
