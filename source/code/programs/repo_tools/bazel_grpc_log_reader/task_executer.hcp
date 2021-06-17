@@ -62,16 +62,16 @@ class
         
         event.name = Get_File_Name(it.method_name());
         event.cat = Get_File_Name(it.method_name());
-        event.pid = counter;
-        event.tid = counter;
+        event.pid = 1;
+        event.tid = 1;
         event.ph = "B";
         event.ts = Get_Timestamp_Ms(it.start_time(),seconds_offset);
         trace.traceEvents.emplace_back(event);
         
         event.name = Get_File_Name(it.method_name());
         event.cat = Get_File_Name(it.method_name());
-        event.pid = counter;
-        event.tid = counter;
+        event.pid = 1;
+        event.tid = 1;
         event.ph = "E";
         event.ts = Get_Timestamp_Ms(it.end_time(),seconds_offset);
         trace.traceEvents.emplace_back(event);
@@ -81,7 +81,7 @@ class
     
 
 
-    // Json_File_Io::Write_Json_To_File(trace,options.Path() + ".json");
+    Json_File_Io::Write_Json_To_File(trace,options.Path() + ".json");
 ❱
 
 
