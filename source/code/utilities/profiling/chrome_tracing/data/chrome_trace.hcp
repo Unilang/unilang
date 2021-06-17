@@ -1,0 +1,13 @@
+class
+❪string❫
+❪"code/utilities/profiling/chrome_tracing/data/chrome_trace_event"❫
+⚯
+
+⚞⚟
+
+◀public:
+    
+    std::vector<Chrome_Trace_Event> ፠traceEvents፠;
+    std::string displayTimeUnit;
+▶
+

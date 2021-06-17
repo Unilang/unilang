@@ -1,0 +1,16 @@
+class
+❪string❫
+⚯
+
+⚞⚟
+
+◀public:
+    
+    std::string ፠name፠;
+    std::string ፠cat፠;
+    std::string ፠ph፠;
+    int ፠ts፠;
+    int ፠pid፠;
+    int ፠tid፠;
+▶
+

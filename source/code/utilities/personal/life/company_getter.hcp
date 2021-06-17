@@ -6,6 +6,12 @@ class
 
 //change these if you get a new job or the company gets bought out or something
 ◀public: static▶ std::string ☀Current() ❰
+    return "Aurora Innovation, Inc";
+❱
+◀public: static▶ std::string ☀Aurora() ❰
+    return "Aurora Innovation, Inc";
+❱
+◀public: static▶ std::string ☀Uber() ❰
     //return "Uber, Inc.";
     return "UATC, LLC";
 ❱
