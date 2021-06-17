@@ -2,8 +2,12 @@ class
 ❪iostream❫
 ❪fstream❫
 ❪"code/programs/repo_tools/bazel_grpc_log_reader/program_options/program_options"❫
+❪google/protobuf/timestamp.pb.h❫
 ⚯
 ❪"code/utilities/program/wrappers/bazel/grpc/grpc_log_parser"❫
+❪"code/utilities/profiling/chrome_tracing/data/chrome_trace"❫
+❪"code/utilities/formats/json/converters/json_file_io"❫
+❪"code/utilities/types/strings/observers/path/lib"❫
 ⚞⚟
 
 
@@ -42,11 +46,50 @@ class
         std::cout << it.end_time().seconds() << " " << it.end_time().nanos();
         std::cout << std::endl;
     }
+    
+    Chrome_Trace trace;
+    
+    //we'll use this as the pid/tid to identify the beginning and end of events
+    int counter = 1;
+    
+    //chrome tracing uses a timestamp, and the grpc log timestamps are very big
+    //we'll take the seconds that things start at, and substract it so our timestamps better fit the tracing model
+    int seconds_offset = x.entries[0].start_time().seconds();
+    
+    for (auto const& it: x.entries){
+        
+        Chrome_Trace_Event event;
+        
+        event.name = Get_File_Name(it.method_name());
+        event.cat = Get_File_Name(it.method_name());
+        event.pid = counter;
+        event.tid = counter;
+        event.ph = "B";
+        auto start_ts_ms = it.start_time().seconds() - seconds_offset;
+        start_ts_ms *= 1000;
+        start_ts_ms += (it.start_time().nanos() / 1000000);
+        trace.traceEvents.emplace_back(event);
+        
+        event.name = Get_File_Name(it.method_name());
+        event.cat = Get_File_Name(it.method_name());
+        event.pid = counter;
+        event.tid = counter;
+        event.ph = "E";
+        trace.traceEvents.emplace_back(event);
+        
+        ++counter;
+    }
+    
 
+
+    // Json_File_Io::Write_Json_To_File(trace,options.Path() + ".json");
 ❱
 
 
 
+◀private: static▶ int ☀Get_Timestamp(google::protobuf::Timestamp time) ❰
 
+    return 0;
+❱
 
 
