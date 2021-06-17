@@ -65,9 +65,7 @@ class
         event.pid = counter;
         event.tid = counter;
         event.ph = "B";
-        auto start_ts_ms = it.start_time().seconds() - seconds_offset;
-        start_ts_ms *= 1000;
-        start_ts_ms += (it.start_time().nanos() / 1000000);
+        event.ts = Get_Timestamp_Ms(it.start_time(),seconds_offset);
         trace.traceEvents.emplace_back(event);
         
         event.name = Get_File_Name(it.method_name());
@@ -75,6 +73,7 @@ class
         event.pid = counter;
         event.tid = counter;
         event.ph = "E";
+        event.ts = Get_Timestamp_Ms(it.end_time(),seconds_offset);
         trace.traceEvents.emplace_back(event);
         
         ++counter;
@@ -87,9 +86,11 @@ class
 
 
 
-◀private: static▶ int ☀Get_Timestamp(google::protobuf::Timestamp time) ❰
-
-    return 0;
+◀private: static▶ int ☀Get_Timestamp_Ms(google::protobuf::Timestamp time, int seconds_offset) ❰
+    auto start_ts_ms = time.seconds() - seconds_offset;
+    start_ts_ms *= 1000;
+    start_ts_ms += (time.nanos() / 1000000);
+    return start_ts_ms;
 ❱
 
 
