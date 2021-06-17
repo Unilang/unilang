@@ -14,27 +14,27 @@ class
 ◀public: static▶ void ☀Execute_Needed_Tasks(Program_Options const& options) ❰
 
     auto x = Grpc_Log_Parser::Parse(options.Path());
-    std::cout << x.entries.size() << std::endl;
+    //std::cout << x.entries.size() << std::endl;
     
     for (auto const& it: x.entries){
         
         //1. metadata
         // std::cout << it.metadata().tool_details().tool_name() << std::endl;
         // std::cout << it.metadata().tool_details().tool_version() << std::endl;
-        // std::cout << it.metadata().action_id() << std::endl;
+        //std::cout << it.metadata().action_id() << std::endl;
         // std::cout << it.metadata().tool_invocation_id() << std::endl;
         // std::cout << it.metadata().correlated_invocations_id() << std::endl;
         // std::cout << it.metadata().action_mnemonic() << std::endl;
-        // std::cout << it.metadata().target_id() << std::endl;
+        //std::cout << it.metadata().target_id() << std::endl;
         // std::cout << it.metadata().configuration_id() << std::endl;
             
         //2. status
-        std::cout << it.status().code() << " ";
-        std::cout << "[" << it.status().message() << "] ";
+        //std::cout << it.status().code() << " ";
+        //std::cout << "[" << it.status().message() << "] ";
         //std::cout <<  it.status().details() << std::endl;
         
         //3. method name
-        std::cout << it.method_name() << " ";
+        //std::cout << it.method_name() << " ";
         
         //4. details
         
@@ -42,14 +42,23 @@ class
         
         
         //5. time range
-        std::cout << it.start_time().seconds() << " " << it.start_time().nanos() << " - ";
-        std::cout << it.end_time().seconds() << " " << it.end_time().nanos();
-        std::cout << std::endl;
+        // std::cout << it.start_time().seconds() << " " << it.start_time().nanos() << " - ";
+        // std::cout << it.end_time().seconds() << " " << it.end_time().nanos();
+        // std::cout << std::endl;
     }
+    int first_time = x.entries[0].start_time().seconds();
+    int last_time = x.entries[x.entries.size()-1].end_time().seconds();
+    std::cout << last_time - first_time << "s" << std::endl;
+    
+    
+    auto add_action_id_to_name = false;
+    
     
     Chrome_Trace trace;
+    trace.displayTimeUnit = "ms";
     
     //we'll use this as the pid/tid to identify the beginning and end of events
+    //actually we don't need to do that as it looks really bad.
     int counter = 1;
     
     //chrome tracing uses a timestamp, and the grpc log timestamps are very big
@@ -60,20 +69,30 @@ class
         
         Chrome_Trace_Event event;
         
-        event.name = Get_File_Name(it.method_name());
+        auto start_time = Get_Timestamp_Ms(it.start_time(),seconds_offset);
+        auto end_time = Get_Timestamp_Ms(it.end_time(),seconds_offset);
+        if (start_time > end_time){
+            std::cout << "violation: " << start_time << " " << end_time << std::endl;
+        }
+        std::string name = Get_File_Name(it.method_name());
+        if (add_action_id_to_name){
+            name += "-" + it.metadata().action_id();
+        }
+        
+        event.name = name;
         event.cat = Get_File_Name(it.method_name());
         event.pid = 1;
         event.tid = 1;
         event.ph = "B";
-        event.ts = Get_Timestamp_Ms(it.start_time(),seconds_offset);
+        event.ts = start_time;
         trace.traceEvents.emplace_back(event);
         
-        event.name = Get_File_Name(it.method_name());
+        event.name = name;
         event.cat = Get_File_Name(it.method_name());
         event.pid = 1;
         event.tid = 1;
         event.ph = "E";
-        event.ts = Get_Timestamp_Ms(it.end_time(),seconds_offset);
+        event.ts = end_time;
         trace.traceEvents.emplace_back(event);
         
         ++counter;
@@ -86,11 +105,15 @@ class
 
 
 
-◀private: static▶ int ☀Get_Timestamp_Ms(google::protobuf::Timestamp time, int seconds_offset) ❰
-    auto start_ts_ms = time.seconds() - seconds_offset;
+◀private: static▶ long ☀Get_Timestamp_Ms(google::protobuf::Timestamp time, long seconds_offset) ❰
+    long start_ts_ms = time.seconds() - seconds_offset;
+    
+    if (start_ts_ms < 0){
+        std::cout << "violation(start_ts_ms): " << start_ts_ms << std::endl;
+    }
     start_ts_ms *= 1000;
     start_ts_ms += (time.nanos() / 1000000);
-    return start_ts_ms;
+    return start_ts_ms * 1000;
 ❱
 
 

@@ -9,7 +9,7 @@ class
     std::string ፠name፠;
     std::string ፠cat፠;
     std::string ፠ph፠;
-    int ፠ts፠;
+    long ፠ts፠;
     int ፠pid፠;
     int ፠tid፠;
 ▶
