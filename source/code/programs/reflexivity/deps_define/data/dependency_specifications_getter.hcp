@@ -82,6 +82,13 @@ class
     
 //crypt
 //https://github.com/Unilang/libxcrypt
+    
+
+//serialization:
+//https://github.com/apache/avro
+    
+//GUI:
+//https://github.com/zenotech/fox-toolkit
 
     
     //Build Systems
