@@ -1,0 +1,15 @@
+class
+❪string❫
+❪vector❫
+⚯
+
+⚞⚟
+
+◀public:
+    std::string local_file_path;
+    std::string gdrive_file_path;
+
+▶
+
+
+

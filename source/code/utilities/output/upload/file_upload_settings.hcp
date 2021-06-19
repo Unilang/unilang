@@ -3,6 +3,7 @@ class
 ❪vector❫
 ❪"code/utilities/web/dropbox/upload_to_dropbox_strategy"❫
 ❪"code/utilities/program/wrappers/git/upload/github_upload_settings"❫
+❪"code/utilities/web/gdrive/gdrive_upload_settings"❫
 ⚯
 
 ⚞⚟
@@ -20,6 +21,10 @@ Upload_To_Dropbox_Strategy strategy;
 //github specific
 bool upload_to_github = false;
 Github_Upload_Settings github_settings;
+
+//googledrive specific
+bool upload_to_gdrive = false;
+Gdrive_Upload_Settings gdrive_settings;
 
 ▶
 

@@ -8,6 +8,7 @@ class
 ❪"code/utilities/web/dropbox/dropbox_uploader"❫
 ❪"code/utilities/personal/secret/secret_getter"❫
 ❪"code/utilities/program/wrappers/git/upload/github_uploader"❫
+❪"code/utilities/web/gdrive/gdrive_uploader"❫
 ⚞⚟
 
 //Eponyms
@@ -31,6 +32,11 @@ class
         
         //upload
         Github_Uploader::Upload(settings.github_settings,settings.local_file_name,settings.remote_file_name);
+    }
+    
+    if (settings.upload_to_gdrive){
+        //Todo
+        //Gdrive_Uploader::Upload()
     }
     
 ❱

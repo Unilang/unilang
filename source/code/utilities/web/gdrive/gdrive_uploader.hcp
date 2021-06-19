@@ -1,0 +1,19 @@
+class
+❪string❫
+❪stdio.h❫
+❪curl/curl.h❫
+❪"code/utilities/web/gdrive/gdrive_upload_settings"❫
+⚯
+❪"code/utilities/types/char/lib.hpp"❫
+❪"code/utilities/program/call/lib.hpp"❫
+❪"code/utilities/streams/filestreams/read_all/lib.hpp"❫
+❪sys/stat.h❫
+❪iostream❫
+⚞⚟
+
+
+
+◀public: static▶ void ☀Upload(Gdrive_Upload_Settings const& settings)❰
+    //TODO
+
+❱

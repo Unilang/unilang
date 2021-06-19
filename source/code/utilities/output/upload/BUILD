@@ -8,6 +8,7 @@ hcp(
     deps = [
         "//code/utilities/program/wrappers/git/upload:github_upload_settings",
         "//code/utilities/web/dropbox:upload_to_dropbox_strategy",
+        "//code/utilities/web/gdrive:gdrive_upload_settings",
     ],
 )
 
@@ -19,5 +20,6 @@ hcp(
         "//code/utilities/program/wrappers/git/upload:github_uploader",
         "//code/utilities/web/dropbox:dropbox_uploader",
         "//code/utilities/web/dropbox:upload_to_dropbox_strategy",
+        "//code/utilities/web/gdrive:gdrive_uploader",
     ],
 )
