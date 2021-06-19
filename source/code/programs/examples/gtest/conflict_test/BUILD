@@ -4,7 +4,6 @@ package(
     default_visibility = ["//visibility:public"],
 )
 
-
 #A user can accidentally link an object with a main() function.
 #The linker chooses it instead of the gtest main which is confusing.
 #These targets are test this and see how to prevent it.
@@ -13,26 +12,40 @@ package(
 # This is just a reflection of the fact that Bazel links binaries dynamically by default and the Linux dynamic linking behavior.
 # If you pass --dynamic_mode=off or set linkstatic = True in the cc_test rules, the linker will fail.
 
-
 #main library
-cc_library(name = "lib",
-           hdrs = ["lib.hpp"],
-           srcs = ["lib.cpp"],
+cc_library(
+    name = "lib",
+    srcs = ["lib.cpp"],
+    hdrs = ["lib.hpp"],
 )
 
 #main program
-cc_binary(name = "main2",
-           srcs = ["main2.cpp"],
+cc_binary(
+    name = "main2",
+    srcs = ["main2.cpp"],
 )
 
 #normal test
-gtest(name = "main", deps = [":main2",":lib"])
-
+gtest(
+    name = "main",
+    deps = [
+        ":lib",
+        ":main2",
+    ],
+)
 
 #injected test
 cc_test(
     name = "test",
-    srcs = ["lib.hpp","main2.cpp","main.cpp"],
-    deps = [":main2",":lib","@gtest//:main"],
+    srcs = [
+        "lib.hpp",
+        "main.cpp",
+        "main2.cpp",
+    ],
     linkstatic = False,
+    deps = [
+        ":lib",
+        ":main2",
+        "@gtest//:main",
+    ],
 )

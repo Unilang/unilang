@@ -20,4 +20,6 @@ public:
 
     //html-geared image
     bool wrap_in_p_tags = false;
+    
+    bool newline_before_image = true;
 ▶

@@ -28,8 +28,8 @@ enum_cpp(
 hcp(
     name = "grice_cooperative_principle_maxim",
     deps = [
-        "//code/utilities/linguistics/cooperative_principle:grice_cooperative_principle_maxims",
         "//code/utilities/linguistics/cooperative_principle:grice_cooperative_principle_maxim_actions",
+        "//code/utilities/linguistics/cooperative_principle:grice_cooperative_principle_maxims",
     ],
 )
 

@@ -32,24 +32,28 @@ class
     // decide how to print the image.
     // we can do the traditional markdown format,
     // or we can do the more html-oriented format.
-
+    
+    std::string result;
+    if (settings.image.newline_before_image){
+        result += "\n";
+    }
 
     //specific style chosen
     if (settings.image.style == Markdown_Image_Style::CLASSIC){
-        return Classic_Markdown_Image::Get(it,settings);
+        result += Classic_Markdown_Image::Get(it,settings);
     }
     else if (settings.image.style == Markdown_Image_Style::HTML){
-        return Html_Markdown_Image::Get(it,settings);
+        result += Html_Markdown_Image::Get(it,settings);
     }
     
     //derive instead
     else if (settings.image.style == Markdown_Image_Style::DERIVE){
-        return Derived_Style_Image(it,settings);
+        result += Derived_Style_Image(it,settings);
     }
 
 
     //should not happen
-    return "";
+    return result;
 ❱
 
 

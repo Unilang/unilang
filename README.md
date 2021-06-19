@@ -1,6 +1,8 @@
+
 <img width="" height="" src=".readme/unilang_logo.png"> [<img width="60" height="60" src=".readme/pdf_download.png">](https://www.dropbox.com/s/1qde65ekii8nyb9/unilang.pdf?dl=1)
 
 **A universal programming language**
+
 
 
 
@@ -8,7 +10,8 @@
 
 
 ## Summary
-Unilang is a programming language and IDE.  It has a graphical and textual fronted for creating programs.  The language unifies with other languages through transcompilation.  It was written to improve the quality of software by allowing a paradigm of rich data annotation.  It was also designed to make developing software more fun.  
+Unilang is a programming language and IDE.  It has a graphical and textual fronted for creating programs.  The language unifies with other languages through transcompilation.  It was written to improve the quality of software by allowing a paradigm of rich data annotation.  It was also designed to make developing software more interactive.  
+
 <img width="" height="" src=".readme/unilang_code_pipeline.png">
 
 
@@ -50,6 +53,7 @@ Shippable | [![Run Status](https://api.shippable.com/projects/5c3163fd4e246e0700
 Travis | [![Build status](https://travis-ci.com/luxe/unilang.svg?branch=master)](https://travis-ci.com/luxe/unilang) | Bootstraps Build | 
 
 The unilang schema is used to encode the concept tree and can be enforceable during projectional editing.  The abbreviations "pk" and "fk" correspond to primary and foreign keys to allow association between subtrees.  This is a similar concept found in ERDs and databases.  
+
 <img width="" height="" src=".readme/unilang_concept_tree.png">
 
 

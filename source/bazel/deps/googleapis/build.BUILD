@@ -25,8 +25,8 @@ cc_grpc_library(
     proto_only = False,
     use_external = False,
     well_known_protos = True,
-    deps = [":google_api_http_cc_proto",
-    
+    deps = [
+        ":google_api_http_cc_proto",
     ],
 )
 
