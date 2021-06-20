@@ -56,6 +56,13 @@ void Nested_Loop(size_t i_start, size_t i_end,size_t j_start, size_t j_end, Fun 
     }
 }
 
+template <typename T, typename Fun>
+void Loop_With_Progress(T container, Fun fun){
+  for (size_t i = 0; i < container.size(); ++i){
+    fun(i+1,container.size(),container[i]);
+  }
+}
+
 
 
 template <typename T, typename Key>
