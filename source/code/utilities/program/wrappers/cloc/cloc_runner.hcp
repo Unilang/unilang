@@ -14,11 +14,11 @@ class
 ◀public: static▶ nlohmann::json ☀Run_In_Dir_And_Get_Json_Results(std::string const& path)❰
 
     std::string timeout_per_file_s = "60";
-
-
+    
     //get cloc if we don't have it
-    execute("wget https://github.com/AlDanial/cloc/releases/download/v1.90/cloc-1.90.pl -O /tmp/cloc");
-    execute("chmod 777 /tmp/cloc");
+    Download_To_Tmp_If_Missing("https://github.com/AlDanial/cloc/releases/download/v1.90/cloc-1.90.pl","cloc");
+
+
     
     std::string command;
     command = "/tmp/cloc --json ";
