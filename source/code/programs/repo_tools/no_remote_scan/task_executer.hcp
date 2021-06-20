@@ -30,11 +30,13 @@ class
     std::cout << "filtering out tests that don't already pass" << std::endl;
     std::vector<std::string> passing_tests;
     Loop_With_Progress(targets,[&](size_t const& current, size_t const& end, std::string const& target){
-        std::cout << current << "/" << end << " " << target << std::endl;
+        std::cout << current << "/" << end << " " << target << " ";
         auto results = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
         if (results){
             passing_tests.emplace_back(target);
+            std::cout << "PASS" << std::endl;
         }
+        std::cout << "FAIL" << std::endl;
     });
     std::cout << passing_tests.size() << " passing tests marked no-remote" << std::endl;
     
