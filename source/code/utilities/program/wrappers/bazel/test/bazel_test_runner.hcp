@@ -1,0 +1,53 @@
+class
+❪vector❫
+❪string❫
+❪iostream❫
+❪sstream❫
+❪iomanip❫
+❪unordered_map❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/strings/observers/other/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/utilities/types/strings/transformers/appending/lib"❫
+❪"code/utilities/program/call/lib"❫
+❪"code/utilities/random/files/random_files"❫
+❪"code/utilities/random/lib"❫
+❪"code/utilities/formats/serialization/protobuf"❫
+❪"code/utilities/program/wrappers/bazel/run_environment"❫
+❪"code/utilities/program/inputs/flags/data/flags"❫
+❪"code/utilities/program/inputs/flags/flag_util"❫
+❪"code/utilities/program/wrappers/bazel/query/query_deps_flags"❫
+❪"code/utilities/program/wrappers/bazel/query/data/cquery_results"❫
+❪"code/utilities/program/wrappers/bazel/fetch/bazel_fetch_output_files"❫
+❪"code/utilities/program/wrappers/bazel/fetch/fetch_results"❫
+⚯
+❪"code/utilities/program/call/process_spawn/timed/timed_process_spawner"❫
+❪"code/utilities/time/profile/function_profiler"❫
+❪"code/utilities/streams/filestreams/read_all/lib"❫
+⚞⚟
+
+
+◀public: static▶ bool ☀Test(std::string const& bazel_wrapper, std::string const& target)❰
+    
+    
+    //build command
+    auto command = Build_Command(bazel_wrapper, target);
+    
+    //run command
+    auto spawn_results = Timed_Process_Spawner::Execute_And_Get_Back_Results(command);
+    
+    return spawn_results.results.return_code == 0;
+    
+❱
+◀private: static▶ std::string ☀Build_Command(std::string const& bazel_wrapper, std::string const& target)❰
+
+    std::string command = bazel_wrapper;
+    command += " test ";
+    
+    command += "--noremote_accept_cached ";
+    command += "--nocache_test_results ";
+    command += "--config=remote ";
+    command += target;
+    return command;
+❱

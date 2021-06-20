@@ -1,0 +1,121 @@
+class
+❪string❫
+❪iostream❫
+❪"code/utilities/code/concept_static_tree_structs"❫
+❪"code/programs/repo_tools/no_remote_scan/program_options/program_options"❫
+⚯
+⚞⚟
+
+◀public: static▶ model::Module ☀Get()❰
+    model::Module x;
+    
+    model::ModuleName name;
+    name.value = "no_remote_scan";
+    x.name.emplace_back(name);
+    
+    x.literature.emplace_back(MainDoc());
+    
+    return x;
+❱
+
+◀private: static▶ model::Literature ☀MainDoc()❰
+    model::Literature x;
+    x.paragraph.emplace_back(Title());
+    x.paragraph.emplace_back(Introduction());
+    x.paragraph.emplace_back(Command_Line());
+    return x;
+❱
+
+◀private: static▶ model::Paragraph ☀Title() ❰
+    model::Paragraph p;
+    
+    model::ParagraphDepth depth;
+    depth.value = "0";
+    
+    model::ParagraphTitle title;
+    title.value = "Evaluates no-remote tests to see if they will work remotely";
+    
+    p.depth.emplace_back(depth);
+    p.title.emplace_back(title);
+    
+    model::ParagraphSentence s;
+    model::Image img;
+    model::AlternativeText alt;
+    alt.value = "no_remote_scan";
+    
+    img.alternative_text.emplace_back(alt);
+    s.image.emplace_back(img);
+    p.sentence.emplace_back(s);
+    
+    return p;
+❱
+
+◀private: static▶ model::Paragraph ☀Introduction() ❰
+    model::Paragraph p;
+    
+    model::ParagraphDepth depth;
+    depth.value = "0";
+    
+    model::ParagraphTitle title;
+    title.value = "Introduction";
+    
+    p.depth.emplace_back(depth);
+    p.title.emplace_back(title);
+    
+    Add_Sentence(p,"This tool attempts to fix no-remote tests");
+    Add_Sentence(p,"It runs no-remote tests without the tag to see if they work remotely");
+    Add_Sentence(p,"It will also tries running them remotely with different exec_properties to see if they can be made to pass");
+    return p;
+❱
+
+◀private: static▶ model::Paragraph ☀Command_Line() ❰
+    model::Paragraph p;
+    
+    model::ParagraphDepth depth;
+    depth.value = "0";
+    
+    model::ParagraphTitle title;
+    title.value = "Command Line";
+    
+    p.depth.emplace_back(depth);
+    p.title.emplace_back(title);
+    
+    std::stringstream ss;
+    char *args[] = {
+        (char*)"--help",
+        NULL
+    };
+    Program_Options po(1,args);
+    Add_Sentence_With_Code(p,"The tool can be used from the command line",po.Get_Help_Message());
+    return p;
+❱
+   
+   
+
+
+
+
+//Utility
+◀private: static▶ void ☀Add_Sentence(model::Paragraph & p, std::string const& str) ❰
+    model::ParagraphSentence x;
+    model::SentenceText text;
+    text.value = str;
+    x.text.emplace_back(text);
+    p.sentence.emplace_back(x);
+❱
+◀private: static▶ void ☀Add_Sentence_With_Code(model::Paragraph & p, std::string const& str, std::string const& code) ❰
+    model::ParagraphSentence x;
+    model::SentenceText text;
+    text.value = str;
+    x.text.emplace_back(text);
+    
+    model::CodeLine code_line;
+    model::Line line;
+    line.value = code;
+    code_line.line.emplace_back(line);
+    x.code_line.emplace_back(code_line);
+    
+    p.sentence.emplace_back(x);
+    
+    
+❱

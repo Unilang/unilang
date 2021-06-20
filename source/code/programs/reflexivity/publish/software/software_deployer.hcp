@@ -18,6 +18,7 @@ class
 ❪"code/utilities/filesystem/files/observers/other/ldd_results_getter"❫
 ❪"code/utilities/formats/json/converters/type_to_json_string"❫
 ❪"code/programs/repo_tools/repo_stats/repo_stats_documentation_getter"❫
+❪"code/programs/repo_tools/no_remote_scan/no_remote_scan_documentation_getter"❫
 ❪"code/utilities/types/vectors/transformers/lib"❫
 ❪"code/utilities/linguistics/computer/frontends/markdown/markdown_str_getter"❫
 ❪"code/utilities/formats/pdf/pdf_creator"❫
@@ -217,6 +218,7 @@ class
 ◀private: static▶ std::vector<model::Module> ☀Get_Documentation_Structures()❰
   std::vector<model::Module> docs;
   docs.emplace_back(Repo_Stats_Documentation_Getter::Get());
+  docs.emplace_back(No_Remote_Scan_Documentation_Getter::Get());
   
   
   

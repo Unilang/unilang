@@ -13,6 +13,15 @@ hcp(
         "//code/utilities/filesystem/paths:lib",
         "//code/utilities/program/wrappers/bazel/query:bazel_aquery_runner",
         "//code/utilities/program/wrappers/bazel/query:bazel_query_runner",
+        "//code/utilities/program/wrappers/bazel/test:bazel_test_runner",
+    ],
+)
+
+hcp(
+    name = "no_remote_scan_documentation_getter",
+    deps = [
+        "//code/programs/repo_tools/no_remote_scan/program_options:lib",
+        "//code/utilities/code:concept_static_tree_structs",
     ],
 )
 
