@@ -36,7 +36,9 @@ class
             passing_tests.emplace_back(target);
             std::cout << "PASS" << std::endl;
         }
-        std::cout << "FAIL" << std::endl;
+        else{
+            std::cout << "FAIL" << std::endl;
+        }
     });
     std::cout << passing_tests.size() << " passing tests marked no-remote" << std::endl;
     
