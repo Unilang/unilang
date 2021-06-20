@@ -1,0 +1,30 @@
+class
+❪string❫
+❪iostream❫
+❪"nlohmann/json.hpp"❫
+⚯
+❪"code/utilities/system/lib"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
+❪"code/utilities/program/call/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/utilities/types/strings/transformers/trimming/lib"❫
+⚞⚟
+
+◀public: static▶ void ☀Download_To_Tmp_If_Missing(std::string const& url, std::string const& name)❰
+
+    std::string program_path = "/tmp/" + name;
+    
+    if (!File_Exists(program_path)){
+
+        //build download command
+        std::string command = "wget ";
+        command += url;
+        command += " -O ";
+        command += program_path;
+        
+        execute(command);
+        execute("chmod 777 " + program_path);
+    }
+    
+❱
