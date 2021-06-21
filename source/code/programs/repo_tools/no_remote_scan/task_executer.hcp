@@ -25,27 +25,28 @@ class
     auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
     
     bool perform_existing_fail_filter = false;
+    auto configs = options.Configs();
     
     //get all the no-remote tests 
     auto targets = Bazel_Query_Runner::Get_All_Test_Targets_Tagged_No_Remote(repo_context.program_to_run_build);
     std::cout << targets.size() << " tests marked no-remote" << std::endl;
     
     if (perform_existing_fail_filter){
-        targets = Filter_Out_Tests_That_Dont_Already_Pass(repo_context, targets);
+        targets = Filter_Out_Tests_That_Dont_Already_Pass(repo_context, configs, targets);
     }
     
-    Attempt_To_Fix_Each_Test(repo_context, targets);
+    Attempt_To_Fix_Each_Test(repo_context, configs, targets);
     
 ❱
 
 
-◀private: static▶ std::vector<std::string> ☀Filter_Out_Tests_That_Dont_Already_Pass(Build_Repo_Settings const& repo_context, std::vector<std::string> const& targets) ❰
+◀private: static▶ std::vector<std::string> ☀Filter_Out_Tests_That_Dont_Already_Pass(Build_Repo_Settings const& repo_context, std::vector<std::string> const& configs, std::vector<std::string> const& targets) ❰
 
     std::cout << "filtering out tests that don't already pass" << std::endl;
     std::vector<std::string> passing_tests;
     Loop_With_Progress(targets,[&](size_t const& current, size_t const& end, std::string const& target){
         std::cout << current << "/" << end << " " << target << " ";
-        auto results = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
+        auto results = Bazel_Test_Runner::Test(repo_context.program_to_run_build,configs,target);
         if (results){
             passing_tests.emplace_back(target);
             std::cout << "PASS" << std::endl;
@@ -59,7 +60,7 @@ class
     return passing_tests;
 ❱
 
-◀private: static▶ void ☀Attempt_To_Fix_Each_Test(Build_Repo_Settings const& repo_context, std::vector<std::string> const& targets) ❰
+◀private: static▶ void ☀Attempt_To_Fix_Each_Test(Build_Repo_Settings const& repo_context, std::vector<std::string> const& configs, std::vector<std::string> const& targets) ❰
 
     Loop_With_Progress(targets,[&](size_t const& current, size_t const& end, std::string const& target){
         std::cout << current << "/" << end << " " << target << " ";
@@ -68,7 +69,7 @@ class
             bool passed = true;
             bool finished = true;
             //finished = run_lambda_with_timeout(std::chrono::seconds(100),[&](){
-                passed = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
+                passed = Bazel_Test_Runner::Test(repo_context.program_to_run_build,configs,target);
             //});
             
             
@@ -80,7 +81,7 @@ class
                 std::cout << "PASS ";
                 std::cout.flush();
                 
-                Attempt_No_Remote_Fix(repo_context,target);
+                Attempt_No_Remote_Fix(repo_context,configs,target);
                 
             }
             else{
@@ -91,7 +92,7 @@ class
     });
 ❱
 
-◀private: static▶ void ☀Attempt_No_Remote_Fix(Build_Repo_Settings const& repo_context, std::string const& target)❰
+◀private: static▶ void ☀Attempt_No_Remote_Fix(Build_Repo_Settings const& repo_context, std::vector<std::string> const& configs, std::string const& target)❰
 
 
         std::cout << ".";
@@ -104,7 +105,7 @@ class
         bool passed = true;
         bool finished = true;
         //finished = run_lambda_with_timeout(std::chrono::seconds(100),[&](){
-            passed = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
+            passed = Bazel_Test_Runner::Test(repo_context.program_to_run_build,configs,target);
         //});
         
         if (!finished){

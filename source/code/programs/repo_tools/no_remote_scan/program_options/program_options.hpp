@@ -22,6 +22,7 @@ class Program_Options {
 		std::string Url() const;
 		std::string Branch() const;
 		std::string Run_Dir() const;
+		std::vector<std::string> Configs() const;
 
         
         std::string Get_Help_Message();
