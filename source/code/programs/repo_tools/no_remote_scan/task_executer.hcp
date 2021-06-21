@@ -64,26 +64,31 @@ class
         std::cout << current << "/" << end << " " << target << " ";
         std::cout.flush();
         
-        auto initial_pass = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
-        if (initial_pass){
-            std::cout << "PASS ";
-            std::cout.flush();
-            
-            Buildozer_Runner::Remove_No_Remote_Tag(target);
-            auto remote_run = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
-            if (remote_run){
-                std::cout << "| PASSES REMOTE ";
+        try {
+            auto initial_pass = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
+            if (initial_pass){
+                std::cout << "PASS ";
                 std::cout.flush();
+                
+                Buildozer_Runner::Remove_No_Remote_Tag(target);
+                auto remote_run = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
+                if (remote_run){
+                    std::cout << "| PASSES REMOTE ";
+                    std::cout.flush();
+                }
+                else{
+                    std::cout << "| FAILS REMOTE ";
+                    std::cout.flush();
+                    Buildozer_Runner::Add_No_Remote_Tag(target);
+                }
+                
             }
             else{
-                std::cout << "| FAILS REMOTE ";
-                std::cout.flush();
-                Buildozer_Runner::Add_No_Remote_Tag(target);
+                std::cout << "FAIL";
             }
-            
         }
-        else{
-            std::cout << "FAIL";
+        catch(...){
+            std::cout << "TIMEOUT";
         }
         
         std::cout << std::endl;
