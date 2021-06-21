@@ -21,7 +21,7 @@ class
 
 
     std::string command;
-    command += "/tmp/buildozer 'add tags no-remote' ";
+    command += "timeout 60 /tmp/buildozer 'add tags no-remote' ";
     command += target;
     execute_quietly(command);
 ❱
@@ -31,7 +31,7 @@ class
 
 
     std::string command;
-    command += "/tmp/buildozer 'remove tags no-remote' ";
+    command += "timeout 60 /tmp/buildozer 'remove tags no-remote' ";
     command += target;
     execute_quietly(command);
 ❱
@@ -45,7 +45,7 @@ class
 
 
     std::string command;
-    command += "/tmp/buildozer 'dict_set exec_properties linux-sandbox:True' ";
+    command += "timeout 60 /tmp/buildozer 'dict_set exec_properties linux-sandbox:True' ";
     command += target;
     execute_quietly(command);
 ❱
@@ -55,7 +55,7 @@ class
 
 
     std::string command;
-    command += "/tmp/buildozer 'dict_delete exec_properties linux-sandbox' ";
+    command += "timeout 60 /tmp/buildozer 'dict_delete exec_properties linux-sandbox' ";
     command += target;
     execute_quietly(command);
 ❱

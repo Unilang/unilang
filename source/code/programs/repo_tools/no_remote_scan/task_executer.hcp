@@ -93,12 +93,16 @@ class
 
 ◀private: static▶ void ☀Attempt_No_Remote_Fix(Build_Repo_Settings const& repo_context, std::string const& target)❰
 
+
+        std::cout << ".";
+        std::cout.flush();
         Buildozer_Runner::Remove_No_Remote_Tag(target);
+        std::cout << ".";
+        std::cout.flush();
         
     
         bool passed = true;
         bool finished = true;
-        
         //finished = run_lambda_with_timeout(std::chrono::seconds(100),[&](){
             passed = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
         //});

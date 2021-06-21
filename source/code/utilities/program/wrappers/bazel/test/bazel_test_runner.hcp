@@ -35,12 +35,13 @@ class
     auto command = Build_Command(bazel_wrapper, target);
     
     //run command
-    auto spawn_results = Timed_Process_Spawner::Execute_And_Get_Back_Results(command);
-    if (spawn_results.results.return_code == 124){
+    // auto spawn_results = Timed_Process_Spawner::Execute_And_Get_Back_Results(command);
+    auto return_code = Silence_Output_And_Get_Return_Value_Of_Running(command);
+    if (return_code == 124){
         std::cout << "TIMEOUT ";
     }
     
-    return spawn_results.results.return_code == 0;
+    return return_code == 0;
     
 ❱
 ◀private: static▶ std::string ☀Build_Command(std::string const& bazel_wrapper, std::string const& target)❰
@@ -54,6 +55,8 @@ class
     command += "--noremote_accept_cached ";
     command += "--nocache_test_results ";
     command += "--config=remote ";
+    command += "--test_summary=none ";
+    command += "--test_output=summary ";
     command += target;
     return command;
 ❱
