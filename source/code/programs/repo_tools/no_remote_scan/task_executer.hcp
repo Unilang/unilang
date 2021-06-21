@@ -66,9 +66,10 @@ class
         std::cout.flush();
         
             bool passed = true;
-            bool finished = run_lambda_with_timeout(std::chrono::seconds(100),[&](){
+            bool finished = true;
+            //finished = run_lambda_with_timeout(std::chrono::seconds(100),[&](){
                 passed = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
-            });
+            //});
             
             
             if (!finished){
@@ -96,9 +97,11 @@ class
         
     
         bool passed = true;
-        bool finished = run_lambda_with_timeout(std::chrono::seconds(100),[&](){
+        bool finished = true;
+        
+        //finished = run_lambda_with_timeout(std::chrono::seconds(100),[&](){
             passed = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
-        });
+        //});
         
         if (!finished){
             std::cout << "TIMEOUT ";
