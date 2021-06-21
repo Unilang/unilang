@@ -23,8 +23,7 @@ class
     std::string command;
     command += "/tmp/buildozer 'add tags no-remote' ";
     command += target;
-    auto results = execute(command);
-    std::cout << results;
+    execute_quietly(command);
 ❱
 ◀public: static▶ void ☀Remove_No_Remote_Tag(std::string const& target)❰
 
@@ -34,8 +33,7 @@ class
     std::string command;
     command += "/tmp/buildozer 'remove tags no-remote' ";
     command += target;
-    auto results = execute(command);
-    std::cout << results;
+    execute_quietly(command);
 ❱
 
 
@@ -49,8 +47,7 @@ class
     std::string command;
     command += "/tmp/buildozer 'dict_set exec_properties linux-sandbox:True' ";
     command += target;
-    auto results = execute(command);
-    std::cout << results;
+    execute_quietly(command);
 ❱
 ◀public: static▶ void ☀Remove_Remote_Sandbox(std::string const& target)❰
 
@@ -60,8 +57,7 @@ class
     std::string command;
     command += "/tmp/buildozer 'dict_delete exec_properties linux-sandbox' ";
     command += target;
-    auto results = execute(command);
-    std::cout << results;
+    execute_quietly(command);
 ❱
 
 
