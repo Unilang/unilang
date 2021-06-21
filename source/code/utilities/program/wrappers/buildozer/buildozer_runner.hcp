@@ -1,0 +1,72 @@
+class
+❪string❫
+❪iostream❫
+❪"nlohmann/json.hpp"❫
+⚯
+❪"code/utilities/system/lib"❫
+❪"code/utilities/filesystem/paths/lib"❫
+❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
+❪"code/utilities/program/call/lib"❫
+❪"code/utilities/types/strings/transformers/removing/lib"❫
+❪"code/utilities/types/strings/transformers/trimming/lib"❫
+❪"code/utilities/program/wrappers/wget/wget_downloader"❫
+⚞⚟
+
+
+
+//no-remote
+◀public: static▶ void ☀Add_No_Remote_Tag(std::string const& target)❰
+
+    Ensure_Tool_Exists();
+
+
+    std::string command;
+    command += "/tmp/buildifier 'add tags no-remote' ";
+    command += target;
+    auto results = execute(command);
+    std::cout << results;
+❱
+◀public: static▶ void ☀Remove_No_Remote_Tag(std::string const& target)❰
+
+    Ensure_Tool_Exists();
+
+
+    std::string command;
+    command += "/tmp/buildifier 'remove tags no-remote' ";
+    command += target;
+    auto results = execute(command);
+    std::cout << results;
+❱
+
+
+
+//linux-sandbox
+◀public: static▶ void ☀Add_Remote_Sandbox(std::string const& target)❰
+
+    Ensure_Tool_Exists();
+
+
+    std::string command;
+    command += "/tmp/buildifier 'dict_set exec_properties linux-sandbox:True' ";
+    command += target;
+    auto results = execute(command);
+    std::cout << results;
+❱
+◀public: static▶ void ☀Remove_Remote_Sandbox(std::string const& target)❰
+
+    Ensure_Tool_Exists();
+
+
+    std::string command;
+    command += "/tmp/buildifier 'dict_delete exec_properties linux-sandbox' ";
+    command += target;
+    auto results = execute(command);
+    std::cout << results;
+❱
+
+
+◀private: static▶ void ☀Ensure_Tool_Exists()❰
+
+    Wget_Downloader::Download_To_Tmp_If_Missing("https://github.com/bazelbuild/buildtools/releases/download/4.0.1/buildifier","buildifier");
+❱
+

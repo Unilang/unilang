@@ -12,5 +12,6 @@ hcp(
         "//code/utilities/system:lib",
         "//code/utilities/types/strings/transformers/removing:lib",
         "//code/utilities/types/strings/transformers/trimming:lib",
+        "//code/utilities/program/wrappers/wget:wget_downloader",
     ],
 )
