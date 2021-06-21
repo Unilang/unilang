@@ -21,7 +21,7 @@ class
 
 
     std::string command;
-    command += "/tmp/buildifier 'add tags no-remote' ";
+    command += "/tmp/buildozer 'add tags no-remote' ";
     command += target;
     auto results = execute(command);
     std::cout << results;
@@ -32,7 +32,7 @@ class
 
 
     std::string command;
-    command += "/tmp/buildifier 'remove tags no-remote' ";
+    command += "/tmp/buildozer 'remove tags no-remote' ";
     command += target;
     auto results = execute(command);
     std::cout << results;
@@ -47,7 +47,7 @@ class
 
 
     std::string command;
-    command += "/tmp/buildifier 'dict_set exec_properties linux-sandbox:True' ";
+    command += "/tmp/buildozer 'dict_set exec_properties linux-sandbox:True' ";
     command += target;
     auto results = execute(command);
     std::cout << results;
@@ -58,7 +58,7 @@ class
 
 
     std::string command;
-    command += "/tmp/buildifier 'dict_delete exec_properties linux-sandbox' ";
+    command += "/tmp/buildozer 'dict_delete exec_properties linux-sandbox' ";
     command += target;
     auto results = execute(command);
     std::cout << results;
@@ -67,6 +67,5 @@ class
 
 ◀private: static▶ void ☀Ensure_Tool_Exists()❰
 
-    Wget_Downloader::Download_To_Tmp_If_Missing("https://github.com/bazelbuild/buildtools/releases/download/4.0.1/buildifier","buildifier");
+    Wget_Downloader::Download_To_Tmp_If_Missing("https://github.com/bazelbuild/buildtools/releases/download/4.0.1/buildozer-linux-amd64","buildozer");
 ❱
-
