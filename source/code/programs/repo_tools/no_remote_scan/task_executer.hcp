@@ -11,6 +11,7 @@ class
 ❪"code/utilities/program/wrappers/bazel/test/bazel_test_runner"❫
 ❪"code/utilities/types/general/lib"❫
 ❪"code/utilities/program/wrappers/buildozer/buildozer_runner"❫
+❪"code/utilities/types/function/lib"❫
 ⚞⚟
 
 
@@ -64,33 +65,53 @@ class
         std::cout << current << "/" << end << " " << target << " ";
         std::cout.flush();
         
-        try {
-            auto initial_pass = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
-            if (initial_pass){
+            bool passed = true;
+            bool finished = run_lambda_with_timeout(std::chrono::seconds(100),[&](){
+                passed = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
+            });
+            
+            
+            if (!finished){
+                std::cout << "TIMEOUT ";
+                std::cout.flush();
+            }
+            else if (passed){
                 std::cout << "PASS ";
                 std::cout.flush();
                 
-                Buildozer_Runner::Remove_No_Remote_Tag(target);
-                auto remote_run = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
-                if (remote_run){
-                    std::cout << "| PASSES REMOTE ";
-                    std::cout.flush();
-                }
-                else{
-                    std::cout << "| FAILS REMOTE ";
-                    std::cout.flush();
-                    Buildozer_Runner::Add_No_Remote_Tag(target);
-                }
+                Attempt_No_Remote_Fix(repo_context,target);
                 
             }
             else{
                 std::cout << "FAIL";
             }
-        }
-        catch(...){
-            std::cout << "TIMEOUT";
-        }
         
         std::cout << std::endl;
     });
+❱
+
+◀private: static▶ void ☀Attempt_No_Remote_Fix(Build_Repo_Settings const& repo_context, std::string const& target)❰
+
+        Buildozer_Runner::Remove_No_Remote_Tag(target);
+        
+    
+        bool passed = true;
+        bool finished = run_lambda_with_timeout(std::chrono::seconds(100),[&](){
+            passed = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
+        });
+        
+        if (!finished){
+            std::cout << "TIMEOUT ";
+            std::cout.flush();
+            Buildozer_Runner::Add_No_Remote_Tag(target);
+        }
+        else if (passed){
+            std::cout << "| PASSES REMOTE ";
+            std::cout.flush();
+        }
+        else{
+            std::cout << "| FAILS REMOTE ";
+            std::cout.flush();
+            Buildozer_Runner::Add_No_Remote_Tag(target);
+        }
 ❱
