@@ -2,14 +2,15 @@ class
 ❪iostream❫
 ❪fstream❫
 ❪"code/programs/repo_tools/no_remote_scan/program_options/program_options"❫
-⚯
 ❪"code/utilities/build/build_repo_establisher/build_repo_establisher"❫
+⚯
 ❪"code/utilities/program/wrappers/bazel/query/bazel_aquery_runner"❫
 ❪"code/utilities/program/wrappers/bazel/query/bazel_query_runner"❫
 ❪"code/utilities/filesystem/paths/lib"❫
 ❪"code/utilities/filesystem/files/observers/lstat_wrap/lib"❫
 ❪"code/utilities/program/wrappers/bazel/test/bazel_test_runner"❫
 ❪"code/utilities/types/general/lib"❫
+❪"code/utilities/program/wrappers/buildozer/buildozer_runner"❫
 ⚞⚟
 
 
@@ -22,11 +23,23 @@ class
     //Analyze the repository to learn how to build it
     auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
     
+    bool perform_existing_fail_filter = false;
+    
     //get all the no-remote tests 
     auto targets = Bazel_Query_Runner::Get_All_Test_Targets_Tagged_No_Remote(repo_context.program_to_run_build);
     std::cout << targets.size() << " tests marked no-remote" << std::endl;
     
-    //filter out the ones that already pass
+    if (perform_existing_fail_filter){
+        targets = Filter_Out_Tests_That_Dont_Already_Pass(repo_context, targets);
+    }
+    
+    Attempt_To_Fix_Each_Test(repo_context, targets);
+    
+❱
+
+
+◀private: static▶ std::vector<std::string> ☀Filter_Out_Tests_That_Dont_Already_Pass(Build_Repo_Settings const& repo_context, std::vector<std::string> const& targets) ❰
+
     std::cout << "filtering out tests that don't already pass" << std::endl;
     std::vector<std::string> passing_tests;
     Loop_With_Progress(targets,[&](size_t const& current, size_t const& end, std::string const& target){
@@ -42,9 +55,37 @@ class
     });
     std::cout << passing_tests.size() << " passing tests marked no-remote" << std::endl;
     
-    //attempt to fix each test
-    Loop_With_Progress(passing_tests,[&](size_t const& current, size_t const& end, std::string const& target){
-        std::cout << current << "/" << end << " " << target << std::endl;
+    return passing_tests;
+❱
+
+◀private: static▶ void ☀Attempt_To_Fix_Each_Test(Build_Repo_Settings const& repo_context, std::vector<std::string> const& targets) ❰
+
+    Loop_With_Progress(targets,[&](size_t const& current, size_t const& end, std::string const& target){
+        std::cout << current << "/" << end << " " << target << " ";
+        std::cout.flush();
+        
+        auto initial_pass = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
+        if (initial_pass){
+            std::cout << "PASS ";
+            std::cout.flush();
+            
+            Buildozer_Runner::Remove_No_Remote_Tag(target);
+            auto remote_run = Bazel_Test_Runner::Test(repo_context.program_to_run_build,target);
+            if (remote_run){
+                std::cout << "| PASSES REMOTE ";
+                std::cout.flush();
+            }
+            else{
+                std::cout << "| FAILS REMOTE ";
+                std::cout.flush();
+                Buildozer_Runner::Add_No_Remote_Tag(target);
+            }
+            
+        }
+        else{
+            std::cout << "FAIL";
+        }
+        
+        std::cout << std::endl;
     });
-    
 ❱
