@@ -125,9 +125,11 @@ class
             replace_all(branch_name,':','_');
             replace_all(branch_name,'\\','_');
             replace_all(branch_name,' ','_');
-            branch_name = "luxe/remove_noremote_" + branch_name;
+            branch_name = "luxe/nm_fix" + branch_name;
             
-            Git_Updater::Default_Push_All_Changes_To_Remote_Branch_And_Return_To_Master(branch_name);
+            Git_Update_Settings settings;
+            settings.message = "remove no-remote tag from " + target;
+            Git_Updater::Push_All_Changes_To_Remote_Branch_And_Return_To_Master(settings,branch_name);
         }
         else{
             std::cout << "| FAILS REMOTE ";
