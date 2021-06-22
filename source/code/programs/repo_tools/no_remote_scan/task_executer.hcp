@@ -12,6 +12,8 @@ class
 ❪"code/utilities/types/general/lib"❫
 ❪"code/utilities/program/wrappers/buildozer/buildozer_runner"❫
 ❪"code/utilities/types/function/lib"❫
+❪"code/utilities/program/wrappers/git/update/git_updater"❫
+❪"code/utilities/types/strings/transformers/search_replace/lib"❫
 ⚞⚟
 
 
@@ -116,6 +118,16 @@ class
         else if (passed){
             std::cout << "| PASSES REMOTE ";
             std::cout.flush();
+            
+            //create a branch name
+            auto branch_name = target;
+            replace_all(branch_name,'/','_');
+            replace_all(branch_name,':','_');
+            replace_all(branch_name,'\\','_');
+            replace_all(branch_name,' ','_');
+            branch_name = "luxe/remove_noremote_" + branch_name;
+            
+            Git_Updater::Default_Push_All_Changes_To_Remote_Branch_And_Return_To_Master(branch_name);
         }
         else{
             std::cout << "| FAILS REMOTE ";

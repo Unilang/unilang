@@ -17,6 +17,8 @@ hcp(
         "//code/utilities/types/general:lib",
         "//code/utilities/program/wrappers/buildozer:buildozer_runner",
         "//code/utilities/types/function:lib",
+        "//code/utilities/program/wrappers/git/update:git_updater",
+        "//code/utilities/types/strings/transformers/search_replace:lib",
     ],
 )
 
