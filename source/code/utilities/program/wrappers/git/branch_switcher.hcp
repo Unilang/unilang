@@ -11,3 +11,16 @@ class
     command += branch_name;
     execute(command);
 ❱
+
+◀public: static▶ void ☀Switch_To_Master()❰
+    
+    std::string command = "git checkout master";
+    execute(command);
+❱
+
+◀public: static▶ void ☀Switch_And_Create_If_Missing(std::string const& branch_name)❰
+    
+    std::string command = "git checkout -B ";
+    command += branch_name;
+    execute(command);
+❱

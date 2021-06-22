@@ -1,0 +1,13 @@
+class
+❪string❫
+❪stdio.h❫
+⚯
+❪"code/utilities/program/call/lib.hpp"❫
+⚞⚟
+
+◀public: static▶ void ☀Push_Upstream(std::string const& branch_name)❰
+    
+    std::string command = "git push --set-upstream origin ";
+    command += branch_name;
+    execute(command);
+❱

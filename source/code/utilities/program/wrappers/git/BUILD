@@ -37,6 +37,13 @@ hcp(
 )
 
 hcp(
+    name = "git_upstream_pusher",
+    deps = [
+        "//code/utilities/program/call:lib",
+    ],
+)
+
+hcp(
     name = "latest_commit_getter",
     deps = [
         "//code/utilities/program/call:lib",

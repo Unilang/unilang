@@ -1,13 +1,33 @@
 class
 ❪string❫
-❪"code/utilities/program/wrappers/git/update/git_update_settings"❫   
+❪"code/utilities/program/wrappers/git/update/git_update_settings"❫
 ⚯
 ❪"code/utilities/program/call/lib.hpp"❫
+❪"code/utilities/program/wrappers/git/branch_switcher"❫
+❪"code/utilities/program/wrappers/git/git_upstream_pusher"❫
 ⚞⚟
 
 
 
-//run git command pragmatically
+//run git commands pragmatically
+◀public: static▶ void ☀Default_Push_All_Changes_To_Remote_Branch_And_Return_To_Master(std::string const& branch_name)❰
+    Branch_Switcher::Switch_And_Create_If_Missing(branch_name);
+    Git_Upstream_Pusher::Push_Upstream(branch_name);
+    Default_Update_All_Changes();
+    Branch_Switcher::Switch_To_Master();
+❱
+◀public: static▶ void ☀Default_Push_All_Changes_To_Remote_Branch(std::string const& branch_name)❰
+    Branch_Switcher::Switch_And_Create_If_Missing(branch_name);
+    Git_Upstream_Pusher::Push_Upstream(branch_name);
+    Default_Update_All_Changes();
+❱
+◀public: static▶ void ☀Default_Update_All_Changes()❰
+
+    Git_Update_Settings settings;
+    Update_All_Changes(settings);
+    
+❱
+
 ◀public: static▶ void ☀Update_All_Changes(Git_Update_Settings const& settings)❰
 
     if (settings.add_everything){
