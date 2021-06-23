@@ -31,6 +31,11 @@ class
     //get all the no-remote tests 
     auto targets = Bazel_Query_Runner::Get_All_Test_Targets_Tagged_No_Remote(repo_context.program_to_run_build);
     std::cout << targets.size() << " tests marked no-remote" << std::endl;
+    
+    auto no_buildkite_targets = Bazel_Query_Runner::Get_All_Test_Targets_Tagged_No_Buildkite(repo_context.program_to_run_build);
+    std::cout << no_buildkite_targets.size() << " tests marked no-buildkite" << std::endl;
+    
+    exit(0);
 
     
     Attempt_To_Fix_Each_Test(repo_context, configs, targets);
