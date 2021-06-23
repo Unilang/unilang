@@ -26,41 +26,18 @@ class
     //Analyze the repository to learn how to build it
     auto repo_context = Build_Repo_Establisher::Establish_Repo_For_Building(options.Run_Dir(),options.Url(),options.Branch());
     
-    bool perform_existing_fail_filter = false;
     auto configs = options.Configs();
     
     //get all the no-remote tests 
     auto targets = Bazel_Query_Runner::Get_All_Test_Targets_Tagged_No_Remote(repo_context.program_to_run_build);
     std::cout << targets.size() << " tests marked no-remote" << std::endl;
-    
-    if (perform_existing_fail_filter){
-        targets = Filter_Out_Tests_That_Dont_Already_Pass(repo_context, configs, targets);
-    }
+
     
     Attempt_To_Fix_Each_Test(repo_context, configs, targets);
     
 ❱
 
 
-◀private: static▶ std::vector<std::string> ☀Filter_Out_Tests_That_Dont_Already_Pass(Build_Repo_Settings const& repo_context, std::vector<std::string> const& configs, std::vector<std::string> const& targets) ❰
-
-    std::cout << "filtering out tests that don't already pass" << std::endl;
-    std::vector<std::string> passing_tests;
-    Loop_With_Progress(targets,[&](size_t const& current, size_t const& end, std::string const& target){
-        std::cout << current << "/" << end << " " << target << " ";
-        auto results = Bazel_Test_Runner::Test(repo_context.program_to_run_build,configs,target);
-        if (results){
-            passing_tests.emplace_back(target);
-            std::cout << "PASS" << std::endl;
-        }
-        else{
-            std::cout << "FAIL" << std::endl;
-        }
-    });
-    std::cout << passing_tests.size() << " passing tests marked no-remote" << std::endl;
-    
-    return passing_tests;
-❱
 
 ◀private: static▶ void ☀Attempt_To_Fix_Each_Test(Build_Repo_Settings const& repo_context, std::vector<std::string> const& configs, std::vector<std::string> const& targets) ❰
 
@@ -119,21 +96,29 @@ class
             std::cout << "| PASSES REMOTE ";
             std::cout.flush();
             
-            //create a branch name
-            auto branch_name = target;
-            replace_all(branch_name,'/','_');
-            replace_all(branch_name,':','_');
-            replace_all(branch_name,'\\','_');
-            replace_all(branch_name,' ','_');
-            branch_name = "luxe/nm_fix" + branch_name;
-            
-            Git_Update_Settings settings;
-            settings.message = "remove no-remote tag from " + target;
-            Git_Updater::Push_All_Changes_To_Remote_Branch_And_Return_To_Master(settings,branch_name);
+            Make_PR(target);
         }
         else{
             std::cout << "| FAILS REMOTE ";
             std::cout.flush();
             Buildozer_Runner::Add_No_Remote_Tag(target);
         }
+❱
+
+
+◀private: static▶ void ☀Make_PR(std::string const& target)❰
+
+    //create a branch name
+    auto branch_name = target;
+    replace_all(branch_name,'/','_');
+    replace_all(branch_name,':','_');
+    replace_all(branch_name,'\\','_');
+    replace_all(branch_name,' ','_');
+    branch_name = "luxe/nm_fix" + branch_name;
+    
+    //push up the branch
+    Git_Update_Settings settings;
+    settings.message = "remove no-remote tag from " + target;
+    Git_Updater::Push_All_Changes_To_Remote_Branch_And_Return_To_Master(settings,branch_name);
+
 ❱
