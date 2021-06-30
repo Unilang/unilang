@@ -267,6 +267,8 @@ class
     x.specs.emplace_back(halley());
     x.specs.emplace_back(blah());
     x.specs.emplace_back(xscreensaver());
+    x.specs.emplace_back(ncine());
+    
     
     
     
@@ -1861,6 +1863,16 @@ cc_library(
     
     return spec;
 ❱
+
+
+◀private: static▶ Dependency_Specification ☀ncine()❰
+    Dependency_Specification spec;
+    spec.lib_name = "nCine";
+    Add_Unilang_Github_Mirror(spec,"nCine","43f5fe8e82e9daa21e4d1feea9ca41ed4cce7454","78964d315e2da1f42f8597c5cd21137015c326bec6bc7fdb128dc86ed3ace285");
+    return spec;
+❱
+
+
 
 
 ◀private: static▶ Dependency_Specification ☀libXxf86vm()❰

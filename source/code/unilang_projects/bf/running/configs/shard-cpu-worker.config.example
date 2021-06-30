@@ -10,7 +10,10 @@ limit_global_execution: true
 # This determines whether the shard instance will participate in the backplane
 # and cache it's operation outputs in its own cache file CAS.
 # When not caching locally, the worker will send its output to another worker's CAS.
-omit_from_cas: false
+capabilities {
+  cas: true
+  execution: true
+}
 
 # the digest function for this worker, required
 # to match out of band between the client and server
