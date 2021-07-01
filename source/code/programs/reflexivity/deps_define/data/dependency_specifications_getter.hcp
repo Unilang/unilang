@@ -119,6 +119,7 @@ class
     x.specs.emplace_back(Rules_Fuzzing());
     x.specs.emplace_back(Rules_Python());
     //x.specs.emplace_back(Rules_Pkg());
+    x.specs.emplace_back(Apple_Rules_Lint());
 
 
     
@@ -3066,6 +3067,15 @@ jazzer_init()
     spec.build_content_in_dependency=true;
     return spec;
 ❱
+◀private: static▶ Dependency_Specification ☀Apple_Rules_Lint()❰
+    Dependency_Specification spec;
+    spec.lib_name = "apple_rules_lint";
+    Add_Unilang_Github_Mirror(spec,"apple_rules_lint","6e8162187add0469842ac2ca37f624966448bd84","d6c602129ec5f27b2fb98db444ab8c4d5cd607946750cbcc60166828c8db02a6");
+    spec.build_content_in_dependency=true;
+    return spec;
+❱
+
+
 ◀private: static▶ Dependency_Specification ☀Rules_Pkg()❰
     Dependency_Specification spec;
     spec.lib_name = "rules_pkg";
