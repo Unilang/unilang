@@ -20,6 +20,7 @@ class
 ❪"code/utilities/code/references/reference_lookup_map"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_range"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/positioned_button_tree_iterator"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/draw_strategy"❫
 ⚯
 ❪"code/utilities/data_structures/graphics/objects/mouse/events/mouse_events_checker"❫
 ❪"code/utilities/types/vectors/operators/lib"❫
@@ -163,7 +164,7 @@ class
     For_Each_Noncollapsed::Iterate(tr,begin.it,end.it,[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
         
         //adjust position
-        Adjust_Positions_For_Next_Cell(it->label,start_pos,current_pos,depth);
+        Adjust_Positions_For_Next_Cell_Before_Draw(it->label,start_pos,current_pos,depth);
         
         out_depth = std::max(out_depth,Faced_Label_Drawer::Get_Dimensions(it->label).x + current_pos.x);
         
@@ -171,7 +172,7 @@ class
     });
     
     //BUG: I have to check the last element as well, but I'm not sure it's depth
-    //Adjust_Positions_For_Next_Cell(end.it->label,start_pos,current_pos,depth);
+    //Adjust_Positions_For_Next_Cell_Before_Draw(end.it->label,start_pos,current_pos,depth);
     out_depth = std::max(out_depth,Faced_Label_Drawer::Get_Dimensions(end.it->label).x + current_pos.x);
     
     //buffer space
@@ -242,7 +243,7 @@ class
     For_Each_Noncollapsed::Iterate(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
         
         //adjust position
-        Adjust_Positions_For_Next_Cell(it->label,start_pos,current_pos,depth);
+        Adjust_Positions_For_Next_Cell_Before_Draw(it->label,start_pos,current_pos,depth);
         
         //add position for label path
         std::pair<std::string,Positioned_Button_Tree_Iterator> result;
@@ -274,16 +275,15 @@ class
     Frame_Elements labels;
     
     
-    For_Each_Noncollapsed::Iterate(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
+    For_Each_Noncollapsed::Iterate_With_Previous(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator prev, tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
         
         //branches
         if (should_draw_branches) {
             Append(branches.types,Possibly_Add_Branches(tr,it,it->label,start_pos,current_pos,depth).types);
         }
         
-        //adjust position for label.  perform event update.
-        Adjust_Positions_For_Next_Cell(it->label,start_pos,current_pos,depth);
-        Faced_Label_Eventer::Event_It(font_chars,it->label,current_pos,pc_input);
+        //adjust position for label. perform event update.
+        Adjust_Positions_For_Next_Cell_Before_Draw(it->label,start_pos,current_pos,depth);
         
         //should we show the button
         if (should_draw_buttons) {
@@ -294,7 +294,10 @@ class
         }
         
         //draw the label
+        Faced_Label_Eventer::Event_It(font_chars,it->label,current_pos,pc_input);
         Append(labels.types,Buttoned_Faced_Label_Drawer::Draw(font_chars,*it,current_pos,pc_input).types);
+        
+        Adjust_Positions_For_Next_Cell_After_Draw(it->label,start_pos,current_pos,depth);
         
         
         return Should_Break::NO;
@@ -356,8 +359,12 @@ class
 ❱
 
 
-◀private: static▶ void  ☀Adjust_Positions_For_Next_Cell(Faced_Label const& label, Position const& start_pos, Position & current_pos, int const& depth)❰
+◀private: static▶ void  ☀Adjust_Positions_For_Next_Cell_Before_Draw(Faced_Label const& label, Position const& start_pos, Position & current_pos, int const& depth)❰
         Move_Down_And_Indent(label,start_pos,current_pos,depth);
+        //Indent(label,start_pos,current_pos,depth);
+❱
+◀private: static▶ void  ☀Adjust_Positions_For_Next_Cell_After_Draw(Faced_Label const& label, Position const& start_pos, Position & current_pos, int const& depth)❰
+        //Move_Down_And_Indent(label,start_pos,current_pos,depth);
         //Indent(label,start_pos,current_pos,depth);
 ❱
 
@@ -370,5 +377,5 @@ class
 ◀private: static▶ void  ☀Indent(Faced_Label const& label, Position const& start_pos, Position & current_pos, int const& depth)❰
 
         auto dim = Faced_Label_Drawer::Get_Dimensions(label);
-        current_pos.x += dim.x;
+        current_pos.x += dim.x -1;
 ❱

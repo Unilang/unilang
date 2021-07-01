@@ -10,6 +10,7 @@ hcp_and_hcp_pos(
     deps = [
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/data:buttoned_faced_label",
         "//code/utilities/data_structures/line_break:should_line_break",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:draw_strategy",
         "@tree",
     ],
 )
@@ -27,6 +28,14 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/data:buttoned_faced_label",
         "//code/utilities/data_structures/line_break:should_line_break",
         "@tree",
+    ],
+)
+
+enum_cpp(
+    name = "draw_strategy",
+    values = [
+        "regular_tree",
+        "wide_tree",
     ],
 )
 
@@ -51,6 +60,7 @@ hcp(
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:for_each_noncollapsed",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:positioned_button_face_tree",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:positioned_button_tree_iterator",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:draw_strategy",
         "//code/utilities/data_structures/graphics/objects/faced_label:faced_label_drawer",
         "//code/utilities/data_structures/graphics/objects/faced_label:faced_label_eventer",
         "//code/utilities/data_structures/graphics/objects/faced_label:faced_label_is_active",

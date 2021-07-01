@@ -51,5 +51,49 @@ static void Iterate(const tree<Buttoned_Faced_Label>& tr, tree<Buttoned_Faced_La
 
 }
 
+template <typename Fun>
+static void Iterate_With_Previous(const tree<Buttoned_Faced_Label>& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, tree<Buttoned_Faced_Label>::pre_order_iterator end, Fun fun){
+
+    //exit early if tree if empty
+    if(!tr.is_valid(it)) return;
+    
+    //calculate the current depth of the iterator given
+    int rootdepth=tr.depth(it);
+    
+    bool subtree_collapsed = false;
+    int collapsed_depth = 0;
+    
+    tree<Buttoned_Faced_Label>::pre_order_iterator prev = nullptr;
+    
+    while(it!=end) {
+        
+        //calculate the depth of the node
+        int depth = tr.depth(it)-rootdepth;
+        
+        //uncollapse
+        if (subtree_collapsed && collapsed_depth >= depth){
+            subtree_collapsed = false;
+        }
+        
+        //do
+        if (!subtree_collapsed){
+            auto should_break = fun(prev,it,depth);
+            if (should_break == Should_Break::YES){
+                break;
+            }
+        }
+        
+        //collapse
+        if (!subtree_collapsed && tr.number_of_children(it) > 0 && it->button.current_face == 0){
+            subtree_collapsed = true;
+            collapsed_depth = depth;
+        }
+        
+        prev=it;
+        ++it;
+    }
+
+}
+
 
 ▶

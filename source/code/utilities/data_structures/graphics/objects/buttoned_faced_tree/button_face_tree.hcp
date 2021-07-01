@@ -1,6 +1,7 @@
 class
 ❪vector❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/data/buttoned_faced_label"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/draw_strategy"❫
 ❪"src/tree.hh"❫
 ⚯
 
@@ -9,5 +10,7 @@ class
 ◀public:
 
     tree<Buttoned_Faced_Label> ፠nodes፠;
+    
+    Draw_Strategy draw_strategy = Draw_Strategy::REGULAR_TREE;
 ▶
 
