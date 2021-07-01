@@ -83,11 +83,11 @@ class
     
     
     elements.types += Build_Branches_And_Button_Labels(font_chars,pc_input,pos,tr,range).types;
-    elements.types += Build_Generic_Schema_References(font_chars,pc_input,pos,tr,range,ref_map).types;
+    elements.types += Build_Generic_Schema_Reference_Connections(font_chars,pc_input,pos,tr,range,ref_map).types;
     
 ❱
 
-◀private: static▶ Frame_Elements  ☀Build_Generic_Schema_References(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range, Reference_Lookup_Map const& ref_map)❰
+◀private: static▶ Frame_Elements  ☀Build_Generic_Schema_Reference_Connections(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range, Reference_Lookup_Map const& ref_map)❰
     
     //iterate the tree to get all path locations.
     //this way we can draw the references by looking up the path instead of re-traversing the tree
@@ -261,6 +261,11 @@ class
 
 ◀private: static▶ Frame_Elements  ☀Build_Branches_And_Button_Labels(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
     
+    
+    bool should_draw_branches = true;
+    bool should_draw_buttons = true;
+    
+    
     auto start_pos = pos;
     auto current_pos = pos;
     
@@ -268,20 +273,29 @@ class
     Frame_Elements branches;
     Frame_Elements labels;
     
+    
     For_Each_Noncollapsed::Iterate(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
         
         //branches
-        Append(branches.types,Possibly_Add_Branches(tr,it,it->label,start_pos,current_pos,depth).types);
+        if (should_draw_branches) {
+            Append(branches.types,Possibly_Add_Branches(tr,it,it->label,start_pos,current_pos,depth).types);
+        }
         
         //adjust position for label.  perform event update.
         Adjust_Positions_For_Next_Cell(it->label,start_pos,current_pos,depth);
         Faced_Label_Eventer::Event_It(font_chars,it->label,current_pos,pc_input);
         
         //should we show the button
-        it->style.show_button = tr.number_of_children(it) > 0;
+        if (should_draw_buttons) {
+            it->style.show_button = tr.number_of_children(it) > 0;
+        }
+        else {
+            it->style.show_button = false;
+        }
         
         //draw the label
         Append(labels.types,Buttoned_Faced_Label_Drawer::Draw(font_chars,*it,current_pos,pc_input).types);
+        
         
         return Should_Break::NO;
     });
@@ -343,7 +357,18 @@ class
 
 
 ◀private: static▶ void  ☀Adjust_Positions_For_Next_Cell(Faced_Label const& label, Position const& start_pos, Position & current_pos, int const& depth)❰
+        Move_Down_And_Indent(label,start_pos,current_pos,depth);
+        //Indent(label,start_pos,current_pos,depth);
+❱
+
+◀private: static▶ void  ☀Move_Down_And_Indent(Faced_Label const& label, Position const& start_pos, Position & current_pos, int const& depth)❰
+
         auto dim = Faced_Label_Drawer::Get_Dimensions(label);
         current_pos.x = start_pos.x + 10 * depth;
         current_pos.y += dim.y-1;
+❱
+◀private: static▶ void  ☀Indent(Faced_Label const& label, Position const& start_pos, Position & current_pos, int const& depth)❰
+
+        auto dim = Faced_Label_Drawer::Get_Dimensions(label);
+        current_pos.x += dim.x;
 ❱
