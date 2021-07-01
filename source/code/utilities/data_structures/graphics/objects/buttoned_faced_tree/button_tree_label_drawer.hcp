@@ -319,9 +319,9 @@ class
     
     //add selector arrow
     if (Faced_Label_Is_Active::Is_Active(label)){
-        branch_data.bitmap = Right_Arrow::Create(10);
+        branch_data.bitmap = Right_Arrow::Create(5);
         branch_data.pos.x = start_pos.x - 18;
-        branch_data.pos.y = current_pos.y + 16;
+        branch_data.pos.y = current_pos.y + 20;
         elements.types.emplace_back(branch_data);
     }
     
