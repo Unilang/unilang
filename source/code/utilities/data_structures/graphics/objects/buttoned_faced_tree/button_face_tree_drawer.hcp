@@ -38,6 +38,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/for_each_noncollapsed"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_full_path_name"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_connection_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_drawer_wide"❫
 ❪"code/utilities/math/math"❫
 ⚞⚟
 
@@ -97,7 +98,7 @@ class
         return Build_Branches_And_Button_Labels_Regular(font_chars,pc_input,pos,tr,draw_settings,range);
     }
     else if (draw_settings.draw_strategy == Draw_Strategy::WIDE_TREE){
-        return Build_Branches_And_Button_Labels_Wide(font_chars,pc_input,pos,tr,draw_settings,range);
+        return Button_Face_Tree_Drawer_Wide::Draw(font_chars,pc_input,pos,tr,draw_settings,range);
     }
     
 ❱
@@ -129,40 +130,6 @@ class
         else {
             it->style.show_button = false;
         }
-        
-        //draw the label
-        Faced_Label_Eventer::Event_It(font_chars,it->label,current_pos,pc_input);
-        Append(labels.types,Buttoned_Faced_Label_Drawer::Draw(font_chars,*it,current_pos,pc_input).types);
-        
-        Adjust_Positions_For_Next_Cell_After_Draw(it->label,start_pos,current_pos,depth);
-        
-        
-        return Should_Break::NO;
-    });
-    
-    all.types += branches.types;
-    all.types += labels.types;
-    return all;
-❱
-
-◀private: static▶ Frame_Elements  ☀Build_Branches_And_Button_Labels_Wide(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Draw_Settings const& draw_settings, Button_Face_Tree_Range const& range)❰
-    
-    auto start_pos = pos;
-    auto current_pos = pos;
-    
-    Frame_Elements all;
-    Frame_Elements branches;
-    Frame_Elements labels;
-    
-    
-    For_Each_Noncollapsed::Iterate_With_Previous(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator prev, tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
-        
-        
-        //adjust position for label. perform event update.
-        Indent(it->label,start_pos,current_pos,depth);
-        
-        //should we show the button
-        it->style.show_button = false;
         
         //draw the label
         Faced_Label_Eventer::Event_It(font_chars,it->label,current_pos,pc_input);
@@ -245,9 +212,4 @@ class
         auto dim = Faced_Label_Drawer::Get_Dimensions(label);
         current_pos.x = start_pos.x + 10 * depth;
         current_pos.y += dim.y-1;
-❱
-◀private: static▶ void  ☀Indent(Faced_Label const& label, Position const& start_pos, Position & current_pos, int const& depth)❰
-
-        auto dim = Faced_Label_Drawer::Get_Dimensions(label);
-        current_pos.x += dim.x -1;
 ❱

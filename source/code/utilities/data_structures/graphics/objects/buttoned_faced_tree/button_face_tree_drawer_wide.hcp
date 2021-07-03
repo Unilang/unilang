@@ -1,0 +1,84 @@
+class
+❪string❫
+❪unordered_map❫
+❪utility❫
+❪cstdlib❫
+❪vector❫
+❪"code/utilities/fonts/bdf/settings/character_segment"❫
+❪"code/utilities/data_structures/graphics/objects/label/data/label_settings"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/data/positioned_buttoned_faced_label"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data/positioned_button_face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data/button_face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/label/label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_eventer"❫
+❪"code/utilities/peripheral/mouse/state/mouse_state"❫
+❪"code/utilities/fonts/bdf/character_maps/character_maps"❫
+❪"code/utilities/data_structures/counters/unique_max_counter/unique_max_counter"❫
+❪"code/utilities/code/references/reference_lookup_map"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_range"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/positioned_button_tree_iterator"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data/draw_strategy"❫
+⚯
+❪"code/utilities/data_structures/graphics/objects/mouse/events/mouse_events_checker"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/vertical_line"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/horizontal_line"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/l_line"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/right_arrow"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/left_arrow"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/buttoned_faced_label_is_active"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_is_active"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_set_active"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_tree_global_navigation"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/buttoned_faced_label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/for_each_noncollapsed"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_full_path_name"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_connection_drawer"❫
+❪"code/utilities/math/math"❫
+⚞⚟
+
+
+
+◀public: static▶ Frame_Elements  ☀Draw(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Draw_Settings const& draw_settings, Button_Face_Tree_Range const& range)❰
+    
+    auto start_pos = pos;
+    auto current_pos = pos;
+    
+    Frame_Elements all;
+    Frame_Elements branches;
+    Frame_Elements labels;
+    
+    
+    For_Each_Noncollapsed::Iterate_With_Previous(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator prev, tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
+        
+        
+        
+        //should we show the button
+        it->style.show_button = false;
+        
+        //draw the label
+        Faced_Label_Eventer::Event_It(font_chars,it->label,current_pos,pc_input);
+        Append(labels.types,Buttoned_Faced_Label_Drawer::Draw(font_chars,*it,current_pos,pc_input).types);
+        
+        //adjust position for label. perform event update.
+        Indent(it->label,start_pos,current_pos,depth);
+        
+        
+        
+        return Should_Break::NO;
+    });
+    
+    all.types += branches.types;
+    all.types += labels.types;
+    return all;
+❱
+
+◀private: static▶ void  ☀Indent(Faced_Label const& label, Position const& start_pos, Position & current_pos, int const& depth)❰
+
+        auto dim = Faced_Label_Drawer::Get_Dimensions(label);
+        current_pos.x += dim.x -1;
+❱
