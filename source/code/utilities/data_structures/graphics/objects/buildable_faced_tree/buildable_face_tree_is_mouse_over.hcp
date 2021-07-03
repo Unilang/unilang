@@ -6,7 +6,7 @@ class
 ❪"code/utilities/fonts/bdf/settings/character_segment"❫
 ❪"code/utilities/data_structures/graphics/objects/label/data/label_settings"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/data/positioned_buttoned_faced_label"❫
-❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/positioned_button_face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data/positioned_button_face_tree"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_tree_label_drawer"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/data/buildable_face_tree"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/data/positioned_buildable_face_tree"❫

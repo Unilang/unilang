@@ -1,6 +1,6 @@
 class
 ❪vector❫
-❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data/button_face_tree"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/data/buttoned_faced_label"❫
 ❪"code/utilities/data_structures/tree/generic/tokens/tree_token"❫
 ❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_first_name"❫

@@ -14,7 +14,7 @@ hcp(
         "//code/utilities/data_structures/graphics/gui_desktop",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree/data:positioned_buildable_face_tree",
         "//code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data:positioned_buildable_schema_faced_tree",
-        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:positioned_button_face_tree",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data:positioned_button_face_tree",
         "//code/utilities/data_structures/graphics/objects/cursor/data:cursor",
         "//code/utilities/data_structures/graphics/objects/cursor/data:label_cursor",
         "//code/utilities/data_structures/graphics/objects/faced_grid:positioned_face_grid",

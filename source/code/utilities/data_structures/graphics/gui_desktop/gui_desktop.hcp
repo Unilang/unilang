@@ -16,7 +16,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/slider/positioned_slider"❫
 ❪"code/utilities/data_structures/graphics/objects/faced_grid/positioned_face_grid"❫
 ❪"code/utilities/data_structures/graphics/objects/faced_tree/positioned_face_tree"❫
-❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/positioned_button_face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data/positioned_button_face_tree"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/data/positioned_buildable_face_tree"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data/positioned_buildable_schema_faced_tree"❫
 ❪"code/utilities/data_structures/graphics/objects/select_menu/positioned_select_menu"❫

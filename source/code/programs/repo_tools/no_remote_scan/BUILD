@@ -14,10 +14,10 @@ hcp(
         "//code/utilities/program/wrappers/bazel/query:bazel_aquery_runner",
         "//code/utilities/program/wrappers/bazel/query:bazel_query_runner",
         "//code/utilities/program/wrappers/bazel/test:bazel_test_runner",
-        "//code/utilities/types/general:lib",
         "//code/utilities/program/wrappers/buildozer:buildozer_runner",
-        "//code/utilities/types/function:lib",
         "//code/utilities/program/wrappers/git/update:git_updater",
+        "//code/utilities/types/function:lib",
+        "//code/utilities/types/general:lib",
         "//code/utilities/types/strings/transformers/search_replace:lib",
     ],
 )

@@ -19,7 +19,7 @@ hcp(
         "//code/utilities/data_structures/graphics/bitmap/premade:tree_button",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_tree_label_drawer",
-        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:positioned_button_face_tree",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data:positioned_button_face_tree",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:string_tree_to_buttoned_face_tree",
         "//code/utilities/data_structures/graphics/objects/label/style:default_label_styles",
         "//code/utilities/data_structures/tree/generic:string_tree",
