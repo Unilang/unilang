@@ -93,6 +93,17 @@ class
 ◀private: static▶ Frame_Elements  ☀Build_Branches_And_Button_Labels(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Draw_Settings const& draw_settings, Button_Face_Tree_Range const& range)❰
     
     
+    if (draw_settings.draw_strategy == Draw_Strategy::REGULAR_TREE) {
+        return Build_Branches_And_Button_Labels_Regular(font_chars,pc_input,pos,tr,draw_settings,range);
+    }
+    else if (draw_settings.draw_strategy == Draw_Strategy::WIDE_TREE){
+        return Build_Branches_And_Button_Labels_Wide(font_chars,pc_input,pos,tr,draw_settings,range);
+    }
+    
+❱
+
+◀private: static▶ Frame_Elements  ☀Build_Branches_And_Button_Labels_Regular(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Draw_Settings const& draw_settings, Button_Face_Tree_Range const& range)❰
+    
     auto start_pos = pos;
     auto current_pos = pos;
     
@@ -133,6 +144,41 @@ class
     all.types += labels.types;
     return all;
 ❱
+
+◀private: static▶ Frame_Elements  ☀Build_Branches_And_Button_Labels_Wide(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Draw_Settings const& draw_settings, Button_Face_Tree_Range const& range)❰
+    
+    auto start_pos = pos;
+    auto current_pos = pos;
+    
+    Frame_Elements all;
+    Frame_Elements branches;
+    Frame_Elements labels;
+    
+    
+    For_Each_Noncollapsed::Iterate_With_Previous(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator prev, tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
+        
+        
+        //adjust position for label. perform event update.
+        Indent(it->label,start_pos,current_pos,depth);
+        
+        //should we show the button
+        it->style.show_button = false;
+        
+        //draw the label
+        Faced_Label_Eventer::Event_It(font_chars,it->label,current_pos,pc_input);
+        Append(labels.types,Buttoned_Faced_Label_Drawer::Draw(font_chars,*it,current_pos,pc_input).types);
+        
+        Adjust_Positions_For_Next_Cell_After_Draw(it->label,start_pos,current_pos,depth);
+        
+        
+        return Should_Break::NO;
+    });
+    
+    all.types += branches.types;
+    all.types += labels.types;
+    return all;
+❱
+
 
 ◀private: static▶ Frame_Elements  ☀Possibly_Add_Branches(tree<Buttoned_Faced_Label> const& tr, tree<Buttoned_Faced_Label>::pre_order_iterator it, Faced_Label const& label, Position const& start_pos, Position const& current_pos, int const& depth)❰
 

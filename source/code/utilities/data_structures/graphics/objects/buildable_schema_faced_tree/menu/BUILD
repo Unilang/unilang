@@ -18,6 +18,8 @@ enum_cpp(
 enum_cpp(
     name = "global_manipulation_option",
     values = [
+        "draw_regular",
+        "draw_wide",
         "draw_children_only",
         "draw_signified_only",
         "draw_all",

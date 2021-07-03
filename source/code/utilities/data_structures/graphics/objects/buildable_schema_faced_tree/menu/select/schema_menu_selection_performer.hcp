@@ -77,6 +77,15 @@ class
 ◀private: static▶ void ☀Handle_Global_Tree_Actions(Buildable_Face_Tree_State & tree, Child_Lookup_Map const& lookup, Style_Lookup_Map const& style_lookup, std::string const& message)❰
 
     switch (enum_cast_to_Global_Manipulation_Option(message)){
+        
+        case Global_Manipulation_Option::DRAW_REGULAR:
+        tree.structure.draw_settings.draw_strategy = Draw_Strategy::REGULAR_TREE;
+        break;
+        
+        case Global_Manipulation_Option::DRAW_WIDE:
+        tree.structure.draw_settings.draw_strategy = Draw_Strategy::WIDE_TREE;
+        break;
+        
         case Global_Manipulation_Option::DRAW_CHILDREN_ONLY:
         break;
         
