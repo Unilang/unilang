@@ -7,7 +7,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/label/data/label_settings"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/data/positioned_buttoned_faced_label"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data/positioned_button_face_tree"❫
-❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_tree_label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_drawer"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/data/buildable_face_tree"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/data/positioned_buildable_face_tree"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/buildable_label_action"❫
@@ -56,7 +56,7 @@ class
     Frame_Elements elements;
     
     //draw the tree
-    elements.types += Button_Tree_Label_Drawer::Draw(font_chars,state.tree.state.structure,pos,pc_input,state.settings.references).types;
+    elements.types += Button_Face_Tree_Drawer::Draw(font_chars,state.tree.state.structure,pos,pc_input,state.settings.references).types;
     
 
     Schema_Menu_Open_Strategy how_to_open = Schema_Menu_Should_Open::Check(state,pc_input);

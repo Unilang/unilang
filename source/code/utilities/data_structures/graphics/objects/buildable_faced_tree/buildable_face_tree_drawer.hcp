@@ -7,7 +7,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/label/data/label_settings"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/data/positioned_buttoned_faced_label"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data/positioned_button_face_tree"❫
-❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_tree_label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_drawer"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/data/buildable_face_tree"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/data/positioned_buildable_face_tree"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/buildable_label_action"❫
@@ -52,7 +52,7 @@ class
     
     //draw the tree
     Reference_Lookup_Map ref_map;
-    elements.types += Button_Tree_Label_Drawer::Draw(font_chars,state.structure,pos,pc_input,ref_map).types;
+    elements.types += Button_Face_Tree_Drawer::Draw(font_chars,state.structure,pos,pc_input,ref_map).types;
     
     //find the element that has been right-clicked
     //TODO: Drawing the tree should return this information.

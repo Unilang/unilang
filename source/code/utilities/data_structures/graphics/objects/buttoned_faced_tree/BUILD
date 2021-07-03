@@ -22,7 +22,7 @@ hcp(
 )
 
 hcp(
-    name = "button_tree_label_drawer",
+    name = "button_face_tree_drawer",
     deps = [
         "//code/utilities/code/references:reference_lookup_map",
         "//code/utilities/data_structures/counters/unique_max_counter",
@@ -229,7 +229,7 @@ hcp(
         "//code/utilities/code:concept_string_tree_getter",
         "//code/utilities/data_structures/graphics/bitmap/premade:tree_button",
         "//code/utilities/data_structures/graphics/objects:frame_elements",
-        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_tree_label_drawer",
+        "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_drawer",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data:positioned_button_face_tree",
         "//code/utilities/data_structures/graphics/objects/label/style:default_label_styles",
         "//code/utilities/data_structures/tree/generic:string_tree",
