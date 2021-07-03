@@ -93,8 +93,8 @@ class
 ◀private: static▶ Frame_Elements  ☀Build_Branches_And_Button_Labels(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
     
     
-    bool should_draw_branches = true;
-    bool should_draw_buttons = true;
+    bool can_draw_branches = true;
+    bool can_draw_buttons = true;
     
     
     auto start_pos = pos;
@@ -108,7 +108,7 @@ class
     For_Each_Noncollapsed::Iterate_With_Previous(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator prev, tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
         
         //branches
-        if (should_draw_branches) {
+        if (can_draw_branches) {
             Append(branches.types,Possibly_Add_Branches(tr,it,it->label,start_pos,current_pos,depth).types);
         }
         
@@ -116,7 +116,7 @@ class
         Adjust_Positions_For_Next_Cell_Before_Draw(it->label,start_pos,current_pos,depth);
         
         //should we show the button
-        if (should_draw_buttons) {
+        if (can_draw_buttons) {
             it->style.show_button = tr.number_of_children(it) > 0;
         }
         else {
