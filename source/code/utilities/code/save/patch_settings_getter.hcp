@@ -27,6 +27,7 @@ class
     patches.emplace_back(Patch_4);
     patches.emplace_back(Patch_5);
     patches.emplace_back(Patch_6);
+    patches.emplace_back(Patch_7);
     
     //add more
     return patches;
@@ -36,8 +37,8 @@ class
 //I wish writing patches could be easier and more automatic.
 //The dilemma boils down to this:
 //A c++ object (the model of the IDE) can change in future versions of the IDE.
-//that's why we need to update the json appropriately so that old unilang files can be loaded and dematerialized correctly.
-//The patches are mechanism to ensure forwards compatibility.
+//that's why we need to update the json appropriately so that old unilang files can be loaded and de-serialized correctly.
+//The patches are mechanism to ensure old files have forwards compatibility.
 //It's the same kind of problem that IDLs like protobuf and thrift attempt to solve in regards to a forward compatible wire format.
 //But I'm not going to have dead values in my object descriptions and arbitrary numbering and "reserved" and stuff- that's equally dumb.
 
@@ -132,6 +133,28 @@ class
                     }
             }
         }
+    }
+❱
+◀private: static▶ void ☀Patch_7(nlohmann::json & j)❰
+
+    //this patch is because a new data member was added to label: message_constraints
+    for (auto & element: j["elements"]["types"]){
+        
+        //if its the variant structure we care about
+        if (element["element"]["index"] == 0){
+            element["element"]["value"]["state"]["structure"]["draw_settings"] = nlohmann::json::object();
+            element["element"]["value"]["state"]["structure"]["draw_settings"]["draw_strategy"] = 0;
+            element["element"]["value"]["state"]["structure"]["draw_settings"]["can_draw_branches"] = true;
+            element["element"]["value"]["state"]["structure"]["draw_settings"]["can_draw_buttons"] = true;
+        }
+        if (element["element"]["index"] == 1){
+            element["element"]["value"]["state"]["tree"]["state"]["structure"]["draw_settings"] = nlohmann::json::object();
+            element["element"]["value"]["state"]["tree"]["state"]["structure"]["draw_settings"]["draw_strategy"] = 0;
+            element["element"]["value"]["state"]["tree"]["state"]["structure"]["draw_settings"]["can_draw_branches"] = true;
+            element["element"]["value"]["state"]["tree"]["state"]["structure"]["draw_settings"]["can_draw_buttons"] = true;
+        }
+        
+        
     }
 ❱
 

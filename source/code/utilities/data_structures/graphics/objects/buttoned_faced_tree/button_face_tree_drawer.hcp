@@ -49,7 +49,7 @@ class
     Button_Face_Tree_Range range = Full_Range(tree);
     
     Button_Tree_Global_Navigation::Handle_User_Events     (font_chars,elements,pc_input,tree.pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
-    Draw_Tree(font_chars,elements,pc_input,tree.pos,tree.nodes,range,ref_map);
+    Draw_Tree(font_chars,elements,pc_input,tree.pos,tree.nodes,tree.draw_settings,range,ref_map);
     return elements;
 ❱
 ◀public: static▶ Frame_Elements ☀Draw(Character_Maps const& font_chars, Button_Face_Tree & tree, Position const& pos, Pc_Input_State const& pc_input, Reference_Lookup_Map const& ref_map)❰
@@ -60,7 +60,7 @@ class
     Button_Face_Tree_Range range = Full_Range(tree);
     
     Button_Tree_Global_Navigation::Handle_User_Events     (font_chars,elements,pc_input,pos,tree.nodes,tree.nodes.begin(),tree.nodes.end());
-    Draw_Tree(font_chars,elements,pc_input,pos,tree.nodes,range,ref_map);
+    Draw_Tree(font_chars,elements,pc_input,pos,tree.nodes,tree.draw_settings,range,ref_map);
     return elements;
 ❱
 
@@ -81,20 +81,16 @@ class
 ❱
 
 
-◀private: static▶ void ☀Draw_Tree(Character_Maps const& font_chars, Frame_Elements & elements, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range, Reference_Lookup_Map const& ref_map)❰
+◀private: static▶ void ☀Draw_Tree(Character_Maps const& font_chars, Frame_Elements & elements, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Draw_Settings const& draw_settings, Button_Face_Tree_Range const& range, Reference_Lookup_Map const& ref_map)❰
     
     
-    elements.types += Build_Branches_And_Button_Labels(font_chars,pc_input,pos,tr,range).types;
+    elements.types += Build_Branches_And_Button_Labels(font_chars,pc_input,pos,tr,draw_settings,range).types;
     elements.types += Button_Face_Tree_Connection_Drawer::Draw(font_chars,pc_input,pos,tr,range,ref_map).types;
     
 ❱
 
 
-◀private: static▶ Frame_Elements  ☀Build_Branches_And_Button_Labels(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
-    
-    
-    bool can_draw_branches = true;
-    bool can_draw_buttons = true;
+◀private: static▶ Frame_Elements  ☀Build_Branches_And_Button_Labels(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Draw_Settings const& draw_settings, Button_Face_Tree_Range const& range)❰
     
     
     auto start_pos = pos;
@@ -108,7 +104,7 @@ class
     For_Each_Noncollapsed::Iterate_With_Previous(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator prev, tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
         
         //branches
-        if (can_draw_branches) {
+        if (draw_settings.can_draw_branches) {
             Append(branches.types,Possibly_Add_Branches(tr,it,it->label,start_pos,current_pos,depth).types);
         }
         
@@ -116,7 +112,7 @@ class
         Adjust_Positions_For_Next_Cell_Before_Draw(it->label,start_pos,current_pos,depth);
         
         //should we show the button
-        if (can_draw_buttons) {
+        if (draw_settings.can_draw_buttons) {
             it->style.show_button = tr.number_of_children(it) > 0;
         }
         else {
