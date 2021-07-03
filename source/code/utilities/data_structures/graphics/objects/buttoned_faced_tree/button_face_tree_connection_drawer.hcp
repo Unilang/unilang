@@ -1,0 +1,222 @@
+class
+❪string❫
+❪unordered_map❫
+❪utility❫
+❪cstdlib❫
+❪vector❫
+❪"code/utilities/fonts/bdf/settings/character_segment"❫
+❪"code/utilities/data_structures/graphics/objects/label/data/label_settings"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/data/positioned_buttoned_faced_label"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data/positioned_button_face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data/button_face_tree"❫
+❪"code/utilities/data_structures/graphics/objects/label/label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/frame_elements"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_eventer"❫
+❪"code/utilities/peripheral/mouse/state/mouse_state"❫
+❪"code/utilities/fonts/bdf/character_maps/character_maps"❫
+❪"code/utilities/data_structures/counters/unique_max_counter/unique_max_counter"❫
+❪"code/utilities/code/references/reference_lookup_map"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_range"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/positioned_button_tree_iterator"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data/draw_strategy"❫
+⚯
+❪"code/utilities/data_structures/graphics/objects/mouse/events/mouse_events_checker"❫
+❪"code/utilities/types/vectors/operators/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/vertical_line"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/horizontal_line"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/l_line"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/right_arrow"❫
+❪"code/utilities/data_structures/graphics/bitmap/premade/left_arrow"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/buttoned_faced_label_is_active"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_is_active"❫
+❪"code/utilities/data_structures/graphics/objects/faced_label/faced_label_set_active"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_tree_global_navigation"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_label/buttoned_faced_label_drawer"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/for_each_noncollapsed"❫
+❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_full_path_name"❫
+❪"code/utilities/math/math"❫
+⚞⚟
+
+
+
+◀public: static▶ Frame_Elements  ☀Draw(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range, Reference_Lookup_Map const& ref_map)❰
+    
+    //iterate the tree to get all path locations.
+    //this way we can draw the references by looking up the path instead of re-traversing the tree
+    auto path_positions = Get_Path_Positions(font_chars,pc_input,pos,tr,range);
+    
+    //use the reference map and path positions to get the pos-to-pos positioning
+    auto connections = Get_Position_Connections(path_positions,ref_map);
+    
+    //draw references
+    Frame_Elements x;
+    
+    for (auto const& it: connections){
+        
+        //calculate how much the connection bar should stick out to the right of the tree
+        auto depth_out = Calculate_Out_Depth(tr,it);
+        //std::cout << depth_out << std::endl;
+        
+        auto from_horiz_start = it.first.pos;
+        auto to_horiz_start = it.second.pos;
+        
+        //adjust to middle of label
+        from_horiz_start.y += 7;
+        to_horiz_start.y += 7;
+        
+        //adjust to end of label
+        from_horiz_start.x += Faced_Label_Drawer::Get_Dimensions(it.first.it->label).x;
+        to_horiz_start.x += Faced_Label_Drawer::Get_Dimensions(it.second.it->label).x;
+        
+        //calculate the two horizontal bars of the connection
+        auto from_horizontal_length = Math::difference(from_horiz_start.x,depth_out);
+        auto to_horizontal_length = Math::difference(to_horiz_start.x,depth_out);
+        auto from_horizontal = Horizontal_Line::Create_Positioned(from_horiz_start,from_horizontal_length);
+        auto to_horizontal = Horizontal_Line::Create_Positioned(to_horiz_start,to_horizontal_length);
+        
+        //std::cout << from_horiz_start.x << "," << from_horiz_start.y << ": " << from_horizontal_length << std::endl;
+        //std::cout << to_horiz_start.x << "," << to_horiz_start.y << ": " << to_horizontal_length << std::endl;
+        
+        
+        //calculate vertical line
+        auto vertical_pos = from_horiz_start;
+        vertical_pos.x += Math::difference(vertical_pos.x,depth_out);
+        vertical_pos.y = std::min(from_horizontal.pos.y,to_horizontal.pos.y);
+        
+        auto vertical_height = Math::difference(from_horizontal.pos.y,to_horizontal.pos.y);
+        
+        //std::cout << vertical_pos.x << " " << vertical_pos.y << " " << vertical_height << std::endl;
+        auto vertical = Vertical_Line::Create_Positioned(vertical_pos,vertical_height);
+        
+        auto arrow = Left_Arrow::Create_Positioned(to_horiz_start,4);
+        arrow.pos.y -=2;
+        
+        x.types.emplace_back(from_horizontal);
+        x.types.emplace_back(to_horizontal);
+        x.types.emplace_back(vertical);
+        x.types.emplace_back(arrow);
+    }
+    
+    return x;
+❱
+
+◀private: static▶ int ☀Calculate_Out_Depth(tree<Buttoned_Faced_Label> const& tr, std::pair<Positioned_Button_Tree_Iterator,Positioned_Button_Tree_Iterator> const& connection)❰
+
+    //decide the correct way to loop through a subset of the tree
+    auto begin = connection.first;
+    auto end = connection.second;
+    Swap_If_Needed(tr,begin,end);
+    
+    
+    auto start_pos = begin.pos;
+    auto current_pos = begin.pos;
+    
+    auto out_depth = begin.pos.x;
+    For_Each_Noncollapsed::Iterate(tr,begin.it,end.it,[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
+        
+        //adjust position
+        Adjust_Positions_For_Next_Cell_Before_Draw(it->label,start_pos,current_pos,depth);
+        
+        out_depth = std::max(out_depth,Faced_Label_Drawer::Get_Dimensions(it->label).x + current_pos.x);
+        
+        return Should_Break::NO;
+    });
+    
+    //BUG: I have to check the last element as well, but I'm not sure it's depth
+    //Adjust_Positions_For_Next_Cell_Before_Draw(end.it->label,start_pos,current_pos,depth);
+    out_depth = std::max(out_depth,Faced_Label_Drawer::Get_Dimensions(end.it->label).x + current_pos.x);
+    
+    //buffer space
+    out_depth += 5;
+    return out_depth;
+❱
+
+◀private: static▶ void ☀Swap_If_Needed(tree<Buttoned_Faced_Label> const& tr, Positioned_Button_Tree_Iterator & a, Positioned_Button_Tree_Iterator & b)❰
+
+    //damn, I can't compare the iterators directly.  How do I know which one comes first?
+    //i'll inefficiently iterate the tree and see which one is first.
+    //then swap if necessary
+
+    For_Each_Noncollapsed::Iterate(tr,tr.begin(),tr.end(),[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
+        //correct order
+        if (a.it == it){
+            return Should_Break::YES;
+        }
+        
+        //backwards. needs fixed
+        if (b.it == it){
+            std::swap(a,b);
+            return Should_Break::YES;
+        }
+        
+        return Should_Break::NO;
+    });
+❱
+
+
+◀private: static▶ std::vector<std::pair<Positioned_Button_Tree_Iterator,Positioned_Button_Tree_Iterator>> ☀Get_Position_Connections(std::unordered_map<std::string,Positioned_Button_Tree_Iterator> const& path_positions, Reference_Lookup_Map const& ref_map)❰
+
+    std::vector<std::pair<Positioned_Button_Tree_Iterator,Positioned_Button_Tree_Iterator>> result;
+    for (auto const& it: path_positions){
+        auto found = ref_map.map.find(it.first);
+        
+        //we need to create a reference
+        if (found != ref_map.map.end()){
+            
+            
+            auto FROM = it.second;
+            auto fk_found = ref_map.map.find(found->first);
+            if (fk_found != ref_map.map.end()){
+                
+                auto found_to_pos = path_positions.find(fk_found->second);
+                if (found_to_pos != path_positions.end()){
+                    auto TO = found_to_pos->second;
+                    result.emplace_back(FROM,TO);
+                    std::cout << fk_found->second << std::endl;
+                }
+            }
+            
+        }
+    }
+    
+    return result;
+    
+❱
+◀private: static▶ std::unordered_map<std::string,Positioned_Button_Tree_Iterator> ☀Get_Path_Positions(Character_Maps const& font_chars, Pc_Input_State const& pc_input, Position const& pos, const tree<Buttoned_Faced_Label>& tr, Button_Face_Tree_Range const& range)❰
+    
+
+    std::unordered_map<std::string,Positioned_Button_Tree_Iterator> path_positions;
+    
+    
+    auto start_pos = pos;
+    auto current_pos = pos;
+    
+    For_Each_Noncollapsed::Iterate(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
+        
+        //adjust position
+        Adjust_Positions_For_Next_Cell_Before_Draw(it->label,start_pos,current_pos,depth);
+        
+        //add position for label path
+        std::pair<std::string,Positioned_Button_Tree_Iterator> result;
+        result.first = Button_Face_Tree_Full_Path_Name::Get(tr,it);
+        result.second.it = it;
+        result.second.pos = current_pos;
+        path_positions.insert(result);
+        
+        return Should_Break::NO;
+    });
+    
+    
+    return path_positions;
+❱
+
+
+◀private: static▶ void  ☀Adjust_Positions_For_Next_Cell_Before_Draw(Faced_Label const& label, Position const& start_pos, Position & current_pos, int const& depth)❰
+
+        auto dim = Faced_Label_Drawer::Get_Dimensions(label);
+        current_pos.x = start_pos.x + 10 * depth;
+        current_pos.y += dim.y-1;
+❱
