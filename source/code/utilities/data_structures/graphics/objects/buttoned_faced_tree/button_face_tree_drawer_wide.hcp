@@ -64,20 +64,26 @@ class
         it->style.show_button = false;
         
         //adjust draw cursor
-        if (prev_depth >= depth && !recent_depth_x_positions.empty() {
-            current_pos.x = recent_depth_x_positions[depth];
-            Move_Down(it->label,start_pos,current_pos,depth);
+        if (prev_depth >= depth) {
+            if (!recent_depth_x_positions.empty()){
+                current_pos.x = recent_depth_x_positions[depth];
+                Move_Down(it->label,start_pos,current_pos,depth);
+            }
+            else {
+                Indent(it->label,start_pos,current_pos,depth);
+            }
         }
+        
         
         //draw the label
         Faced_Label_Eventer::Event_It(font_chars,it->label,current_pos,pc_input);
         Append(labels.types,Buttoned_Faced_Label_Drawer::Draw(font_chars,*it,current_pos,pc_input).types);
+        Safely_Add_To_Vector_At_Index(recent_depth_x_positions,depth,current_pos.x);
+        
+        
         
         //adjust draw cursor
-        if (prev_depth < depth || recent_depth_x_positions.empty()) {
-            Safely_Add_To_Vector_At_Index(recent_depth_x_positions,depth,current_pos.x);
-            Indent(it->label,start_pos,current_pos,depth);
-        }
+        Indent(it->label,start_pos,current_pos,depth);
         
         
         
