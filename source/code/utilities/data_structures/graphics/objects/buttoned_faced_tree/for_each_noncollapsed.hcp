@@ -64,6 +64,7 @@ static void Iterate_With_Previous(const tree<Buttoned_Faced_Label>& tr, tree<But
     int collapsed_depth = 0;
     
     tree<Buttoned_Faced_Label>::pre_order_iterator prev = nullptr;
+    int prev_depth = 0;
     
     while(it!=end) {
         
@@ -77,7 +78,7 @@ static void Iterate_With_Previous(const tree<Buttoned_Faced_Label>& tr, tree<But
         
         //do
         if (!subtree_collapsed){
-            auto should_break = fun(prev,it,depth);
+            auto should_break = fun(prev,it,prev_depth,depth);
             if (should_break == Should_Break::YES){
                 break;
             }
@@ -91,6 +92,7 @@ static void Iterate_With_Previous(const tree<Buttoned_Faced_Label>& tr, tree<But
         
         prev=it;
         ++it;
+        prev_depth = depth;
     }
 
 }

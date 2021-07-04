@@ -39,6 +39,7 @@ class
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_full_path_name"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_connection_drawer"❫
 ❪"code/utilities/math/math"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
 ⚞⚟
 
 
@@ -52,20 +53,31 @@ class
     Frame_Elements branches;
     Frame_Elements labels;
     
+    std::vector<int> recent_depth_x_positions; //indexed by depth;
     
-    For_Each_Noncollapsed::Iterate_With_Previous(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator prev, tree<Buttoned_Faced_Label>::pre_order_iterator it, int depth){
+    
+    For_Each_Noncollapsed::Iterate_With_Previous(tr,range.begin,range.end,[&](tree<Buttoned_Faced_Label>::pre_order_iterator prev, tree<Buttoned_Faced_Label>::pre_order_iterator it, int prev_depth, int depth){
         
         
         
         //should we show the button
         it->style.show_button = false;
         
+        //adjust draw cursor
+        if (prev_depth >= depth && !recent_depth_x_positions.empty() {
+            current_pos.x = recent_depth_x_positions[depth];
+            Move_Down(it->label,start_pos,current_pos,depth);
+        }
+        
         //draw the label
         Faced_Label_Eventer::Event_It(font_chars,it->label,current_pos,pc_input);
         Append(labels.types,Buttoned_Faced_Label_Drawer::Draw(font_chars,*it,current_pos,pc_input).types);
         
-        //adjust position for label. perform event update.
-        Indent(it->label,start_pos,current_pos,depth);
+        //adjust draw cursor
+        if (prev_depth < depth || recent_depth_x_positions.empty()) {
+            Safely_Add_To_Vector_At_Index(recent_depth_x_positions,depth,current_pos.x);
+            Indent(it->label,start_pos,current_pos,depth);
+        }
         
         
         
@@ -81,4 +93,10 @@ class
 
         auto dim = Faced_Label_Drawer::Get_Dimensions(label);
         current_pos.x += dim.x -1;
+❱
+
+◀private: static▶ void  ☀Move_Down(Faced_Label const& label, Position const& start_pos, Position & current_pos, int const& depth)❰
+
+        auto dim = Faced_Label_Drawer::Get_Dimensions(label);
+        current_pos.y += dim.y-1;
 ❱

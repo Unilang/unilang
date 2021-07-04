@@ -140,6 +140,7 @@ hcp(
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/vectors/operators:lib",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_tree:button_face_tree_connection_drawer",
+        "//code/utilities/types/vectors/transformers:lib",
     ],
 )
 
