@@ -16,6 +16,12 @@ hcp(
 )
 
 hcp(
+    name = "playing_card",
+    data = ["@playing_card_assets//:all"],
+    deps = [],
+)
+
+hcp(
     name = "chrome_drivers",
     data = ["@chrome_drivers//:all"],
     deps = [],

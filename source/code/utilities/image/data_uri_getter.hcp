@@ -11,7 +11,7 @@ class
 ◀public: static▶ std::string ☀Get_URI(std::string file_name)❰
 
     auto mime_type = execute("file -bN --mime-type " + file_name);
-    auto content = execute("base64 -w0 < " + file_name);
+    auto content = execute("base64 " + file_name);
     std::string uri = "url('data:" + mime_type + ";base64," + content + "')";
     return uri;
 ❱
@@ -19,8 +19,13 @@ class
 //https://www.thesitewizard.com/html-tutorial/embed-images-with-data-urls.shtml
 ◀public: static▶ std::string ☀Get_Img_Tag(std::string file_name)❰
 
-    auto mime_type = execute("file -bN --mime-type " + file_name);
-    auto content = execute("base64 -w0 < " + file_name);
+    auto mime_type = execute("file -bNL --mime-type " + file_name);
+    if (mime_type == "inode/symlink"){
+    }
+    
+    
+    //auto content = execute("base64 -w0 < " + file_name);
+    auto content = execute("base64 " + file_name);
     std::string uri = "<img src=\"data:" + mime_type + ";base64," + content + "\">";
     return uri;
 ❱

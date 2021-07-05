@@ -482,6 +482,7 @@ class
     x.specs.emplace_back(Fonts());
     x.specs.emplace_back(PuyoPuyo());
     x.specs.emplace_back(EnglishSounds());
+    x.specs.emplace_back(PlayingCardAssets());
     
     //tools
     x.specs.emplace_back(gkrellm());
@@ -2481,6 +2482,13 @@ grpc_deps()
     Add_Unilang_Github_Mirror(spec,"english_sounds","0fdbe05b76b93732c97573148412a2bfbc4bd7fa","b30fd69cbcbf9afef6b6bb92d7729eb9f809f3436b558cfff38689a263053335");
     return spec;
 ❱
+◀private: static▶ Dependency_Specification ☀PlayingCardAssets()❰
+    Dependency_Specification spec;
+    spec.lib_name = "playing_card_assets";
+    Add_Unilang_Github_Mirror(spec,"playing_card_assets","30d8e60a198cc2673ff2bbdef754796e1317e79b","b827856be082322b5c1499c9db7895b3819860d9a6782b98a97776b75da4340f");
+    return spec;
+❱
+
 ◀private: static▶ Dependency_Specification ☀olcPixelGameEngine()❰
     Dependency_Specification spec;
     spec.lib_name = "olcPixelGameEngine";
