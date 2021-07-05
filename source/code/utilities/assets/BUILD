@@ -16,9 +16,12 @@ hcp(
 )
 
 hcp(
-    name = "playing_card",
+    name = "playing_card_assets",
     data = ["@playing_card_assets//:all"],
-    deps = [],
+    deps = [
+        "//code/utilities/data_structures:playing_card",
+        "//code/utilities/types/strings/transformers/casing:lib",
+    ],
 )
 
 hcp(

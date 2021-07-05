@@ -60,6 +60,7 @@ class
     
     //getting all
     Output_All_Strings_Decleration(out,e);
+    Output_All_Enums_Decleration(out,e);
     Print_To_Stream_With_Newline(out,"");
 ❱
 ◀private: static▶ void ☀Print_Enum_Def(std::ofstream & out, Enum e)❰
@@ -88,6 +89,7 @@ class
     
     //getting all
     Output_All_Strings_Definition(out,e);
+    Output_All_Enums_Definition(out,e);
     Print_To_Stream_With_Newline(out,"");
 ❱
 
@@ -280,6 +282,32 @@ class
         Print_To_Stream(out,"\"");
         Print_To_Stream(out,As_All_Capital_Letters_With_Spaces_As_Underscores(it));
         Print_To_Stream(out,"\"");
+        Print_To_Stream(out,",");
+    }
+    
+    Print_To_Stream(out,"};");
+    Print_To_Stream(out,"}");
+❱
+
+◀private: static▶ void ☀Output_All_Enums_Decleration(std::ofstream & out, Enum const& e)❰
+
+    Print_To_Stream(out,"std::vector<" + Make_Capital_And_Underscored_In_User_Type_Format(e.name) + "> ");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out,"_all_enums(");
+    Print_To_Stream(out,");");
+❱
+
+◀private: static▶ void ☀Output_All_Enums_Definition(std::ofstream & out, Enum const& e)❰
+
+    Print_To_Stream(out,"std::vector<" + Make_Capital_And_Underscored_In_User_Type_Format(e.name) + "> ");
+    Print_To_Stream(out,Make_Capital_And_Underscored_In_User_Type_Format(e.name));
+    Print_To_Stream(out,"_all_enums(");
+    Print_To_Stream(out,"){");
+    Print_To_Stream(out,"return {");
+    
+    for (auto const& it: e.values){
+        auto str = Make_Capital_And_Underscored_In_User_Type_Format(e.name) + "::" + As_All_Capital_Letters_With_Spaces_As_Underscores(it);
+        Print_To_Stream(out,str);
         Print_To_Stream(out,",");
     }
     

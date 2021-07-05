@@ -11,9 +11,10 @@ hcp(
     name = "task_executer",
     deps = [
         "//code/utilities/formats/html:basic_html_template_getter",
+        "//code/utilities/data_structures:playing_card",
         "//code/utilities/image:data_uri_getter",
         "//code/utilities/program/call:lib",
-        "//code/utilities/assets:playing_card",
+        "//code/utilities/assets:playing_card_assets",
         "@boost//:algorithm",
         "@boost//:asio",
         "@boost//:optional",
