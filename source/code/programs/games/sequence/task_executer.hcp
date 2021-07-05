@@ -172,11 +172,7 @@ class
     body += "</div>";
     
     //build hand
-    body += "<div class='hand'>";
-    for (auto const& card: game.p1.hand){
-        body += Data_Uri_Getter::Get_Img_Tag(Playing_Card_Assets::Get(card));
-    }
-    body += "</div>";
+    body += Draw_Hand(game.p1);
 
     //render
     return Basic_Html_Template_Getter::Get(title,import_scripts,css,body);
@@ -197,16 +193,28 @@ class
     body += "</div>";
     
     //build hand
-    body += "<div class='hand'>";
-    for (auto const& card: game.p2.hand){
-        body += Data_Uri_Getter::Get_Img_Tag(Playing_Card_Assets::Get(card));
-    }
-    body += "</div>";
+    body += Draw_Hand(game.p2);
 
     //render
     return Basic_Html_Template_Getter::Get(title,import_scripts,css,body);
 ❱
 
+
+◀private: static▶ std::string ☀Draw_Hand(Player_State & state)❰
+
+    //build hand
+    std::string body;
+    body += "<div class='hand'>";
+    int counter = 0;
+    for (auto const& card: state.hand){
+        body += "<div class='card" + std::to_string(counter) + "'>";
+        body += Data_Uri_Getter::Get_Img_Tag(Playing_Card_Assets::Get(card));
+        body += "</div>";
+        counter++;
+    }
+    body += "</div>";
+    return body;
+❱
 
 
 ◀private: static▶ std::vector<std::string> ☀Get_Scripts()❰
@@ -220,6 +228,7 @@ class
     std::string css;
     css +=  "img {  vertical-align: bottom; width: 50px; }";
     css +=  ".card_row { display: flex; }";
+    css +=  ".hand { display: flex; }";
     return css;
 ❱
 
