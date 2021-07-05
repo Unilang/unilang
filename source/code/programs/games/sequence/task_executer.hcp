@@ -16,6 +16,7 @@ class
 ❪"code/utilities/image/data_uri_getter"❫
 ❪"code/utilities/types/vectors/transformers/lib"❫
 ❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/strings/observers/other/lib"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Run()❰
@@ -69,6 +70,8 @@ class
                 state.connection = nullptr;
                 })
         .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary){
+            std::lock_guard<std::mutex> _(game.mtx);
+                    std::cout << "UPDATE" << std::endl;
                     Update_Game_State(game,data,0);
                 });
         
@@ -90,6 +93,8 @@ class
                 state.connection = nullptr;
                 })
         .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary){
+            std::lock_guard<std::mutex> _(game.mtx);
+            std::cout << "UPDATE" << std::endl;
                     Update_Game_State(game,data,1);
                 });
         
@@ -105,14 +110,40 @@ class
 
 ◀private: static▶ void  ☀Update_Game_State(Game_State & game, std::string const& data, int player)❰
 
-    // for (auto it: player1){
-    //     it->send_text("test");
-    // }
-    // for (auto it: player2){
-    //     it->send_text("test");
-    // }
+    
+    //update game state
+    if (player == 0){
+        if (Begins_With(data,"card")){
+            std::string number = data;
+            number.erase(0,4);
+            std::cout << number << std::endl;
+        }
+    }
+    if (player == 1){
+        if (Begins_With(data,"card")){
+            std::string number = data;
+            number.erase(0,4);
+            std::cout << number << std::endl;
+        }
+    }
+
+
+
+
+    //redraw scene
+    auto space1 = Get_Update_Space(game,game.p1);
+    auto space2 = Get_Update_Space(game,game.p2);
+    if (game.p1.connection) {
+        game.p1.connection->send_text("a");
+    }
+    if (game.p2.connection) {
+        game.p2.connection->send_text("b");
+    }
 ❱
 
+
+
+//getting game state
 ◀private: static▶ std::vector<std::vector<Playing_Card>>  ☀Get_Board()❰
 
     //get standard 52 deck
@@ -157,6 +188,11 @@ class
 
 
 
+
+
+
+
+//drawing frontend
 ◀private: static▶ std::string ☀Player1_Draw(Game_State & game)❰
 
     //build boilerplate
@@ -168,11 +204,9 @@ class
     //build board
     auto body = Everything_Update_Websocket("ws://192.168.0.137:18080/ws_p1");
     body += "<div id='everything'>";
-    body += Get_Html_Board(game.board);
+    body += Get_Update_Space(game,game.p1);
     body += "</div>";
     
-    //build hand
-    body += Draw_Hand(game.p1);
 
     //render
     return Basic_Html_Template_Getter::Get(title,import_scripts,css,body);
@@ -189,18 +223,24 @@ class
     //build board
     auto body = Everything_Update_Websocket("ws://192.168.0.137:18080/ws_p2");
     body += "<div id='everything'>";
-    body += Get_Html_Board(game.board);
+    body += Get_Update_Space(game,game.p2);
     body += "</div>";
-    
-    //build hand
-    body += Draw_Hand(game.p2);
 
     //render
     return Basic_Html_Template_Getter::Get(title,import_scripts,css,body);
 ❱
 
+◀private: static▶ std::string ☀Get_Update_Space(Game_State & game, Player_State & state)❰
 
-◀private: static▶ std::string ☀Draw_Hand(Player_State & state)❰
+    std::string body;
+    body += Get_Html_Board(game.board);
+    body += Draw_Hand(game,state);
+    //std::cout << body << std::endl;
+    return body;
+❱
+
+
+◀private: static▶ std::string ☀Draw_Hand(Game_State & game, Player_State & state)❰
 
     //build hand
     std::string body;
@@ -232,14 +272,14 @@ class
     return css;
 ❱
 
-
-
 ◀private: static▶ std::string ☀Everything_Update_Websocket(std::string const& socket_name)❰
 
     //establish the websocket
 std::string body;
 
     body += "<script>";
+    body += "$(document).ready(function() {";
+    
     body += "var sock = new WebSocket(\"";
     body += socket_name;
     body += "\");";
@@ -260,12 +300,38 @@ std::string body;
         console.log(e)
         $('#everything').html(e.data);
     }
-    </script>
     )RAW_STRING";
+    
+    
+    body += R"RAW_STRING(
+        $(".card0").click(()=>{
+            sock.send("card1");
+        });
+        $(".card1").click(()=>{
+            sock.send("card2");
+        });
+        $(".card2").click(()=>{
+            sock.send("card3");
+        });
+        $(".card3").click(()=>{
+            sock.send("card4");
+        });
+        $(".card4").click(()=>{
+            sock.send("card5");
+        });
+        $(".card5").click(()=>{
+            sock.send("card6");
+        });
+        $(".card6").click(()=>{
+            sock.send("card7");
+        });
+    )RAW_STRING";
+    
+    body += "});";
+    body += "</script>";
     
     return body;
 ❱
-
 
 
 ◀private: static▶ std::string ☀Get_Html_Board(std::vector<std::vector<Playing_Card>> const& cards)❰

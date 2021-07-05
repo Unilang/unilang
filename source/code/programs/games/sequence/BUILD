@@ -18,6 +18,7 @@ hcp(
         "//code/utilities/types/vectors/transformers:lib",
         "//code/programs/games/sequence/data:game_state",
         "//code/utilities/types/vectors/observers:lib",
+        "//code/utilities/types/strings/observers/other:lib",
         "@boost//:algorithm",
         "@boost//:asio",
         "@boost//:optional",

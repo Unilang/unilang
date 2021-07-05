@@ -13,5 +13,7 @@ class
     crow::websocket::connection* connection;
     
     std::vector<Playing_Card> hand;
+    
+    int card_selected = -1;
 ▶
 

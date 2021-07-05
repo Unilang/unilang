@@ -14,6 +14,8 @@ class
     crow::SimpleApp server;
     int port;
     
+    std::mutex mtx;
+    
     std::vector<std::vector<Playing_Card>> board;
     std::vector<Playing_Card> deck;
     
