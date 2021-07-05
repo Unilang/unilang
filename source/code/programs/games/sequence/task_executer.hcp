@@ -113,18 +113,10 @@ class
     
     //update game state
     if (player == 0){
-        if (Begins_With(data,"card")){
-            std::string number = data;
-            number.erase(0,4);
-            std::cout << number << std::endl;
-        }
+        Handle_Card_Select(game.p1,data);
     }
     if (player == 1){
-        if (Begins_With(data,"card")){
-            std::string number = data;
-            number.erase(0,4);
-            std::cout << number << std::endl;
-        }
+        Handle_Card_Select(game.p2,data);
     }
 
 
@@ -134,13 +126,27 @@ class
     auto space1 = Get_Update_Space(game,game.p1);
     auto space2 = Get_Update_Space(game,game.p2);
     if (game.p1.connection) {
-        game.p1.connection->send_text("a");
+        game.p1.connection->send_text(space1);
     }
     if (game.p2.connection) {
-        game.p2.connection->send_text("b");
+        game.p2.connection->send_text(space2);
     }
 ❱
 
+◀private: static▶ void  ☀Handle_Card_Select(Player_State & state, std::string const& data)❰
+
+        if (Begins_With(data,"card")){
+            std::string number = data;
+            number.erase(0,4);
+            int selected = std::atoi(number.c_str());
+            if (state.card_selected == selected){
+                state.card_selected = -1;
+            }
+            else {
+                state.card_selected = selected;
+            }
+        }
+❱
 
 
 //getting game state
@@ -247,7 +253,11 @@ class
     body += "<div class='hand'>";
     int counter = 0;
     for (auto const& card: state.hand){
-        body += "<div class='card" + std::to_string(counter) + "'>";
+        body += "<div class='card" + std::to_string(counter) + " ";
+        if (state.card_selected == counter){
+            body += " card_selected ";
+        }
+        body += "'>";
         body += Data_Uri_Getter::Get_Img_Tag(Playing_Card_Assets::Get(card));
         body += "</div>";
         counter++;
@@ -269,6 +279,7 @@ class
     css +=  "img {  vertical-align: bottom; width: 50px; }";
     css +=  ".card_row { display: flex; }";
     css +=  ".hand { display: flex; }";
+    css +=  ".card_selected {     padding: 4px; background: red; }";
     return css;
 ❱
 
@@ -305,25 +316,25 @@ std::string body;
     
     body += R"RAW_STRING(
         $(".card0").click(()=>{
-            sock.send("card1");
+            sock.send("card0");
         });
         $(".card1").click(()=>{
-            sock.send("card2");
+            sock.send("card1");
         });
         $(".card2").click(()=>{
-            sock.send("card3");
+            sock.send("card2");
         });
         $(".card3").click(()=>{
-            sock.send("card4");
+            sock.send("card3");
         });
         $(".card4").click(()=>{
-            sock.send("card5");
+            sock.send("card4");
         });
         $(".card5").click(()=>{
-            sock.send("card6");
+            sock.send("card5");
         });
         $(".card6").click(()=>{
-            sock.send("card7");
+            sock.send("card6");
         });
     )RAW_STRING";
     

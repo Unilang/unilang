@@ -10,7 +10,7 @@ class
 ◀public:
     
     std::string websocket_name;
-    crow::websocket::connection* connection;
+    crow::websocket::connection* connection = nullptr;
     
     std::vector<Playing_Card> hand;
     
