@@ -23,36 +23,36 @@ class
     
     Game_State game;
     game.port = 18080;
-    game.board = Get_Board_Deck();
     
+    //build the board and the deck
+    game.board = Get_Board();
+    game.deck = Get_Deck();
+    
+    //each user draws 7 cards
     game.p1.websocket_name = "ws_p1";
+    for (size_t i = 0; i < 7; ++i){
+        Transfer_An_Element(deck,game.p1.hand);
+    }
+    
+    
     game.p2.websocket_name = "ws_p2";
+    for (size_t i = 0; i < 7; ++i){
+        Transfer_An_Element(deck,game.p2.hand);
+    }
     
     
     
     
-    //web socket stuff
+    //add routes and web sockets
     Create_Player_Routes_P1(game,game.p1);
     Create_Player_Routes_P2(game,game.p2);
     
 
     
     
-    // std::thread t1([&](){
-    //     int i = 0;
-    //     while (true){
-    //         std::this_thread::sleep_for(std::chrono::seconds(5));
-            
-    //         for (auto it: player1){
-    //             it->send_text("<p>" + std::to_string(i) + "</p>");
-    //         }
-    //         ++i;
-    //     }
-    // });
-    
+    //start server
     game.server.port(game.port).multithreaded().run();
     
-    //t1.join();
 ❱
 
 
@@ -113,7 +113,7 @@ class
     // }
 ❱
 
-◀private: static▶ std::vector<std::vector<Playing_Card>>  ☀Get_Board_Deck()❰
+◀private: static▶ std::vector<std::vector<Playing_Card>>  ☀Get_Board()❰
 
     //get standard 52 deck
     auto cards = Playing_Card_all_enums();
@@ -138,6 +138,23 @@ class
     
 ❱
 
+◀private: static▶ std::vector<Playing_Card>  ☀Get_Deck()❰
+
+    //get standard 52 deck
+    auto cards = Playing_Card_all_enums();
+    
+    //shuffle
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(cards.begin(),cards.end(),g);
+    
+    return cards;
+❱
+
+
+
+
+
 
 
 ◀private: static▶ std::string ☀Player1_Draw(Game_State & game)❰
@@ -148,10 +165,17 @@ class
     auto css = Get_Css();
     
     
-    //build body
+    //build board
     auto body = Everything_Update_Websocket("ws://192.168.0.137:18080/ws_p1");
     body += "<div id='everything'>";
     body += Get_Html_Board(game.board);
+    body += "</div>";
+    
+    //build hand
+    body += "<div class='hand'>";
+    for (auto const& card: game.p1.hand){
+        body += Data_Uri_Getter::Get_Img_Tag(Playing_Card_Assets::Get(card));
+    }
     body += "</div>";
 
     //render
@@ -166,10 +190,17 @@ class
     auto css = Get_Css();
     
     
-    //build body
+    //build board
     auto body = Everything_Update_Websocket("ws://192.168.0.137:18080/ws_p2");
     body += "<div id='everything'>";
     body += Get_Html_Board(game.board);
+    body += "</div>";
+    
+    //build hand
+    body += "<div class='hand'>";
+    for (auto const& card: game.p2.hand){
+        body += Data_Uri_Getter::Get_Img_Tag(Playing_Card_Assets::Get(card));
+    }
     body += "</div>";
 
     //render

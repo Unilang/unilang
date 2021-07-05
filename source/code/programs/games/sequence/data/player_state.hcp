@@ -11,5 +11,7 @@ class
     
     std::string websocket_name;
     crow::websocket::connection* connection;
+    
+    std::vector<Playing_Card> hand;
 ▶
 

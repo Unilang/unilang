@@ -15,6 +15,7 @@ class
     int port;
     
     std::vector<std::vector<Playing_Card>> board;
+    std::vector<Playing_Card> deck;
     
     Player_State p1;
     Player_State p2;

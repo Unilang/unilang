@@ -36,6 +36,14 @@ void Ensure_Not_Empty(std::vector<T>& v)
     }
 }
 
+template <typename T>
+void Transfer_An_Element(std::vector<T>& from, std::vector<T>& to){
+    if (!from.empty()){
+        auto take = Remove_Last_Element(from);
+        to.emplace_back(take)l
+    }
+}
+
 
 
 //math (string is treated as integer)
