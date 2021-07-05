@@ -30,9 +30,14 @@ class
         return Player1_Draw(cards);
     });
     
-    CROW_ROUTE(app, "/player2")([&](){
+    CROW_ROUTE(app, "/player1_pick<int>")([&](int i){
         
-        return Player2_Draw(cards);
+        return "";
+    });
+    
+    CROW_ROUTE(app, "/player2_pick<int>")([&](int i){
+        
+        return "";
     });
     
     
