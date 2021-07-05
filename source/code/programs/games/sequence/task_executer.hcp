@@ -289,32 +289,10 @@ class
 std::string body;
 
     body += "<script>";
-    body += "$(document).ready(function() {";
-    
-    body += "var sock = new WebSocket(\"";
-    body += socket_name;
-    body += "\");";
-    
     
     body += R"RAW_STRING(
-
-    sock.onopen = ()=>{
-        console.log('open')
-    }
-    sock.onerror = (e)=>{
-        console.log('error',e)
-    }
-    sock.onclose = ()=>{
-        console.log('close')
-    }
-    sock.onmessage = (e)=>{
-        console.log(e)
-        $('#everything').html(e.data);
-    }
-    )RAW_STRING";
-    
-    
-    body += R"RAW_STRING(
+    function on_click_handlers(sock) {
+        
         $(".card0").on( "click", function() {
             console.log("card0");
             sock.send("card0");
@@ -343,9 +321,45 @@ std::string body;
             console.log("card6");
             sock.send("card6");
         });
+        
+    }
+)RAW_STRING";
+    
+    body += "$(document).ready(function() {";
+    
+    body += "var sock = new WebSocket(\"";
+    body += socket_name;
+    body += "\");";
+    
+    
+    body += R"RAW_STRING(
+
+    sock.onopen = ()=>{
+        console.log('open')
+    }
+    sock.onerror = (e)=>{
+        console.log('error',e)
+    }
+    sock.onclose = ()=>{
+        console.log('close')
+    }
+    sock.onmessage = (e)=>{
+        console.log(e)
+        $('#everything').html(e.data);
+        on_click_handlers(sock);
+    }
+    )RAW_STRING";
+    
+    
+    body += R"RAW_STRING(
+        on_click_handlers(sock);
     )RAW_STRING";
     
     body += "});";
+    
+    
+    
+    
     body += "</script>";
     
     return body;
