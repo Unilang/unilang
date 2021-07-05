@@ -39,8 +39,9 @@ void Ensure_Not_Empty(std::vector<T>& v)
 template <typename T>
 void Transfer_An_Element(std::vector<T>& from, std::vector<T>& to){
     if (!from.empty()){
-        auto take = Remove_Last_Element(from);
-        to.emplace_back(take)l
+        auto take = from[0];
+        Remove_First_Element(from);
+        to.emplace_back(take);
     }
 }
 
