@@ -315,25 +315,32 @@ std::string body;
     
     
     body += R"RAW_STRING(
-        $(".card0").click(()=>{
+        $(".card0").on( "click", function() {
+            console.log("card0");
             sock.send("card0");
         });
-        $(".card1").click(()=>{
+        $(".card1").on( "click", function() {
+            console.log("card1");
             sock.send("card1");
         });
-        $(".card2").click(()=>{
+        $(".card2").on( "click", function() {
+            console.log("card2");
             sock.send("card2");
         });
-        $(".card3").click(()=>{
+        $(".card3").on( "click", function() {
+            console.log("card3");
             sock.send("card3");
         });
-        $(".card4").click(()=>{
+        $(".card4").on( "click", function() {
+            console.log("card4");
             sock.send("card4");
         });
-        $(".card5").click(()=>{
+        $(".card5").on( "click", function() {
+            console.log("card5");
             sock.send("card5");
         });
-        $(".card6").click(()=>{
+        $(".card6").on( "click", function() {
+            console.log("card6");
             sock.send("card6");
         });
     )RAW_STRING";
