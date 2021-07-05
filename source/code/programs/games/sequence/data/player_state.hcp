@@ -1,0 +1,15 @@
+class
+❪"include/crow.h"❫
+❪vector❫
+❪string❫
+❪"code/utilities/data_structures/playing_card"❫
+⚯
+
+⚞⚟
+
+◀public:
+    
+    std::string websocket_name;
+    crow::websocket::connection* connection;
+▶
+

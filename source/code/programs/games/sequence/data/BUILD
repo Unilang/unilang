@@ -8,7 +8,7 @@ load("//bazel/rules/cpp:object.bzl", "cpp_object")
 load("//bazel/rules/cpp:distributable_main.bzl", "distributable_cpp_main")
 
 hcp(
-    name = "task_executer",
+    name = "game_state",
     deps = [
         "//code/utilities/formats/html:basic_html_template_getter",
         "//code/utilities/data_structures:playing_card",
@@ -16,8 +16,7 @@ hcp(
         "//code/utilities/program/call:lib",
         "//code/utilities/assets:playing_card_assets",
         "//code/utilities/types/vectors/transformers:lib",
-        "//code/programs/games/sequence/data:game_state",
-        "//code/utilities/types/vectors/observers:lib",
+        "//code/programs/games/sequence/data:player_state",
         "@boost//:algorithm",
         "@boost//:asio",
         "@boost//:optional",
@@ -25,11 +24,10 @@ hcp(
     ],
 )
 
-cpp_main(
-    name = "sequence",
+hcp(
+    name = "player_state",
     deps = [
-        "//code/programs/games/sequence:task_executer",
-        "//code/utilities/program/call:lib",
+        "//code/utilities/data_structures:playing_card",
         "@boost//:algorithm",
         "@boost//:asio",
         "@boost//:optional",

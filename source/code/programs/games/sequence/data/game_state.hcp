@@ -1,0 +1,22 @@
+class
+❪"include/crow.h"❫
+❪vector❫
+❪string❫
+❪"code/programs/games/sequence/data/player_state"❫
+❪"code/utilities/data_structures/playing_card"❫
+⚯
+
+⚞⚟
+
+◀public:
+    
+    //the server that hosts the game
+    crow::SimpleApp server;
+    int port;
+    
+    std::vector<std::vector<Playing_Card>> board;
+    
+    Player_State p1;
+    Player_State p2;
+▶
+

@@ -3,48 +3,117 @@ class
 ❪iostream❫
 ❪algorithm❫
 ❪random❫
+❪thread❫
+❪unordered_set❫
+❪utility❫
 ❪"include/crow.h"❫
 ❪"code/utilities/program/call/lib.hpp"❫
 ❪"code/utilities/data_structures/playing_card"❫
+❪"code/programs/games/sequence/data/game_state"❫
 ⚯
 ❪"code/utilities/formats/html/basic_html_template_getter"❫
 ❪"code/utilities/assets/playing_card_assets"❫
 ❪"code/utilities/image/data_uri_getter"❫
 ❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Run()❰
  
     
-    crow::SimpleApp app;
+    Game_State game;
+    game.port = 18080;
+    game.board = Get_Board_Deck();
     
-    //get standard 52 deck
-    auto cards = Get_Board_Deck();
+    game.p1.websocket_name = "ws_p1";
+    game.p2.websocket_name = "ws_p2";
+    
+    
+    
+    
+    //web socket stuff
+    Create_Player_Routes_P1(game,game.p1);
+    Create_Player_Routes_P2(game,game.p2);
+    
 
-    CROW_ROUTE(app, "/")([&](){
-        return "Board";
-    });
-    
-    CROW_ROUTE(app, "/player1")([&](){
-        
-        return Player1_Draw(cards);
-    });
-    
-    CROW_ROUTE(app, "/player1_pick<int>")([&](int i){
-        
-        return "";
-    });
-    
-    CROW_ROUTE(app, "/player2_pick<int>")([&](int i){
-        
-        return "";
-    });
     
     
-    app.port(18080).multithreaded().run();
+    // std::thread t1([&](){
+    //     int i = 0;
+    //     while (true){
+    //         std::this_thread::sleep_for(std::chrono::seconds(5));
+            
+    //         for (auto it: player1){
+    //             it->send_text("<p>" + std::to_string(i) + "</p>");
+    //         }
+    //         ++i;
+    //     }
+    // });
+    
+    game.server.port(game.port).multithreaded().run();
+    
+    //t1.join();
 ❱
 
-◀private: static▶ std::vector<Playing_Card>  ☀Get_Board_Deck()❰
+
+◀private: static▶ void  ☀Create_Player_Routes_P1(Game_State & game, Player_State & state)❰
+
+    CROW_ROUTE(game.server, "/ws_p1") //can't be dynamic :(
+        .websocket()
+        .onopen([&](crow::websocket::connection& conn){
+                CROW_LOG_INFO << "new websocket connection";
+                state.connection = &conn;
+                })
+        .onclose([&](crow::websocket::connection& conn, const std::string& reason){
+                CROW_LOG_INFO << "websocket connection closed: " << reason;
+                state.connection = nullptr;
+                })
+        .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary){
+                    Update_Game_State(game,data,0);
+                });
+        
+    CROW_ROUTE(game.server, "/p1")([&](){
+        return Player1_Draw(game);
+    });
+❱
+
+◀private: static▶ void  ☀Create_Player_Routes_P2(Game_State & game, Player_State & state)❰
+
+    CROW_ROUTE(game.server, "/ws_p2") //can't be dynamic :(
+        .websocket()
+        .onopen([&](crow::websocket::connection& conn){
+                CROW_LOG_INFO << "new websocket connection";
+                state.connection = &conn;
+                })
+        .onclose([&](crow::websocket::connection& conn, const std::string& reason){
+                CROW_LOG_INFO << "websocket connection closed: " << reason;
+                state.connection = nullptr;
+                })
+        .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary){
+                    Update_Game_State(game,data,1);
+                });
+        
+    CROW_ROUTE(game.server, "/p2")([&](){
+        return Player2_Draw(game);
+    });
+❱
+
+
+
+
+
+
+◀private: static▶ void  ☀Update_Game_State(Game_State & game, std::string const& data, int player)❰
+
+    // for (auto it: player1){
+    //     it->send_text("test");
+    // }
+    // for (auto it: player2){
+    //     it->send_text("test");
+    // }
+❱
+
+◀private: static▶ std::vector<std::vector<Playing_Card>>  ☀Get_Board_Deck()❰
 
     //get standard 52 deck
     auto cards = Playing_Card_all_enums();
@@ -64,53 +133,122 @@ class
     
     std::cout << cards.size() << std::endl;
     
-    return cards;
+    auto board = Split_Every_N(cards,6);
+    return board;
     
 ❱
 
 
 
-◀private: static▶ std::string ☀Player1_Draw(std::vector<Playing_Card> & cards)❰
+◀private: static▶ std::string ☀Player1_Draw(Game_State & game)❰
+
+    //build boilerplate
+    std::string title = "Sequence!";
+    auto import_scripts = Get_Scripts();
+    auto css = Get_Css();
+    
+    
+    //build body
+    auto body = Everything_Update_Websocket("ws://192.168.0.137:18080/ws_p1");
+    body += "<div id='everything'>";
+    body += Get_Html_Board(game.board);
+    body += "</div>";
+
+    //render
+    return Basic_Html_Template_Getter::Get(title,import_scripts,css,body);
+❱
+
+◀private: static▶ std::string ☀Player2_Draw(Game_State & game)❰
+
+    //build boilerplate
+    std::string title = "Sequence!";
+    auto import_scripts = Get_Scripts();
+    auto css = Get_Css();
+    
+    
+    //build body
+    auto body = Everything_Update_Websocket("ws://192.168.0.137:18080/ws_p2");
+    body += "<div id='everything'>";
+    body += Get_Html_Board(game.board);
+    body += "</div>";
+
+    //render
+    return Basic_Html_Template_Getter::Get(title,import_scripts,css,body);
+❱
 
 
-    cards = Get_Board_Deck();
 
-    std::string title = "title";
+◀private: static▶ std::vector<std::string> ☀Get_Scripts()❰
+        std::vector<std::string> import_scripts;
+    import_scripts.emplace_back("https://code.jquery.com/jquery-3.1.0.min.js");
+    return import_scripts;
+❱
+
+◀private: static▶ std::string ☀Get_Css()❰
+
     std::string css;
-    //css += "img { display: block; }";
     css +=  "img {  vertical-align: bottom; width: 50px; }";
-    
-    
-    css +=  "div { display: flex; }";
-    std::string body;
+    css +=  ".card_row { display: flex; }";
+    return css;
+❱
 
-    int counter = 1;
-    body += "<div>";
-    for (auto const& card: cards) {
-        body += "<a href='myfile.htm'>";
-        body += Data_Uri_Getter::Get_Img_Tag(Playing_Card_Assets::Get(card));
-        body += "</a>";
-        
-        if (counter == 6) {
-            counter = 0;
-            body += "</div>";
-            body += "<div>";
-            //body += "<br>";
-        }
-        
-        counter++;
+
+
+◀private: static▶ std::string ☀Everything_Update_Websocket(std::string const& socket_name)❰
+
+    //establish the websocket
+std::string body;
+
+    body += "<script>";
+    body += "var sock = new WebSocket(\"";
+    body += socket_name;
+    body += "\");";
+    
+    
+    body += R"RAW_STRING(
+
+    sock.onopen = ()=>{
+        console.log('open')
     }
-
-
+    sock.onerror = (e)=>{
+        console.log('error',e)
+    }
+    sock.onclose = ()=>{
+        console.log('close')
+    }
+    sock.onmessage = (e)=>{
+        console.log(e)
+        $('#everything').html(e.data);
+    }
+    </script>
+    )RAW_STRING";
     
-    
-    return Basic_Html_Template_Getter::Get(title,css,body);
+    return body;
 ❱
 
-◀private: static▶ std::string ☀Player2_Draw(std::vector<Playing_Card> & cards)❰
 
-    std::string title = "title";
-    std::string css = "";
-    std::string body = "hello world";
-    return Basic_Html_Template_Getter::Get(title,css,body);
+
+◀private: static▶ std::string ☀Get_Html_Board(std::vector<std::vector<Playing_Card>> const& cards)❰
+
+    std::string body;
+    
+    
+    for (auto const& a: cards){
+        body += "<div class='card_row'>";
+        for (auto const& card: a){
+            body += Data_Uri_Getter::Get_Img_Tag(Playing_Card_Assets::Get(card));
+        }
+        body += "</div>";
+    }
+    return body;
+    
 ❱
+
+
+
+
+
+
+
+
+
