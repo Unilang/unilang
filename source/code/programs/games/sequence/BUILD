@@ -15,6 +15,7 @@ hcp(
         "//code/utilities/image:data_uri_getter",
         "//code/utilities/program/call:lib",
         "//code/utilities/assets:playing_card_assets",
+        "//code/utilities/types/vectors/transformers:lib",
         "@boost//:algorithm",
         "@boost//:asio",
         "@boost//:optional",
