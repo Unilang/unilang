@@ -2198,6 +2198,8 @@ cc_library(
     Dependency_Specification spec;
     spec.lib_name = "crow";
     Add_Unilang_Github_Mirror(spec,"crow","49edf898a5b9a39a0d69072cc2434c4f23692908","cd2c780b57c54a42f964ef7e6eaee0cd95f3fee97466c23d5dab87fd80cde696");
+    
+    //project abandoned.  use https://github.com/CrowCpp/crow
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀Cpp_Httplib()❰
