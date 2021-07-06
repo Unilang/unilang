@@ -11,6 +11,6 @@ class
     
     
     Playing_Card face;
-    int value = 0;
+    int value = -1;
 ▶
 

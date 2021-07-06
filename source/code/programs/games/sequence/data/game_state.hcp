@@ -16,6 +16,7 @@ class
     std::string host;
     int port;
     std::mutex mtx;
+    int starting_player_turn = 0;
     
     //the game pieces
     std::vector<std::vector<Board_Space>> board;
