@@ -72,11 +72,11 @@ class
     
     
     //cycle who goes first next time
-    if (starting_player_turn == 0){
-        starting_player_turn = 1;
+    if (game.starting_player_turn == 0){
+        game.starting_player_turn = 1;
     }
     else {
-        starting_player_turn = 0;
+        game.starting_player_turn = 0;
     }
 
 ❱
@@ -285,10 +285,7 @@ class
     auto cards = Playing_Card_all_enums();
     
     
-    //shuffle
-    std::random_device rd;
-    std::mt19937 g(rd());
-    std::shuffle(cards.begin(),cards.end(),g);
+    Shuffle(cards);
     
     //remove the jacks
     Remove_Element(cards,Playing_Card::CARD_11_CLOVER);
@@ -315,10 +312,7 @@ class
     //get standard 52 deck
     auto cards = Playing_Card_all_enums();
     
-    //shuffle
-    std::random_device rd;
-    std::mt19937 g(rd());
-    std::shuffle(cards.begin(),cards.end(),g);
+    Shuffle(cards);
     
     return cards;
 ❱

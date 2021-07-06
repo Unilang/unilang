@@ -3,6 +3,7 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
+#include <random>
 #include <set>
 #include "code/utilities/types/strings/transformers/casing/lib.hpp"
 #include "code/utilities/data_structures/index_mode.hpp"
@@ -330,6 +331,15 @@ template <typename value_t>
 void BogoSort( std::vector< value_t > & data ){
     while( !std::is_sorted(data.cbegin(), data.cend()) )
     {std::shuffle(data.begin(), data.end());}
+}
+
+
+template <typename T>
+void Shuffle(std::vector<T> vec){
+
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(vec.begin(),vec.end(),g);
 }
 
 void Alphabetize_And_Print(std::vector<std::string> results);
