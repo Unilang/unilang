@@ -3,6 +3,7 @@ class
 ❪vector❫
 ❪string❫
 ❪"code/programs/games/sequence/data/player_state"❫
+❪"code/programs/games/sequence/data/board_space"❫
 ❪"code/utilities/data_structures/playing_card"❫
 ⚯
 
@@ -12,13 +13,15 @@ class
     
     //the server that hosts the game
     crow::SimpleApp server;
+    std::string host;
     int port;
-    
     std::mutex mtx;
     
-    std::vector<std::vector<Playing_Card>> board;
+    //the game pieces
+    std::vector<std::vector<Board_Space>> board;
     std::vector<Playing_Card> deck;
     
+    int player_turn = 0;
     Player_State p1;
     Player_State p2;
 ▶

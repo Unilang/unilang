@@ -12,6 +12,7 @@ class
     std::string websocket_name;
     crow::websocket::connection* connection = nullptr;
     
+    int player_num = 0;
     std::vector<Playing_Card> hand;
     
     int card_selected = -1;

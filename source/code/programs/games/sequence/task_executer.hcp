@@ -17,12 +17,14 @@ class
 ❪"code/utilities/types/vectors/transformers/lib"❫
 ❪"code/utilities/types/vectors/observers/lib"❫
 ❪"code/utilities/types/strings/observers/other/lib"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Run()❰
  
     
     Game_State game;
+    game.host = "192.168.0.137";
     game.port = 18080;
     
     //build the board and the deck
@@ -31,12 +33,14 @@ class
     
     //each user draws 7 cards
     game.p1.websocket_name = "ws_p1";
+    game.p1.player_num = 0;
     for (size_t i = 0; i < 7; ++i){
         Transfer_An_Element(game.deck,game.p1.hand);
     }
     
     
     game.p2.websocket_name = "ws_p2";
+    game.p2.player_num = 1;
     for (size_t i = 0; i < 7; ++i){
         Transfer_An_Element(game.deck,game.p2.hand);
     }
@@ -114,9 +118,21 @@ class
     //update game state
     if (player == 0){
         Handle_Card_Select(game.p1,data);
+        if (game.player_turn == 0){
+            bool success = Take_Turn(game.p1,data);
+            if (success) {
+                game.player_turn = 1;
+            }
+        }
     }
     if (player == 1){
         Handle_Card_Select(game.p2,data);
+        if (game.player_turn == 1){
+            bool success = Take_Turn(game.p2,data);
+            if (success) {
+                game.player_turn = 0;
+            }
+        }
     }
 
 
@@ -148,14 +164,28 @@ class
         }
 ❱
 
+◀private: static▶ bool  ☀Take_Turn(Player_State & state, std::string const& data)❰
+
+    if (Begins_With(data,"space")){
+            std::string number = data;
+            number.erase(0,5);
+            auto parts = Split_Into_Parts_From_Dash(number);
+            auto index1 = parts[0];
+            auto index2 = parts[1];
+            std::cout << index1 << " " << index2 << std::endl;
+    }
+    
+    return false;
+    std::cout << data << std::endl;
+❱
+
 
 //getting game state
-◀private: static▶ std::vector<std::vector<Playing_Card>>  ☀Get_Board()❰
+◀private: static▶ std::vector<std::vector<Board_Space>>  ☀Get_Board()❰
 
     //get standard 52 deck
     auto cards = Playing_Card_all_enums();
     
-    std::cout << cards.size() << std::endl;
     
     //shuffle
     std::random_device rd;
@@ -168,9 +198,16 @@ class
     Remove_Element(cards,Playing_Card::CARD_11_HEART);
     Remove_Element(cards,Playing_Card::CARD_11_SPADE);
     
-    std::cout << cards.size() << std::endl;
     
-    auto board = Split_Every_N(cards,6);
+    std::vector<Board_Space> spaces;
+    for (auto const& it: cards){
+        Board_Space temp;
+        temp.face = it;
+        spaces.emplace_back(temp);
+    }
+    
+    
+    auto board = Split_Every_N(spaces,6);
     return board;
     
 ❱
@@ -201,25 +238,17 @@ class
 //drawing frontend
 ◀private: static▶ std::string ☀Player1_Draw(Game_State & game)❰
 
-    //build boilerplate
-    std::string title = "Sequence!";
-    auto import_scripts = Get_Scripts();
-    auto css = Get_Css();
-    
-    
-    //build board
-    auto body = Everything_Update_Websocket("ws://192.168.0.137:18080/ws_p1");
-    body += "<div id='everything'>";
-    body += Get_Update_Space(game,game.p1);
-    body += "</div>";
-    
-
-    //render
-    return Basic_Html_Template_Getter::Get(title,import_scripts,css,body);
+    return Player_Draw(game,game.p1);
 ❱
 
 ◀private: static▶ std::string ☀Player2_Draw(Game_State & game)❰
 
+    return Player_Draw(game,game.p2);
+❱
+
+
+◀private: static▶ std::string ☀Player_Draw(Game_State & game, Player_State & player)❰
+
     //build boilerplate
     std::string title = "Sequence!";
     auto import_scripts = Get_Scripts();
@@ -227,44 +256,28 @@ class
     
     
     //build board
-    auto body = Everything_Update_Websocket("ws://192.168.0.137:18080/ws_p2");
+    auto ip = std::string("ws://") + game.host + ":" + std::to_string(game.port) + "/" + player.websocket_name;
+    auto body = Everything_Update_Websocket(ip);
     body += "<div id='everything'>";
-    body += Get_Update_Space(game,game.p2);
+    body += Get_Update_Space(game,player);
     body += "</div>";
 
     //render
     return Basic_Html_Template_Getter::Get(title,import_scripts,css,body);
 ❱
 
+
 ◀private: static▶ std::string ☀Get_Update_Space(Game_State & game, Player_State & state)❰
 
     std::string body;
-    body += Get_Html_Board(game.board);
+    body += Draw_Html_Board(game.board,state);
     body += Draw_Hand(game,state);
+    body += Draw_Game_Status(game,state);
     //std::cout << body << std::endl;
     return body;
 ❱
 
 
-◀private: static▶ std::string ☀Draw_Hand(Game_State & game, Player_State & state)❰
-
-    //build hand
-    std::string body;
-    body += "<div class='hand'>";
-    int counter = 0;
-    for (auto const& card: state.hand){
-        body += "<div class='card" + std::to_string(counter) + " ";
-        if (state.card_selected == counter){
-            body += " card_selected ";
-        }
-        body += "'>";
-        body += Data_Uri_Getter::Get_Img_Tag(Playing_Card_Assets::Get(card));
-        body += "</div>";
-        counter++;
-    }
-    body += "</div>";
-    return body;
-❱
 
 
 ◀private: static▶ std::vector<std::string> ☀Get_Scripts()❰
@@ -280,6 +293,32 @@ class
     css +=  ".card_row { display: flex; }";
     css +=  ".hand { display: flex; }";
     css +=  ".card_selected {     padding: 4px; background: red; }";
+    css +=  ".space_selected {     outline: 6px solid red; }";
+    
+    
+    css += R"RAW_STRING(
+        .p1-circle {
+            width: 30px;
+            height: 30px;
+            margin-left: 9px;
+            margin-top: 17px;
+            position: absolute;
+            background: red;
+            border-radius: 50%;
+        }
+        
+        .p2-circle {
+            width: 30px;
+            height: 30px;
+            margin-left: 9px;
+            margin-top: 17px;
+            position: absolute;
+            background: yellow;
+            border-radius: 50%;
+        }
+        )RAW_STRING";
+    
+    
     return css;
 ❱
 
@@ -321,9 +360,22 @@ std::string body;
             console.log("card6");
             sock.send("card6");
         });
-        
-    }
 )RAW_STRING";
+    for (size_t i = 0; i < 8; ++i){
+        for (size_t j = 0; j < 6; ++j){
+            std::string space_name = "space";
+            space_name += std::to_string(i) + "-" + std::to_string(j);
+            
+            body +="$(\".";
+            body += space_name;
+            body += "\")";
+            body += ".on( \"click\", function() {";
+            body += "sock.send(\"";
+            body += space_name;
+            body += "\");});\n";
+        }
+    }
+    body += "}";
     
     body += "$(document).ready(function() {";
     
@@ -366,20 +418,61 @@ std::string body;
 ❱
 
 
-◀private: static▶ std::string ☀Get_Html_Board(std::vector<std::vector<Playing_Card>> const& cards)❰
+◀private: static▶ std::string ☀Draw_Html_Board(std::vector<std::vector<Board_Space>> const& cards, Player_State & player)❰
 
     std::string body;
     
     
+    int counter1 = 0;
     for (auto const& a: cards){
         body += "<div class='card_row'>";
+        int counter2 = 0;
         for (auto const& card: a){
-            body += Data_Uri_Getter::Get_Img_Tag(Playing_Card_Assets::Get(card));
+            body += "<div class='space" + std::to_string(counter1) + "-" + std::to_string(counter2) + " ";
+            if (player.card_selected != -1){
+                auto selected_face = player.hand[player.card_selected];
+                if (selected_face == card.face){
+                    body += " space_selected ";
+                }
+            }
+            body += "'>";
+            body += Data_Uri_Getter::Get_Img_Tag(Playing_Card_Assets::Get(card.face));
+            body += "</div>";
+            ++counter2;
         }
+        ++counter1;
         body += "</div>";
     }
     return body;
     
+❱
+
+◀private: static▶ std::string ☀Draw_Hand(Game_State & game, Player_State & state)❰
+
+    //build hand
+    std::string body;
+    body += "<div class='hand'>";
+    int counter = 0;
+    for (auto const& card: state.hand){
+        body += "<div class='card" + std::to_string(counter) + " ";
+        if (state.card_selected == counter){
+            body += " card_selected ";
+        }
+        body += "'>";
+        body += Data_Uri_Getter::Get_Img_Tag(Playing_Card_Assets::Get(card));
+        body += "</div>";
+        counter++;
+    }
+    body += "</div>";
+    return body;
+❱
+
+◀private: static▶ std::string ☀Draw_Game_Status(Game_State & game, Player_State & state)❰
+    std::string body;
+    if (game.player_turn == state.player_num){
+        body += "Your turn";
+    }
+    return body;
 ❱
 
 

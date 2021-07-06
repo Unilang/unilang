@@ -1,0 +1,16 @@
+class
+❪"include/crow.h"❫
+❪vector❫
+❪string❫
+❪"code/utilities/data_structures/playing_card"❫
+⚯
+
+⚞⚟
+
+◀public:
+    
+    
+    Playing_Card face;
+    int value = 0;
+▶
+

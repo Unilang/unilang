@@ -17,6 +17,7 @@ hcp(
         "//code/utilities/assets:playing_card_assets",
         "//code/utilities/types/vectors/transformers:lib",
         "//code/programs/games/sequence/data:player_state",
+        "//code/programs/games/sequence/data:board_space",
         "@boost//:algorithm",
         "@boost//:asio",
         "@boost//:optional",
@@ -26,6 +27,17 @@ hcp(
 
 hcp(
     name = "player_state",
+    deps = [
+        "//code/utilities/data_structures:playing_card",
+        "@boost//:algorithm",
+        "@boost//:asio",
+        "@boost//:optional",
+        "@crow",
+    ],
+)
+
+hcp(
+    name = "board_space",
     deps = [
         "//code/utilities/data_structures:playing_card",
         "@boost//:algorithm",

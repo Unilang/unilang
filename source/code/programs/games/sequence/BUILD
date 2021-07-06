@@ -19,6 +19,7 @@ hcp(
         "//code/programs/games/sequence/data:game_state",
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/strings/observers/other:lib",
+        "//code/utilities/types/strings/observers/splitting:lib",
         "@boost//:algorithm",
         "@boost//:asio",
         "@boost//:optional",
