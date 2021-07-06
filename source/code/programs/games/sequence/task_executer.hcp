@@ -18,6 +18,7 @@ class
 ❪"code/utilities/types/vectors/observers/lib"❫
 ❪"code/utilities/types/strings/observers/other/lib"❫
 ❪"code/utilities/types/strings/observers/splitting/lib"❫
+❪"code/programs/games/sequence/frontend_drawer"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Run()❰
@@ -47,8 +48,8 @@ class
 ◀private: static▶ void  ☀New_Game(Game_State & game)❰
 
     //build the board and the deck
-    game.board = Get_Board();
-    game.deck = Get_Deck();
+    game.board = Get_Shuffled_Board();
+    game.deck = Get_Shuffled_Deck();
     
     //each user draws 7 cards
     game.p1.websocket_name = "ws_p1";
@@ -100,7 +101,7 @@ class
                 });
         
     CROW_ROUTE(game.server, "/p1")([&](){
-        return Player1_Draw(game);
+        return Frontend_Drawer::Player1_Draw(game);
     });
 ❱
 
@@ -123,7 +124,7 @@ class
                 });
         
     CROW_ROUTE(game.server, "/p2")([&](){
-        return Player2_Draw(game);
+        return Frontend_Drawer::Player2_Draw(game);
     });
 ❱
 
@@ -163,8 +164,8 @@ class
 
 
     //redraw scene
-    auto space1 = Get_Update_Space(game,game.p1);
-    auto space2 = Get_Update_Space(game,game.p2);
+    auto space1 = Frontend_Drawer::Get_Update_Space(game,game.p1);
+    auto space2 = Frontend_Drawer::Get_Update_Space(game,game.p2);
     if (game.p1.connection) {
         game.p1.connection->send_text(space1);
     }
@@ -279,7 +280,7 @@ class
 
 
 //getting game state
-◀private: static▶ std::vector<std::vector<Board_Space>>  ☀Get_Board()❰
+◀private: static▶ std::vector<std::vector<Board_Space>>  ☀Get_Shuffled_Board()❰
 
     //get standard 52 deck
     auto cards = Playing_Card_all_enums();
@@ -307,7 +308,7 @@ class
     
 ❱
 
-◀private: static▶ std::vector<Playing_Card>  ☀Get_Deck()❰
+◀private: static▶ std::vector<Playing_Card>  ☀Get_Shuffled_Deck()❰
 
     //get standard 52 deck
     auto cards = Playing_Card_all_enums();
@@ -319,265 +320,6 @@ class
 
 
 
-
-
-
-
-
-
-
-
-//drawing frontend
-◀private: static▶ std::string ☀Player1_Draw(Game_State & game)❰
-
-    return Player_Draw(game,game.p1);
-❱
-
-◀private: static▶ std::string ☀Player2_Draw(Game_State & game)❰
-
-    return Player_Draw(game,game.p2);
-❱
-
-
-◀private: static▶ std::string ☀Player_Draw(Game_State & game, Player_State & player)❰
-
-    //build boilerplate
-    std::string title = "Sequence!";
-    auto import_scripts = Get_Scripts();
-    auto css = Get_Css();
-    
-    
-    //build board
-    auto ip = std::string("ws://") + game.host + ":" + std::to_string(game.port) + "/" + player.websocket_name;
-    auto body = Everything_Update_Websocket(ip);
-    body += "<div id='everything'>";
-    body += Get_Update_Space(game,player);
-    body += "</div>";
-
-    //render
-    return Basic_Html_Template_Getter::Get(title,import_scripts,css,body);
-❱
-
-
-◀private: static▶ std::string ☀Get_Update_Space(Game_State & game, Player_State & state)❰
-
-    std::string body;
-    body += Draw_Html_Board(game.board,state);
-    body += Draw_Hand(game,state);
-    body += Draw_Game_Status(game,state);
-    //std::cout << body << std::endl;
-    return body;
-❱
-
-
-
-
-◀private: static▶ std::vector<std::string> ☀Get_Scripts()❰
-        std::vector<std::string> import_scripts;
-    import_scripts.emplace_back("https://code.jquery.com/jquery-3.1.0.min.js");
-    return import_scripts;
-❱
-
-◀private: static▶ std::string ☀Get_Css()❰
-
-    std::string css;
-    css +=  "img {  vertical-align: bottom; width: 50px; }";
-    css +=  ".card_row { display: flex; }";
-    css +=  ".hand { display: flex; }";
-    css +=  ".card_selected {     padding: 4px; background: red; }";
-    css +=  ".space_selected {     outline: 6px solid red; }";
-    
-    
-    css += R"RAW_STRING(
-        .p1-circle {
-            width: 30px;
-            height: 30px;
-            margin-left: 9px;
-            margin-top: 17px;
-            position: absolute;
-            background: red;
-            border-radius: 50%;
-        }
-        
-        .p2-circle {
-            width: 30px;
-            height: 30px;
-            margin-left: 9px;
-            margin-top: 17px;
-            position: absolute;
-            background: yellow;
-            border-radius: 50%;
-        }
-        )RAW_STRING";
-    
-    
-    return css;
-❱
-
-◀private: static▶ std::string ☀Everything_Update_Websocket(std::string const& socket_name)❰
-
-    //establish the websocket
-std::string body;
-
-    body += "<script>";
-    
-    body += R"RAW_STRING(
-    function on_click_handlers(sock) {
-        
-        $(".card0").on( "click", function() {
-            console.log("card0");
-            sock.send("card0");
-        });
-        $(".card1").on( "click", function() {
-            console.log("card1");
-            sock.send("card1");
-        });
-        $(".card2").on( "click", function() {
-            console.log("card2");
-            sock.send("card2");
-        });
-        $(".card3").on( "click", function() {
-            console.log("card3");
-            sock.send("card3");
-        });
-        $(".card4").on( "click", function() {
-            console.log("card4");
-            sock.send("card4");
-        });
-        $(".card5").on( "click", function() {
-            console.log("card5");
-            sock.send("card5");
-        });
-        $(".card6").on( "click", function() {
-            console.log("card6");
-            sock.send("card6");
-        });
-        
-        $(".new_game").on( "click", function() {
-            sock.send("new_game");
-        });
-)RAW_STRING";
-    for (size_t i = 0; i < 8; ++i){
-        for (size_t j = 0; j < 6; ++j){
-            std::string space_name = "space";
-            space_name += std::to_string(i) + "-" + std::to_string(j);
-            
-            body +="$(\".";
-            body += space_name;
-            body += "\")";
-            body += ".on( \"click\", function() {";
-            body += "sock.send(\"";
-            body += space_name;
-            body += "\");});\n";
-        }
-    }
-    body += "}";
-    
-    body += "$(document).ready(function() {";
-    
-    body += "var sock = new WebSocket(\"";
-    body += socket_name;
-    body += "\");";
-    
-    
-    body += R"RAW_STRING(
-
-    sock.onopen = ()=>{
-        console.log('open')
-    }
-    sock.onerror = (e)=>{
-        console.log('error',e)
-    }
-    sock.onclose = ()=>{
-        console.log('close')
-    }
-    sock.onmessage = (e)=>{
-        console.log(e)
-        $('#everything').html(e.data);
-        on_click_handlers(sock);
-    }
-    )RAW_STRING";
-    
-    
-    body += R"RAW_STRING(
-        on_click_handlers(sock);
-    )RAW_STRING";
-    
-    body += "});";
-    
-    
-    
-    
-    body += "</script>";
-    
-    return body;
-❱
-
-
-◀private: static▶ std::string ☀Draw_Html_Board(std::vector<std::vector<Board_Space>> const& cards, Player_State & player)❰
-
-    std::string body;
-    
-    
-    int counter1 = 0;
-    for (auto const& a: cards){
-        body += "<div class='card_row'>";
-        int counter2 = 0;
-        for (auto const& card: a){
-            body += "<div class='space" + std::to_string(counter1) + "-" + std::to_string(counter2) + " ";
-            if (player.card_selected != -1){
-                auto selected_face = player.hand[player.card_selected];
-                if (selected_face == card.face){
-                    body += " space_selected ";
-                }
-            }
-            body += "'>";
-            
-            if (card.value == 0){
-                body += "<div class='p1-circle'> </div>";
-            }
-            else if (card.value == 1){
-                body += "<div class='p2-circle'> </div>";
-            }
-            body += Data_Uri_Getter::Get_Img_Tag(Playing_Card_Assets::Get(card.face));
-            body += "</div>";
-            ++counter2;
-        }
-        ++counter1;
-        body += "</div>";
-    }
-    return body;
-    
-❱
-
-◀private: static▶ std::string ☀Draw_Hand(Game_State & game, Player_State & state)❰
-
-    //build hand
-    std::string body;
-    body += "<div class='hand'>";
-    int counter = 0;
-    for (auto const& card: state.hand){
-        body += "<div class='card" + std::to_string(counter) + " ";
-        if (state.card_selected == counter){
-            body += " card_selected ";
-        }
-        body += "'>";
-        body += Data_Uri_Getter::Get_Img_Tag(Playing_Card_Assets::Get(card));
-        body += "</div>";
-        counter++;
-    }
-    body += "</div>";
-    return body;
-❱
-
-◀private: static▶ std::string ☀Draw_Game_Status(Game_State & game, Player_State & state)❰
-    std::string body;
-    if (game.player_turn == state.player_num){
-        body += "Your turn";
-    }
-    body += "<p class='new_game'> [ new game ] </p>";
-    return body;
-❱
 
 
 

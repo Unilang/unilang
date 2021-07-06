@@ -20,6 +20,27 @@ hcp(
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/strings/observers/other:lib",
         "//code/utilities/types/strings/observers/splitting:lib",
+        "//code/programs/games/sequence:frontend_drawer",
+        "@boost//:algorithm",
+        "@boost//:asio",
+        "@boost//:optional",
+        "@crow",
+    ],
+)
+
+hcp(
+    name = "frontend_drawer",
+    deps = [
+        "//code/utilities/formats/html:basic_html_template_getter",
+        "//code/utilities/data_structures:playing_card",
+        "//code/utilities/image:data_uri_getter",
+        "//code/utilities/program/call:lib",
+        "//code/utilities/assets:playing_card_assets",
+        "//code/utilities/types/vectors/transformers:lib",
+        "//code/programs/games/sequence/data:game_state",
+        "//code/utilities/types/vectors/observers:lib",
+        "//code/utilities/types/strings/observers/other:lib",
+        "//code/utilities/types/strings/observers/splitting:lib",
         "@boost//:algorithm",
         "@boost//:asio",
         "@boost//:optional",

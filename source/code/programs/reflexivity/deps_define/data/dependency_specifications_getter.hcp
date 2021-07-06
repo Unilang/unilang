@@ -234,6 +234,7 @@ class
     x.specs.emplace_back(IntervalTree());
     x.specs.emplace_back(Frozen());
     x.specs.emplace_back(stxxl());
+    x.specs.emplace_back(stl_threadsafe());
     x.specs.emplace_back(bitset2());
     
     //https://github.com/goldsborough/lru-cache
@@ -2536,6 +2537,12 @@ cc_binary(
     Dependency_Specification spec;
     spec.lib_name = "stxxl";
     Add_Unilang_Github_Mirror(spec,"stxxl","b9e44f0ecba7d7111fbb33f3330c3e53f2b75236","5350eba594f7899f125e607217662e4027b0c3cb78541b3964e02b9ac36e410f");
+    return spec;
+❱
+◀private: static▶ Dependency_Specification ☀stxxl()❰
+    Dependency_Specification spec;
+    spec.lib_name = "stl_threadsafe";
+    Add_Unilang_Github_Mirror(spec,"STL-Threadsafe","08b2d9e7f487121088a817071d1d42b2736996e9","5350eba594f7899f125e607217662e4027b0c3cb78541b3964e02b9ac36e410f");
     return spec;
 ❱
 ◀private: static▶ Dependency_Specification ☀bitset2()❰
