@@ -1,0 +1,50 @@
+class
+❪string❫
+❪iostream❫
+❪algorithm❫
+❪random❫
+❪thread❫
+❪unordered_set❫
+❪utility❫
+❪"include/crow.h"❫
+❪"code/utilities/program/call/lib.hpp"❫
+❪"code/utilities/data_structures/playing_card"❫
+❪"code/programs/games/sequence/data/game_state"❫
+⚯
+❪"code/utilities/formats/html/basic_html_template_getter"❫
+❪"code/utilities/assets/playing_card_assets"❫
+❪"code/utilities/image/data_uri_getter"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/strings/observers/other/lib"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
+❪"code/programs/games/sequence/frontend_drawer"❫
+⚞⚟
+
+◀public: static▶ std::vector<std::vector<Board_Space>>  ☀Get_Shuffled()❰
+
+    //get standard 52 deck
+    auto cards = Playing_Card_all_enums();
+    
+    
+    Shuffle(cards);
+    
+    //remove the jacks
+    Remove_Element(cards,Playing_Card::CARD_11_CLOVER);
+    Remove_Element(cards,Playing_Card::CARD_11_DIAMOND);
+    Remove_Element(cards,Playing_Card::CARD_11_HEART);
+    Remove_Element(cards,Playing_Card::CARD_11_SPADE);
+    
+    
+    std::vector<Board_Space> spaces;
+    for (auto const& it: cards){
+        Board_Space temp;
+        temp.face = it;
+        spaces.emplace_back(temp);
+    }
+    
+    
+    auto board = Split_Every_N(spaces,6);
+    return board;
+    
+❱

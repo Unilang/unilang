@@ -19,6 +19,8 @@ class
 ❪"code/utilities/types/strings/observers/other/lib"❫
 ❪"code/utilities/types/strings/observers/splitting/lib"❫
 ❪"code/programs/games/sequence/frontend_drawer"❫
+❪"code/utilities/games/sequence/board_getter"❫
+❪"code/utilities/games/sequence/deck_getter"❫
 ⚞⚟
 
 ◀public: static▶ void ☀Run()❰
@@ -48,8 +50,8 @@ class
 ◀private: static▶ void  ☀New_Game(Game_State & game)❰
 
     //build the board and the deck
-    game.board = Get_Shuffled_Board();
-    game.deck = Get_Shuffled_Deck();
+    game.board = Board_Getter::Get_Shuffled();
+    game.deck = Deck_Getter::Get_Shuffled();
     
     //each user draws 7 cards
     game.p1.websocket_name = "ws_p1";
@@ -277,51 +279,6 @@ class
 ◀private: static▶ bool  ☀Is_Remove_Jack(Playing_Card const& p)❰
     return p == Playing_Card::CARD_11_SPADE || p == Playing_Card::CARD_11_CLOVER;
 ❱
-
-
-//getting game state
-◀private: static▶ std::vector<std::vector<Board_Space>>  ☀Get_Shuffled_Board()❰
-
-    //get standard 52 deck
-    auto cards = Playing_Card_all_enums();
-    
-    
-    Shuffle(cards);
-    
-    //remove the jacks
-    Remove_Element(cards,Playing_Card::CARD_11_CLOVER);
-    Remove_Element(cards,Playing_Card::CARD_11_DIAMOND);
-    Remove_Element(cards,Playing_Card::CARD_11_HEART);
-    Remove_Element(cards,Playing_Card::CARD_11_SPADE);
-    
-    
-    std::vector<Board_Space> spaces;
-    for (auto const& it: cards){
-        Board_Space temp;
-        temp.face = it;
-        spaces.emplace_back(temp);
-    }
-    
-    
-    auto board = Split_Every_N(spaces,6);
-    return board;
-    
-❱
-
-◀private: static▶ std::vector<Playing_Card>  ☀Get_Shuffled_Deck()❰
-
-    //get standard 52 deck
-    auto cards = Playing_Card_all_enums();
-    
-    Shuffle(cards);
-    
-    return cards;
-❱
-
-
-
-
-
 
 
 

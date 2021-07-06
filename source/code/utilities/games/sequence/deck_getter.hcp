@@ -1,0 +1,33 @@
+class
+❪string❫
+❪iostream❫
+❪algorithm❫
+❪random❫
+❪thread❫
+❪unordered_set❫
+❪utility❫
+❪"include/crow.h"❫
+❪"code/utilities/program/call/lib.hpp"❫
+❪"code/utilities/data_structures/playing_card"❫
+❪"code/programs/games/sequence/data/game_state"❫
+⚯
+❪"code/utilities/formats/html/basic_html_template_getter"❫
+❪"code/utilities/assets/playing_card_assets"❫
+❪"code/utilities/image/data_uri_getter"❫
+❪"code/utilities/types/vectors/transformers/lib"❫
+❪"code/utilities/types/vectors/observers/lib"❫
+❪"code/utilities/types/strings/observers/other/lib"❫
+❪"code/utilities/types/strings/observers/splitting/lib"❫
+❪"code/programs/games/sequence/frontend_drawer"❫
+⚞⚟
+
+◀public: static▶ std::vector<Playing_Card>  ☀Get_Shuffled()❰
+
+    //get standard 52 deck
+    auto cards = Playing_Card_all_enums();
+    
+    Shuffle(cards);
+    
+    return cards;
+❱
+

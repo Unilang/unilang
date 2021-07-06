@@ -8,7 +8,7 @@ load("//bazel/rules/cpp:object.bzl", "cpp_object")
 load("//bazel/rules/cpp:distributable_main.bzl", "distributable_cpp_main")
 
 hcp(
-    name = "task_executer",
+    name = "board_getter",
     deps = [
         "//code/utilities/formats/html:basic_html_template_getter",
         "//code/utilities/data_structures:playing_card",
@@ -21,8 +21,6 @@ hcp(
         "//code/utilities/types/strings/observers/other:lib",
         "//code/utilities/types/strings/observers/splitting:lib",
         "//code/programs/games/sequence:frontend_drawer",
-        "//code/utilities/games/sequence:board_getter",
-        "//code/utilities/games/sequence:deck_getter",
         "@boost//:algorithm",
         "@boost//:asio",
         "@boost//:optional",
@@ -31,7 +29,7 @@ hcp(
 )
 
 hcp(
-    name = "frontend_drawer",
+    name = "deck_getter",
     deps = [
         "//code/utilities/formats/html:basic_html_template_getter",
         "//code/utilities/data_structures:playing_card",
@@ -43,18 +41,7 @@ hcp(
         "//code/utilities/types/vectors/observers:lib",
         "//code/utilities/types/strings/observers/other:lib",
         "//code/utilities/types/strings/observers/splitting:lib",
-        "@boost//:algorithm",
-        "@boost//:asio",
-        "@boost//:optional",
-        "@crow",
-    ],
-)
-
-cpp_main(
-    name = "sequence",
-    deps = [
-        "//code/programs/games/sequence:task_executer",
-        "//code/utilities/program/call:lib",
+        "//code/programs/games/sequence:frontend_drawer",
         "@boost//:algorithm",
         "@boost//:asio",
         "@boost//:optional",
