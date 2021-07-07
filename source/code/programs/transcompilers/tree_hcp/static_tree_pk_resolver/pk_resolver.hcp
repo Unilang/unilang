@@ -134,6 +134,11 @@ class
     
     //add the "didn't find it" implementation
     str += "std::cerr << \"lookup failed: " + pk + "\" << std::endl;\n";
+    str += "std::cerr << \"these were the fks:\";";
+    str += "std::cerr << std::endl;";
+    for (auto const& it: fks){
+        str += "std::cerr << \""+ pk + "\" << std::endl;\n";
+    }
     str += "exit(-1);\n";
     
     return str;
