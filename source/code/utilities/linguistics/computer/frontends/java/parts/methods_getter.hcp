@@ -187,10 +187,20 @@ class
 
 ◀private: static▶ std::string ☀Get_Body(model::Module const& structure, model::Function const& method, Java_Settings const& settings)❰
     std::string x;
+    
+    bool previous_was_comment = false;
     for (auto const& statement: First_Element_Or_Default(method.body).statement){
             auto fk = First_Element_Or_Default(statement.name);
             auto pk = Resolve(structure,fk);
+            
+            //space out comment blocks
+            if (Is_Comment(structure,pk,settings) && !previous_was_comment){
+                x += "\n";
+            }
+            previous_was_comment = Is_Comment(structure,pk,settings);
+            
             x += Get_Body_Statement(structure,pk,settings);
+            
     }
     return x;
 ❱
@@ -216,6 +226,24 @@ class
         }, any_statement);
     
     return str;
+❱
+
+◀private: static▶ bool ☀Is_Comment(model::Module const& structure, model_variants::StatementName const& any_statement, Java_Settings const& settings)❰
+    bool is_comment = false;
+    
+        std::visit(overloaded {
+            [&](model::RawStatement const& statement) {
+                is_comment = false;
+            },
+            [&](model::TodoStatement const& statement) {
+                is_comment = true;
+            },
+            [&](model::ModuleComment const& statement) {
+                is_comment = true;
+            },
+        }, any_statement);
+        
+    return is_comment;
 ❱
 
 
