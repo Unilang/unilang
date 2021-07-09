@@ -12,3 +12,4 @@ build:unilang --sandbox_writable_path=/home/luxe/Desktop/repos
 build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine=@rules_fuzzing//fuzzing/engines:libfuzzer
 build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine_instrumentation=libfuzzer
 build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine_sanitizer=asan
+build:asan --copt=-fsanitize=address --linkopt=-fsanitize=address

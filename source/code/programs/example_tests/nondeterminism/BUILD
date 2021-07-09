@@ -10,4 +10,5 @@ deterministic_output("is_deterministic")
 create_file_with_epoch("epoch_file")
 
 create_file_with_randomness("random_file")
-create_file_with_different_data_10_percent_of_time("10_percent_different");
+
+create_file_with_different_data_10_percent_of_time("10_percent_different")

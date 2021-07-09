@@ -10,14 +10,14 @@ load("//bazel/rules/cpp:distributable_main.bzl", "distributable_cpp_main")
 hcp(
     name = "game_state",
     deps = [
-        "//code/utilities/formats/html:basic_html_template_getter",
+        "//code/programs/games/sequence/data:board_space",
+        "//code/programs/games/sequence/data:player_state",
+        "//code/utilities/assets:playing_card_assets",
         "//code/utilities/data_structures:playing_card",
+        "//code/utilities/formats/html:basic_html_template_getter",
         "//code/utilities/image:data_uri_getter",
         "//code/utilities/program/call:lib",
-        "//code/utilities/assets:playing_card_assets",
         "//code/utilities/types/vectors/transformers:lib",
-        "//code/programs/games/sequence/data:player_state",
-        "//code/programs/games/sequence/data:board_space",
         "@boost//:algorithm",
         "@boost//:asio",
         "@boost//:optional",

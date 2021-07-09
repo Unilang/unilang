@@ -46,8 +46,8 @@ class
     //one day this flag will be the default and we can remove it here as well
     //TODO(thickey): remove flag
     Append_With_Newline(str,"build --incompatible_enable_cc_toolchain_resolution");
-    
     Append_With_Newline(str,"build --incompatible_restrict_string_escapes=false");
+    
     
     //faster to build here?
     //codeship does not have this.
@@ -73,6 +73,8 @@ class
     Append_With_Newline(str,"build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine=@rules_fuzzing//fuzzing/engines:libfuzzer");
     Append_With_Newline(str,"build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine_instrumentation=libfuzzer");
     Append_With_Newline(str,"build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine_sanitizer=asan");
+    
+    Append_With_Newline(str,"build:asan --copt=-fsanitize=address --linkopt=-fsanitize=address");
     
     return str;
 ❱
