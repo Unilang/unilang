@@ -7,3 +7,5 @@ build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine=@rules_fuzzing//fuzzing
 build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine_instrumentation=libfuzzer
 build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine_sanitizer=asan
 build:asan --copt=-fsanitize=address --linkopt=-fsanitize=address
+build:ubsan --copt=-fsanitize=undefined --copt=-fno-sanitize-recover=all --linkopt=-fsanitize=undefined
+build:msan --copt=-fsanitize=memory --copt=-fsanitize-memory-track-origins --copt=-fno-sanitize-recover=all --linkopt=-fsanitize=memory

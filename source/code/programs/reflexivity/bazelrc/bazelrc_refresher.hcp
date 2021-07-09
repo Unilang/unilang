@@ -100,6 +100,11 @@ class
     //enable other sanitizers
     Append_With_Newline(str,"build:asan --copt=-fsanitize=address --linkopt=-fsanitize=address");
     
+    
+// build:ubsan --copt=-fsanitize=undefined --copt=-fno-sanitize-recover=all --linkopt=-fsanitize=undefined
+// build:msan --copt=-fsanitize=memory --copt=-fsanitize-memory-track-origins --copt=-fno-sanitize-recover=all --linkopt=-fsanitize=memory
+
+    
     return str;
 ❱
 
