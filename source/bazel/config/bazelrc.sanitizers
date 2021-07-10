@@ -22,3 +22,8 @@ build:msan --copt=-fsanitize-memory-track-origins
 build:msan --copt=-fno-sanitize-recover=all
 build:msan --linkopt=-fsanitize=memory
 
+# Make tsan possible
+build:tsan --copt=-fsanitize=thread
+build:tsan --copt=-fno-sanitize-recover=all
+build:tsan --linkopt=-fsanitize=thread
+
