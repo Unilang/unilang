@@ -102,12 +102,26 @@ class
     Append_With_Newline(str,"# Make asan possible");
     Append_With_Newline(str,"build:asan --copt=-fsanitize=address");
     Append_With_Newline(str,"build:asan --linkopt=-fsanitize=address");
+                            // "-fno-sanitize-recover=all",
+                            // "-DADDRESS_SANITIZER",
+                            // "-DLEAK_SANITIZER",
+                            // # https://github.com/google/sanitizers/wiki/AddressSanitizer#faq
+                            // "-U_FORTIFY_SOURCE",
+                            // "-mllvm",
+                            // "-asan-use-private-alias=1",
+                            // --linkopts=-fsanitize-link-c++-runtime
     Append_With_Newline(str,"");
     
     Append_With_Newline(str,"# Make ubsan possible");
     Append_With_Newline(str,"build:ubsan --copt=-fsanitize=undefined");
     Append_With_Newline(str,"build:ubsan --copt=-fno-sanitize-recover=all");
     Append_With_Newline(str,"build:ubsan --linkopt=-fsanitize=undefined");
+                            // "-DUNDEFINED_BEHAVIOR_SANITIZER",
+                            // "-fno-sanitize=float-divide-by-zero",
+                            // "-fno-sanitize=vptr",
+                            // # https://github.com/google/sanitizers/wiki/AddressSanitizer#faq
+                            // "-U_FORTIFY_SOURCE",
+                            // --linkopts=-fsanitize-link-c++-runtime
     Append_With_Newline(str,"");
     
     Append_With_Newline(str,"# Make msan possible");
@@ -115,6 +129,20 @@ class
     Append_With_Newline(str,"build:msan --copt=-fsanitize-memory-track-origins");
     Append_With_Newline(str,"build:msan --copt=-fno-sanitize-recover=all");
     Append_With_Newline(str,"build:msan --linkopt=-fsanitize=memory");
+                            // "-DMEMORY_SANITIZER",
+                            // # https://github.com/google/sanitizers/wiki/AddressSanitizer#faq
+                            // "-U_FORTIFY_SOURCE",
+                            // --linkopts=-fsanitize-link-c++-runtime
+    Append_With_Newline(str,"");
+    
+    Append_With_Newline(str,"# Make tsan possible");
+    Append_With_Newline(str,"build:tsan --copt=-fsanitize=thread");
+    Append_With_Newline(str,"build:tsan --copt=-fno-sanitize-recover=all");
+    Append_With_Newline(str,"build:tsan --linkopt=-fsanitize=thread");
+                            // "-DTHREAD_SANITIZER",
+                            // # https://github.com/google/sanitizers/wiki/AddressSanitizer#faq
+                            // "-U_FORTIFY_SOURCE",
+                            // --linkopts=-fsanitize-link-c++-runtime
     Append_With_Newline(str,"");
 
     
