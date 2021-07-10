@@ -92,17 +92,30 @@ class
     Append_With_Newline(str,Generated_Comment_Getter::Get());
     
     //make fuzzing possible
-    Append_With_Newline(str,"# Define the --config=asan-libfuzzer configuration.");
+    Append_With_Newline(str,"# Make asan fuzzing possible");
     Append_With_Newline(str,"build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine=@rules_fuzzing//fuzzing/engines:libfuzzer");
     Append_With_Newline(str,"build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine_instrumentation=libfuzzer");
     Append_With_Newline(str,"build:asan-libfuzzer --@rules_fuzzing//fuzzing:cc_engine_sanitizer=asan");
+    Append_With_Newline(str,"");
     
     //enable other sanitizers
-    Append_With_Newline(str,"build:asan --copt=-fsanitize=address --linkopt=-fsanitize=address");
+    Append_With_Newline(str,"# Make asan possible");
+    Append_With_Newline(str,"build:asan --copt=-fsanitize=address");
+    Append_With_Newline(str,"build:asan --linkopt=-fsanitize=address");
+    Append_With_Newline(str,"");
     
+    Append_With_Newline(str,"# Make ubsan possible");
+    Append_With_Newline(str,"build:ubsan --copt=-fsanitize=undefined");
+    Append_With_Newline(str,"build:ubsan --copt=-fno-sanitize-recover=all");
+    Append_With_Newline(str,"build:ubsan --linkopt=-fsanitize=undefined");
+    Append_With_Newline(str,"");
     
-// build:ubsan --copt=-fsanitize=undefined --copt=-fno-sanitize-recover=all --linkopt=-fsanitize=undefined
-// build:msan --copt=-fsanitize=memory --copt=-fsanitize-memory-track-origins --copt=-fno-sanitize-recover=all --linkopt=-fsanitize=memory
+    Append_With_Newline(str,"# Make msan possible");
+    Append_With_Newline(str,"build:msan --copt=-fsanitize=memory");
+    Append_With_Newline(str,"build:msan --copt=-fsanitize-memory-track-origins");
+    Append_With_Newline(str,"build:msan --copt=-fno-sanitize-recover=all");
+    Append_With_Newline(str,"build:msan --linkopt=-fsanitize=memory");
+    Append_With_Newline(str,"");
 
     
     return str;
