@@ -103,8 +103,8 @@ class
     //get child items based on the schema
     auto full_name = Button_Face_Tree_Full_Path_Name::Get(structure,it);
     auto strs = Child_Lookup_Map_Find::Get_Children(lookup,full_name);
-    for (auto const& it: strs){
-        face_label.state.faces[0].label.message = settings.children_append_symbol + it;
+    for (auto const& str: strs){
+        face_label.state.faces[0].label.message = settings.children_append_symbol + str;
         x.menu.nodes.insert(x.menu.nodes.end(),face_label);
     }
 ❱

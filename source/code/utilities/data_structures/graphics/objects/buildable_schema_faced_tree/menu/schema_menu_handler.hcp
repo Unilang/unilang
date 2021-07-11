@@ -67,8 +67,21 @@ class
     if (how_to_open != Schema_Menu_Open_Strategy::DONT_OPEN){
         
         auto settings = Create_Menu_Settings(pc_input);
-        auto menu_out = Schema_Tree_Menu_Creator::Create_Menu(tree.structure,lookup,settings,tree.selected_node);
-        tree.menu.menu = menu_out.menu;
+        
+        
+        //THIS RESULTS IN A SEGFAULT!
+        //EXAMPLATION:
+        //the tree copy_() function fails
+        //tree is somehow corrupted where insert function crashes at end on: "tmp->prev_sibling->next_sibling=tmp;"
+        //ORIGINAL CODE:
+        // auto menu_out = Schema_Tree_Menu_Creator::Create_Menu(tree.structure,lookup,settings,tree.selected_node);
+        // tree.menu.menu = menu_out.menu;
+        
+        //DO THIS INSTEAD:
+        tree.menu.menu = Schema_Tree_Menu_Creator::Create_Menu(tree.structure,lookup,settings,tree.selected_node).menu;
+        
+        
+        
         tree.menu.pos = Decide_Menu_Location(pc_input,pos,tree,how_to_open);
         
         //does the generated meny actually have menu items?
