@@ -77,7 +77,7 @@ class
         // auto menu_out = Schema_Tree_Menu_Creator::Create_Menu(tree.structure,lookup,settings,tree.selected_node);
         // tree.menu.menu = menu_out.menu;
         
-        //DO THIS INSTEAD:
+        //DO THIS INSTEAD (avoid the temporary):
         tree.menu.menu = Schema_Tree_Menu_Creator::Create_Menu(tree.structure,lookup,settings,tree.selected_node).menu;
         
         
