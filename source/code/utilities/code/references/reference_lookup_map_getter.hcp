@@ -20,7 +20,5 @@ class
     x.map.insert({"code/module/function/body/statement/name/","code/module/todo statement/id/"});
     x.map.insert({"code/module/function/body/statement/name/","code/module/comment/id/"});
     
-    std::cout << x.map << std::endl;
-    
     return x;
 ❱

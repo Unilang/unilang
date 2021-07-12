@@ -113,7 +113,6 @@ static void Chrono_Loop(T stop_predicate, U logic, V render){
     const std::chrono::nanoseconds FRAMETIME(16666667);     // Equal to 16.66ms or 1000/60
     using clock = std::chrono::high_resolution_clock;
     
-    auto gameTimeStart  = clock::now();                     // Total runtime of the program
     auto frameTimeStart = clock::now();     
     std::chrono::nanoseconds accumulator(0ns);              // Time passed since the last update
     
