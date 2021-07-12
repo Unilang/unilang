@@ -2,7 +2,7 @@ class
 ❪vector❫
 ❪string❫
 ❪unordered_map❫
-❪"code/utilities/code/style_theme/style_lookup_map"❫
+❪"code/utilities/code/properties/style_theme/style_lookup_map"❫
 ❪"code/utilities/data_structures/graphics/objects/label/style/default_label_styles"❫
 ⚯
 

@@ -20,7 +20,7 @@ class
 ❪"code/utilities/data_structures/counters/unique_max_counter/unique_max_counter"❫
 ❪"code/utilities/data_structures/graphics/objects/select_menu/select_menu"❫
 ❪"code/utilities/data_structures/tree/generic/child_lookup_map"❫
-❪"code/utilities/code/style_theme/style_lookup_map"❫
+❪"code/utilities/code/properties/style_theme/style_lookup_map"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/create/schema_tree_menu_creation_settings"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_menu_type"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/menu/schema_menu_open_strategy"❫

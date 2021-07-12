@@ -15,7 +15,7 @@ hcp(
         "//code/programs/reflexivity/docker:dockerfile_refresher",
         "//code/programs/reflexivity/settings:reflexive_refresh_settings",
         "//code/programs/reflexivity/settings:reflexive_refresh_settings_getter",
-        "//code/utilities/code:concept_tree_to_image",
+        "//code/utilities/code/artifacts/concept_tree:concept_tree_to_image",
         "//code/utilities/filesystem/files/creating:lib",
         "//code/utilities/filesystem/files/temp:existing_temp_file",
         "//code/utilities/filesystem/paths:lib",

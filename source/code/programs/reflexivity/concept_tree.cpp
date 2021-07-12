@@ -1,5 +1,5 @@
 #include <iostream>
-#include "code/utilities/code/concept_tree_to_image.hpp"
+#include "code/utilities/code/artifacts/concept_tree/concept_tree_to_image.hpp"
 #include "code/utilities/filesystem/paths/lib.hpp"
 
 

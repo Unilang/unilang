@@ -14,16 +14,16 @@ class
 ❪"code/utilities/program/common_actions/locale/lib"❫
 ❪"code/utilities/program/name/program_name_getter"❫
 ❪"code/utilities/output/publisher/essay/essay_publisher"❫
-❪"code/utilities/code/concept_tree_to_image"❫
+❪"code/utilities/code/artifacts/concept_tree/concept_tree_to_image"❫
 ❪"code/programs/reflexivity/deps_define/scan/deps_repo_scanner"❫
 ❪"code/utilities/build/self_builder"❫
 ❪"code/programs/reflexivity/target_build_file_refresher"❫
 ❪"code/utilities/logo/unilang_logo_creator"❫
-❪"code/utilities/code/animate/unilang_hello_world_gif"❫
+❪"code/utilities/code/artifacts/animate/unilang_hello_world_gif"❫
 ❪"code/utilities/filesystem/files/getting/lib"❫
 ❪"code/utilities/filesystem/files/transformers/lib"❫
 ❪"code/programs/reflexivity/publish/unilang_documentation_generator"❫
-❪"code/utilities/code/code_pipeline/code_pipeline_image_maker"❫
+❪"code/utilities/code/artifacts/code_pipeline/code_pipeline_image_maker"❫
 ⚞⚟
 
 

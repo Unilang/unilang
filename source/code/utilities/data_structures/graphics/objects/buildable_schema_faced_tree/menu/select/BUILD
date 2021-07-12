@@ -8,8 +8,8 @@ load("//bazel/rules/enum_cpp:enum_cpp.bzl", "enum_cpp")
 hcp(
     name = "schema_tree_menu_click_handler",
     deps = [
-        "//code/utilities/code/style_theme",
-        "//code/utilities/code/style_theme:style_lookup_map",
+        "//code/utilities/code/properties/style_theme",
+        "//code/utilities/code/properties/style_theme:style_lookup_map",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_action_doer",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_style_applier",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree/data:buildable_face_tree",
@@ -34,8 +34,8 @@ hcp(
 hcp(
     name = "schema_tree_menu_select_handler",
     deps = [
-        "//code/utilities/code/style_theme",
-        "//code/utilities/code/style_theme:style_lookup_map",
+        "//code/utilities/code/properties/style_theme",
+        "//code/utilities/code/properties/style_theme:style_lookup_map",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_action_doer",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_style_applier",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree/data:buildable_face_tree",
@@ -61,8 +61,8 @@ hcp(
 hcp(
     name = "schema_menu_selection_performer",
     deps = [
-        "//code/utilities/code/style_theme",
-        "//code/utilities/code/style_theme:style_lookup_map",
+        "//code/utilities/code/properties/style_theme",
+        "//code/utilities/code/properties/style_theme:style_lookup_map",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_action_doer",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_style_applier",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree/data:buildable_face_tree",

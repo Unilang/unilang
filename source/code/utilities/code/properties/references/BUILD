@@ -12,7 +12,7 @@ hcp(
 hcp(
     name = "reference_lookup_map_getter",
     deps = [
-        "//code/utilities/code/references:reference_lookup_map",
+        "//code/utilities/code/properties/references:reference_lookup_map",
         "//code/utilities/output/printers:lib",
     ],
 )

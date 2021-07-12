@@ -10,7 +10,7 @@ hcp(
     deps = [
         "token_method_argument_attribute_settings",
         "token_method_inheritance_attribute_settings",
-        "//code/utilities/code/symbols/shared:token_access_attribute_settings",
+        "//code/utilities/code/properties/symbols/shared:token_access_attribute_settings",
     ],
 )
 

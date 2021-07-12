@@ -3,7 +3,7 @@ class
 ⚯
 ❪"code/utilities/types/vectors/observers/lib"❫
 ❪"code/utilities/types/strings/observers/other/lib"❫
-❪"code/utilities/code/symbols/token_attribute_settings"❫
+❪"code/utilities/code/properties/symbols/token_attribute_settings"❫
 ⚞⚟
 
 ◀public: static▶ bool ☀Has_Virtual_Methods(model::Module const& structure)❰

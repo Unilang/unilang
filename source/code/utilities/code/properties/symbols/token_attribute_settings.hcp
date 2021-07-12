@@ -1,0 +1,29 @@
+class
+❪"code/utilities/code/properties/symbols/token_meta_attribute_settings"❫
+❪"code/utilities/code/properties/symbols/token_literature_settings"❫
+❪"code/utilities/code/properties/symbols/import/token_import_attribute_settings"❫
+❪"code/utilities/code/properties/symbols/token_macro_attribute_settings"❫
+❪"code/utilities/code/properties/symbols/token_namespace_attribute_settings"❫
+❪"code/utilities/code/properties/symbols/token_inheritance_attribute_settings"❫
+❪"code/utilities/code/properties/symbols/token_enumerated_attribute_settings"❫
+❪"code/utilities/code/properties/symbols/method/token_method_attribute_settings"❫
+❪"code/utilities/code/properties/symbols/token_typedef_attribute_settings"❫
+❪"code/utilities/code/properties/symbols/data_member/token_data_member_attribute_settings"❫
+⚯
+
+⚞⚟
+
+
+◀
+public:
+    Token_Meta_Attribute_Settings          meta;
+    Token_Literature_Settings              literature;
+    Token_Import_Attribute_Settings        import;
+    Token_Macro_Attribute_Settings         macro;
+    Token_Namespace_Attribute_Settings     _namespace;
+    Token_Inheritance_Attribute_Settings   inheritance;
+    Token_Enumerated_Attribute_Settings    enumerated;
+    Token_Method_Attribute_Settings        method;
+    Token_Typedef_Attribute_Settings       _typedef;
+    Token_Data_Member_Attribute_Settings   data_member;
+▶

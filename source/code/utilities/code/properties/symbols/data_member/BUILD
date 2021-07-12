@@ -9,6 +9,6 @@ hcp(
     name = "token_data_member_attribute_settings",
     deps = [
         "token_data_member_state_attribute_settings",
-        "//code/utilities/code/symbols/shared:token_access_attribute_settings",
+        "//code/utilities/code/properties/symbols/shared:token_access_attribute_settings",
     ],
 )

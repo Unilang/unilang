@@ -7,7 +7,7 @@ hcp(
     name = "argument_is_mutable",
     deps = [
         "//code/utilities/code:concept_static_tree_structs",
-        "//code/utilities/code/symbols:token_attribute_settings",
+        "//code/utilities/code/properties/symbols:token_attribute_settings",
         "//code/utilities/comments/doxygen/settings:doxygen_parameter_direction",
         "//code/utilities/types/converters:lib",
         "//code/utilities/types/strings/observers/other:lib",
@@ -20,7 +20,7 @@ hcp(
     name = "argument_is_reference",
     deps = [
         "//code/utilities/code:concept_static_tree_structs",
-        "//code/utilities/code/symbols:token_attribute_settings",
+        "//code/utilities/code/properties/symbols:token_attribute_settings",
         "//code/utilities/comments/doxygen/settings:doxygen_parameter_direction",
         "//code/utilities/types/converters:lib",
         "//code/utilities/types/strings/observers/other:lib",
@@ -73,7 +73,7 @@ hcp(
     name = "virtual_method_checker",
     deps = [
         "//code/utilities/code:concept_static_tree_structs",
-        "//code/utilities/code/symbols:token_attribute_settings",
+        "//code/utilities/code/properties/symbols:token_attribute_settings",
         "//code/utilities/types/strings/observers/other:lib",
         "//code/utilities/types/vectors/observers:lib",
     ],
@@ -93,7 +93,7 @@ hcp(
     deps = [
         "//code/utilities/code:class_access",
         "//code/utilities/code:concept_static_tree_structs",
-        "//code/utilities/code/symbols:token_attribute_settings",
+        "//code/utilities/code/properties/symbols:token_attribute_settings",
         "//code/utilities/comments/doxygen/settings:doxygen_parameter_direction",
         "//code/utilities/types/converters:lib",
         "//code/utilities/types/strings/observers/other:lib",
@@ -107,7 +107,7 @@ hcp(
     deps = [
         "//code/utilities/code:class_access",
         "//code/utilities/code:concept_static_tree_structs",
-        "//code/utilities/code/symbols:token_attribute_settings",
+        "//code/utilities/code/properties/symbols:token_attribute_settings",
         "//code/utilities/comments/doxygen/settings:doxygen_parameter_direction",
         "//code/utilities/types/converters:lib",
         "//code/utilities/types/strings/observers/other:lib",
@@ -121,7 +121,7 @@ hcp(
     deps = [
         "//code/utilities/code:concept_static_tree_structs",
         "//code/utilities/code:storage_specifier",
-        "//code/utilities/code/symbols:token_attribute_settings",
+        "//code/utilities/code/properties/symbols:token_attribute_settings",
         "//code/utilities/comments/doxygen/settings:doxygen_parameter_direction",
         "//code/utilities/types/converters:lib",
         "//code/utilities/types/strings/observers/other:lib",
@@ -135,7 +135,7 @@ hcp(
     deps = [
         "//code/utilities/code:concept_static_tree_structs",
         "//code/utilities/code:storage_specifier",
-        "//code/utilities/code/symbols:token_attribute_settings",
+        "//code/utilities/code/properties/symbols:token_attribute_settings",
         "//code/utilities/comments/doxygen/settings:doxygen_parameter_direction",
         "//code/utilities/types/converters:lib",
         "//code/utilities/types/strings/observers/other:lib",
@@ -149,7 +149,7 @@ hcp(
     deps = [
         "//code/utilities/code:concept_static_tree_structs",
         "//code/utilities/code:mutability",
-        "//code/utilities/code/symbols:token_attribute_settings",
+        "//code/utilities/code/properties/symbols:token_attribute_settings",
         "//code/utilities/comments/doxygen/settings:doxygen_parameter_direction",
         "//code/utilities/types/converters:lib",
         "//code/utilities/types/strings/observers/other:lib",

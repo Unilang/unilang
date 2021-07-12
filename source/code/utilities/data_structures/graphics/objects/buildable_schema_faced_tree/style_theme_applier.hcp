@@ -5,8 +5,8 @@ class
 ❪cstdlib❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_faced_tree/data/buildable_face_tree"❫
 ❪"code/utilities/data_structures/tree/generic/child_lookup_map"❫
-❪"code/utilities/code/style_theme/style_lookup_map"❫
-❪"code/utilities/code/style_theme/style_theme"❫
+❪"code/utilities/code/properties/style_theme/style_lookup_map"❫
+❪"code/utilities/code/properties/style_theme/style_theme"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data/buildable_schema_faced_tree_state"❫
 ❪"code/utilities/data_structures/graphics/objects/buildable_schema_faced_tree/data/positioned_buildable_schema_faced_tree"❫
 ⚯

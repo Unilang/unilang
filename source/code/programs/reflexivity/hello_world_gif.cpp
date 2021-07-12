@@ -1,5 +1,5 @@
 #include <iostream>
-#include "code/utilities/code/animate/unilang_hello_world_gif.hpp"
+#include "code/utilities/code/artifacts/animate/unilang_hello_world_gif.hpp"
 #include "code/utilities/filesystem/paths/lib.hpp"
 
 

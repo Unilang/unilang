@@ -2,7 +2,7 @@ class
 ❪vector❫
 ❪string❫
 ❪unordered_map❫
-❪"code/utilities/code/references/reference_lookup_map"❫
+❪"code/utilities/code/properties/references/reference_lookup_map"❫
 ❪"code/utilities/output/printers/lib"❫
 ⚯
 
@@ -13,6 +13,11 @@ class
     Reference_Lookup_Map x;
     
     //Foreign Key -> Primary Key
+    //It's like a database kind of thing.
+    //all the elements are a part of the same tree, but these references turn the tree into the graph.
+    //what they really do is turn the tree-graph into a graph of trees.
+    //there are different ways to try and render this idea.
+    //the most common would be Entity Relationship Diagrams (ERDs)
     x.map.insert({"code/module/literature/paragraph/sentence/citations/id/","code/module/citation/id/"});
     x.map.insert({"code/module/description/foreseeable change fk/","code/module/foreseeable change/pk/"});
     x.map.insert({"code/module/description fk/","code/module/description/pk/"});

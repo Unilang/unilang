@@ -18,8 +18,8 @@ hcp(
         "//code/programs/reflexivity/settings:reflexive_refresh_settings",
         "//code/programs/reflexivity/settings:reflexive_refresh_settings_getter",
         "//code/utilities/build:self_builder",
-        "//code/utilities/code:concept_tree_to_image",
-        "//code/utilities/code/code_pipeline:code_pipeline_image_maker",
+        "//code/utilities/code/artifacts/concept_tree:concept_tree_to_image",
+        "//code/utilities/code/artifacts/code_pipeline:code_pipeline_image_maker",
         "//code/utilities/filesystem/files/creating:lib",
         "//code/utilities/filesystem/files/getting:lib",
         "//code/utilities/filesystem/files/transformers:lib",
@@ -42,7 +42,7 @@ hcp(
         "//code/programs/reflexivity/settings:reflexive_refresh_settings",
         "//code/programs/reflexivity/settings:reflexive_refresh_settings_getter",
         "//code/utilities/build:self_builder",
-        "//code/utilities/code/animate:unilang_hello_world_gif",
+        "//code/utilities/code/artifacts/animate:unilang_hello_world_gif",
     ],
 )
 
@@ -56,7 +56,7 @@ cpp_main(
         "//code/programs/reflexivity/docker:dockerfile_refresher",
         "//code/programs/reflexivity/settings:reflexive_refresh_settings",
         "//code/programs/reflexivity/settings:reflexive_refresh_settings_getter",
-        "//code/utilities/code:concept_tree_to_image",
+        "//code/utilities/code/artifacts/concept_tree:concept_tree_to_image",
         "//code/utilities/output/publisher/essay:essay_publisher",
         "//code/utilities/program/common_actions/locale:lib",
         "//code/utilities/program/name:program_name_getter",
@@ -80,7 +80,7 @@ cpp_main(
 cpp_main(
     name = "concept_tree",
     deps = [
-        "//code/utilities/code:concept_tree_to_image",
+        "//code/utilities/code/artifacts/concept_tree:concept_tree_to_image",
         "//code/utilities/filesystem/paths:lib",
     ],
 )
@@ -96,7 +96,7 @@ cpp_main(
 cpp_main(
     name = "hello_world_gif",
     deps = [
-        "//code/utilities/code/animate:unilang_hello_world_gif",
+        "//code/utilities/code/artifacts/animate:unilang_hello_world_gif",
         "//code/utilities/filesystem/paths:lib",
     ],
 )

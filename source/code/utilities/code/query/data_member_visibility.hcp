@@ -7,7 +7,7 @@ class
 ❪"code/utilities/types/converters/lib"❫
 ❪"code/utilities/types/strings/transformers/stripping/lib"❫
 ❪"code/utilities/types/strings/observers/other/lib"❫
-❪"code/utilities/code/symbols/token_attribute_settings"❫
+❪"code/utilities/code/properties/symbols/token_attribute_settings"❫
 ❪"code/utilities/types/vectors/observers/lib"❫
 ⚞⚟
 

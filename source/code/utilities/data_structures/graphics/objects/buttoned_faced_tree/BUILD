@@ -24,7 +24,7 @@ hcp(
 hcp(
     name = "button_face_tree_drawer",
     deps = [
-        "//code/utilities/code/references:reference_lookup_map",
+        "//code/utilities/code/properties/references:reference_lookup_map",
         "//code/utilities/data_structures/counters/unique_max_counter",
         "//code/utilities/data_structures/graphics/bitmap/premade:horizontal_line",
         "//code/utilities/data_structures/graphics/bitmap/premade:l_line",
@@ -66,7 +66,7 @@ hcp(
 hcp(
     name = "button_face_tree_drawer_regular",
     deps = [
-        "//code/utilities/code/references:reference_lookup_map",
+        "//code/utilities/code/properties/references:reference_lookup_map",
         "//code/utilities/data_structures/counters/unique_max_counter",
         "//code/utilities/data_structures/graphics/bitmap/premade:horizontal_line",
         "//code/utilities/data_structures/graphics/bitmap/premade:l_line",
@@ -106,7 +106,7 @@ hcp(
 hcp(
     name = "button_face_tree_drawer_wide",
     deps = [
-        "//code/utilities/code/references:reference_lookup_map",
+        "//code/utilities/code/properties/references:reference_lookup_map",
         "//code/utilities/data_structures/counters/unique_max_counter",
         "//code/utilities/data_structures/graphics/bitmap/premade:horizontal_line",
         "//code/utilities/data_structures/graphics/bitmap/premade:l_line",
@@ -147,7 +147,7 @@ hcp(
 hcp(
     name = "button_face_tree_connection_drawer",
     deps = [
-        "//code/utilities/code/references:reference_lookup_map",
+        "//code/utilities/code/properties/references:reference_lookup_map",
         "//code/utilities/data_structures/counters/unique_max_counter",
         "//code/utilities/data_structures/graphics/bitmap/premade:horizontal_line",
         "//code/utilities/data_structures/graphics/bitmap/premade:l_line",
@@ -391,8 +391,8 @@ enum_cpp(
 hcp(
     name = "button_face_tree_style_applier",
     deps = [
-        "//code/utilities/code/style_theme",
-        "//code/utilities/code/style_theme:style_lookup_map",
+        "//code/utilities/code/properties/style_theme",
+        "//code/utilities/code/properties/style_theme:style_lookup_map",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_action_doer",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label:button_faced_label_style_applier",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/premade:buttoned_faced_label_premades",
@@ -409,8 +409,8 @@ hcp(
 hcp(
     name = "button_face_tree_first_face_no_edit",
     deps = [
-        "//code/utilities/code/style_theme",
-        "//code/utilities/code/style_theme:style_lookup_map",
+        "//code/utilities/code/properties/style_theme",
+        "//code/utilities/code/properties/style_theme:style_lookup_map",
         "//code/utilities/data_structures/graphics/objects/buildable_faced_tree:buildable_face_tree_action_doer",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label:buttoned_faced_label_first_face_no_edit",
         "//code/utilities/data_structures/graphics/objects/buttoned_faced_label/premade:buttoned_faced_label_premades",

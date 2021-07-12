@@ -17,7 +17,7 @@ class
 ❪"code/utilities/peripheral/mouse/state/mouse_state"❫
 ❪"code/utilities/fonts/bdf/character_maps/character_maps"❫
 ❪"code/utilities/data_structures/counters/unique_max_counter/unique_max_counter"❫
-❪"code/utilities/code/references/reference_lookup_map"❫
+❪"code/utilities/code/properties/references/reference_lookup_map"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/button_face_tree_range"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/positioned_button_tree_iterator"❫
 ❪"code/utilities/data_structures/graphics/objects/buttoned_faced_tree/data/draw_strategy"❫

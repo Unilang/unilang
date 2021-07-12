@@ -14,7 +14,7 @@ class
 ❪"code/utilities/program/common_actions/locale/lib"❫
 ❪"code/utilities/program/name/program_name_getter"❫
 ❪"code/utilities/output/publisher/essay/essay_publisher"❫
-❪"code/utilities/code/concept_tree_to_image"❫
+❪"code/utilities/code/artifacts/concept_tree/concept_tree_to_image"❫
 ❪"code/programs/reflexivity/deps_define/data/dependency_specifications_getter"❫
 ❪"code/utilities/github/repo_getter"❫
 ❪"code/utilities/program/wrappers/git/repo_establisher/repo_establisher"❫

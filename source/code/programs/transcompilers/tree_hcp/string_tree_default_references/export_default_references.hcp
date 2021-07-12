@@ -23,7 +23,7 @@ class
 ❪"code/programs/transcompilers/tree_hcp/shared/path_naming"❫
 ❪"code/programs/transcompilers/shared/json_gen"❫
 ❪"code/utilities/formats/json/converters/json_file_io"❫
-❪"code/utilities/code/references/reference_lookup_map_getter"❫
+❪"code/utilities/code/properties/references/reference_lookup_map_getter"❫
 ❪"code/utilities/types/multimap/lib"❫
 ⚞⚟
 

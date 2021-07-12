@@ -59,7 +59,7 @@ hcp(
 hcp(
     name = "schema_menu_handler",
     deps = [
-        "//code/utilities/code/style_theme:style_lookup_map",
+        "//code/utilities/code/properties/style_theme:style_lookup_map",
         "//code/utilities/data_structures/counters/unique_max_counter",
         "//code/utilities/data_structures/graphics/bitmap/premade:horizontal_line",
         "//code/utilities/data_structures/graphics/bitmap/premade:l_line",

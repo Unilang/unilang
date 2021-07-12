@@ -11,7 +11,7 @@ hcp(
         "//code/programs/transcompilers/hcp-compiler/programatic/data:function",
         "//code/programs/transcompilers/shared:json_gen",
         "//code/programs/transcompilers/tree_hcp/shared:path_naming",
-        "//code/utilities/code/references:reference_lookup_map",
+        "//code/utilities/code/properties/references:reference_lookup_map",
         "//code/utilities/data_structures/tree/generic:string_to_string_tree",
         "//code/utilities/data_structures/tree/generic:string_tree",
         "//code/utilities/formats/json/converters:json_file_io",
