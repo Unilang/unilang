@@ -1,0 +1,14 @@
+class
+❪vector❫
+❪string❫
+❪unordered_map❫
+❪map❫
+⚯
+
+⚞⚟
+
+◀public:
+
+    std::multimap<std::string,size_t> ፠map፠;
+▶
+
