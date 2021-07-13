@@ -1,0 +1,27 @@
+class
+❪vector❫
+❪string❫
+❪unordered_map❫
+❪"code/utilities/code/properties/reference_depth/reference_depth_map"❫
+❪"code/utilities/code/properties/references/reference_lookup_map"❫
+❪"code/utilities/output/printers/lib"❫
+⚯
+
+⚞⚟
+
+◀public: static▶ Reference_Depth_Map ☀Get_Default_References(Reference_Lookup_Map const& refs)❰
+
+
+    //A schema tree is technically a graph due to the references.  
+    //One of the strategies for rendering this "tree-graph" is to render it as separate trees.
+    //Based on the amount reference indirection that any subtree requires would indicate which tree it belongs in.
+    //imagine an x-axis, where each column is a tree.
+    //Trees on the very left (column 0) require no indirection.
+    //Trees on the very right (last column) require the most indirection.
+    //We are going to build the desired column number for every possible label based on knowledge of references.
+    Reference_Depth_Map x;
+    
+    
+    
+    return x;
+❱

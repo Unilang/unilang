@@ -8,3 +8,12 @@ hcp(
     deps = [
     ],
 )
+
+hcp(
+    name = "reference_depth_map_getter",
+    deps = [
+        "//code/utilities/code/properties/reference_depth:reference_depth_map",
+        "//code/utilities/code/properties/references:reference_lookup_map",
+        "//code/utilities/output/printers:lib",
+    ],
+)
