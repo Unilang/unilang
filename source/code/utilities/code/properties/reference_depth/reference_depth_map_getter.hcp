@@ -9,11 +9,11 @@ class
 
 ⚞⚟
 
-◀public: static▶ Reference_Depth_Map ☀Get_Default_References(Reference_Lookup_Map const& refs)❰
+◀public: static▶ Reference_Depth_Map ☀Get_Default_References(String_Tree const& str_tree, Reference_Lookup_Map const& refs)❰
 
 
     //A schema tree is technically a graph due to the references.  
-    //One of the strategies for rendering this "tree-graph" is to render it as separate trees.
+    //One of the strategies for rendering this "tree-like graph" is to render it as separate trees.
     //Based on the amount reference indirection that any subtree requires would indicate which tree it belongs in.
     //imagine an x-axis, where each column is a tree.
     //Trees on the very left (column 0) require no indirection.
