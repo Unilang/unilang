@@ -25,6 +25,8 @@ class
     
     auto paths = Tree_Full_Paths_Getter::Get_All_Paths_Ordered(str_tree);
     
+    d
+    
     
     
     return x;
