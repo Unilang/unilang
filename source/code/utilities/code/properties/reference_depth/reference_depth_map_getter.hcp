@@ -5,6 +5,7 @@ class
 ❪"code/utilities/code/properties/reference_depth/reference_depth_map"❫
 ❪"code/utilities/code/properties/references/reference_lookup_map"❫
 ❪"code/utilities/output/printers/lib"❫
+❪"code/utilities/types/tree/converters/tree_full_paths_getter"❫
 ⚯
 
 ⚞⚟
@@ -20,6 +21,9 @@ class
     //Trees on the very right (last column) require the most indirection.
     //We are going to build the desired column number for every possible label based on knowledge of references.
     Reference_Depth_Map x;
+    
+    
+    auto paths = Tree_Full_Paths_Getter::Get_All_Paths_Ordered(str_tree);
     
     
     
