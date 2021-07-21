@@ -24,8 +24,16 @@ class
     
     
     auto paths = Tree_Full_Paths_Getter::Get_All_Paths_Ordered(str_tree);
+    for (auto const& path: paths){
+        auto depth = Decide_Path_Depth(str_tree,refs,path);
+        x.map.emplace(path,depth);
+    }
     
     
     
     return x;
+❱
+
+
+◀private: static▶ int ☀Decide_Path_Depth(String_Tree const& str_tree, Reference_Lookup_Map const& refs, std::string const& path)❰
 ❱
